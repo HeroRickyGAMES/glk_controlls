@@ -76,7 +76,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
         title: Container(
           child:
           Text(
-              'GLK Controls - Interface para Porteiros'
+              'GLK Controls - Interface para Operadores'
           ),
         ),
       ),

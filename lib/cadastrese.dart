@@ -45,7 +45,7 @@ class _registroState extends State<registro> {
             children: [
               RadioListTile(
                 title: Text(
-                    "Sou um Porteiro",
+                    "Sou um Operador",
                   style: TextStyle(
                       fontSize: 20
                   ),
