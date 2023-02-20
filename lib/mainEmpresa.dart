@@ -58,11 +58,7 @@ class mainEmpresa extends StatelessWidget {
               });
 
             });
-
           }
-
-
-
         }
         );
       }

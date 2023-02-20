@@ -6,12 +6,8 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
-import '../camera.dart';
 import '../mainPorteiro.dart';
 import 'dart:io';
-import 'package:flutter/material.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
 //Programado Por HeroRickyGames
@@ -25,7 +21,6 @@ class modalPorteiro extends StatefulWidget {
   @override
   State<modalPorteiro> createState() => _modalPorteiroState();
 }
-
 class _modalPorteiroState extends State<modalPorteiro> {
   String? coletaouentrega;
   String? lacreounao;
@@ -33,10 +28,17 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
   String? cpfoucnpj;
 
+  //fields
+  String? CNHst;
+  String? nomeMotorista;
+  String? RGMotorista;
+  String? PlacaVeiculo;
+
   File? imageFile;
   @override
   Widget build(BuildContext context) {
-    final cnhController = TextEditingController();
+    final FocusNode _focusNode = FocusNode();
+    var cnhController = TextEditingController();
     final motoristaController = TextEditingController();
     final cpfMotoristaController = TextEditingController();
     final placaDoVeiculoController = TextEditingController();
@@ -64,6 +66,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
       if (imageFile != null) {
         setState(() {
           imageFile = imageFile;
+
+
         });
 
         print(imageFile);
@@ -84,7 +88,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
       }else{
         print('Empresa selecionada $empresaSelecionada');
 
-        if(cnhController.text == ''){
+        if(CNHst == null){
           Fluttertoast.showToast(
             msg: 'Preencha a CNH do motorista!',
             toastLength: Toast.LENGTH_SHORT,
@@ -95,7 +99,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
           );
         }else{
 
-          if(motoristaController.text == ''){
+          if(nomeMotorista == null){
             Fluttertoast.showToast(
               msg: 'Preencha o nome do motorista!',
               toastLength: Toast.LENGTH_SHORT,
@@ -106,10 +110,10 @@ class _modalPorteiroState extends State<modalPorteiro> {
             );
           }else{
 
-            if(cpfMotoristaController.text == ''){
+            if(RGMotorista == null){
 
               Fluttertoast.showToast(
-                msg: 'Preencha a CNH do motorista!',
+                msg: 'Preencha o RG do motorista!',
                 toastLength: Toast.LENGTH_SHORT,
                 timeInSecForIosWeb: 1,
                 backgroundColor: Colors.black,
@@ -144,7 +148,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
                 }else{
 
-                  if(placaDoVeiculoController.text == ''){
+                  if(PlacaVeiculo == null){
 
                     Fluttertoast.showToast(
                       msg: 'Preencha o Campo da Placa do veiculo!',
@@ -157,93 +161,114 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
                   }else{
 
-                    //registre todos os valores no db
-                    var UID = FirebaseAuth.instance.currentUser?.uid;
-                    var db = FirebaseFirestore.instance;
-                    db.collection('Users').doc(UID).get().then((event) {
+                    if(imageFile == null){
+                      Fluttertoast.showToast(
+                        msg: 'Por favor, tire uma foto do veiculo!',
+                        toastLength: Toast.LENGTH_SHORT,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.black,
+                        textColor: Colors.white,
+                        fontSize: 16.0,
+                      );
+                    }else{
 
-                      event.data()?.forEach((key, value) async {
+                      Fluttertoast.showToast(
+                        msg: 'Enviando informações para o servidor...',
+                        toastLength: Toast.LENGTH_SHORT,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.black,
+                        textColor: Colors.white,
+                        fontSize: 16.0,
+                      );
+
+                      //registre todos os valores no db
+                      var UID = FirebaseAuth.instance.currentUser?.uid;
+                      var db = FirebaseFirestore.instance;
+                      db.collection('Users').doc(UID).get().then((event) {
+
+                        event.data()?.forEach((key, value) async {
 
 
-                        if(key == 'RGouCNPJ'){
+                          if(key == 'RGouCNPJ'){
 
-                          print(value);
+                            print(value);
 
-                          cpfoucnpj = value;
+                            cpfoucnpj = value;
 
-                          //put cam
-                          var dateTime= new DateTime.now();
+                            //put cam
+                            var dateTime= new DateTime.now();
 
-                          var uuid = Uuid();
+                            var uuid = Uuid();
 
-                          String idd = uuid.v4();
+                            String idd = uuid.v4();
 
-                          final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
+                            final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
 
-                          print(imageUrl);
+                            print(imageUrl);
 
-                          FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
-                            'Empresa': empresaSelecionada,
-                            'ColetaOuEntrega': coletaouentrega,
-                            'LacreouNao': lacreounao,
-                            'CNHMotorista': cnhController.text,
-                            'nomeMotorista': motoristaController.text,
-                            'RGDoMotorista': cpfMotoristaController.text,
-                            'QuemAutorizou': widget.nomeUser,
-                            'CPFcnpjAutorizou': cpfoucnpj,
-                            'PlacaDoVeiculo': placaDoVeiculoController.text,
-                            'Status': 'Autorizado pela Portaria',
-                            'Horario Criado': dateTime,
-                            'uriImage': imageUrl
-                          }).then((value) {
+                            FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
+                              'Empresa': empresaSelecionada,
+                              'ColetaOuEntrega': coletaouentrega,
+                              'LacreouNao': lacreounao,
+                              'CNHMotorista': CNHst,
+                              'nomeMotorista': nomeMotorista,
+                              'RGDoMotorista': RGMotorista,
+                              'QuemAutorizou': widget.nomeUser,
+                              'CPFcnpjAutorizou': cpfoucnpj,
+                              'PlacaDoVeiculo': PlacaVeiculo,
+                              'Status': 'Autorizado pela Portaria',
+                              'Horario Criado': dateTime,
+                              'uriImage': imageUrl
+                            }).then((value) {
 
-                            Fluttertoast.showToast(
-                              msg: 'Enviado com sucesso!',
-                              toastLength: Toast.LENGTH_SHORT,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.black,
-                              textColor: Colors.white,
-                              fontSize: 16.0,
-                            );
-                            widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
+                              Fluttertoast.showToast(
+                                msg: 'Enviado com sucesso!',
+                                toastLength: Toast.LENGTH_SHORT,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.black,
+                                textColor: Colors.white,
+                                fontSize: 16.0,
+                              );
+                              widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
 
-                            var db = FirebaseFirestore.instance;
-                            var UID = FirebaseAuth.instance.currentUser?.uid;
-                            db.collection('Users').doc(UID).get().then((event){
-                              print("${event.data()}");
+                              var db = FirebaseFirestore.instance;
+                              var UID = FirebaseAuth.instance.currentUser?.uid;
+                              db.collection('Users').doc(UID).get().then((event){
+                                print("${event.data()}");
 
-                              event.data()?.forEach((key, value) {
+                                event.data()?.forEach((key, value) {
 
-                                print(key);
-                                print(value);
+                                  print(key);
+                                  print(value);
 
-                                if(key == 'nome'){
-                                  String PorteiroNome = value;
+                                  if(key == 'nome'){
+                                    String PorteiroNome = value;
 
-                                  print('Porteiro name é' + PorteiroNome);
+                                    print('Porteiro name é' + PorteiroNome);
 
-                                  Navigator.pop(context);
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context){
-                                        return mainPorteiro(PorteiroNome);
-                                      }));
+                                    Navigator.pop(context);
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context){
+                                          return mainPorteiro(PorteiroNome);
+                                        }));
 
-                                }
+                                  }
 
-                              });
+                                });
 
-                            }
-                            );
+                              }
+                              );
 
-                          });
+                            });
+                          }
+
                         }
+                        );
 
                       }
                       );
 
                     }
-                    );
-
                   }
                 }
 
@@ -426,8 +451,12 @@ class _modalPorteiroState extends State<modalPorteiro> {
               ),
               Container(
                 padding: EdgeInsets.only(top: 16),
-                child: TextField(
-                  controller: cnhController,
+                child: TextFormField(
+                  onChanged: (valor){
+                    CNHst = valor;
+                    print(CNHst);
+                    //Mudou mandou para a String
+                  },
                   keyboardType: TextInputType.number,
                   enableSuggestions: false,
                   autocorrect: false,
@@ -442,8 +471,12 @@ class _modalPorteiroState extends State<modalPorteiro> {
               ),
               Container(
                 padding: EdgeInsets.only(top: 16),
-                child: TextField(
-                  controller: motoristaController,
+                child: TextFormField(
+                  onChanged: (valor){
+                    nomeMotorista = valor;
+                    print(CNHst);
+                    //Mudou mandou para a String
+                  },
                   keyboardType: TextInputType.name,
                   enableSuggestions: false,
                   autocorrect: false,
@@ -458,8 +491,12 @@ class _modalPorteiroState extends State<modalPorteiro> {
               ),
               Container(
                 padding: EdgeInsets.only(top: 16),
-                child: TextField(
-                  controller: cpfMotoristaController,
+                child: TextFormField(
+                  onChanged: (valor){
+                    RGMotorista = valor;
+                    print(CNHst);
+                    //Mudou mandou para a String
+                  },
                   keyboardType: TextInputType.number,
                   enableSuggestions: false,
                   autocorrect: false,
@@ -482,8 +519,12 @@ class _modalPorteiroState extends State<modalPorteiro> {
               ),
               Container(
                 padding: EdgeInsets.only(top: 16),
-                child: TextField(
-                  controller: placaDoVeiculoController,
+                child: TextFormField(
+                  onChanged: (valor){
+                    PlacaVeiculo = valor;
+                    print(CNHst);
+                    //Mudou mandou para a String
+                  },
                   keyboardType: TextInputType.text,
                   enableSuggestions: false,
                   autocorrect: false,
