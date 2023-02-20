@@ -96,7 +96,6 @@ class _mainPorteiroState extends State<mainPorteiro> {
                       child: CircularProgressIndicator(),
                     );
                   }
-                  
                   return ListView(
                     children:
                     snapshot.data!.docs.map((documents) {
@@ -108,7 +107,8 @@ class _mainPorteiroState extends State<mainPorteiro> {
                       String ColetaOuEntregast = '';
                       idDocumento = documents.id;
 
-                      if(documents['Status'] != 'Autorizado a Sair'){
+                      if(documents['Status'] != 'Autorizado a Sair' ){
+                        if(documents['Status'] != 'Autorizado a entrar na empresa'){
                         if(lacre == 'lacre'){
                           lacrebool = true;
                           lacrado = 'Lacrado';
@@ -218,12 +218,36 @@ class _mainPorteiroState extends State<mainPorteiro> {
 
                                       print(documents.id);
 
+                                      if(documents['Status'] == 'Saída Solicitada'){
 
-                                      FirebaseFirestore.instance
-                                          .collection("Autorizacoes")
-                                          .doc(documents.id).update({
-                                        'Status': 'Autorizado a Sair'
-                                      });
+                                          AlertDialog alert = AlertDialog(
+                                            title: Text("Autorizar saída?"),
+                                            content: Text("Deseja autorizar a saída?"),
+                                            actions: [
+                                              TextButton(onPressed: (){
+
+                                                FirebaseFirestore.instance
+                                                    .collection("Autorizacoes")
+                                                    .doc(documents.id).update({
+                                                  'Status': 'Autorizado a Sair'
+                                                });
+                                                Navigator.pop(context);
+
+                                              },child:
+                                                Text(
+                                                    'Sim'
+                                                ),
+                                              ),
+                                            ],
+                                          );
+
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return alert;
+                                            },
+                                          );
+                                      }
                                     },
                                     child:
                                     Text('Autorizar Saída')
@@ -232,10 +256,12 @@ class _mainPorteiroState extends State<mainPorteiro> {
                             ),
                           ),
                         );
+                        }else{
+                          return Text('');
+                        }
                       }else{
                         return Text('');
                       }
-
                     }).toList(),
                   );
             }

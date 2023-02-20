@@ -105,6 +105,29 @@ class mainEmpresa extends StatelessWidget {
                       bool coletaBool = false;
                       String lacrado = '';
                       String ColetaOuEntregast = '';
+                      bool letGo = false;
+
+                      late String BTNStatus = '';
+
+                      if(documents['Status'] == 'Autorizado pela Portaria'){
+                        BTNStatus = 'Autorizar Entrada';
+
+                        letGo = false;
+
+                      }
+
+                      if(documents['Status'] == 'Saída Solicitada'){
+
+                        letGo = true;
+
+                      }
+
+                      if(documents['Status'] == 'Autorizado a entrar na empresa'){
+
+                        BTNStatus = 'Autorizar saida da empresa';
+
+
+                      }
 
 
                       if(lacre == 'lacre'){
@@ -159,6 +182,14 @@ class mainEmpresa extends StatelessWidget {
                                 ),
                               ),
                               Text(
+                                'Status: ' +
+                                    documents['Status'],
+                                style:
+                                TextStyle(
+                                  fontSize: 20,
+                                ),
+                              ),
+                              Text(
                                 'CNH: ' +
                                     documents['CNHMotorista'],
                                 style:
@@ -187,6 +218,84 @@ class mainEmpresa extends StatelessWidget {
                                 TextStyle(
                                   fontSize: 20,
                                 ),
+                              ),
+                              Container(
+                                padding: EdgeInsets.all(16),
+                                child: Image
+                                    .network(
+                                  documents['uriImage'],
+                                ),
+                              ),
+                              letGo?
+                                  Text('')
+                              : ElevatedButton(
+                                  onPressed: (){
+
+                                    print(documents.id);
+
+                                    if(documents['Status'] == 'Autorizado pela Portaria'){
+
+                                      AlertDialog alert = AlertDialog(
+                                        title: Text("Autorizar entrada?"),
+                                        content: Text("Deseja autorizar entrada na empresa?"),
+                                        actions: [
+                                          TextButton(onPressed: (){
+
+                                            FirebaseFirestore.instance
+                                                .collection("Autorizacoes")
+                                                .doc(documents.id).update({
+                                              'Status': 'Autorizado a entrar na empresa'
+                                            });
+                                            Navigator.pop(context);
+
+                                          },child:
+                                          Text(
+                                              'Sim'
+                                          ),
+                                          ),
+                                        ],
+                                      );
+
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return alert;
+                                        },
+                                      );
+                                    }
+                                    if(documents['Status'] == 'Autorizado a entrar na empresa'){
+
+                                      AlertDialog alert = AlertDialog(
+                                        title: Text("Autorizar saída?"),
+                                        content: Text("Deseja autorizar saída na empresa?"),
+                                        actions: [
+                                          TextButton(onPressed: (){
+
+                                            FirebaseFirestore.instance
+                                                .collection("Autorizacoes")
+                                                .doc(documents.id).update({
+                                              'Status': 'Saída Solicitada'
+                                            });
+                                            Navigator.pop(context);
+
+                                          },child:
+                                          Text(
+                                              'Sim'
+                                          ),
+                                          ),
+                                        ],
+                                      );
+
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return alert;
+                                        },
+                                      );
+                                    }
+                                  },
+                                  child:
+                                  Text(BTNStatus)
                               ),
                             ],
                           ),

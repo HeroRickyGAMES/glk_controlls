@@ -24,6 +24,12 @@ class _registroState extends State<registro> {
   final passController = TextEditingController();
   final rgController = TextEditingController();
 
+  String? Email;
+  String? nome;
+  String? Pass;
+  String? RGcnpj;
+  String? Senha;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,8 +87,11 @@ class _registroState extends State<registro> {
               ),
               Container(
                 padding: EdgeInsets.only(top: 16),
-                child: TextField(
-                  controller: nomeController,
+                child: TextFormField(
+                  onChanged: (valor){
+                    nome = valor;
+                    //Mudou mandou para a String
+                  },
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: NomeOuRazao,
@@ -94,8 +103,11 @@ class _registroState extends State<registro> {
               ),
               Container(
                 padding: EdgeInsets.only(top: 16),
-                child: TextField(
-                  controller: emailController,
+                child: TextFormField(
+                  onChanged: (valor){
+                    Email = valor;
+                    //Mudou mandou para a String
+                  },
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Seu Email',
@@ -107,8 +119,11 @@ class _registroState extends State<registro> {
               ),
               Container(
                 padding: EdgeInsets.only(top: 16),
-                child: TextField(
-                  controller: rgController,
+                child: TextFormField(
+                  onChanged: (valor){
+                    RGcnpj = valor;
+                    //Mudou mandou para a String
+                  },
                   keyboardType: TextInputType.number,
                   enableSuggestions: false,
                   autocorrect: false,
@@ -123,8 +138,10 @@ class _registroState extends State<registro> {
               ),
               Container(
                 padding: EdgeInsets.only(top: 16),
-                child: TextField(
-                  controller: passController,
+                child: TextFormField(
+                  onChanged: (valor){
+                    Senha = valor;
+                  },
                   keyboardType: TextInputType.visiblePassword,
                   obscureText: true,
                   enableSuggestions: false,
@@ -143,17 +160,17 @@ class _registroState extends State<registro> {
                 child: ElevatedButton(
                     onPressed: (){
 
-                      if(emailController.text != ''){
-                        print(emailController.text);
+                      if(Email != null){
+                        print(Email);
 
-                        if(passController.text != ''){
-                          print(passController.text);
+                        if(Senha != null){
+                          print(Senha);
 
-                          if(rgController.text != ''){
-                            print(rgController.text);
+                          if(RGcnpj != null){
+                            print(RGcnpj);
 
-                            if(nomeController.text != ''){
-                              print(nomeController.text);
+                            if(nome != null){
+                              print(nome);
 
                               if(tipos == 'porteiro'){
 
@@ -161,22 +178,22 @@ class _registroState extends State<registro> {
                                 //Fazer o cadastro no banco
 
                                   FirebaseAuth.instance.createUserWithEmailAndPassword(
-                                      email: emailController.text,
-                                      password: passController.text).then((value) {
+                                      email: Email as String,
+                                      password: Senha as String).then((value) {
 
                                         FirebaseFirestore.instance.collection('Users').doc(value.user?.uid).set({
-                                          'email': value.user?.email,
+                                          'email': Email,
                                           'tipoConta': tipos,
-                                          'RGouCNPJ': rgController.text,
-                                          'nome': nomeController.text,
+                                          'RGouCNPJ': RGcnpj,
+                                          'nome': nome,
                                           'estaativo': false
                                         });
 
                                         FirebaseFirestore.instance.collection(tipos!).doc(value.user?.uid).set({
-                                          'email': value.user?.email,
+                                          'email': Email,
                                           'tipoConta': tipos,
-                                          'RGouCNPJ': rgController.text,
-                                          'nome': nomeController.text,
+                                          'RGouCNPJ': RGcnpj,
+                                          'nome': nome,
                                           'estaativo': false
                                         });
 

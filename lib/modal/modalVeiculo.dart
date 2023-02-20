@@ -474,7 +474,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 child: TextFormField(
                   onChanged: (valor){
                     nomeMotorista = valor;
-                    print(CNHst);
                     //Mudou mandou para a String
                   },
                   keyboardType: TextInputType.name,
@@ -494,7 +493,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 child: TextFormField(
                   onChanged: (valor){
                     RGMotorista = valor;
-                    print(CNHst);
                     //Mudou mandou para a String
                   },
                   keyboardType: TextInputType.number,
@@ -509,20 +507,11 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   ),
                 ),
               ),
-              Row(
-                children: [
-                  ElevatedButton(
-                      onPressed: _uploadImage,
-                      child: Text('Selecionar imagem da camera'),
-                  ),
-                ],
-              ),
               Container(
                 padding: EdgeInsets.only(top: 16),
                 child: TextFormField(
                   onChanged: (valor){
                     PlacaVeiculo = valor;
-                    print(CNHst);
                     //Mudou mandou para a String
                   },
                   keyboardType: TextInputType.text,
@@ -534,6 +523,27 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     hintStyle: TextStyle(
                         fontSize: 20
                     ),
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(top: 16),
+                child: Text(
+                    'Adicione a foto no icone abaixo',
+                  style: TextStyle(
+                      fontSize: 20
+                  ),
+
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerRight,
+                child:
+                ElevatedButton(
+                  onPressed: _uploadImage,
+                  child: Icon(
+                    Icons.camera_alt_outlined,
+                    color: Colors.white,
                   ),
                 ),
               ),
