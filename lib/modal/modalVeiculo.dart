@@ -1,8 +1,18 @@
+import 'dart:math';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:image_picker/image_picker.dart';
+import '../camera.dart';
 import '../mainPorteiro.dart';
+import 'dart:io';
+import 'package:flutter/material.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
 
 //Programado Por HeroRickyGames
 
@@ -23,13 +33,230 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
   String? cpfoucnpj;
 
-
+  File? imageFile;
   @override
   Widget build(BuildContext context) {
     final cnhController = TextEditingController();
     final motoristaController = TextEditingController();
     final cpfMotoristaController = TextEditingController();
     final placaDoVeiculoController = TextEditingController();
+    final FirebaseStorage storage = FirebaseStorage.instance;
+
+    Future<File?> _getImageFromCamera() async {
+      final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
+      return File(pickedFile!.path);
+    }
+    Future<String> _uploadImageToFirebase(File file, String id) async {
+      // Crie uma referência única para o arquivo
+      final fileName = DateTime.now().millisecondsSinceEpoch.toString();
+      final reference = storage.ref().child('images/$id/$fileName');
+
+      // Faça upload da imagem para o Cloud Storage
+      await reference.putFile(file);
+
+      // Recupere a URL do download da imagem para salvar no banco de dados
+      final url = await reference.getDownloadURL();
+      return url;
+    }
+    
+    Future<void> _uploadImage() async {
+      imageFile = await _getImageFromCamera();
+      if (imageFile != null) {
+        setState(() {
+          imageFile = imageFile;
+        });
+
+        print(imageFile);
+
+        // Salve a URL do download da imagem no banco de dados
+      }
+    }
+    uploadInfos(){
+      if(empresaSelecionada == null){
+        Fluttertoast.showToast(
+          msg: 'Selecione a empresa!',
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      }else{
+        print('Empresa selecionada $empresaSelecionada');
+
+        if(cnhController.text == ''){
+          Fluttertoast.showToast(
+            msg: 'Preencha a CNH do motorista!',
+            toastLength: Toast.LENGTH_SHORT,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.black,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+        }else{
+
+          if(motoristaController.text == ''){
+            Fluttertoast.showToast(
+              msg: 'Preencha o nome do motorista!',
+              toastLength: Toast.LENGTH_SHORT,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.black,
+              textColor: Colors.white,
+              fontSize: 16.0,
+            );
+          }else{
+
+            if(cpfMotoristaController.text == ''){
+
+              Fluttertoast.showToast(
+                msg: 'Preencha a CNH do motorista!',
+                toastLength: Toast.LENGTH_SHORT,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.black,
+                textColor: Colors.white,
+                fontSize: 16.0,
+              );
+
+            }else{
+              if(coletaouentrega == null){
+
+                Fluttertoast.showToast(
+                  msg: 'Selecione se é Coleta ou Entrega',
+                  toastLength: Toast.LENGTH_SHORT,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.black,
+                  textColor: Colors.white,
+                  fontSize: 16.0,
+                );
+
+              }else{
+
+                if(lacreounao == null){
+
+                  Fluttertoast.showToast(
+                    msg: 'Selecione se está entrando com lacre ou não!',
+                    toastLength: Toast.LENGTH_SHORT,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.black,
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
+
+                }else{
+
+                  if(placaDoVeiculoController.text == ''){
+
+                    Fluttertoast.showToast(
+                      msg: 'Preencha o Campo da Placa do veiculo!',
+                      toastLength: Toast.LENGTH_SHORT,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.black,
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
+
+                  }else{
+
+                    //registre todos os valores no db
+                    var UID = FirebaseAuth.instance.currentUser?.uid;
+                    var db = FirebaseFirestore.instance;
+                    db.collection('Users').doc(UID).get().then((event) {
+
+                      event.data()?.forEach((key, value) async {
+
+
+                        if(key == 'RGouCNPJ'){
+
+                          print(value);
+
+                          cpfoucnpj = value;
+
+                          //put cam
+                          var dateTime= new DateTime.now();
+
+                          var uuid = Uuid();
+
+                          String idd = uuid.v4();
+
+                          final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
+
+                          print(imageUrl);
+
+                          FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
+                            'Empresa': empresaSelecionada,
+                            'ColetaOuEntrega': coletaouentrega,
+                            'LacreouNao': lacreounao,
+                            'CNHMotorista': cnhController.text,
+                            'nomeMotorista': motoristaController.text,
+                            'RGDoMotorista': cpfMotoristaController.text,
+                            'QuemAutorizou': widget.nomeUser,
+                            'CPFcnpjAutorizou': cpfoucnpj,
+                            'PlacaDoVeiculo': placaDoVeiculoController.text,
+                            'Status': 'Autorizado pela Portaria',
+                            'Horario Criado': dateTime,
+                            'uriImage': imageUrl
+                          }).then((value) {
+
+                            Fluttertoast.showToast(
+                              msg: 'Enviado com sucesso!',
+                              toastLength: Toast.LENGTH_SHORT,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.black,
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+                            widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
+
+                            var db = FirebaseFirestore.instance;
+                            var UID = FirebaseAuth.instance.currentUser?.uid;
+                            db.collection('Users').doc(UID).get().then((event){
+                              print("${event.data()}");
+
+                              event.data()?.forEach((key, value) {
+
+                                print(key);
+                                print(value);
+
+                                if(key == 'nome'){
+                                  String PorteiroNome = value;
+
+                                  print('Porteiro name é' + PorteiroNome);
+
+                                  Navigator.pop(context);
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context){
+                                        return mainPorteiro(PorteiroNome);
+                                      }));
+
+                                }
+
+                              });
+
+                            }
+                            );
+
+                          });
+                        }
+
+                      }
+                      );
+
+                    }
+                    );
+
+                  }
+                }
+
+              }
+
+            }
+
+          }
+
+        }
+
+      }
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -245,6 +472,14 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   ),
                 ),
               ),
+              Row(
+                children: [
+                  ElevatedButton(
+                      onPressed: _uploadImage,
+                      child: Text('Selecionar imagem da camera'),
+                  ),
+                ],
+              ),
               Container(
                 padding: EdgeInsets.only(top: 16),
                 child: TextField(
@@ -261,180 +496,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   ),
                 ),
               ),
-              ElevatedButton(onPressed: (){
-
-                if(empresaSelecionada == null){
-                  Fluttertoast.showToast(
-                    msg: 'Selecione a empresa!',
-                    toastLength: Toast.LENGTH_SHORT,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Colors.black,
-                    textColor: Colors.white,
-                    fontSize: 16.0,
-                  );
-                }else{
-                  print('Empresa selecionada $empresaSelecionada');
-
-                  if(cnhController.text == ''){
-                    Fluttertoast.showToast(
-                      msg: 'Preencha a CNH do motorista!',
-                      toastLength: Toast.LENGTH_SHORT,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.black,
-                      textColor: Colors.white,
-                      fontSize: 16.0,
-                    );
-                  }else{
-
-                    if(motoristaController.text == ''){
-                      Fluttertoast.showToast(
-                        msg: 'Preencha o nome do motorista!',
-                        toastLength: Toast.LENGTH_SHORT,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.black,
-                        textColor: Colors.white,
-                        fontSize: 16.0,
-                      );
-                    }else{
-
-                      if(cpfMotoristaController.text == ''){
-
-                        Fluttertoast.showToast(
-                          msg: 'Preencha a CNH do motorista!',
-                          toastLength: Toast.LENGTH_SHORT,
-                          timeInSecForIosWeb: 1,
-                          backgroundColor: Colors.black,
-                          textColor: Colors.white,
-                          fontSize: 16.0,
-                        );
-
-                      }else{
-                        if(coletaouentrega == null){
-
-                          Fluttertoast.showToast(
-                            msg: 'Selecione se é Coleta ou Entrega',
-                            toastLength: Toast.LENGTH_SHORT,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.black,
-                            textColor: Colors.white,
-                            fontSize: 16.0,
-                          );
-
-                        }else{
-
-                          if(lacreounao == null){
-
-                            Fluttertoast.showToast(
-                              msg: 'Selecione se está entrando com lacre ou não!',
-                              toastLength: Toast.LENGTH_SHORT,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.black,
-                              textColor: Colors.white,
-                              fontSize: 16.0,
-                            );
-
-                          }else{
-
-                            if(placaDoVeiculoController.text == ''){
-
-                              Fluttertoast.showToast(
-                                msg: 'Preencha o Campo da Placa do veiculo!',
-                                toastLength: Toast.LENGTH_SHORT,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.black,
-                                textColor: Colors.white,
-                                fontSize: 16.0,
-                              );
-
-                            }else{
-
-                              //registre todos os valores no db
-                              var UID = FirebaseAuth.instance.currentUser?.uid;
-                              var db = FirebaseFirestore.instance;
-                              db.collection('Users').doc(UID).get().then((event) {
-
-                                event.data()?.forEach((key, value) {
-
-
-                                  if(key == 'RGouCNPJ'){
-
-                                    print(value);
-
-                                    cpfoucnpj = value;
-
-                                    FirebaseFirestore.instance.collection('Autorizacoes').doc().set({
-                                      'Empresa': empresaSelecionada,
-                                      'ColetaOuEntrega': coletaouentrega,
-                                      'LacreouNao': lacreounao,
-                                      'CNHMotorista': cnhController.text,
-                                      'nomeMotorista': motoristaController.text,
-                                      'RGDoMotorista': cpfMotoristaController.text,
-                                      'QuemAutorizou': widget.nomeUser,
-                                      'CPFcnpjAutorizou': cpfoucnpj,
-                                      'PlacaDoVeiculo': placaDoVeiculoController.text,
-                                      'Status': 'Autorizado pela Portaria',
-                                    }).then((value) {
-
-                                      Fluttertoast.showToast(
-                                        msg: 'Enviado com sucesso!',
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: Colors.black,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0,
-                                      );
-                                      widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
-
-                                      var db = FirebaseFirestore.instance;
-                                      var UID = FirebaseAuth.instance.currentUser?.uid;
-                                      db.collection('Users').doc(UID).get().then((event){
-                                        print("${event.data()}");
-
-                                        event.data()?.forEach((key, value) {
-
-                                          print(key);
-                                          print(value);
-
-                                          if(key == 'nome'){
-                                            String PorteiroNome = value;
-
-                                            print('Porteiro name é' + PorteiroNome);
-
-                                            Navigator.pop(context);
-                                            Navigator.push(context,
-                                                MaterialPageRoute(builder: (context){
-                                                  return mainPorteiro(PorteiroNome);
-                                                }));
-
-                                          }
-
-                                        });
-
-                                      }
-                                      );
-
-                                    });
-                                  }
-
-                                }
-                                );
-
-                              }
-                              );
-
-                            }
-                          }
-
-                        }
-
-                      }
-
-                    }
-
-                  }
-
-                }
-              },
+              ElevatedButton(
+              onPressed: uploadInfos,
               child:
               Text(
                   'Adicionar novo Motorista',

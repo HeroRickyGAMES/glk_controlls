@@ -43,6 +43,7 @@ dependencies:
   dropdown_button2: ^1.9.2
   firebase_storage: ^11.0.13
   image_picker: ^0.8.6+2
+  uuid: ^3.0.7
 
 dev_dependencies:
   flutter_test:

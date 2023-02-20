@@ -210,7 +210,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                                   padding: EdgeInsets.all(16),
                                   child: Image
                                       .network(
-                                      'https://icon-library.com/images/android-app-icon-png/android-app-icon-png-27.jpg'
+                                      documents['uriImage'],
                                   ),
                                 ),
                                 ElevatedButton(
