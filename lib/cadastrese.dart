@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:glk_controls/mainEmpresa.dart';
 import 'package:glk_controls/mainPorteiro.dart';
 
@@ -167,23 +168,39 @@ class _registroState extends State<registro> {
                                           'email': value.user?.email,
                                           'tipoConta': tipos,
                                           'RGouCNPJ': rgController.text,
-                                          'nome': nomeController.text
+                                          'nome': nomeController.text,
+                                          'estaativo': false
                                         });
 
                                         FirebaseFirestore.instance.collection(tipos!).doc(value.user?.uid).set({
                                           'email': value.user?.email,
                                           'tipoConta': tipos,
                                           'RGouCNPJ': rgController.text,
-                                          'nome': nomeController.text
+                                          'nome': nomeController.text,
+                                          'estaativo': false
                                         });
 
                                         print('cadastrado');
 
-                                        Navigator.push(context,
-                                            MaterialPageRoute(builder: (context){
-                                              return mainPorteiro();
-                                            }));
+                                        AlertDialog alert = AlertDialog(
+                                          title: Text("Sua conta ainda não está ativa!"),
+                                          content: Text("A sua conta foi criada com sucesso! Porém ainda não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: (){
+                                                  SystemNavigator.pop();
+                                                },
+                                                child: Text('Ok')
+                                            ),
+                                          ],
+                                        );
 
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return alert;
+                                          },
+                                        );
                                     }
                                   );
 
@@ -202,41 +219,38 @@ class _registroState extends State<registro> {
                                       'email': value.user?.email,
                                       'tipoConta': tipos,
                                       'RGouCNPJ': rgController.text,
-                                      'nome': nomeController.text
+                                      'nome': nomeController.text,
+                                      'estaativo': false
                                     });
 
                                     FirebaseFirestore.instance.collection(tipos!).doc(value.user?.uid).set({
                                       'email': value.user?.email,
                                       'tipoConta': tipos,
                                       'RGouCNPJ': rgController.text,
-                                      'nome': nomeController.text
+                                      'nome': nomeController.text,
+                                      'estaativo': false
                                     });
                                       print('Ele é uma empresa');
-                                      var UID = FirebaseAuth.instance.currentUser?.uid;
+                                      print('O está ativo está funcionando!');
 
-                                      var db = FirebaseFirestore.instance;
-                                      db.collection('Users').doc(UID).get().then((event){
-                                        print("${event.data()}");
+                                      AlertDialog alert = AlertDialog(
+                                        title: Text("Sua conta ainda não está ativa!"),
+                                        content: Text("A sua conta foi criada com sucesso! Porém ainda não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
+                                        actions: [
+                                          TextButton(
+                                              onPressed: (){
+                                                SystemNavigator.pop();
+                                              },
+                                              child: Text('Ok')
+                                          ),
+                                        ],
+                                      );
 
-                                        event.data()?.forEach((key, value) {
-
-                                          print(key);
-                                          print(value);
-
-                                          if(key == 'nome'){
-                                            print('Ele é uma empresa');
-                                            String nome = value;
-                                            //Passar o codigo para mandar a tela
-                                            Navigator.pop(context);
-                                            Navigator.push(context,
-                                                MaterialPageRoute(builder: (context){
-                                                  return mainEmpresa(nome);
-                                                }));
-                                          }
-
-                                        });
-
-                                      }
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return alert;
+                                        },
                                       );
                                   }
                                   );

@@ -39,11 +39,33 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
               widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
 
-                      Navigator.pop(context);
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context){
-                            return mainPorteiro();
-                          }));
+              var db = FirebaseFirestore.instance;
+              var UID = FirebaseAuth.instance.currentUser?.uid;
+              db.collection('Users').doc(UID).get().then((event){
+                print("${event.data()}");
+
+                event.data()?.forEach((key, value) {
+
+                  print(key);
+                  print(value);
+
+                  if(key == 'nome'){
+                    String PorteiroNome = value;
+
+                    print('Porteiro name é' + PorteiroNome);
+
+                    Navigator.pop(context);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context){
+                          return mainPorteiro(PorteiroNome);
+                        }));
+
+                  }
+
+                });
+
+              }
+              );
             },
                 child:
             Icon(
@@ -363,11 +385,33 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                       );
                                       widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
 
-                                      Navigator.pop(context);
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder: (context){
-                                            return mainPorteiro();
-                                          }));
+                                      var db = FirebaseFirestore.instance;
+                                      var UID = FirebaseAuth.instance.currentUser?.uid;
+                                      db.collection('Users').doc(UID).get().then((event){
+                                        print("${event.data()}");
+
+                                        event.data()?.forEach((key, value) {
+
+                                          print(key);
+                                          print(value);
+
+                                          if(key == 'nome'){
+                                            String PorteiroNome = value;
+
+                                            print('Porteiro name é' + PorteiroNome);
+
+                                            Navigator.pop(context);
+                                            Navigator.push(context,
+                                                MaterialPageRoute(builder: (context){
+                                                  return mainPorteiro(PorteiroNome);
+                                                }));
+
+                                          }
+
+                                        });
+
+                                      }
+                                      );
 
                                     });
                                   }

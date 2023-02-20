@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:glk_controls/cadastrese.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:glk_controls/login.dart';
@@ -54,13 +55,83 @@ void main() {
            print(value);
 
            if(value == 'porteiro'){
+
+             var db = FirebaseFirestore.instance;
+             var UID = FirebaseAuth.instance.currentUser?.uid;
+             db.collection('Users').doc(UID).get().then((event){
+               print("${event.data()}");
+
+               event.data()?.forEach((key, value) {
+
+                 print(key);
+                 print(value);
+
+                 if(key == 'nome'){
+                   String PorteiroNome = value;
+
+                   print('Porteiro name é' + PorteiroNome);
+
+                   var db = FirebaseFirestore.instance;
+                   var UID = FirebaseAuth.instance.currentUser?.uid;
+                   db.collection('Users').doc(UID).get().then((event){
+                     print("${event.data()}");
+
+                     event.data()?.forEach((key, value) {
+
+                       print(key);
+                       print(value);
+
+                       if(key == 'estaativo'){
+                         if(value == true){
+
+                           print('Porteiro name é' + PorteiroNome);
+
+                           Navigator.pop(context);
+                           Navigator.push(context,
+                               MaterialPageRoute(builder: (context){
+                                 return mainPorteiro(PorteiroNome);
+                               }));
+
+                         }else{
+
+                           print('O está ativo está funcionando!');
+
+                           AlertDialog alert = AlertDialog(
+                             title: Text("Sua conta ainda não está ativa!"),
+                             content: Text("A sua conta não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
+                             actions: [
+                               TextButton(
+                                   onPressed: (){
+                                     SystemNavigator.pop();
+                                   },
+                                   child: Text('Ok')
+                               ),
+                             ],
+                           );
+
+                           showDialog(
+                             context: context,
+                             builder: (BuildContext context) {
+                               return alert;
+                             },
+                           );
+                         }
+
+
+                       }
+
+                     });
+
+                   }
+                   );
+                 }
+
+               });
+
+             }
+             );
              print('Ele é um porteiro');
              //Passar o codigo para mandar a tela
-             Navigator.pop(context);
-             Navigator.push(context,
-                 MaterialPageRoute(builder: (context){
-                   return mainPorteiro();
-                 }));
            }
 
            if(value == 'empresa'){
@@ -78,11 +149,57 @@ void main() {
                    print('Ele é uma empresa');
                    String nome = value;
                    //Passar o codigo para mandar a tela
-                   Navigator.pop(context);
-                   Navigator.push(context,
-                       MaterialPageRoute(builder: (context){
-                         return mainEmpresa(nome);
-                       }));
+                   var db = FirebaseFirestore.instance;
+                   var UID = FirebaseAuth.instance.currentUser?.uid;
+                   db.collection('Users').doc(UID).get().then((event){
+                     print("${event.data()}");
+
+                     event.data()?.forEach((key, value) {
+
+                       print(key);
+                       print(value);
+
+                       if(key == 'estaativo'){
+                         if(value == true){
+
+                           Navigator.pop(context);
+                           Navigator.push(context,
+                               MaterialPageRoute(builder: (context){
+                                 return mainEmpresa(nome);
+                               }));
+
+                         }else{
+
+                           print('O está ativo está funcionando!');
+
+                           AlertDialog alert = AlertDialog(
+                             title: Text("Sua conta ainda não está ativa!"),
+                             content: Text("A sua conta não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
+                             actions: [
+                               TextButton(
+                                   onPressed: (){
+                                     SystemNavigator.pop();
+                                   },
+                                   child: Text('Ok')
+                               ),
+                             ],
+                           );
+
+                           showDialog(
+                             context: context,
+                             builder: (BuildContext context) {
+                               return alert;
+                             },
+                           );
+                         }
+
+
+                       }
+
+                     });
+
+                   }
+                   );
                  }
 
                });

@@ -14,13 +14,15 @@ String idDocumento = '';
 List listaNome = [];
 
 class mainPorteiro extends StatefulWidget {
-  const mainPorteiro({Key? key}) : super(key: key);
+  final String PorteiroNome;
+  const mainPorteiro(this.PorteiroNome);
 
   @override
   State<mainPorteiro> createState() => _mainPorteiroState();
 }
 
 class _mainPorteiroState extends State<mainPorteiro> {
+
   @override
   Widget build(BuildContext context) {
     openModal() async {
@@ -47,12 +49,12 @@ class _mainPorteiroState extends State<mainPorteiro> {
               print(value);
 
               if(key == 'nome'){
-                String PorteiroNome = value;
+                String PorteiroNomee = value;
 
                 Navigator.pop(context);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context){
-                      return modalPorteiro(listaNome, dropValue, PorteiroNome);
+                      return modalPorteiro(listaNome, dropValue, PorteiroNomee);
 
                     }));
 
@@ -76,7 +78,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
         title: Container(
           child:
           Text(
-              'GLK Controls - Interface para Operadores'
+              'GLK Controls - Interface para Operadores. Usuario logado: ' + widget.PorteiroNome
           ),
         ),
       ),
