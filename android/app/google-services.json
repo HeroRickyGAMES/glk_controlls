@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "356631007583",
+    "project_id": "glk-controls",
+    "storage_bucket": "glk-controls.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:356631007583:android:dae2b68d7017c5dab3e6ea",
+        "android_client_info": {
+          "package_name": "com.herorickystudios.flutter.glk_controls"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "356631007583-8reaqntq06hq62s6o91pe429ie4vsi6b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLErXqM47Et4379uk81RmbI-P62uAHBPY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "356631007583-8reaqntq06hq62s6o91pe429ie4vsi6b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

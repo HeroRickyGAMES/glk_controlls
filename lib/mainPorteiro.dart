@@ -1,0 +1,250 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+
+import 'modal/modalVeiculo.dart';
+
+
+//Programado por HeroRickyGames
+Map map = Map();
+
+Map<String, String> map1 = {};
+Map<String, String> mapNome = {};
+String idDocumento = '';
+List listaNome = [];
+
+class mainPorteiro extends StatefulWidget {
+  const mainPorteiro({Key? key}) : super(key: key);
+
+  @override
+  State<mainPorteiro> createState() => _mainPorteiroState();
+}
+
+class _mainPorteiroState extends State<mainPorteiro> {
+  @override
+  Widget build(BuildContext context) {
+    openModal() async {
+
+      var result = await FirebaseFirestore.instance
+          .collection("empresa")
+          .get();
+      result.docs.forEach((res) {
+        print(res.data()['nome']);
+
+        setState(() {
+          listaNome.add(res.data()['nome']);
+
+          final dropValue = ValueNotifier('');
+
+          var db = FirebaseFirestore.instance;
+          var UID = FirebaseAuth.instance.currentUser?.uid;
+          db.collection('Users').doc(UID).get().then((event){
+            print("${event.data()}");
+
+            event.data()?.forEach((key, value) {
+
+              print(key);
+              print(value);
+
+              if(key == 'nome'){
+                String PorteiroNome = value;
+
+                Navigator.pop(context);
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context){
+                      return modalPorteiro(listaNome, dropValue, PorteiroNome);
+
+                    }));
+
+              }
+
+            });
+
+          }
+          );
+
+
+        });
+
+      });
+      print(listaNome);
+    }
+
+    return Scaffold(
+      appBar: AppBar(
+        //backgroundColor: Colors.red[900],
+        title: Container(
+          child:
+          Text(
+              'GLK Controls - Interface para Porteiros'
+          ),
+        ),
+      ),
+      body: Container(
+        padding: EdgeInsets.all(16),
+        child: StreamBuilder(
+          stream: FirebaseFirestore
+            .instance
+            .collection('Autorizacoes')
+            .snapshots(),
+            builder: (BuildContext context,
+                AsyncSnapshot<QuerySnapshot> snapshot) {
+                  if (!snapshot.hasData) {
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                  
+                  return ListView(
+                    children:
+                    snapshot.data!.docs.map((documents) {
+                      String lacre = '${documents['LacreouNao']}';
+                      String ColetaOuEntrega = '${documents['ColetaOuEntrega']}';
+                      bool lacrebool = false;
+                      bool coletaBool = false;
+                      String lacrado = '';
+                      String ColetaOuEntregast = '';
+                      idDocumento = documents.id;
+
+                      if(documents['Status'] != 'Autorizado a Sair'){
+                        if(lacre == 'lacre'){
+                          lacrebool = true;
+                          lacrado = 'Lacrado';
+                        }
+                        if(lacre == 'naolacrado'){
+                          lacrebool = false;
+                          lacrado = 'Não Lacrado';
+                        }
+                        if(ColetaOuEntrega == 'coleta'){
+                          coletaBool = true;
+                          ColetaOuEntregast = 'Coleta';
+                        }
+                        if(ColetaOuEntrega == 'entrega'){
+                          coletaBool = false;
+                          ColetaOuEntregast = 'Entrega';
+                        }
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            color: Colors.grey[300],
+                            padding: EdgeInsets.all(16),
+                            child:
+                            Column(
+                              children: [
+                                Text(
+                                  'Motorista: ' +
+                                      documents['nomeMotorista'],
+                                  style:
+                                  TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                                Text(
+                                  'Empresa: ' +
+                                      documents['Empresa'],
+                                  style:
+                                  TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                                Text(
+                                  'Quem autorizou: ' +
+                                      documents['QuemAutorizou'],
+                                  style:
+                                  TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold
+                                  ),
+                                ),
+                                Text(
+                                  'CNH: ' +
+                                      documents['CNHMotorista'],
+                                  style:
+                                  TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                Text(
+                                  'Placa Do Veiculo: ' +
+                                      documents['PlacaDoVeiculo'],
+                                  style:
+                                  TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                Text(
+                                  'Status: ' +
+                                      documents['Status'],
+                                  style:
+                                  TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                Text(
+                                  'RG do Motorista: ' +
+                                      documents['RGDoMotorista'],
+                                  style:
+                                  TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                Text(
+                                  lacrado,
+                                  style:
+                                  TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                Text(
+                                  ColetaOuEntregast,
+                                  style:
+                                  TextStyle(
+                                    fontSize: 20,
+                                  ),
+                                ),
+                                Container(
+                                  padding: EdgeInsets.all(16),
+                                  child: Image
+                                      .network(
+                                      'https://icon-library.com/images/android-app-icon-png/android-app-icon-png-27.jpg'
+                                  ),
+                                ),
+                                ElevatedButton(
+                                    onPressed: (){
+
+                                      print(documents.id);
+
+
+                                      FirebaseFirestore.instance
+                                          .collection("Autorizacoes")
+                                          .doc(documents.id).update({
+                                        'Status': 'Autorizado a Sair'
+                                      });
+                                    },
+                                    child:
+                                    Text('Autorizar Saída')
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      }else{
+                        return Text('');
+                      }
+
+                    }).toList(),
+                  );
+            }
+        ),
+      ),
+      floatingActionButton:
+      FloatingActionButton(
+        onPressed: () => openModal(),
+        backgroundColor: Colors.red,
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+}
