@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:glk_controls/modal/cadastroUsuarioADM.dart';
 
 class setorADM extends StatefulWidget {
   const setorADM({Key? key}) : super(key: key);
@@ -15,6 +16,19 @@ class _setorADMState extends State<setorADM> {
         title: Text('SETOR ADIMISTRATIVO'),
       ),
       body: Text('data'),
+      floatingActionButton:
+      FloatingActionButton(
+        child: Icon(
+          Icons.add
+        ),
+          onPressed: (){
+            Navigator.pop(context);
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context){
+                  return cadastroUsuarioModal();
+                }));
+        }
+      ),
     );
   }
 }
