@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:glk_controls/login.dart';
 import 'package:glk_controls/mainEmpresa.dart';
 import 'package:glk_controls/mainPorteiro.dart';
+import 'package:glk_controls/setorADM.dart';
 import 'firebase_options.dart';
 //Programado por HeroRickyGames
 
@@ -52,6 +53,17 @@ void main() {
 
            print(key);
            print(value);
+
+           if(value == 'ADM'){
+
+             print('essa conta é ADM');
+
+             Navigator.pop(context);
+             Navigator.push(context,
+                 MaterialPageRoute(builder: (context){
+                   return setorADM();
+                 }));
+           }
 
            if(value == 'porteiro'){
 
