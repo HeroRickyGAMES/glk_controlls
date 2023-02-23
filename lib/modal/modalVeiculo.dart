@@ -26,25 +26,17 @@ class _modalPorteiroState extends State<modalPorteiro> {
   String? lacreounao;
   String? empresaSelecionada;
 
-  String? cpfoucnpj;
-
   //fields
-  String? CNHst;
   String? nomeMotorista;
   String? RGMotorista;
-  String? PlacaVeiculo;
   String? Veiculo;
-  String? telefone;
+  String? telefone = '';
   String? originEmpresa;
+  String? galpao;
 
   File? imageFile;
   @override
   Widget build(BuildContext context) {
-    final FocusNode _focusNode = FocusNode();
-    var cnhController = TextEditingController();
-    final motoristaController = TextEditingController();
-    final cpfMotoristaController = TextEditingController();
-    final placaDoVeiculoController = TextEditingController();
     final FirebaseStorage storage = FirebaseStorage.instance;
 
     Future<File?> _getImageFromCamera() async {
@@ -79,9 +71,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
       }
     }
     uploadInfos(){
-      if(empresaSelecionada == null){
+      if(nomeMotorista == null){
         Fluttertoast.showToast(
-          msg: 'Selecione a empresa!',
+          msg: 'Preencha o nome do motorista!',
           toastLength: Toast.LENGTH_SHORT,
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.black,
@@ -89,11 +81,10 @@ class _modalPorteiroState extends State<modalPorteiro> {
           fontSize: 16.0,
         );
       }else{
-        print('Empresa selecionada $empresaSelecionada');
 
-        if(CNHst == null){
+        if(RGMotorista == null){
           Fluttertoast.showToast(
-            msg: 'Preencha a CNH do motorista!',
+            msg: 'Preencha o RG do motorista',
             toastLength: Toast.LENGTH_SHORT,
             timeInSecForIosWeb: 1,
             backgroundColor: Colors.black,
@@ -101,10 +92,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
             fontSize: 16.0,
           );
         }else{
-
-          if(nomeMotorista == null){
+          if(Veiculo == null){
             Fluttertoast.showToast(
-              msg: 'Preencha o nome do motorista!',
+              msg: 'Preencha tipo de veiculo!',
               toastLength: Toast.LENGTH_SHORT,
               timeInSecForIosWeb: 1,
               backgroundColor: Colors.black,
@@ -112,61 +102,49 @@ class _modalPorteiroState extends State<modalPorteiro> {
               fontSize: 16.0,
             );
           }else{
-
-            if(RGMotorista == null){
-
+            if(originEmpresa == null){
               Fluttertoast.showToast(
-                msg: 'Preencha o RG do motorista!',
+                msg: 'Digite a empresa de origem',
                 toastLength: Toast.LENGTH_SHORT,
                 timeInSecForIosWeb: 1,
                 backgroundColor: Colors.black,
                 textColor: Colors.white,
                 fontSize: 16.0,
               );
-
             }else{
-              if(coletaouentrega == null){
-
+              if(galpao == null){
                 Fluttertoast.showToast(
-                  msg: 'Selecione se é Coleta ou Entrega',
+                  msg: 'Digite o galpão',
                   toastLength: Toast.LENGTH_SHORT,
                   timeInSecForIosWeb: 1,
                   backgroundColor: Colors.black,
                   textColor: Colors.white,
                   fontSize: 16.0,
                 );
-
               }else{
-
-                if(lacreounao == null){
-
+                if(empresaSelecionada == null){
                   Fluttertoast.showToast(
-                    msg: 'Selecione se está entrando com lacre ou não!',
+                    msg: 'Selecione uma empresa!',
                     toastLength: Toast.LENGTH_SHORT,
                     timeInSecForIosWeb: 1,
                     backgroundColor: Colors.black,
                     textColor: Colors.white,
                     fontSize: 16.0,
                   );
-
                 }else{
-
-                  if(PlacaVeiculo == null){
-
+                  if(coletaouentrega == null){
                     Fluttertoast.showToast(
-                      msg: 'Preencha o Campo da Placa do veiculo!',
+                      msg: 'Selecione se é coleta ou entrega!',
                       toastLength: Toast.LENGTH_SHORT,
                       timeInSecForIosWeb: 1,
                       backgroundColor: Colors.black,
                       textColor: Colors.white,
                       fontSize: 16.0,
                     );
-
                   }else{
-
-                    if(imageFile == null){
+                    if(lacreounao == null){
                       Fluttertoast.showToast(
-                        msg: 'Por favor, tire uma foto do veiculo!',
+                        msg: 'Selecione se é com lacre ou sem!',
                         toastLength: Toast.LENGTH_SHORT,
                         timeInSecForIosWeb: 1,
                         backgroundColor: Colors.black,
@@ -174,113 +152,116 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         fontSize: 16.0,
                       );
                     }else{
+                      if(imageFile == null){
+                        Fluttertoast.showToast(
+                          msg: 'Tire uma foto do veiculo!',
+                          toastLength: Toast.LENGTH_SHORT,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.black,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
+                      }else{
+                        Fluttertoast.showToast(
+                          msg: 'Enviando informações para o servidor...',
+                          toastLength: Toast.LENGTH_SHORT,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.black,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
 
-                      Fluttertoast.showToast(
-                        msg: 'Enviando informações para o servidor...',
-                        toastLength: Toast.LENGTH_SHORT,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.black,
-                        textColor: Colors.white,
-                        fontSize: 16.0,
-                      );
+                        //registre todos os valores no db
+                        var UID = FirebaseAuth.instance.currentUser?.uid;
+                        var db = FirebaseFirestore.instance;
+                        db.collection('Users').doc(UID).get().then((event) {
 
-                      //registre todos os valores no db
-                      var UID = FirebaseAuth.instance.currentUser?.uid;
-                      var db = FirebaseFirestore.instance;
-                      db.collection('Users').doc(UID).get().then((event) {
-
-                        event.data()?.forEach((key, value) async {
+                          event.data()?.forEach((key, value) async {
 
 
-                          if(key == 'RGouCNPJ'){
+                            if(key == 'RGouCNPJ'){
 
-                            print(value);
+                              print(value);
+                              //put cam
+                              var dateTime= new DateTime.now();
 
-                            cpfoucnpj = value;
+                              var uuid = Uuid();
 
-                            //put cam
-                            var dateTime= new DateTime.now();
+                              String idd = uuid.v4();
 
-                            var uuid = Uuid();
+                              final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
 
-                            String idd = uuid.v4();
+                              print(imageUrl);
 
-                            final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
+                              FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
+                                'nomeMotorista': nomeMotorista,
+                                'RGDoMotorista': RGMotorista,
+                                'Veiculo': Veiculo,
+                                'EmpresadeOrigin': originEmpresa,
+                                'Empresa': empresaSelecionada,
+                                'ColetaOuEntrega': coletaouentrega,
+                                'Galpão': galpao,
+                                'LacreouNao': lacreounao,
+                                'QuemAutorizou': widget.nomeUser,
+                                'Status': 'Autorizado pela Portaria',
+                                'Horario Criado': dateTime,
+                                'uriImage': imageUrl
+                              }).then((value) {
 
-                            print(imageUrl);
+                                Fluttertoast.showToast(
+                                  msg: 'Enviado com sucesso!',
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.black,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0,
+                                );
+                                widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
 
-                            FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
-                              'Empresa': empresaSelecionada,
-                              'ColetaOuEntrega': coletaouentrega,
-                              'LacreouNao': lacreounao,
-                              'CNHMotorista': CNHst,
-                              'nomeMotorista': nomeMotorista,
-                              'RGDoMotorista': RGMotorista,
-                              'QuemAutorizou': widget.nomeUser,
-                              'CPFcnpjAutorizou': cpfoucnpj,
-                              'PlacaDoVeiculo': PlacaVeiculo,
-                              'Status': 'Autorizado pela Portaria',
-                              'Horario Criado': dateTime,
-                              'uriImage': imageUrl
-                            }).then((value) {
+                                var db = FirebaseFirestore.instance;
+                                var UID = FirebaseAuth.instance.currentUser?.uid;
+                                db.collection('Users').doc(UID).get().then((event){
+                                  print("${event.data()}");
 
-                              Fluttertoast.showToast(
-                                msg: 'Enviado com sucesso!',
-                                toastLength: Toast.LENGTH_SHORT,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.black,
-                                textColor: Colors.white,
-                                fontSize: 16.0,
-                              );
-                              widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
+                                  event.data()?.forEach((key, value) {
 
-                              var db = FirebaseFirestore.instance;
-                              var UID = FirebaseAuth.instance.currentUser?.uid;
-                              db.collection('Users').doc(UID).get().then((event){
-                                print("${event.data()}");
+                                    print(key);
+                                    print(value);
 
-                                event.data()?.forEach((key, value) {
+                                    if(key == 'nome'){
+                                      String PorteiroNome = value;
 
-                                  print(key);
-                                  print(value);
+                                      print('Porteiro name é' + PorteiroNome);
 
-                                  if(key == 'nome'){
-                                    String PorteiroNome = value;
+                                      Navigator.pop(context);
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context){
+                                            return mainPorteiro(PorteiroNome);
+                                          }));
 
-                                    print('Porteiro name é' + PorteiroNome);
+                                    }
 
-                                    Navigator.pop(context);
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context){
-                                          return mainPorteiro(PorteiroNome);
-                                        }));
+                                  });
 
-                                  }
+                                }
+                                );
 
-                                });
+                              });
+                            }
 
-                              }
-                              );
-
-                            });
                           }
+                          );
 
                         }
                         );
 
                       }
-                      );
-
                     }
                   }
                 }
-
               }
-
             }
-
           }
-
         }
 
       }
@@ -349,7 +330,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   autocorrect: false,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Nome Completo do Motorista',
+                    hintText: 'Nome Completo do Motorista *',
                     hintStyle: TextStyle(
                         fontSize: 20
                     ),
@@ -368,7 +349,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   autocorrect: false,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'RG do Motorista (Apenas Números)',
+                    hintText: 'RG do Motorista (Apenas Números) * ',
                     hintStyle: TextStyle(
                         fontSize: 20
                     ),
@@ -382,12 +363,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     Veiculo = valor;
                     //Mudou mandou para a String
                   },
-                  keyboardType: TextInputType.number,
-                  enableSuggestions: false,
-                  autocorrect: false,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Veiculo',
+                    hintText: 'Veiculo * ',
                     hintStyle: TextStyle(
                         fontSize: 20
                     ),
@@ -420,12 +398,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     originEmpresa = valor;
                     //Mudou mandou para a String
                   },
-                  keyboardType: TextInputType.number,
-                  enableSuggestions: false,
-                  autocorrect: false,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Empresa de Origem',
+                    hintText: 'Empresa de Origem *',
                     hintStyle: TextStyle(
                         fontSize: 20
                     ),
@@ -435,14 +410,13 @@ class _modalPorteiroState extends State<modalPorteiro> {
               Container(
                 padding: EdgeInsets.all(16),
                 child: Text(
-                  'Selecione a Empresa que o motorista irá entrar',
+                  'Empresa destino *',
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold
                   ),
                 ),
               ),
-
               Center(
                   child: ValueListenableBuilder(valueListenable: widget.dropValue, builder: (context, String value, _){
                     return DropdownButton(
@@ -521,6 +495,25 @@ class _modalPorteiroState extends State<modalPorteiro> {
               ),
               Container(
                 padding: EdgeInsets.only(top: 16),
+                child: TextFormField(
+                  onChanged: (valor){
+                    galpao = valor;
+                    //Mudou mandou para a String
+                  },
+                  //keyboardType: TextInputType.number,
+                  //enableSuggestions: false,
+                  //autocorrect: false,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Galpão *',
+                    hintStyle: TextStyle(
+                        fontSize: 20
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(top: 16),
                 child:
                 Column(
                   children: [
@@ -533,7 +526,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     ),
                     RadioListTile(
                       title: Text(
-                          "Entrando com Lacre"
+                          "Com Lacre"
                       ),
                       value: "lacre",
                       groupValue: lacreounao,
@@ -545,7 +538,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     ),
 
                     RadioListTile(
-                      title: Text("Entrando sem Lacre",),
+                      title: Text("Sem Lacre",),
                       value: "naolacrado",
                       groupValue: lacreounao,
                       onChanged: (value){
@@ -555,45 +548,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
                       },
                     ),
                   ],
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.only(top: 16),
-                child: TextFormField(
-                  onChanged: (valor){
-                    CNHst = valor;
-                    print(CNHst);
-                    //Mudou mandou para a String
-                  },
-                  keyboardType: TextInputType.number,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'CNH do Motorista (Apenas números)',
-                    hintStyle: TextStyle(
-                        fontSize: 20
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.only(top: 16),
-                child: TextFormField(
-                  onChanged: (valor){
-                    PlacaVeiculo = valor;
-                    //Mudou mandou para a String
-                  },
-                  keyboardType: TextInputType.text,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Placa do veiculo',
-                    hintStyle: TextStyle(
-                        fontSize: 20
-                    ),
-                  ),
                 ),
               ),
               Container(
