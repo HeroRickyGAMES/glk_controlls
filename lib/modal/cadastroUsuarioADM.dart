@@ -16,6 +16,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text("Cadastro Users")
       ),
     body: SingleChildScrollView(

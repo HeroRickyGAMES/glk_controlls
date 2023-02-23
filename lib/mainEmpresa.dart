@@ -70,7 +70,7 @@ class mainEmpresa extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        //backgroundColor: Colors.red[900],
+        centerTitle: true,
         title: Container(
           child:
           Text(

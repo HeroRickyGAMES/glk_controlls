@@ -14,6 +14,7 @@ class _setorADMState extends State<setorADM> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text('SETOR ADIMISTRATIVO'),
       ),
       body: Column(

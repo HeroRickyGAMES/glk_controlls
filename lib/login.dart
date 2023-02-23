@@ -31,6 +31,7 @@ class _loginState extends State<login> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          centerTitle: true,
           title: Text(
               'GLK Controls - Login'
           ),

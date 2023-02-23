@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:glk_controls/listas/listaEntrada.dart';
+import 'package:glk_controls/modal/modalVeiculoEdit.dart';
 
 import 'modal/modalVeiculo.dart';
 
@@ -74,6 +76,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
 
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         //backgroundColor: Colors.red[900],
         title: Container(
           child:
@@ -138,6 +141,47 @@ class _mainPorteiroState extends State<mainPorteiro> {
                 style: TextStyle(
                     fontSize: 20
                 ),
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(16),
+            child: ElevatedButton(
+              onPressed: (){
+
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context){
+                      return listEntrada();
+                    }));
+              },
+              child: Text(
+                'Verificar Entrada',
+                style: TextStyle(
+                    fontSize: 20
+                ),
+              ),
+            style: ElevatedButton.styleFrom(
+              primary: Colors.green[700]
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(16),
+            child: ElevatedButton(
+              onPressed: (){
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context){
+                      return modalVeiculoEdit();
+                    }));
+              },
+              child: Text(
+                'Verificar Saída',
+                style: TextStyle(
+                    fontSize: 20
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                  primary: Colors.yellow[800]
               ),
             ),
           ),

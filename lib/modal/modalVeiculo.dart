@@ -103,6 +103,18 @@ class _modalPorteiroState extends State<modalPorteiro> {
               fontSize: 16.0,
             );
           }else{
+            if(VeiculoPlaca == null){
+              Fluttertoast.showToast(
+                msg: 'Preencha a placa do veiculo!',
+                toastLength: Toast.LENGTH_SHORT,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.black,
+                textColor: Colors.white,
+                fontSize: 16.0,
+              );
+            }else{
+
+
             if(originEmpresa == null){
               Fluttertoast.showToast(
                 msg: 'Digite a empresa de origem',
@@ -163,101 +175,101 @@ class _modalPorteiroState extends State<modalPorteiro> {
                           fontSize: 16.0,
                         );
                       }else{
-                        Fluttertoast.showToast(
-                          msg: 'Enviando informações para o servidor...',
-                          toastLength: Toast.LENGTH_SHORT,
-                          timeInSecForIosWeb: 1,
-                          backgroundColor: Colors.black,
-                          textColor: Colors.white,
-                          fontSize: 16.0,
-                        );
-
-                        //registre todos os valores no db
-                        var UID = FirebaseAuth.instance.currentUser?.uid;
-                        var db = FirebaseFirestore.instance;
-                        db.collection('Users').doc(UID).get().then((event) {
-
-                          event.data()?.forEach((key, value) async {
-
-
-                            if(key == 'RGouCNPJ'){
-
-                              print(value);
-                              //put cam
-                              var dateTime= new DateTime.now();
-
-                              var uuid = Uuid();
-
-                              String idd = uuid.v4();
-
-                              final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
-
-                              print(imageUrl);
-
-                              FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
-                                'nomeMotorista': nomeMotorista,
-                                'RGDoMotorista': RGMotorista,
-                                'Veiculo': Veiculo,
-                                'PlacaVeiculo': VeiculoPlaca,
-                                'Telefone': telefone,
-                                'EmpresadeOrigin': originEmpresa,
-                                'Empresa': empresaSelecionada,
-                                'ColetaOuEntrega': coletaouentrega,
-                                'Galpão': galpao,
-                                'LacreouNao': lacreounao,
-                                'QuemAutorizou': widget.nomeUser,
-                                'Status': 'Autorizado pela Portaria',
-                                'Horario Criado': dateTime,
-                                'uriImage': imageUrl
-                              }).then((value) {
-
-                                Fluttertoast.showToast(
-                                  msg: 'Enviado com sucesso!',
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  timeInSecForIosWeb: 1,
-                                  backgroundColor: Colors.black,
-                                  textColor: Colors.white,
-                                  fontSize: 16.0,
-                                );
-                                widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
-
-                                var db = FirebaseFirestore.instance;
-                                var UID = FirebaseAuth.instance.currentUser?.uid;
-                                db.collection('Users').doc(UID).get().then((event){
-                                  print("${event.data()}");
-
-                                  event.data()?.forEach((key, value) {
-
-                                    print(key);
-                                    print(value);
-
-                                    if(key == 'nome'){
-                                      String PorteiroNome = value;
-
-                                      print('Porteiro name é' + PorteiroNome);
-
-                                      Navigator.pop(context);
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder: (context){
-                                            return mainPorteiro(PorteiroNome);
-                                          }));
-
-                                    }
-
-                                  });
-
-                                }
-                                );
-
-                              });
-                            }
-
-                          }
+                          Fluttertoast.showToast(
+                            msg: 'Enviando informações para o servidor...',
+                            toastLength: Toast.LENGTH_SHORT,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.black,
+                            textColor: Colors.white,
+                            fontSize: 16.0,
                           );
 
-                        }
-                        );
+                          //registre todos os valores no db
+                          var UID = FirebaseAuth.instance.currentUser?.uid;
+                          var db = FirebaseFirestore.instance;
+                          db.collection('Users').doc(UID).get().then((event) {
 
+                            event.data()?.forEach((key, value) async {
+
+
+                              if(key == 'RGouCNPJ'){
+
+                                print(value);
+                                //put cam
+                                var dateTime= new DateTime.now();
+
+                                var uuid = Uuid();
+
+                                String idd = uuid.v4();
+
+                                final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
+
+                                print(imageUrl);
+
+                                FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
+                                  'nomeMotorista': nomeMotorista,
+                                  'RGDoMotorista': RGMotorista,
+                                  'Veiculo': Veiculo,
+                                  'PlacaVeiculo': VeiculoPlaca,
+                                  'Telefone': telefone,
+                                  'EmpresadeOrigin': originEmpresa,
+                                  'Empresa': empresaSelecionada,
+                                  'ColetaOuEntrega': coletaouentrega,
+                                  'Galpão': galpao,
+                                  'LacreouNao': lacreounao,
+                                  'QuemAutorizou': widget.nomeUser,
+                                  'Status': 'Autorizado pela Portaria',
+                                  'Horario Criado': dateTime,
+                                  'uriImage': imageUrl
+                                }).then((value) {
+
+                                  Fluttertoast.showToast(
+                                    msg: 'Enviado com sucesso!',
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.black,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0,
+                                  );
+                                  widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
+
+                                  var db = FirebaseFirestore.instance;
+                                  var UID = FirebaseAuth.instance.currentUser?.uid;
+                                  db.collection('Users').doc(UID).get().then((event){
+                                    print("${event.data()}");
+
+                                    event.data()?.forEach((key, value) {
+
+                                      print(key);
+                                      print(value);
+
+                                      if(key == 'nome'){
+                                        String PorteiroNome = value;
+
+                                        print('Porteiro name é' + PorteiroNome);
+
+                                        Navigator.pop(context);
+                                        Navigator.push(context,
+                                            MaterialPageRoute(builder: (context){
+                                              return mainPorteiro(PorteiroNome);
+                                            }));
+
+                                      }
+
+                                    });
+
+                                  }
+                                  );
+
+                                });
+                              }
+
+                            }
+                            );
+
+                            }
+                          );
+                        }
                       }
                     }
                   }
