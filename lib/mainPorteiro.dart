@@ -103,47 +103,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
               ),
             ),
           ),
-          Container(
-            padding: EdgeInsets.all(16),
-            child: Center(
-              child: TextFormField(
-                onChanged: (valor){
-                  //Mudou mandou para a String
 
-                },
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'RG:',
-                  hintStyle: TextStyle(
-                      fontSize: 20
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Container(
-            alignment: Alignment.topLeft,
-            padding: EdgeInsets.all(16),
-            child:
-            Text(
-                'RG: Sem Digito',
-              style: TextStyle(
-                  fontSize: 20
-              ),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.all(16),
-            child: ElevatedButton(
-              onPressed: (){},
-              child: Text(
-                'Fazer busca',
-                style: TextStyle(
-                    fontSize: 20
-                ),
-              ),
-            ),
-          ),
           Container(
             padding: EdgeInsets.all(16),
             child: ElevatedButton(
@@ -182,6 +142,23 @@ class _mainPorteiroState extends State<mainPorteiro> {
               ),
               style: ElevatedButton.styleFrom(
                   primary: Colors.yellow[800]
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(16),
+            child: ElevatedButton(
+              onPressed: (){
+
+              },
+              child: Text(
+                'Relatorio',
+                style: TextStyle(
+                    fontSize: 20
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                  //primary: Colors.yellow[800]
               ),
             ),
           ),

@@ -10,9 +10,15 @@ Map map = Map();
 
 Map<String, String> map1 = {};
 Map<String, String> mapNome = {};
-class mainEmpresa extends StatelessWidget {
+class mainEmpresa extends StatefulWidget {
   final String empresaName;
   const mainEmpresa(this.empresaName);
+
+  @override
+  State<mainEmpresa> createState() => _mainEmpresaState();
+}
+
+class _mainEmpresaState extends State<mainEmpresa> {
   openModal(BuildContext context){
 
 
@@ -66,255 +72,177 @@ class mainEmpresa extends StatelessWidget {
     print('chegou aqui!');
   }
 
-  @override
   Widget build(BuildContext context) {
+    String idDocumento;
+
+    String holderPlaca = '';
+
+    bool estaPesquisando = false;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Container(
-          child:
-          Text(
-              'GLK Controls - Interface para Empresas'
-          ),
-        ),
+        title: Text('GLK Controls - EMPRESAS'),
+        backgroundColor: Colors.red[700],
       ),
-      body: Container(
-        padding: EdgeInsets.all(16),
-        child: StreamBuilder(
-            stream: FirebaseFirestore
-                .instance
-                .collection('Autorizacoes')
-                .snapshots(),
-            builder: (BuildContext context,
-                AsyncSnapshot<QuerySnapshot> snapshot) {
-              if (!snapshot.hasData) {
-                return Center(
-                  child: Text(''),
-                );
-              }
-              return ListView(
-                children: snapshot.data!.docs.map((documents) {
+      body: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.all(16),
+            child:
+            Column(
+              children: [
+                Text(
+                  'Pesquisar Placa:',
+                  style: TextStyle(
+                      fontSize: 20
+                  ),
+                ),
+                TextFormField(
+                  onChanged: (valor){
+                    setState(() {
+                      holderPlaca = valor;
+                      estaPesquisando = true;
 
-                  if(documents['Empresa'] == empresaName){
+                    });
+                  },
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.green
+                        )
+                    ),
+                    hintStyle: TextStyle(
+                        fontSize: 20
+                    ),
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.all(16),
+                  child: ElevatedButton(
+                    onPressed: (){
 
-                    if(documents['Status'] != 'Autorizado a Sair'){
-
-                      String lacre = '${documents['LacreouNao']}';
-                      String ColetaOuEntrega = '${documents['ColetaOuEntrega']}';
-                      bool lacrebool = false;
-                      bool coletaBool = false;
-                      String lacrado = '';
-                      String ColetaOuEntregast = '';
-                      bool letGo = false;
-
-                      late String BTNStatus = '';
-
-                      if(documents['Status'] == 'Autorizado pela Portaria'){
-                        BTNStatus = 'Autorizar Entrada';
-
-                        letGo = false;
-
+                  },
+                    child: Text(
+                        'Pesquisar'
+                    ),
+                  ),
+                ),
+                StreamBuilder(
+                    stream: FirebaseFirestore
+                        .instance
+                        .collection('Autorizacoes')
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
                       }
+                      return Container(
+                        height: 900,
+                        width: double.infinity,
+                        child: GridView.count(
+                          padding: const EdgeInsets.all(5),
+                          crossAxisSpacing: 5,
+                          mainAxisSpacing: 5,
+                          crossAxisCount: 2,
+                          childAspectRatio: 0.57,
+                          children:
+                          snapshot.data!.docs.map((documents) {
+                            String lacre = '${documents['LacreouNao']}';
+                            String ColetaOuEntrega = '${documents['ColetaOuEntrega']}';
+                            bool lacrebool = false;
+                            bool coletaBool = false;
+                            String lacrado = '';
+                            String ColetaOuEntregast = '';
+                            idDocumento = documents.id;
 
-                      if(documents['Status'] == 'Saída Solicitada'){
-
-                        letGo = true;
-
-                      }
-
-                      if(documents['Status'] == 'Autorizado a entrar na empresa'){
-
-                        BTNStatus = 'Autorizar saida da empresa';
-
-
-                      }
-
-
-                      if(lacre == 'lacre'){
-                        lacrebool = true;
-                        lacrado = 'Lacrado';
-                      }
-                      if(lacre == 'naolacrado'){
-                        lacrebool = false;
-                        lacrado = 'Não Lacrado';
-                      }
-                      if(ColetaOuEntrega == 'coleta'){
-                        coletaBool = true;
-                        ColetaOuEntregast = 'Coleta';
-                      }
-                      if(ColetaOuEntrega == 'entrega'){
-                        coletaBool = false;
-                        ColetaOuEntregast = 'Entrega';
-                      }
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          color: Colors.grey[300],
-                          padding: EdgeInsets.all(16),
-                          child:
-                          Column(
-                            children: [
-                              Text(
-                                'Motorista: ' +
-                                    documents['nomeMotorista'],
-                                style:
-                                TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold
-                                ),
-                              ),
-                              Text(
-                                'Empresa: ' +
-                                    documents['Empresa'],
-                                style:
-                                TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold
-                                ),
-                              ),
-                              Text(
-                                'Quem autorizou: ' +
-                                    documents['QuemAutorizou'],
-                                style:
-                                TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold
-                                ),
-                              ),
-                              Text(
-                                'Status: ' +
-                                    documents['Status'],
-                                style:
-                                TextStyle(
-                                  fontSize: 20,
-                                ),
-                              ),
-                              Text(
-                                'CNH: ' +
-                                    documents['CNHMotorista'],
-                                style:
-                                TextStyle(
-                                  fontSize: 20,
-                                ),
-                              ),
-                              Text(
-                                'Placa Do Veiculo: ' +
-                                    documents['PlacaDoVeiculo'],
-                                style:
-                                TextStyle(
-                                  fontSize: 20,
-                                ),
-                              ),
-                              Text(
-                                lacrado,
-                                style:
-                                TextStyle(
-                                  fontSize: 20,
-                                ),
-                              ),
-                              Text(
-                                ColetaOuEntregast,
-                                style:
-                                TextStyle(
-                                  fontSize: 20,
-                                ),
-                              ),
-                              Container(
-                                padding: EdgeInsets.all(16),
-                                child: Image
-                                    .network(
-                                  documents['uriImage'],
-                                ),
-                              ),
-                              letGo?
-                                  Text('')
-                              : ElevatedButton(
-                                  onPressed: (){
-
-                                    print(documents.id);
-
-                                    if(documents['Status'] == 'Autorizado pela Portaria'){
-
-                                      AlertDialog alert = AlertDialog(
-                                        title: Text("Autorizar entrada?"),
-                                        content: Text("Deseja autorizar entrada na empresa?"),
-                                        actions: [
-                                          TextButton(onPressed: (){
-
-                                            FirebaseFirestore.instance
-                                                .collection("Autorizacoes")
-                                                .doc(documents.id).update({
-                                              'Status': 'Autorizado a entrar na empresa'
-                                            });
-                                            Navigator.pop(context);
-
-                                          },child:
-                                          Text(
-                                              'Sim'
+                              if(documents['Status'] != 'Autorizado a entrar na empresa'){
+                                if(lacre == 'lacre'){
+                                  lacrebool = true;
+                                  lacrado = 'Lacrado';
+                                }
+                                if(lacre == 'naolacrado'){
+                                  lacrebool = false;
+                                  lacrado = 'Não Lacrado';
+                                }
+                                if(ColetaOuEntrega == 'coleta'){
+                                  coletaBool = true;
+                                  ColetaOuEntregast = 'Coleta';
+                                }
+                                if(ColetaOuEntrega == 'entrega'){
+                                  coletaBool = false;
+                                  ColetaOuEntregast = 'Entrega';
+                                }
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    color: Colors.grey[300],
+                                    padding: EdgeInsets.all(16),
+                                    child:
+                                    Column(
+                                      children: [
+                                        Text(
+                                          documents['PlacaVeiculo'],
+                                          style:
+                                          TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold
                                           ),
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.all(16),
+                                          child: Image
+                                              .network(
+                                            documents['uriImage'],
+                                            fit: BoxFit.cover,
                                           ),
-                                        ],
-                                      );
-
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return alert;
-                                        },
-                                      );
-                                    }
-                                    if(documents['Status'] == 'Autorizado a entrar na empresa'){
-
-                                      AlertDialog alert = AlertDialog(
-                                        title: Text("Autorizar saída?"),
-                                        content: Text("Deseja autorizar saída na empresa?"),
-                                        actions: [
-                                          TextButton(onPressed: (){
-
-                                            FirebaseFirestore.instance
-                                                .collection("Autorizacoes")
-                                                .doc(documents.id).update({
-                                              'Status': 'Saída Solicitada'
-                                            });
-                                            Navigator.pop(context);
-
-                                          },child:
-                                          Text(
-                                              'Sim'
+                                        ),
+                                        Container(
+                                          padding: EdgeInsets.all(16),
+                                          child: Text(
+                                            'Status: \n' +
+                                                documents['Status'],
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold
+                                            ),
                                           ),
-                                          ),
-                                        ],
-                                      );
+                                        ),
+                                        ElevatedButton(
+                                            onPressed: (){
 
-                                      showDialog(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return alert;
-                                        },
-                                      );
-                                    }
-                                  },
-                                  child:
-                                  Text(BTNStatus)
-                              ),
-                            ],
-                          ),
+                                            },
+                                            child: Text(
+                                              'Editar',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold
+                                              ),
+                                            )
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              }else{
+                                return Text('');
+                              }
+                            }
+                          ).toList(),
                         ),
                       );
-
-                    }else{
-                      return Text('');
                     }
+                ),
 
-                  }else{
-                    return Center(
-                      child: Text(''),
-                    );
-                  }
-                }).toList(),
-              );
-            }
-        ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

@@ -81,7 +81,6 @@ class _listEntradaState extends State<listEntrada> {
                             String ColetaOuEntregast = '';
                             idDocumento = documents.id;
 
-                            if(documents['Status'] != 'Autorizado a Sair' ){
                               if(documents['Status'] != 'Autorizado a entrar na empresa'){
                                 if(lacre == 'lacre'){
                                   lacrebool = true;
@@ -153,9 +152,6 @@ class _listEntradaState extends State<listEntrada> {
                               }else{
                                 return Text('');
                               }
-                            }else{
-                              return Text('');
-                            }
                           }).toList(),
                         ),
                       );

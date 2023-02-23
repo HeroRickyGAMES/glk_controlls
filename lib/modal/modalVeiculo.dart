@@ -34,6 +34,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
   String? VeiculoPlaca;
   String? originEmpresa;
   String? galpao;
+  String? lacreSt;
+  bool lacrebool = false;
 
   File? imageFile;
   @override
@@ -184,91 +186,186 @@ class _modalPorteiroState extends State<modalPorteiro> {
                             fontSize: 16.0,
                           );
 
-                          //registre todos os valores no db
-                          var UID = FirebaseAuth.instance.currentUser?.uid;
-                          var db = FirebaseFirestore.instance;
-                          db.collection('Users').doc(UID).get().then((event) {
+                          if(lacreounao == 'lacre'){
 
-                            event.data()?.forEach((key, value) async {
+                            //registre todos os valores no db
+                            var UID = FirebaseAuth.instance.currentUser?.uid;
+                            var db = FirebaseFirestore.instance;
+                            db.collection('Users').doc(UID).get().then((event) {
+
+                              event.data()?.forEach((key, value) async {
 
 
-                              if(key == 'RGouCNPJ'){
+                                if(key == 'RGouCNPJ'){
 
-                                print(value);
-                                //put cam
-                                var dateTime= new DateTime.now();
+                                  print(value);
+                                  //put cam
+                                  var dateTime= new DateTime.now();
 
-                                var uuid = Uuid();
+                                  var uuid = Uuid();
 
-                                String idd = uuid.v4();
+                                  String idd = uuid.v4();
 
-                                final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
+                                  final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
 
-                                print(imageUrl);
+                                  print(imageUrl);
 
-                                FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
-                                  'nomeMotorista': nomeMotorista,
-                                  'RGDoMotorista': RGMotorista,
-                                  'Veiculo': Veiculo,
-                                  'PlacaVeiculo': VeiculoPlaca,
-                                  'Telefone': telefone,
-                                  'EmpresadeOrigin': originEmpresa,
-                                  'Empresa': empresaSelecionada,
-                                  'ColetaOuEntrega': coletaouentrega,
-                                  'Galpão': galpao,
-                                  'LacreouNao': lacreounao,
-                                  'QuemAutorizou': widget.nomeUser,
-                                  'Status': 'Autorizado pela Portaria',
-                                  'Horario Criado': dateTime,
-                                  'uriImage': imageUrl
-                                }).then((value) {
+                                  FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
+                                    'nomeMotorista': nomeMotorista,
+                                    'RGDoMotorista': RGMotorista,
+                                    'Veiculo': Veiculo,
+                                    'PlacaVeiculo': VeiculoPlaca,
+                                    'Telefone': telefone,
+                                    'EmpresadeOrigin': originEmpresa,
+                                    'Empresa': empresaSelecionada,
+                                    'ColetaOuEntrega': coletaouentrega,
+                                    'Galpão': galpao,
+                                    'LacreouNao': lacreounao,
+                                    'QuemAutorizou': widget.nomeUser,
+                                    'Status': 'Autorizado pela Portaria',
+                                    'Lacre': lacreSt,
+                                    'Horario Criado': dateTime,
+                                    'uriImage': imageUrl
+                                  }).then((value) {
 
-                                  Fluttertoast.showToast(
-                                    msg: 'Enviado com sucesso!',
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    timeInSecForIosWeb: 1,
-                                    backgroundColor: Colors.black,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0,
-                                  );
-                                  widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
+                                    Fluttertoast.showToast(
+                                      msg: 'Enviado com sucesso!',
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.black,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0,
+                                    );
+                                    widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
 
-                                  var db = FirebaseFirestore.instance;
-                                  var UID = FirebaseAuth.instance.currentUser?.uid;
-                                  db.collection('Users').doc(UID).get().then((event){
-                                    print("${event.data()}");
+                                    var db = FirebaseFirestore.instance;
+                                    var UID = FirebaseAuth.instance.currentUser?.uid;
+                                    db.collection('Users').doc(UID).get().then((event){
+                                      print("${event.data()}");
 
-                                    event.data()?.forEach((key, value) {
+                                      event.data()?.forEach((key, value) {
 
-                                      print(key);
-                                      print(value);
+                                        print(key);
+                                        print(value);
 
-                                      if(key == 'nome'){
-                                        String PorteiroNome = value;
+                                        if(key == 'nome'){
+                                          String PorteiroNome = value;
 
-                                        print('Porteiro name é' + PorteiroNome);
+                                          print('Porteiro name é' + PorteiroNome);
 
-                                        Navigator.pop(context);
-                                        Navigator.push(context,
-                                            MaterialPageRoute(builder: (context){
-                                              return mainPorteiro(PorteiroNome);
-                                            }));
+                                          Navigator.pop(context);
+                                          Navigator.push(context,
+                                              MaterialPageRoute(builder: (context){
+                                                return mainPorteiro(PorteiroNome);
+                                              }));
 
-                                      }
+                                        }
 
-                                    });
+                                      });
 
-                                  }
-                                  );
+                                    }
+                                    );
 
-                                });
+                                  });
+                                }
+
                               }
+                              );
 
                             }
                             );
 
+                          }
+
+                          if(lacreounao == 'naolacrado'){
+                            //registre todos os valores no db
+                            var UID = FirebaseAuth.instance.currentUser?.uid;
+                            var db = FirebaseFirestore.instance;
+                            db.collection('Users').doc(UID).get().then((event) {
+
+                              event.data()?.forEach((key, value) async {
+
+
+                                if(key == 'RGouCNPJ'){
+
+                                  print(value);
+                                  //put cam
+                                  var dateTime= new DateTime.now();
+
+                                  var uuid = Uuid();
+
+                                  String idd = uuid.v4();
+
+                                  final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
+
+                                  print(imageUrl);
+
+                                  FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
+                                    'nomeMotorista': nomeMotorista,
+                                    'RGDoMotorista': RGMotorista,
+                                    'Veiculo': Veiculo,
+                                    'PlacaVeiculo': VeiculoPlaca,
+                                    'Telefone': telefone,
+                                    'EmpresadeOrigin': originEmpresa,
+                                    'Empresa': empresaSelecionada,
+                                    'ColetaOuEntrega': coletaouentrega,
+                                    'Galpão': galpao,
+                                    'LacreouNao': lacreounao,
+                                    'QuemAutorizou': widget.nomeUser,
+                                    'Status': 'Autorizado pela Portaria',
+                                    'Horario Criado': dateTime,
+                                    'uriImage': imageUrl
+                                  }).then((value) {
+
+                                    Fluttertoast.showToast(
+                                      msg: 'Enviado com sucesso!',
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.black,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0,
+                                    );
+                                    widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
+
+                                    var db = FirebaseFirestore.instance;
+                                    var UID = FirebaseAuth.instance.currentUser?.uid;
+                                    db.collection('Users').doc(UID).get().then((event){
+                                      print("${event.data()}");
+
+                                      event.data()?.forEach((key, value) {
+
+                                        print(key);
+                                        print(value);
+
+                                        if(key == 'nome'){
+                                          String PorteiroNome = value;
+
+                                          print('Porteiro name é' + PorteiroNome);
+
+                                          Navigator.pop(context);
+                                          Navigator.push(context,
+                                              MaterialPageRoute(builder: (context){
+                                                return mainPorteiro(PorteiroNome);
+                                              }));
+
+                                        }
+
+                                      });
+
+                                    }
+                                    );
+
+                                  });
+                                }
+
+                              }
+                              );
+
                             }
-                          );
+                            );
+                          }
+
+
                         }
                       }
                     }
@@ -364,7 +461,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   autocorrect: false,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'RG do Motorista (Apenas Números) * ',
+                    hintText: 'RG do Motorista (Sem digitos) * ',
                     hintStyle: TextStyle(
                         fontSize: 20
                     ),
@@ -482,13 +579,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 child:
                 Column(
                   children: [
-                    Text(
-                      'É Coleta ou Entrega?',
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold
-                      ),
-                    ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
@@ -564,10 +654,13 @@ class _modalPorteiroState extends State<modalPorteiro> {
                       onChanged: (value){
                         setState(() {
                           lacreounao = value.toString();
+
+                          if(value == 'lacre'){
+                            lacrebool = true;
+                          }
                         });
                       },
                     ),
-
                     RadioListTile(
                       title: Text("Sem Lacre",),
                       value: "naolacrado",
@@ -575,12 +668,38 @@ class _modalPorteiroState extends State<modalPorteiro> {
                       onChanged: (value){
                         setState(() {
                           lacreounao = value.toString();
+
+                          if(value == 'naolacrado'){
+                            lacrebool = false;
+                          }
                         });
                       },
                     ),
+                    lacrebool ?
+                    Container(
+                      padding: EdgeInsets.only(top: 16),
+                      child: TextFormField(
+                        onChanged: (valor){
+                          lacreSt = valor;
+                          //Mudou mandou para a String
+                        },
+                        //keyboardType: TextInputType.number,
+                        //enableSuggestions: false,
+                        //autocorrect: false,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Numero do lacre *',
+                          hintStyle: TextStyle(
+                              fontSize: 20
+                          ),
+                        ),
+                      ),
+                    )
+                        :Text(''),
                   ],
                 ),
               ),
+
               Container(
                 padding: EdgeInsets.only(top: 16),
                 child: Text(
