@@ -78,7 +78,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
         title: Container(
           child:
           Text(
-              'GLK Controls - Interface para Operadores. Usuario logado: ' + widget.PorteiroNome
+              'GLK Controls - OPERADORES'
           ),
         ),
       ),
@@ -86,14 +86,85 @@ class _mainPorteiroState extends State<mainPorteiro> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Center(
-            child: ElevatedButton(onPressed: (){
-
-            },
-                child: Text(
-                    'Novo cadastro'
-                ),
+          Container(
+            padding: EdgeInsets.all(16),
+            child: Center(
+              child: ElevatedButton(
+                onPressed: openModal,
+                  child: Text(
+                      'Novo cadastro',
+                    style: TextStyle(
+                        fontSize: 20
+                    ),
+                  ),
+              ),
             ),
+          ),
+          Container(
+            padding: EdgeInsets.all(16),
+            child: Center(
+              child: TextFormField(
+                onChanged: (valor){
+                  //Mudou mandou para a String
+
+                },
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'RG:',
+                  hintStyle: TextStyle(
+                      fontSize: 20
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Container(
+            alignment: Alignment.topLeft,
+            padding: EdgeInsets.all(16),
+            child:
+            Text(
+                'RG: Sem Digito',
+              style: TextStyle(
+                  fontSize: 20
+              ),
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.all(16),
+            child: ElevatedButton(
+              onPressed: (){},
+              child: Text(
+                'Fazer busca',
+                style: TextStyle(
+                    fontSize: 20
+                ),
+              ),
+            ),
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Container(
+                  width: 180,
+                  height: 180,
+                  padding: EdgeInsets.all(16),
+                  child:
+                  Image.asset(
+                    'assets/icon.png',
+                    fit: BoxFit.contain,
+                  )
+              ),
+              Container(
+                padding: EdgeInsets.all(16),
+                child:
+                Text(
+                  'Operador: ' + widget.PorteiroNome,
+                  style: TextStyle(
+                      fontSize: 20
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),

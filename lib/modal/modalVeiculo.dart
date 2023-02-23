@@ -33,6 +33,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
   String? nomeMotorista;
   String? RGMotorista;
   String? PlacaVeiculo;
+  String? Veiculo;
+  String? telefone;
+  String? originEmpresa;
 
   File? imageFile;
   @override
@@ -325,7 +328,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
               color: Colors.white,
             )
             ),
-            Text('GLK Controls - Adicionar novo motorista'),
+            Text('GLK Controls - Cadastro: Motorista e Veiculo'),
           ],
         ),
       ),
@@ -335,43 +338,139 @@ class _modalPorteiroState extends State<modalPorteiro> {
           child: Column(
             children: [
               Container(
+                padding: EdgeInsets.only(top: 16),
+                child: TextFormField(
+                  onChanged: (valor){
+                    nomeMotorista = valor;
+                    //Mudou mandou para a String
+                  },
+                  keyboardType: TextInputType.name,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Nome Completo do Motorista',
+                    hintStyle: TextStyle(
+                        fontSize: 20
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(top: 16),
+                child: TextFormField(
+                  onChanged: (valor){
+                    RGMotorista = valor;
+                    //Mudou mandou para a String
+                  },
+                  keyboardType: TextInputType.number,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'RG do Motorista (Apenas Números)',
+                    hintStyle: TextStyle(
+                        fontSize: 20
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(top: 16),
+                child: TextFormField(
+                  onChanged: (valor){
+                    Veiculo = valor;
+                    //Mudou mandou para a String
+                  },
+                  keyboardType: TextInputType.number,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Veiculo',
+                    hintStyle: TextStyle(
+                        fontSize: 20
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(top: 16),
+                child: TextFormField(
+                  onChanged: (valor){
+                    telefone = valor;
+                    //Mudou mandou para a String
+                  },
+                  keyboardType: TextInputType.number,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Telefone',
+                    hintStyle: TextStyle(
+                        fontSize: 20
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(top: 16),
+                child: TextFormField(
+                  onChanged: (valor){
+                    originEmpresa = valor;
+                    //Mudou mandou para a String
+                  },
+                  keyboardType: TextInputType.number,
+                  enableSuggestions: false,
+                  autocorrect: false,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Empresa de Origem',
+                    hintStyle: TextStyle(
+                        fontSize: 20
+                    ),
+                  ),
+                ),
+              ),
+              Container(
                 padding: EdgeInsets.all(16),
                 child: Text(
-                    'Selecione a Empresa que o motorista irá entrar',
+                  'Selecione a Empresa que o motorista irá entrar',
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold
                   ),
                 ),
               ),
-              Center(
-                child: ValueListenableBuilder(valueListenable: widget.dropValue, builder: (context, String value, _){
-                  return DropdownButton(
-                    hint: Text(
-                        'Selecione uma empresa',
-                      style: TextStyle(
-                        fontSize: 18
-                      ),
-                    ),
-                    value: (value.isEmpty)? null : value,
-                    onChanged: (escolha) {
-                      widget.dropValue.value = escolha.toString();
 
-                      empresaSelecionada = escolha.toString();
-                    },
-                    items: widget.EmpresasOpc.map((opcao) => DropdownMenuItem(
+              Center(
+                  child: ValueListenableBuilder(valueListenable: widget.dropValue, builder: (context, String value, _){
+                    return DropdownButton(
+                      hint: Text(
+                        'Selecione uma empresa',
+                        style: TextStyle(
+                            fontSize: 18
+                        ),
+                      ),
+                      value: (value.isEmpty)? null : value,
+                      onChanged: (escolha) {
+                        widget.dropValue.value = escolha.toString();
+
+                        empresaSelecionada = escolha.toString();
+                      },
+                      items: widget.EmpresasOpc.map((opcao) => DropdownMenuItem(
                         value: opcao,
                         child:
                         Text(
-                            opcao,
+                          opcao,
                           style: TextStyle(
                               fontSize: 18
                           ),
                         ),
                       ),
-                    ).toList(),
-                  );
-                })
+                      ).toList(),
+                    );
+                  })
               ),
               Container(
                 padding: EdgeInsets.only(top: 16),
@@ -385,28 +484,37 @@ class _modalPorteiroState extends State<modalPorteiro> {
                           fontWeight: FontWeight.bold
                       ),
                     ),
-                    RadioListTile(
-                      title: Text("É Coleta"),
-                      value: "coleta",
-                      groupValue: coletaouentrega,
-                      onChanged: (value){
-                        setState(() {
-                          coletaouentrega = value.toString();
-                        });
-                      },
-                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Expanded(
+                          child: RadioListTile(
+                            title: Text("É Coleta"),
+                            value: "coleta",
+                            groupValue: coletaouentrega,
+                            onChanged: (value){
+                              setState(() {
+                                coletaouentrega = value.toString();
+                              });
+                            },
+                          ),
+                        ),
 
-                    RadioListTile(
-                      title: Text(
-                          "É Entrega"
-                      ),
-                      value: "entrega",
-                      groupValue: coletaouentrega,
-                      onChanged: (value){
-                        setState(() {
-                          coletaouentrega = value.toString();
-                        });
-                      },
+                        Expanded(
+                          child: RadioListTile(
+                            title: Text(
+                                "É Entrega"
+                            ),
+                            value: "entrega",
+                            groupValue: coletaouentrega,
+                            onChanged: (value){
+                              setState(() {
+                                coletaouentrega = value.toString();
+                              });
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
@@ -473,44 +581,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 padding: EdgeInsets.only(top: 16),
                 child: TextFormField(
                   onChanged: (valor){
-                    nomeMotorista = valor;
-                    //Mudou mandou para a String
-                  },
-                  keyboardType: TextInputType.name,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Nome Completo do Motorista',
-                    hintStyle: TextStyle(
-                        fontSize: 20
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.only(top: 16),
-                child: TextFormField(
-                  onChanged: (valor){
-                    RGMotorista = valor;
-                    //Mudou mandou para a String
-                  },
-                  keyboardType: TextInputType.number,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'RG do Motorista (Apenas Números)',
-                    hintStyle: TextStyle(
-                        fontSize: 20
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.only(top: 16),
-                child: TextFormField(
-                  onChanged: (valor){
                     PlacaVeiculo = valor;
                     //Mudou mandou para a String
                   },
@@ -557,7 +627,32 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     fontWeight: FontWeight.bold
                 ),
               )
-              )
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                      width: 180,
+                      height: 180,
+                      padding: EdgeInsets.all(16),
+                      child:
+                      Image.asset(
+                        'assets/icon.png',
+                        fit: BoxFit.contain,
+                      )
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    child:
+                    Text(
+                      'Operador: ' + widget.nomeUser,
+                      style: TextStyle(
+                          fontSize: 20
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
         ),
