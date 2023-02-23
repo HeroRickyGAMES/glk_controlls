@@ -31,6 +31,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
   String? RGMotorista;
   String? Veiculo;
   String? telefone = '';
+  String? VeiculoPlaca;
   String? originEmpresa;
   String? galpao;
 
@@ -197,6 +198,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                 'nomeMotorista': nomeMotorista,
                                 'RGDoMotorista': RGMotorista,
                                 'Veiculo': Veiculo,
+                                'PlacaVeiculo': VeiculoPlaca,
+                                'Telefone': telefone,
                                 'EmpresadeOrigin': originEmpresa,
                                 'Empresa': empresaSelecionada,
                                 'ColetaOuEntrega': coletaouentrega,
@@ -366,6 +369,22 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Veiculo * ',
+                    hintStyle: TextStyle(
+                        fontSize: 20
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                padding: EdgeInsets.only(top: 16),
+                child: TextFormField(
+                  onChanged: (valor){
+                    VeiculoPlaca = valor;
+                    //Mudou mandou para a String
+                  },
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Placa do Veiculo * ',
                     hintStyle: TextStyle(
                         fontSize: 20
                     ),
