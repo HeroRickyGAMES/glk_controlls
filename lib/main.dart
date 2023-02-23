@@ -56,13 +56,41 @@ void main() {
 
            if(value == 'ADM'){
 
-             print('essa conta é ADM');
+             var db = FirebaseFirestore.instance;
+             var UID = FirebaseAuth.instance.currentUser?.uid;
+             db.collection('Users').doc(UID).get().then((event){
+               print("${event.data()}");
 
-             Navigator.pop(context);
-             Navigator.push(context,
-                 MaterialPageRoute(builder: (context){
-                   return setorADM();
-                 }));
+               event.data()?.forEach((key, value) {
+
+                 print(key);
+                 print(value);
+
+                 if(key == 'nome'){
+                   String ADMName = value;
+
+                   print('O ADM é ' + ADMName);
+
+                   var db = FirebaseFirestore.instance;
+                   var UID = FirebaseAuth.instance.currentUser?.uid;
+                   db.collection('Users').doc(UID).get().then((event){
+                     print("${event.data()}");
+
+                     Navigator.pop(context);
+                     Navigator.push(context,
+                         MaterialPageRoute(builder: (context){
+                           return setorADM(ADMName);
+                         }));
+                   }
+                   );
+                 }
+
+               });
+
+             }
+             );
+             print('Ele é um ADM');
+             //Passar o codigo para mandar a tela
            }
 
            if(value == 'porteiro'){

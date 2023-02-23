@@ -9,8 +9,8 @@ class cadastroUsuarioModal extends StatefulWidget {
 
 class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
   String? tipos;
-  String? cnpjourg = 'Seu RG';
-  String? NomeOuRazao = 'Seu Nome completo';
+  String? cnpjourg = 'RG';
+  String? NomeOuRazao = 'Nome completo';
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
             padding: EdgeInsets.all(16),
             child: RadioListTile(
               title: Text(
-                "Sou um Operador",
+                "Operador",
                 style: TextStyle(
                     fontSize: 20
                 ),
@@ -45,7 +45,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
             padding: EdgeInsets.all(16),
             child: RadioListTile(
               title: Text(
-                "Sou uma Empresa",
+                "Empresa",
                 style: TextStyle(
                     fontSize: 20
                 ),
@@ -129,7 +129,10 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
             },
                 child:
                 Text(
-                    'Cadastrar usuario'
+                    'Cadastrar usuario',
+                  style: TextStyle(
+                    fontSize: 20
+                  ),
                 )
             ),
           )
