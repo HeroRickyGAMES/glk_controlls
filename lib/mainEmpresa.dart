@@ -213,6 +213,13 @@ class _mainEmpresaState extends State<mainEmpresa> {
                           return Container(
                             height: 700,
                             width: double.infinity,
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 1.0,
+                              ),
+                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                            ),
                             child: GridView.count(
                               padding: const EdgeInsets.all(5),
                               crossAxisSpacing: 5,
@@ -271,8 +278,15 @@ class _mainEmpresaState extends State<mainEmpresa> {
                                     return Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Container(
-                                        color: color,
                                         padding: EdgeInsets.all(16),
+                                        decoration: BoxDecoration(
+                                          color: color,
+                                          border: Border.all(
+                                            color: Colors.black,
+                                            width: 1.0,
+                                          ),
+                                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                        ),
                                         child:
                                         Column(
                                           children: [

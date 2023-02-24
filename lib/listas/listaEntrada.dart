@@ -110,6 +110,13 @@ class _listEntradaState extends State<listEntrada> {
                         return Container(
                           height: 700,
                           width: double.infinity,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                          ),
                           child: GridView.count(
                             padding: const EdgeInsets.all(5),
                             crossAxisSpacing: 5,
@@ -126,7 +133,7 @@ class _listEntradaState extends State<listEntrada> {
                               String ColetaOuEntregast = '';
                               idDocumento = documents.id;
 
-                                if(documents['Status'] != 'Autorizado a entrar na empresa'){
+                                if(documents['Status'] != 'Saida'){
                                   if(lacre == 'lacre'){
                                     lacrebool = true;
                                     lacrado = 'Lacrado';
@@ -146,8 +153,15 @@ class _listEntradaState extends State<listEntrada> {
                                   return Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
-                                      color: Colors.grey[300],
                                       padding: EdgeInsets.all(16),
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[300],
+                                        border: Border.all(
+                                          color: Colors.black,
+                                          width: 1.0,
+                                        ),
+                                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                      ),
                                       child:
                                       Column(
                                         children: [
