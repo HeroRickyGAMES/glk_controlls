@@ -222,7 +222,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                     'Galpão': galpao,
                                     'LacreouNao': lacreounao,
                                     'QuemAutorizou': widget.nomeUser,
-                                    'Status': 'Autorizado pela Portaria',
+                                    'Status': 'Aguardando',
                                     'Lacre': lacreSt,
                                     'Horario Criado': dateTime,
                                     'uriImage': imageUrl
@@ -312,7 +312,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                     'Galpão': galpao,
                                     'LacreouNao': lacreounao,
                                     'QuemAutorizou': widget.nomeUser,
-                                    'Status': 'Autorizado pela Portaria',
+                                    'Status': 'Aguardando',
                                     'Horario Criado': dateTime,
                                     'uriImage': imageUrl
                                   }).then((value) {
@@ -761,6 +761,18 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     ),
                   ),
                 ],
+              ),
+              WillPopScope(
+                onWillPop: () async {
+                  widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
+                  Navigator.pop(context);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context){
+                        return mainPorteiro(widget.nomeUser);
+                      }));
+                  // retorna false para impedir que a navegação volte à tela anterior
+                  return false;
+                }, child: Text(''),
               ),
             ],
           ),

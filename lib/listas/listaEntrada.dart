@@ -71,7 +71,7 @@ class _listEntradaState extends State<listEntrada> {
                         if(holderPlaca == ''){
 
                           Fluttertoast.showToast(
-                            msg: '´Preencha a pesquisa!',
+                            msg: 'Preencha a pesquisa!',
                             toastLength: Toast.LENGTH_SHORT,
                             timeInSecForIosWeb: 1,
                             backgroundColor: Colors.black,
