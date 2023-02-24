@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:glk_controls/pesquisaDir/pesquisa.dart';
 
 import 'modal/modalVeiculo.dart';
 
@@ -16,6 +18,39 @@ class mainEmpresa extends StatefulWidget {
 
   @override
   State<mainEmpresa> createState() => _mainEmpresaState();
+}
+
+class _PlateFormatter extends TextInputFormatter {
+  static const int _firstGroupLength = 3;
+  static const int _secondGroupLength = 4;
+  static const String _separator = ' ';
+
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    String cleaned = newValue.text.replaceAll(RegExp('[^a-zA-Z0-9]'), '');
+    String plate = '';
+    int i = 0;
+    while (i < cleaned.length) {
+      int remaining = cleaned.length - i;
+      if (remaining > _firstGroupLength) {
+        plate += cleaned.substring(i, i + _firstGroupLength) + _separator;
+        i += _firstGroupLength;
+      } else {
+        plate += cleaned.substring(i, i + remaining);
+        i += remaining;
+      }
+      if (i == _firstGroupLength && remaining > 0) {
+        plate += _separator;
+      }
+    }
+    return TextEditingValue(
+      text: plate,
+      selection: TextSelection.fromPosition(
+        TextPosition(offset: plate.length),
+      ),
+    );
+  }
 }
 
 class _mainEmpresaState extends State<mainEmpresa> {
@@ -100,15 +135,18 @@ class _mainEmpresaState extends State<mainEmpresa> {
                 ),
                 TextFormField(
                   onChanged: (valor){
-                    setState(() {
-                      holderPlaca = valor;
-                      estaPesquisando = true;
 
-                    });
+                    String value = valor.replaceAll(' ', '').toUpperCase();;
+
+                    holderPlaca = value.replaceAllMapped(
+                      RegExp(r'^([a-zA-Z]{3})([0-9]{4})$'),
+                          (Match m) => '${m[1]}-${m[2]}',
+                    );
                   },
                   enableSuggestions: false,
                   autocorrect: false,
                   decoration: InputDecoration(
+
                     border: OutlineInputBorder(
                         borderSide: BorderSide(
                             color: Colors.green
@@ -123,7 +161,10 @@ class _mainEmpresaState extends State<mainEmpresa> {
                   padding: EdgeInsets.all(16),
                   child: ElevatedButton(
                     onPressed: (){
-
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context){
+                            return pesquisa(holderPlaca);
+                          }));
                   },
                     child: Text(
                         'Pesquisar'

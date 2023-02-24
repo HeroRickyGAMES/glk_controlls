@@ -488,7 +488,12 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 padding: EdgeInsets.only(top: 16),
                 child: TextFormField(
                   onChanged: (valor){
-                    VeiculoPlaca = valor;
+
+                    String valorpuro = valor.toUpperCase();
+                    VeiculoPlaca = valorpuro.replaceAllMapped(
+                      RegExp(r'^([a-zA-Z]{3})([0-9]{4})$'),
+                          (Match m) => '${m[1]}-${m[2]}',
+                    );
                     //Mudou mandou para a String
                   },
                   decoration: InputDecoration(
