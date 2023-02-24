@@ -111,7 +111,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
 
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context){
-                      return listEntrada();
+                      return listEntrada(widget.PorteiroNome);
                     }));
               },
               child: Text(
