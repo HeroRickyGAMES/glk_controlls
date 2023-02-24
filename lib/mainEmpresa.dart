@@ -214,7 +214,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                               crossAxisSpacing: 5,
                               mainAxisSpacing: 5,
                               crossAxisCount: 2,
-                              childAspectRatio: 0.55,
+                              childAspectRatio: 1.4,
                               children:
                               snapshot.data!.docs.map((documents) {
                                 String lacre = '${documents['LacreouNao']}';
@@ -276,14 +276,6 @@ class _mainEmpresaState extends State<mainEmpresa> {
                                                   fontSize: 20,
                                                   fontWeight: FontWeight.bold,
                                                   color: textColor
-                                              ),
-                                            ),
-                                            Container(
-                                              padding: EdgeInsets.all(16),
-                                              child: Image
-                                                  .network(
-                                                documents['uriImage'],
-                                                fit: BoxFit.cover,
                                               ),
                                             ),
                                             Container(

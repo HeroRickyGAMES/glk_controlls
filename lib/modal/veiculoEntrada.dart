@@ -47,11 +47,15 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
 
 
     if(widget.lacreounao == 'lacre'){
+
       lacrebool = true;
+
     }
 
     if(widget.lacreounao == 'naolacrado'){
+
       lacrebool = false;
+
     }
 
     String _textoPredefinido = widget.lacradoStr;
@@ -59,8 +63,14 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
     TextEditingController _textEditingController = TextEditingController(text: _textoPredefinido);
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.yellow,
         centerTitle: true,
-        title: Text('GLK Controls - Entrada'),
+        title: Text(
+            'GLK Controls - Entrada',
+          style: TextStyle(
+            color: Colors.black
+          ),
+        ),
       ),
       body: SingleChildScrollView(
         child: Column(

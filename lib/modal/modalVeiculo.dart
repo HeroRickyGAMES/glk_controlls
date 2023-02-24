@@ -204,7 +204,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
                                   var uuid = Uuid();
 
-                                  String idd = uuid.v4();
+                                  String idd = uuid.v4() + "${DateTime.now().toString()}";
 
                                   final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
 
@@ -224,6 +224,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                     'QuemAutorizou': widget.nomeUser,
                                     'Status': 'Aguardando',
                                     'Lacre': lacreSt,
+                                    'lacrenum': lacreSt,
                                     'Horario Criado': dateTime,
                                     'uriImage': imageUrl
                                   }).then((value) {
@@ -294,7 +295,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
                                   var uuid = Uuid();
 
-                                  String idd = uuid.v4();
+                                  String idd = uuid.v4() + "${DateTime.now().toString()}";
 
                                   final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
 
@@ -314,7 +315,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                     'QuemAutorizou': widget.nomeUser,
                                     'Status': 'Aguardando',
                                     'Horario Criado': dateTime,
-                                    'uriImage': imageUrl
+                                    'uriImage': imageUrl,
+                                    'lacrenum': '',
                                   }).then((value) {
 
                                     Fluttertoast.showToast(

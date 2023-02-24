@@ -113,7 +113,7 @@ class _listEntradaState extends State<listEntrada> {
                             crossAxisSpacing: 5,
                             mainAxisSpacing: 5,
                             crossAxisCount: 2,
-                            childAspectRatio: 0.57,
+                            childAspectRatio: 1.4,
                             children:
                             snapshot.data!.docs.map((documents) {
                               String lacre = '${documents['LacreouNao']}';
@@ -159,14 +159,6 @@ class _listEntradaState extends State<listEntrada> {
                                           ),
                                           Container(
                                             padding: EdgeInsets.all(16),
-                                            child: Image
-                                                .network(
-                                              documents['uriImage'],
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          Container(
-                                            padding: EdgeInsets.all(16),
                                             child: Text(
                                                 'Status: \n' +
                                                 documents['Status'],
@@ -195,7 +187,7 @@ class _listEntradaState extends State<listEntrada> {
                                 }else{
                                   return Text('');
                                 }
-                            }).toList(),
+                            }).toList().reversed.toList(),
                           ),
                         );
                       }
