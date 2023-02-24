@@ -36,6 +36,7 @@ class _pesquisaState extends State<pesquisa> {
                       stream: FirebaseFirestore
                           .instance
                           .collection('Autorizacoes')
+                          .where('PlacaVeiculo', isEqualTo: widget.pesquisast)
                           .snapshots(),
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -62,8 +63,7 @@ class _pesquisaState extends State<pesquisa> {
                               String lacrado = '';
                               String ColetaOuEntregast = '';
                               idDocumento = documents.id;
-
-                              if(documents['PlacaVeiculo'] == widget.pesquisast){
+                              
                                 if(lacre == 'lacre'){
                                   lacrebool = true;
                                   lacrado = 'Lacrado';
@@ -123,9 +123,7 @@ class _pesquisaState extends State<pesquisa> {
                                     ),
                                   ),
                                 );
-                              }else{
-                                return Text('');
-                              }
+
                             }
                             ).toList().reversed.toList(),
                           ),

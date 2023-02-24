@@ -116,6 +116,8 @@ class _mainEmpresaState extends State<mainEmpresa> {
 
     bool estaPesquisando = false;
 
+    bool filtro = false;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -140,7 +142,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                     TextFormField(
                       onChanged: (valor){
 
-                        String value = valor.replaceAll(' ', '').toUpperCase();;
+                        String value = valor.replaceAll(' ', '').toUpperCase();
 
                         holderPlaca = value.replaceAllMapped(
                           RegExp(r'^([a-zA-Z]{3})([0-9]{4})$'),
@@ -198,6 +200,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                         stream: FirebaseFirestore
                             .instance
                             .collection('Autorizacoes')
+                            .where('Empresa', isEqualTo: widget.empresaName)
                             .snapshots(),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -217,6 +220,8 @@ class _mainEmpresaState extends State<mainEmpresa> {
                               childAspectRatio: 1.4,
                               children:
                               snapshot.data!.docs.map((documents) {
+
+                                if(documents['Empresa'] == widget.empresaName){
                                 String lacre = '${documents['LacreouNao']}';
                                 String ColetaOuEntrega = '${documents['ColetaOuEntrega']}';
                                 bool lacrebool = false;
@@ -224,6 +229,8 @@ class _mainEmpresaState extends State<mainEmpresa> {
                                 String lacrado = '';
                                 String ColetaOuEntregast = '';
                                 idDocumento = documents.id;
+
+                                filtro = true;
 
                                     if(lacre == 'lacre'){
                                       lacrebool = true;
@@ -396,6 +403,9 @@ class _mainEmpresaState extends State<mainEmpresa> {
                                         ),
                                       ),
                                     );
+                                    }else{
+                                      return SizedBox(width: 0, height: 0);
+                                    }
                                 }
                               ).toList().reversed.toList(),
                             ),
