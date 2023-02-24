@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
+//Programado por HeroRickyGames
+
 class pesquisa extends StatefulWidget {
   String pesquisast;
   pesquisa(this.pesquisast);
@@ -63,7 +65,7 @@ class _pesquisaState extends State<pesquisa> {
                               String lacrado = '';
                               String ColetaOuEntregast = '';
                               idDocumento = documents.id;
-                              
+
                                 if(lacre == 'lacre'){
                                   lacrebool = true;
                                   lacrado = 'Lacrado';

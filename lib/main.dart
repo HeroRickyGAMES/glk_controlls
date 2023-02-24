@@ -9,6 +9,7 @@ import 'package:glk_controls/mainEmpresa.dart';
 import 'package:glk_controls/mainPorteiro.dart';
 import 'package:glk_controls/setorADM.dart';
 import 'firebase_options.dart';
+
 //Programado por HeroRickyGames
 
 void main() {

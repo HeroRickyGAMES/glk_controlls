@@ -10,6 +10,8 @@ import 'package:glk_controls/mainPorteiro.dart';
 import 'package:glk_controls/setorADM.dart';
 import 'firebase_options.dart';
 
+//Programado por HeroRickyGames
+
 class login extends StatefulWidget {
   const login({Key? key}) : super(key: key);
 

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:glk_controls/modal/cadastroUsuarioADM.dart';
 
+//Programado por HeroRickyGames
+
 class setorADM extends StatefulWidget {
   final String ADMName;
   const setorADM(this.ADMName);
