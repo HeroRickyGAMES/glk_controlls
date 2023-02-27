@@ -119,6 +119,7 @@ class _listEntradaState extends State<listEntrada> {
                       stream: FirebaseFirestore
                           .instance
                           .collection('Autorizacoes')
+                          .where('Status', isNotEqualTo: 'Saida')
                           .snapshots(),
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -152,8 +153,7 @@ class _listEntradaState extends State<listEntrada> {
                               String lacrado = '';
                               String ColetaOuEntregast = '';
                               idDocumento = documents.id;
-
-                                if(documents['Status'] != 'Saida'){
+                              
                                   if(lacre == 'lacre'){
                                     lacrebool = true;
                                     lacrado = 'Lacrado';
@@ -220,10 +220,7 @@ class _listEntradaState extends State<listEntrada> {
                                       ),
                                     ),
                                   );
-                                }else{
-                                  return Text('');
-                                }
-                            }).toList().reversed.toList(),
+                                }).toList().reversed.toList(),
                           ),
                         );
                       }

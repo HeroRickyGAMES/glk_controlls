@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,15 +11,16 @@ import '../mainPorteiro.dart';
 import 'dart:io';
 import 'package:uuid/uuid.dart';
 
-//Programado por HeroRickyGames
-
 //Programado Por HeroRickyGames
 
 class modalPorteiro extends StatefulWidget {
   final List<dynamic> EmpresasOpc;
   final dropValue;
   final String nomeUser;
-  modalPorteiro(this.EmpresasOpc, this.dropValue, this.nomeUser);
+  final String idEmpresa;
+  final dropValue2;
+  List galpaes;
+  modalPorteiro(this.EmpresasOpc, this.dropValue, this.nomeUser, this.idEmpresa, this.dropValue2, this.galpaes);
 
   @override
   State<modalPorteiro> createState() => _modalPorteiroState();
@@ -382,6 +384,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
       }
     }
+    List<dynamic> galpaes = ['Valor 1', 'Valor 2', 'Valor 3'];
+    String selectedValue = galpaes[0];
 
     return Scaffold(
       appBar: AppBar(
@@ -390,6 +394,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
             ElevatedButton(onPressed: (){
 
               widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
+              galpaes.removeRange(0, galpaes.length);
 
               var db = FirebaseFirestore.instance;
               var UID = FirebaseAuth.instance.currentUser?.uid;
@@ -564,10 +569,11 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         ),
                       ),
                       value: (value.isEmpty)? null : value,
-                      onChanged: (escolha) {
+                      onChanged: (escolha) async {
                         widget.dropValue.value = escolha.toString();
 
                         empresaSelecionada = escolha.toString();
+
                       },
                       items: widget.EmpresasOpc.map((opcao) => DropdownMenuItem(
                         value: opcao,
@@ -623,24 +629,50 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   ],
                 ),
               ),
-              Container(
-                padding: EdgeInsets.only(top: 16),
-                child: TextFormField(
-                  onChanged: (valor){
-                    galpao = valor;
-                    //Mudou mandou para a String
-                  },
-                  //keyboardType: TextInputType.number,
-                  //enableSuggestions: false,
-                  //autocorrect: false,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Galpão *',
-                    hintStyle: TextStyle(
-                        fontSize: 20
+              Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    child: Text(
+                      'Empresa Galpão *',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold
+                      ),
                     ),
                   ),
-                ),
+                  Center(
+                      child: ValueListenableBuilder(valueListenable: widget.dropValue2, builder: (context, String value, _){
+                        return DropdownButton(
+                          hint: Text(
+                            'Selecione um Galpão',
+                            style: TextStyle(
+                                fontSize: 18
+                            ),
+                          ),
+                          value: (value.isEmpty)? null : value,
+                          onChanged: (escolha) {
+                            setState(() {
+                              widget.dropValue2.value = escolha.toString();
+
+                              galpao = escolha.toString();
+                            });
+                          },
+                          items: widget.galpaes.map((opcao) => DropdownMenuItem(
+                            value: opcao,
+                            child:
+                            Text(
+                              opcao,
+                              style: TextStyle(
+                                  fontSize: 18
+                              ),
+                            ),
+                          ),
+                          ).toList(),
+                        );
+                      })
+                  ),
+                ],
               ),
               Container(
                 padding: EdgeInsets.only(top: 16),
@@ -769,6 +801,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
               WillPopScope(
                 onWillPop: () async {
                   widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
+                  galpaes.removeRange(0, galpaes.length);
                   Navigator.pop(context);
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context){

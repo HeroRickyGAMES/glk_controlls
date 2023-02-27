@@ -60,58 +60,6 @@ class _PlateFormatter extends TextInputFormatter {
 }
 
 class _mainEmpresaState extends State<mainEmpresa> {
-  openModal(BuildContext context){
-
-
-    var db = FirebaseFirestore.instance;
-
-    db.collection('empresa').get().then((event) {
-
-      for(var doc in event.docs){
-
-        doc.data().forEach((key, value) {
-          print('O valores são ' + value);
-
-          print('O valor é ' + value);
-
-          if(key == 'nome'){
-
-            print( 'valor com nome é' + value);
-
-            final EmpresasOpc = [];
-
-            EmpresasOpc.add(value);
-            final dropValue = '';
-
-            var UID = FirebaseAuth.instance.currentUser?.uid;
-            var db = FirebaseFirestore.instance;
-            String nomeUser;
-            db.collection('Users').doc(UID).get().then((value) {
-
-              value.data()?.forEach((key, value) {
-                if(key == 'nome'){
-
-                  print(value);
-                  nomeUser = value;
-
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context){
-                        return modalPorteiro(EmpresasOpc, dropValue, nomeUser);
-
-                      }));
-
-                }
-
-              });
-
-            });
-          }
-        }
-        );
-      }
-    });
-    print('chegou aqui!');
-  }
 
   Widget build(BuildContext context) {
     String idDocumento;

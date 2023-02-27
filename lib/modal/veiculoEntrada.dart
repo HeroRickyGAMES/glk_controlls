@@ -1,5 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:glk_controls/mainEmpresa.dart';
+import 'package:glk_controls/mainPorteiro.dart';
 
 //Programado por HeroRickyGames
 
@@ -192,14 +195,14 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
               ),
               lacrebool ?
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: EdgeInsets.all(16),
                 child: TextFormField(
                   controller: _textEditingController,
                   onChanged: (valor){
                     lacreSt = valor;
                     //Mudou mandou para a String
                   },
-                  //keyboardType: TextInputType.number,
+                  keyboardType: TextInputType.number,
                   //enableSuggestions: false,
                   //autocorrect: false,
                   decoration: InputDecoration(
@@ -216,7 +219,31 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
               padding: EdgeInsets.all(16),
               child: ElevatedButton(
                 onPressed: (){
-                  
+                  if(lacrebool == false){
+                    FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                      'DataSaida': DateTime.now(),
+                      'Status': 'Saida'
+                    });
+                    Navigator.pop(context);
+                  }
+
+                  if(lacrebool == true){
+                    if(lacreSt == null){
+                      Fluttertoast.showToast(
+                        msg: 'Preencha o numero do lacre!',
+                        toastLength: Toast.LENGTH_SHORT,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.black,
+                        textColor: Colors.white,
+                        fontSize: 16.0,
+                      );
+                    }else{
+                      FirebaseFirestore.instance.collection('Autorizacoes').doc(idDocumento).update({
+                        'DataSaida': DateTime.now(),
+                        'Status': 'Saida'
+                      });
+                    }
+                  }
                 },
                 child: Text(
                   'Autorizar saída',

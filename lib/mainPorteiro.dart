@@ -15,6 +15,7 @@ Map<String, String> map1 = {};
 Map<String, String> mapNome = {};
 String idDocumento = '';
 List listaNome = [];
+List galpao = [ ];
 
 class mainPorteiro extends StatefulWidget {
   final String PorteiroNome;
@@ -39,7 +40,11 @@ class _mainPorteiroState extends State<mainPorteiro> {
         setState(() {
           listaNome.add(res.data()['nome']);
 
+          galpao.addAll(res.data()['galpaes']);
+
+          print('dentro da array: ${galpao}' );
           final dropValue = ValueNotifier('');
+          final dropValue2 = ValueNotifier('');
 
           var db = FirebaseFirestore.instance;
           var UID = FirebaseAuth.instance.currentUser?.uid;
@@ -54,12 +59,31 @@ class _mainPorteiroState extends State<mainPorteiro> {
               if(key == 'nome'){
                 String PorteiroNomee = value;
 
-                Navigator.pop(context);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context){
-                      return modalPorteiro(listaNome, dropValue, PorteiroNomee);
+                var db = FirebaseFirestore.instance;
+                var UID = FirebaseAuth.instance.currentUser?.uid;
+                db.collection('Users').doc(UID).get().then((event){
+                  print("${event.data()}");
 
-                    }));
+                  event.data()?.forEach((key, value) {
+
+                    print(key);
+                    print(value);
+
+                    if(key == 'nome'){
+
+                      Navigator.pop(context);
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context){
+                            return modalPorteiro(listaNome, dropValue, PorteiroNomee, '',dropValue2, galpao);
+
+                          }));
+
+                    }
+
+                  });
+
+                }
+                );
 
               }
 
