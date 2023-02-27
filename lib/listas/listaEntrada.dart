@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -21,6 +24,23 @@ class _listEntradaState extends State<listEntrada> {
   Widget build(BuildContext context) {
     String holderPlaca = '';
 
+    double tamanhotexto = 20;
+    double tamanhotextomin = 16;
+    double aspect = 1.0;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextomin = 16;
+      aspect = 1.0;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 20;
+        aspect = 0.8;
+
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -38,7 +58,7 @@ class _listEntradaState extends State<listEntrada> {
                   Text(
                       'Pesquisar Placa:',
                     style: TextStyle(
-                      fontSize: 20
+                      fontSize: tamanhotexto
                     ),
                   ),
                   TextFormField(
@@ -61,7 +81,7 @@ class _listEntradaState extends State<listEntrada> {
                           )
                       ),
                       hintStyle: TextStyle(
-                          fontSize: 20
+                          fontSize: tamanhotexto
                       ),
                     ),
                   ),
@@ -78,7 +98,7 @@ class _listEntradaState extends State<listEntrada> {
                             timeInSecForIosWeb: 1,
                             backgroundColor: Colors.black,
                             textColor: Colors.white,
-                            fontSize: 16.0,
+                            fontSize: tamanhotextomin,
                           );
 
                         }else{
@@ -121,8 +141,8 @@ class _listEntradaState extends State<listEntrada> {
                             padding: const EdgeInsets.all(5),
                             crossAxisSpacing: 5,
                             mainAxisSpacing: 5,
-                            crossAxisCount: 2,
-                            childAspectRatio: 1.4,
+                            crossAxisCount: 3,
+                            childAspectRatio: aspect,
                             children:
                             snapshot.data!.docs.map((documents) {
                               String lacre = '${documents['LacreouNao']}';
@@ -169,7 +189,7 @@ class _listEntradaState extends State<listEntrada> {
                                                 documents['PlacaVeiculo'],
                                             style:
                                             TextStyle(
-                                                fontSize: 20,
+                                                fontSize: tamanhotexto,
                                                 fontWeight: FontWeight.bold
                                             ),
                                           ),
@@ -179,7 +199,7 @@ class _listEntradaState extends State<listEntrada> {
                                                 'Status: \n' +
                                                 documents['Status'],
                                               style: TextStyle(
-                                                fontSize: 20,
+                                                fontSize: tamanhotexto,
                                                   fontWeight: FontWeight.bold
                                               ),
                                             ),
@@ -191,7 +211,7 @@ class _listEntradaState extends State<listEntrada> {
                                               child: Text(
                                                   'Editar',
                                                 style: TextStyle(
-                                                    fontSize: 20,
+                                                    fontSize: tamanhotexto,
                                                   fontWeight: FontWeight.bold
                                                 ),
                                               )
@@ -231,7 +251,7 @@ class _listEntradaState extends State<listEntrada> {
                   Text(
                     'Operador: ' + widget.porteiroName,
                     style: TextStyle(
-                        fontSize: 20
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),

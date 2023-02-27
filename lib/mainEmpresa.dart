@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -115,9 +118,23 @@ class _mainEmpresaState extends State<mainEmpresa> {
 
     String holderPlaca = '';
 
-    bool estaPesquisando = false;
+    double tamanhotexto = 20;
+    double tamanhotextomin = 16;
+    double aspect = 1.0;
 
-    bool filtro = false;
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextomin = 16;
+      aspect = 1.0;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 20;
+        aspect = 0.8;
+
+      }
+    }
+
 
     return Scaffold(
       appBar: AppBar(
@@ -137,7 +154,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                     Text(
                       'Pesquisar Placa:',
                       style: TextStyle(
-                          fontSize: 20
+                          fontSize: tamanhotexto
                       ),
                     ),
                     TextFormField(
@@ -160,7 +177,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                             )
                         ),
                         hintStyle: TextStyle(
-                            fontSize: 20
+                            fontSize: tamanhotexto
                         ),
                       ),
                     ),
@@ -176,7 +193,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                               timeInSecForIosWeb: 1,
                               backgroundColor: Colors.black,
                               textColor: Colors.white,
-                              fontSize: 16.0,
+                              fontSize: tamanhotextomin,
                             );
 
                           }else{
@@ -191,7 +208,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                         child: Text(
                             'Pesquisar',
                           style: TextStyle(
-                              fontSize: 20,
+                              fontSize: tamanhotexto,
                               fontWeight: FontWeight.bold
                           ),
                         ),
@@ -213,6 +230,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                           return Container(
                             height: 700,
                             width: double.infinity,
+                            alignment: Alignment.center,
                             decoration: BoxDecoration(
                               border: Border.all(
                                 color: Colors.black,
@@ -221,11 +239,10 @@ class _mainEmpresaState extends State<mainEmpresa> {
                               borderRadius: BorderRadius.all(Radius.circular(5.0)),
                             ),
                             child: GridView.count(
-                              padding: const EdgeInsets.all(5),
-                              crossAxisSpacing: 5,
-                              mainAxisSpacing: 5,
-                              crossAxisCount: 2,
-                              childAspectRatio: 1.4,
+                              crossAxisCount: 3,
+                              mainAxisSpacing: 10,
+                              crossAxisSpacing: 10,
+                              childAspectRatio: aspect,
                               children:
                               snapshot.data!.docs.map((documents) {
 
@@ -237,8 +254,6 @@ class _mainEmpresaState extends State<mainEmpresa> {
                                 String lacrado = '';
                                 String ColetaOuEntregast = '';
                                 idDocumento = documents.id;
-
-                                filtro = true;
 
                                     if(lacre == 'lacre'){
                                       lacrebool = true;
@@ -289,13 +304,15 @@ class _mainEmpresaState extends State<mainEmpresa> {
                                         ),
                                         child:
                                         Column(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             Text(
                                               'Placa:\n' +
                                               documents['PlacaVeiculo'],
                                               style:
                                               TextStyle(
-                                                  fontSize: 20,
+                                                  fontSize: tamanhotexto,
                                                   fontWeight: FontWeight.bold,
                                                   color: textColor
                                               ),
@@ -306,7 +323,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                                                 'Status: \n' +
                                                     documents['Status'],
                                                 style: TextStyle(
-                                                    fontSize: 20,
+                                                    fontSize: tamanhotexto,
                                                     fontWeight: FontWeight.bold,
                                                     color: textColor
                                                 ),
@@ -409,7 +426,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                                                 child: Text(
                                                   'Mudar Status',
                                                   style: TextStyle(
-                                                      fontSize: 20,
+                                                      fontSize: tamanhotexto,
                                                       fontWeight: FontWeight.bold
                                                   ),
                                                 )
@@ -450,7 +467,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                   Text(
                     'Empresa: ' + widget.empresaName,
                     style: TextStyle(
-                        fontSize: 20
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),

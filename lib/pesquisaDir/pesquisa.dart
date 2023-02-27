@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 //Programado por HeroRickyGames
@@ -16,14 +19,27 @@ class _pesquisaState extends State<pesquisa> {
   Widget build(BuildContext context) {
     String idDocumento;
 
-    String holderPlaca = '';
+    double tamanhotexto = 20;
+    double tamanhotextomin = 16;
+    double aspect = 1.0;
 
-    bool estaPesquisando = false;
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextomin = 16;
+      aspect = 0.8;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 20;
+        aspect = 1.0;
+
+      }
+    }
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('GLK Controls - EMPRESAS'),
+        title: Text('GLK Controls - PESQUISAS'),
         backgroundColor: Colors.red[700],
       ),
       body: SingleChildScrollView(
@@ -51,11 +67,10 @@ class _pesquisaState extends State<pesquisa> {
                           height: 900,
                           width: double.infinity,
                           child: GridView.count(
-                            padding: const EdgeInsets.all(5),
-                            crossAxisSpacing: 5,
-                            mainAxisSpacing: 5,
-                            crossAxisCount: 2,
-                            childAspectRatio: 1.4,
+                            crossAxisCount: 3,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10,
+                            childAspectRatio: aspect,
                             children:
                             snapshot.data!.docs.map((documents) {
                               String lacre = '${documents['LacreouNao']}';
@@ -89,12 +104,14 @@ class _pesquisaState extends State<pesquisa> {
                                     padding: EdgeInsets.all(16),
                                     child:
                                     Column(
+                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(
                                           documents['PlacaVeiculo'],
                                           style:
                                           TextStyle(
-                                              fontSize: 20,
+                                              fontSize: tamanhotexto,
                                               fontWeight: FontWeight.bold
                                           ),
                                         ),
@@ -104,23 +121,21 @@ class _pesquisaState extends State<pesquisa> {
                                             'Status: \n' +
                                                 documents['Status'],
                                             style: TextStyle(
-                                                fontSize: 20,
+                                                fontSize: tamanhotexto,
                                                 fontWeight: FontWeight.bold
                                             ),
                                           ),
                                         ),
                                         ElevatedButton(
-                                            onPressed: (){
-
-                                            },
+                                            onPressed: null,
                                             child: Text(
-                                              'Editar',
+                                              'Mudar algo',
                                               style: TextStyle(
-                                                  fontSize: 20,
+                                                  fontSize: tamanhotexto,
                                                   fontWeight: FontWeight.bold
                                               ),
                                             )
-                                        )
+                                        ),
                                       ],
                                     ),
                                   ),
