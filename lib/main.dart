@@ -285,7 +285,9 @@ class _loginScreenState extends State<loginScreen> {
   Widget build(BuildContext context) {
     checkislog(context);
     return Scaffold(
-
+      body: Center(
+        child: CircularProgressIndicator(),
+      ),
    );
   }
 }

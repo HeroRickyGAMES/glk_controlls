@@ -280,6 +280,11 @@ class _mainEmpresaState extends State<mainEmpresa> {
                                       textColor = Colors.white as Color;
                                     }
 
+                                    if(documents['Status'] == 'Rejeitado'){
+                                      color = Colors.red[400] as Color;
+                                      textColor = Colors.white as Color;
+                                    }
+
                                     if(documents['Status'] == 'Entrada'){
                                       color = Colors.yellow[400] as Color;
                                       textColor = Colors.black as Color;
@@ -332,7 +337,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                                             ElevatedButton(
                                                 onPressed: (){
 
-                                                  if(documents['Status'] == 'Entrada'){
+                                                  if(documents['Status'] == 'Entrada' ){
 
                                                           String lacre = documents['LacreouNao'];
 
@@ -397,14 +402,18 @@ class _mainEmpresaState extends State<mainEmpresa> {
                                                           ),
                                                           actions: <Widget>[
                                                             TextButton(
-                                                              child: Text('Não deixar'),
+                                                              child: Text('Rejeitar Entrada'),
                                                               onPressed: () {
                                                                 Navigator.of(context).pop();
 
+                                                                FirebaseFirestore.instance.collection('Autorizacoes').doc(documents.id).update({
+                                                                  'DatadeRejeicao': DateTime.now(),
+                                                                  'Status': 'Rejeitado'
+                                                                });
                                                               },
                                                             ),
                                                             TextButton(
-                                                              child: Text('Deixar'),
+                                                              child: Text('Permitir Entrada'),
                                                               onPressed: () {
                                                                 Navigator.of(context).pop();
 
