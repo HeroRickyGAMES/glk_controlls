@@ -66,83 +66,87 @@ class _pesquisaState extends State<pesquisa> {
                         return Container(
                           height: 900,
                           width: double.infinity,
-                          child: GridView.count(
-                            crossAxisCount: 3,
-                            mainAxisSpacing: 10,
-                            crossAxisSpacing: 10,
-                            childAspectRatio: aspect,
-                            children:
-                            snapshot.data!.docs.map((documents) {
-                              String lacre = '${documents['LacreouNao']}';
-                              String ColetaOuEntrega = '${documents['ColetaOuEntrega']}';
-                              bool lacrebool = false;
-                              bool coletaBool = false;
-                              String lacrado = '';
-                              String ColetaOuEntregast = '';
-                              idDocumento = documents.id;
+                          child: OrientationBuilder(
+                            builder: (context, orientation) {
+                              return GridView.count(
+                                crossAxisCount: orientation == Orientation.portrait ? 2 : 4,
+                                mainAxisSpacing: 10,
+                                crossAxisSpacing: 10,
+                                childAspectRatio: orientation == Orientation.portrait ? 1.0 : 0.7,
+                                children:
+                                snapshot.data!.docs.map((documents) {
+                                  String lacre = '${documents['LacreouNao']}';
+                                  String ColetaOuEntrega = '${documents['ColetaOuEntrega']}';
+                                  bool lacrebool = false;
+                                  bool coletaBool = false;
+                                  String lacrado = '';
+                                  String ColetaOuEntregast = '';
+                                  idDocumento = documents.id;
 
-                                if(lacre == 'lacre'){
-                                  lacrebool = true;
-                                  lacrado = 'Lacrado';
-                                }
-                                if(lacre == 'naolacrado'){
-                                  lacrebool = false;
-                                  lacrado = 'Não Lacrado';
-                                }
-                                if(ColetaOuEntrega == 'coleta'){
-                                  coletaBool = true;
-                                  ColetaOuEntregast = 'Coleta';
-                                }
-                                if(ColetaOuEntrega == 'entrega'){
-                                  coletaBool = false;
-                                  ColetaOuEntregast = 'Entrega';
-                                }
-                                return Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Container(
-                                    color: Colors.grey[300],
-                                    padding: EdgeInsets.all(16),
-                                    child:
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          documents['PlacaVeiculo'],
-                                          style:
-                                          TextStyle(
-                                              fontSize: tamanhotexto,
-                                              fontWeight: FontWeight.bold
-                                          ),
-                                        ),
-                                        Container(
-                                          padding: EdgeInsets.all(16),
-                                          child: Text(
-                                            'Status: \n' +
-                                                documents['Status'],
-                                            style: TextStyle(
+                                  if(lacre == 'lacre'){
+                                    lacrebool = true;
+                                    lacrado = 'Lacrado';
+                                  }
+                                  if(lacre == 'naolacrado'){
+                                    lacrebool = false;
+                                    lacrado = 'Não Lacrado';
+                                  }
+                                  if(ColetaOuEntrega == 'coleta'){
+                                    coletaBool = true;
+                                    ColetaOuEntregast = 'Coleta';
+                                  }
+                                  if(ColetaOuEntrega == 'entrega'){
+                                    coletaBool = false;
+                                    ColetaOuEntregast = 'Entrega';
+                                  }
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      color: Colors.grey[300],
+                                      padding: EdgeInsets.all(16),
+                                      child:
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            documents['PlacaVeiculo'],
+                                            style:
+                                            TextStyle(
                                                 fontSize: tamanhotexto,
                                                 fontWeight: FontWeight.bold
                                             ),
                                           ),
-                                        ),
-                                        ElevatedButton(
-                                            onPressed: null,
+                                          Container(
+                                            padding: EdgeInsets.all(16),
                                             child: Text(
-                                              'Mudar algo',
+                                              'Status: \n' +
+                                                  documents['Status'],
                                               style: TextStyle(
                                                   fontSize: tamanhotexto,
                                                   fontWeight: FontWeight.bold
                                               ),
-                                            )
-                                        ),
-                                      ],
+                                            ),
+                                          ),
+                                          ElevatedButton(
+                                              onPressed: null,
+                                              child: Text(
+                                                'Mudar algo',
+                                                style: TextStyle(
+                                                    fontSize: tamanhotexto,
+                                                    fontWeight: FontWeight.bold
+                                                ),
+                                              )
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                );
+                                  );
 
-                            }
-                            ).toList().reversed.toList(),
+                                }
+                                ).toList().reversed.toList(),
+                              );
+                            },
                           ),
                         );
                       }

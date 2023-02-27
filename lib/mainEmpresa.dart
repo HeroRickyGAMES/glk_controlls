@@ -125,7 +125,10 @@ class _mainEmpresaState extends State<mainEmpresa> {
     if(kIsWeb){
       tamanhotexto = 25;
       tamanhotextomin = 16;
+      //aspect = 1.0;
       aspect = 1.0;
+
+      print(aspect);
     }else{
       if(Platform.isAndroid){
 
@@ -238,217 +241,221 @@ class _mainEmpresaState extends State<mainEmpresa> {
                               ),
                               borderRadius: BorderRadius.all(Radius.circular(5.0)),
                             ),
-                            child: GridView.count(
-                              crossAxisCount: 3,
-                              mainAxisSpacing: 10,
-                              crossAxisSpacing: 10,
-                              childAspectRatio: aspect,
-                              children:
-                              snapshot.data!.docs.map((documents) {
+                            child: OrientationBuilder(
+                              builder: (context, orientation) {
+                                return GridView.count(
+                                  crossAxisCount: orientation == Orientation.portrait ? 2 : 4,
+                                  mainAxisSpacing: 10,
+                                  crossAxisSpacing: 10,
+                                  childAspectRatio: orientation == Orientation.portrait ? 1.0 : 0.7,
+                                  children:
+                                  snapshot.data!.docs.map((documents) {
 
-                                if(documents['Empresa'] == widget.empresaName){
-                                String lacre = '${documents['LacreouNao']}';
-                                String ColetaOuEntrega = '${documents['ColetaOuEntrega']}';
-                                bool lacrebool = false;
-                                bool coletaBool = false;
-                                String lacrado = '';
-                                String ColetaOuEntregast = '';
-                                idDocumento = documents.id;
+                                    if(documents['Empresa'] == widget.empresaName){
+                                      String lacre = '${documents['LacreouNao']}';
+                                      String ColetaOuEntrega = '${documents['ColetaOuEntrega']}';
+                                      bool lacrebool = false;
+                                      bool coletaBool = false;
+                                      String lacrado = '';
+                                      String ColetaOuEntregast = '';
+                                      idDocumento = documents.id;
 
-                                    if(lacre == 'lacre'){
-                                      lacrebool = true;
-                                      lacrado = 'Lacrado';
-                                    }
-                                    if(lacre == 'naolacrado'){
-                                      lacrebool = false;
-                                      lacrado = 'Não Lacrado';
-                                    }
-                                    if(ColetaOuEntrega == 'coleta'){
-                                      coletaBool = true;
-                                      ColetaOuEntregast = 'Coleta';
-                                    }
-                                    if(ColetaOuEntrega == 'entrega'){
-                                      coletaBool = false;
-                                      ColetaOuEntregast = 'Entrega';
-                                    }
+                                      if(lacre == 'lacre'){
+                                        lacrebool = true;
+                                        lacrado = 'Lacrado';
+                                      }
+                                      if(lacre == 'naolacrado'){
+                                        lacrebool = false;
+                                        lacrado = 'Não Lacrado';
+                                      }
+                                      if(ColetaOuEntrega == 'coleta'){
+                                        coletaBool = true;
+                                        ColetaOuEntregast = 'Coleta';
+                                      }
+                                      if(ColetaOuEntrega == 'entrega'){
+                                        coletaBool = false;
+                                        ColetaOuEntregast = 'Entrega';
+                                      }
 
-                                     Color color = Colors.white as Color;
-                                     Color textColor = Colors.white as Color;
+                                      Color color = Colors.white as Color;
+                                      Color textColor = Colors.white as Color;
 
-                                    if(documents['Status'] == 'Aguardando'){
-                                      color = Colors.red[400] as Color;
-                                      textColor = Colors.white as Color;
-                                    }
+                                      if(documents['Status'] == 'Aguardando'){
+                                        color = Colors.red[400] as Color;
+                                        textColor = Colors.white as Color;
+                                      }
 
-                                    if(documents['Status'] == 'Rejeitado'){
-                                      color = Colors.red[400] as Color;
-                                      textColor = Colors.white as Color;
-                                    }
+                                      if(documents['Status'] == 'Rejeitado'){
+                                        color = Colors.red[400] as Color;
+                                        textColor = Colors.white as Color;
+                                      }
 
-                                    if(documents['Status'] == 'Entrada'){
-                                      color = Colors.yellow[400] as Color;
-                                      textColor = Colors.black as Color;
-                                    }
+                                      if(documents['Status'] == 'Entrada'){
+                                        color = Colors.yellow[400] as Color;
+                                        textColor = Colors.black as Color;
+                                      }
 
-                                    if(documents['Status'] == 'Saida'){
-                                      color = Colors.green[400] as Color;
-                                      textColor = Colors.white as Color;
-                                    }
+                                      if(documents['Status'] == 'Saida'){
+                                        color = Colors.green[400] as Color;
+                                        textColor = Colors.white as Color;
+                                      }
 
-                                    return Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Container(
-                                        padding: EdgeInsets.all(16),
-                                        decoration: BoxDecoration(
-                                          color: color,
-                                          border: Border.all(
-                                            color: Colors.black,
-                                            width: 1.0,
-                                          ),
-                                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                        ),
-                                        child:
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'Placa:\n' +
-                                              documents['PlacaVeiculo'],
-                                              style:
-                                              TextStyle(
-                                                  fontSize: tamanhotexto,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: textColor
-                                              ),
+                                      return Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Container(
+                                          padding: EdgeInsets.all(16),
+                                          decoration: BoxDecoration(
+                                            color: color,
+                                            border: Border.all(
+                                              color: Colors.black,
+                                              width: 1.0,
                                             ),
-                                            Container(
-                                              padding: EdgeInsets.all(16),
-                                              child: Text(
-                                                'Status: \n' +
-                                                    documents['Status'],
-                                                style: TextStyle(
+                                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                          ),
+                                          child:
+                                          Column(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Text(
+                                                'Placa:\n' +
+                                                    documents['PlacaVeiculo'],
+                                                style:
+                                                TextStyle(
                                                     fontSize: tamanhotexto,
                                                     fontWeight: FontWeight.bold,
                                                     color: textColor
                                                 ),
                                               ),
-                                            ),
-                                            ElevatedButton(
-                                                onPressed: (){
-
-                                                  if(documents['Status'] == 'Entrada' ){
-
-                                                          String lacre = documents['LacreouNao'];
-
-                                                          if(lacre == 'lacre'){
-                                                            String liberadopor = documents['QuemAutorizou'];
-                                                            Timestamp horarioCriacao = documents['Horario Criado'];
-                                                            String nomeMotorista = documents['nomeMotorista'];
-                                                            String Veiculo = documents['Veiculo'];
-                                                            String PlacaVeiculo = documents['PlacaVeiculo'];
-                                                            String Empresadestino = documents['Empresa'];
-                                                            String EmpresadeOrigin = documents['EmpresadeOrigin'];
-                                                            String Galpao = documents['Galpão'];
-                                                            Timestamp DataEntrada = documents['DataEntrada'];
-                                                            String lacradoStr = documents['lacrenum'];
-
-                                                            String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
-                                                            String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
-
-                                                            Navigator.push(context,
-                                                                MaterialPageRoute(builder: (context){
-                                                                  return veiculoEntrada(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, formattedDate2);
-                                                                }));
-
-                                                          }
-                                                          else{
-                                                            if(lacre == 'naolacrado'){
-                                                              String liberadopor = documents['QuemAutorizou'];
-                                                              Timestamp horarioCriacao = documents['Horario Criado'];
-                                                              Timestamp DataEntrada = documents['DataEntrada'];
-                                                              String nomeMotorista = documents['nomeMotorista'];
-                                                              String Veiculo = documents['Veiculo'];
-                                                              String PlacaVeiculo = documents['PlacaVeiculo'];
-                                                              String Empresadestino = documents['Empresa'];
-                                                              String EmpresadeOrigin = documents['EmpresadeOrigin'];
-                                                              String Galpao = documents['Galpão'];
-
-                                                              String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
-                                                              String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
-
-                                                              print(formattedDate);
-
-                                                              Navigator.push(context,
-                                                                  MaterialPageRoute(builder: (context){
-                                                                    return veiculoEntrada(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, formattedDate2);
-                                                                  }));
-                                                            }
-                                                          }
-                                                        }
-
-                                                  if(documents['Status'] == 'Aguardando'){
-                                                    showDialog<void>(
-                                                      context: context,
-                                                      builder: (BuildContext context) {
-                                                        return AlertDialog(
-                                                          title: Text('Deseja autorizar entrada?'),
-                                                          content: SingleChildScrollView(
-                                                            child: ListBody(
-                                                              children: <Widget>[
-                                                                Text('Deseja autorizar entrada desse veiculo?'),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          actions: <Widget>[
-                                                            TextButton(
-                                                              child: Text('Rejeitar Entrada'),
-                                                              onPressed: () {
-                                                                Navigator.of(context).pop();
-
-                                                                FirebaseFirestore.instance.collection('Autorizacoes').doc(documents.id).update({
-                                                                  'DatadeRejeicao': DateTime.now(),
-                                                                  'Status': 'Rejeitado'
-                                                                });
-                                                              },
-                                                            ),
-                                                            TextButton(
-                                                              child: Text('Permitir Entrada'),
-                                                              onPressed: () {
-                                                                Navigator.of(context).pop();
-
-                                                                FirebaseFirestore.instance.collection('Autorizacoes').doc(documents.id).update({
-                                                                  'DataEntrada': DateTime.now(),
-                                                                  'Status': 'Entrada'
-                                                                });
-
-                                                              },
-                                                            ),
-                                                          ],
-                                                        );
-                                                      },
-                                                    );
-                                                  }else{
-
-                                                  }
-                                                },
+                                              Container(
+                                                padding: EdgeInsets.all(16),
                                                 child: Text(
-                                                  'Mudar Status',
+                                                  'Status: \n' +
+                                                      documents['Status'],
                                                   style: TextStyle(
                                                       fontSize: tamanhotexto,
-                                                      fontWeight: FontWeight.bold
+                                                      fontWeight: FontWeight.bold,
+                                                      color: textColor
                                                   ),
-                                                )
-                                            )
-                                          ],
+                                                ),
+                                              ),
+                                              ElevatedButton(
+                                                  onPressed: (){
+
+                                                    if(documents['Status'] == 'Entrada' ){
+
+                                                      String lacre = documents['LacreouNao'];
+
+                                                      if(lacre == 'lacre'){
+                                                        String liberadopor = documents['QuemAutorizou'];
+                                                        Timestamp horarioCriacao = documents['Horario Criado'];
+                                                        String nomeMotorista = documents['nomeMotorista'];
+                                                        String Veiculo = documents['Veiculo'];
+                                                        String PlacaVeiculo = documents['PlacaVeiculo'];
+                                                        String Empresadestino = documents['Empresa'];
+                                                        String EmpresadeOrigin = documents['EmpresadeOrigin'];
+                                                        String Galpao = documents['Galpão'];
+                                                        Timestamp DataEntrada = documents['DataEntrada'];
+                                                        String lacradoStr = documents['lacrenum'];
+
+                                                        String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
+                                                        String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
+
+                                                        Navigator.push(context,
+                                                            MaterialPageRoute(builder: (context){
+                                                              return veiculoEntrada(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, formattedDate2);
+                                                            }));
+
+                                                      }
+                                                      else{
+                                                        if(lacre == 'naolacrado'){
+                                                          String liberadopor = documents['QuemAutorizou'];
+                                                          Timestamp horarioCriacao = documents['Horario Criado'];
+                                                          Timestamp DataEntrada = documents['DataEntrada'];
+                                                          String nomeMotorista = documents['nomeMotorista'];
+                                                          String Veiculo = documents['Veiculo'];
+                                                          String PlacaVeiculo = documents['PlacaVeiculo'];
+                                                          String Empresadestino = documents['Empresa'];
+                                                          String EmpresadeOrigin = documents['EmpresadeOrigin'];
+                                                          String Galpao = documents['Galpão'];
+
+                                                          String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
+                                                          String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
+
+                                                          print(formattedDate);
+
+                                                          Navigator.push(context,
+                                                              MaterialPageRoute(builder: (context){
+                                                                return veiculoEntrada(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, formattedDate2);
+                                                              }));
+                                                        }
+                                                      }
+                                                    }
+
+                                                    if(documents['Status'] == 'Aguardando'){
+                                                      showDialog<void>(
+                                                        context: context,
+                                                        builder: (BuildContext context) {
+                                                          return AlertDialog(
+                                                            title: Text('Deseja autorizar entrada?'),
+                                                            content: SingleChildScrollView(
+                                                              child: ListBody(
+                                                                children: <Widget>[
+                                                                  Text('Deseja autorizar entrada desse veiculo?'),
+                                                                ],
+                                                              ),
+                                                            ),
+                                                            actions: <Widget>[
+                                                              TextButton(
+                                                                child: Text('Rejeitar Entrada'),
+                                                                onPressed: () {
+                                                                  Navigator.of(context).pop();
+
+                                                                  FirebaseFirestore.instance.collection('Autorizacoes').doc(documents.id).update({
+                                                                    'DatadeRejeicao': DateTime.now(),
+                                                                    'Status': 'Rejeitado'
+                                                                  });
+                                                                },
+                                                              ),
+                                                              TextButton(
+                                                                child: Text('Permitir Entrada'),
+                                                                onPressed: () {
+                                                                  Navigator.of(context).pop();
+
+                                                                  FirebaseFirestore.instance.collection('Autorizacoes').doc(documents.id).update({
+                                                                    'DataEntrada': DateTime.now(),
+                                                                    'Status': 'Entrada'
+                                                                  });
+
+                                                                },
+                                                              ),
+                                                            ],
+                                                          );
+                                                        },
+                                                      );
+                                                    }else{
+
+                                                    }
+                                                  },
+                                                  child: Text(
+                                                    'Mudar Status',
+                                                    style: TextStyle(
+                                                        fontSize: tamanhotexto,
+                                                        fontWeight: FontWeight.bold
+                                                    ),
+                                                  )
+                                              )
+                                            ],
+                                          ),
                                         ),
-                                      ),
-                                    );
+                                      );
                                     }else{
                                       return SizedBox(width: 0, height: 0);
                                     }
-                                }
-                              ).toList().reversed.toList(),
+                                  }
+                                  ).toList().reversed.toList(),
+                                );
+                              },
                             ),
                           );
                         }
