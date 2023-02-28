@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:glk_controls/modal/cadastroEmpresa.dart';
 import 'package:glk_controls/modal/cadastroUsuarioADM.dart';
@@ -13,6 +15,8 @@ class painelADM extends StatefulWidget {
 }
 
 class _painelADMState extends State<painelADM> {
+  List listaNome = [];
+  List uids = [ ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,8 +52,42 @@ class _painelADMState extends State<painelADM> {
             child: Container(
               padding: EdgeInsets.all(16),
               child: ElevatedButton(
-                onPressed: (){
+                onPressed: () async {
 
+
+                  var result = await FirebaseFirestore.instance
+                      .collection("empresa")
+                      .get();
+                  result.docs.forEach((res) {
+                    print(res.data()['nome']);
+
+                    setState(() {
+                      listaNome.add(res.data()['nome']);
+
+                      uids.add(res.data()['id']);
+
+                      print('dentro da array: ${uids}');
+                      final dropValue = ValueNotifier('');
+
+                      var db = FirebaseFirestore.instance;
+                      var UID = FirebaseAuth.instance.currentUser?.uid;
+                      db.collection('Users').doc(UID).get().then((event){
+                        print("${event.data()}");
+
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context){
+                              return cadastroUsuarioModal(dropValue, listaNome, uids);
+                            }));
+
+                      }
+                      );
+
+
+                    });
+
+                  });
+                  
+                  
                 },
                 child:
                 Text(

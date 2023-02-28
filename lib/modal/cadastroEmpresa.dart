@@ -256,7 +256,8 @@ class cadastroEmpresa extends StatelessWidget {
                                             'Telefone': telNum,
                                             'email': email,
                                             'tipoConta': 'empresa',
-                                            'estaativo': true
+                                            'estaativo': true,
+                                            'id': userCredential.user?.uid
                                           }
                                       );
                                       FirebaseFirestore.instance.collection('Users').doc(userCredential.user?.uid).set(
@@ -267,7 +268,8 @@ class cadastroEmpresa extends StatelessWidget {
                                             'Telefone': telNum,
                                             'email': email,
                                             'tipoConta': 'empresa',
-                                            'estaativo': true
+                                            'estaativo': true,
+                                            'id': userCredential.user?.uid,
                                           }
                                       ).then((value) {
                                         Fluttertoast.showToast(
@@ -292,10 +294,7 @@ class cadastroEmpresa extends StatelessWidget {
                                         fontSize: 20,
                                       );
                                     }
-
                                     await app.delete();
-
-
                                   }
                                 }
                               }
