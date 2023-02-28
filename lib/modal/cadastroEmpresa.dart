@@ -248,22 +248,26 @@ class cadastroEmpresa extends StatelessWidget {
                                         textColor: Colors.white,
                                         fontSize: 20,
                                       );
-                                      FirebaseFirestore.instance.collection('empresa').doc().set(
+                                      FirebaseFirestore.instance.collection('empresa').doc(userCredential.user?.uid).set(
                                           {
-                                            'Nome': empresaName,
+                                            'nome': empresaName,
                                             'galpaes': lista,
                                             'NameResponsavel': respName,
                                             'Telefone': telNum,
-                                            'email': email
+                                            'email': email,
+                                            'tipoConta': 'empresa',
+                                            'estaativo': true
                                           }
                                       );
-                                      FirebaseFirestore.instance.collection('Users').doc().set(
+                                      FirebaseFirestore.instance.collection('Users').doc(userCredential.user?.uid).set(
                                           {
-                                            'Nome': empresaName,
+                                            'nome': empresaName,
                                             'galpaes': lista,
                                             'NameResponsavel': respName,
                                             'Telefone': telNum,
-                                            'email': email
+                                            'email': email,
+                                            'tipoConta': 'empresa',
+                                            'estaativo': true
                                           }
                                       ).then((value) {
                                         Fluttertoast.showToast(
@@ -274,14 +278,19 @@ class cadastroEmpresa extends StatelessWidget {
                                           textColor: Colors.white,
                                           fontSize: 20,
                                         );
+                                        Navigator.pop(context);
                                       });
 
                                     }
                                     on FirebaseAuthException catch (e) {
-                                      // Do something with exception. This try/catch is here to make sure
-                                      // that even if the user creation fails, app.delete() runs, if is not,
-                                      // next time Firebase.initializeApp() will fail as the previous one was
-                                      // not deleted.
+                                      Fluttertoast.showToast(
+                                        msg: e.message.toString(),
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.black,
+                                        textColor: Colors.white,
+                                        fontSize: 20,
+                                      );
                                     }
 
                                     await app.delete();
