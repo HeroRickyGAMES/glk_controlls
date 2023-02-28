@@ -9,15 +9,15 @@ import '../pesquisaDir/pesquisa.dart';
 
 //Programado por HeroRickyGames
 
-class listEntrada extends StatefulWidget {
+class listaSaida extends StatefulWidget {
   String porteiroName;
-  listEntrada(this.porteiroName, {Key? key}) : super(key: key);
+  listaSaida(this.porteiroName, {Key? key}) : super(key: key);
 
   @override
-  State<listEntrada> createState() => _listEntradaState();
+  State<listaSaida> createState() => _listaSaidaState();
 }
 
-class _listEntradaState extends State<listEntrada> {
+class _listaSaidaState extends State<listaSaida> {
   String? idDocumento;
 
   @override
@@ -44,8 +44,13 @@ class _listEntradaState extends State<listEntrada> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('GLK Controls - ENTRADA'),
-        backgroundColor: Colors.green[700],
+        title: Text(
+            'GLK Controls - ENTRADA',
+          style: TextStyle(
+              color: Colors.black
+          ),
+        ),
+        backgroundColor: Colors.yellow,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -56,9 +61,9 @@ class _listEntradaState extends State<listEntrada> {
               Column(
                 children: [
                   Text(
-                      'Pesquisar Placa:',
+                    'Pesquisar Placa:',
                     style: TextStyle(
-                      fontSize: tamanhotexto
+                        fontSize: tamanhotexto
                     ),
                   ),
                   TextFormField(
@@ -77,7 +82,7 @@ class _listEntradaState extends State<listEntrada> {
 
                       border: OutlineInputBorder(
                           borderSide: BorderSide(
-                              color: Colors.green
+                              color: Colors.yellow
                           )
                       ),
                       hintStyle: TextStyle(
@@ -119,8 +124,7 @@ class _listEntradaState extends State<listEntrada> {
                       stream: FirebaseFirestore
                           .instance
                           .collection('Autorizacoes')
-                          .where('Status', isNotEqualTo: 'Saida')
-                          .orderBy("Status", descending: true)
+                          .where('Status', isEqualTo: 'Liberado')
                           .snapshots(),
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -155,73 +159,108 @@ class _listEntradaState extends State<listEntrada> {
                               String ColetaOuEntregast = '';
                               idDocumento = documents.id;
 
-                                  if(lacre == 'lacre'){
-                                    lacrebool = true;
-                                    lacrado = 'Lacrado';
-                                  }
-                                  if(lacre == 'naolacrado'){
-                                    lacrebool = false;
-                                    lacrado = 'Não Lacrado';
-                                  }
-                                  if(ColetaOuEntrega == 'coleta'){
-                                    coletaBool = true;
-                                    ColetaOuEntregast = 'Coleta';
-                                  }
-                                  if(ColetaOuEntrega == 'entrega'){
-                                    coletaBool = false;
-                                    ColetaOuEntregast = 'Entrega';
-                                  }
-                                  return Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      padding: EdgeInsets.all(16),
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey[300],
-                                        border: Border.all(
-                                          color: Colors.black,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                      ),
-                                      child:
-                                      Column(
-                                        children: [
-                                          Text(
-                                                documents['PlacaVeiculo'],
-                                            style:
-                                            TextStyle(
-                                                fontSize: tamanhotexto,
-                                                fontWeight: FontWeight.bold
-                                            ),
-                                          ),
-                                          Container(
-                                            padding: EdgeInsets.all(16),
-                                            child: Text(
-                                                'Status: \n' +
-                                                documents['Status'],
-                                              style: TextStyle(
-                                                fontSize: tamanhotexto,
-                                                  fontWeight: FontWeight.bold
-                                              ),
-                                            ),
-                                          ),
-                                          ElevatedButton(
-                                              onPressed: (){
-
-                                              },
-                                              child: Text(
-                                                  'Editar',
-                                                style: TextStyle(
-                                                    fontSize: tamanhotexto,
-                                                  fontWeight: FontWeight.bold
-                                                ),
-                                              )
-                                          )
-                                        ],
-                                      ),
+                              if(lacre == 'lacre'){
+                                lacrebool = true;
+                                lacrado = 'Lacrado';
+                              }
+                              if(lacre == 'naolacrado'){
+                                lacrebool = false;
+                                lacrado = 'Não Lacrado';
+                              }
+                              if(ColetaOuEntrega == 'coleta'){
+                                coletaBool = true;
+                                ColetaOuEntregast = 'Coleta';
+                              }
+                              if(ColetaOuEntrega == 'entrega'){
+                                coletaBool = false;
+                                ColetaOuEntregast = 'Entrega';
+                              }
+                              return Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Container(
+                                  padding: EdgeInsets.all(16),
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey[300],
+                                    border: Border.all(
+                                      color: Colors.black,
+                                      width: 1.0,
                                     ),
-                                  );
-                                }).toList().reversed.toList(),
+                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                  ),
+                                  child:
+                                  Column(
+                                    children: [
+                                      Text(
+                                        documents['PlacaVeiculo'],
+                                        style:
+                                        TextStyle(
+                                            fontSize: tamanhotexto,
+                                            fontWeight: FontWeight.bold
+                                        ),
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.all(16),
+                                        child: Text(
+                                          'Status: \n' +
+                                              documents['Status'],
+                                          style: TextStyle(
+                                              fontSize: tamanhotexto,
+                                              fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                      ),
+                                      ElevatedButton(
+                                          onPressed: (){
+                                            showDialog<void>(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  title: Text('Deseja liberar a saída?'),
+                                                  content: SingleChildScrollView(
+                                                    child: ListBody(
+                                                      children: <Widget>[
+                                                        Text('Deseja liberar a saída desse veiculo?'),
+                                                      ],
+                                                    ),
+                                                  ),
+                                                  actions: <Widget>[
+                                                    TextButton(
+                                                      child: Text('Rejeitar Saida'),
+                                                      onPressed: () {
+                                                        Navigator.of(context).pop();
+
+                                                      },
+                                                    ),
+                                                    TextButton(
+                                                      child: Text('Permitir Saida'),
+                                                      onPressed: () {
+                                                        Navigator.of(context).pop();
+
+                                                        FirebaseFirestore.instance.collection('Autorizacoes').doc(documents.id).update({
+                                                          'DataEntrada': DateTime.now(),
+                                                          'Status': 'Saida'
+                                                        });
+
+                                                      },
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                          },
+                                          child: Text(
+                                            'Liberar Saída',
+                                            style: TextStyle(
+                                                fontSize: tamanhotexto,
+                                                fontWeight: FontWeight.bold,
+                                            ),
+                                          )
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              );
+                            }).toList().reversed.toList(),
                           ),
                         );
                       }

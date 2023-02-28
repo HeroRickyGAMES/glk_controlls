@@ -243,6 +243,11 @@ class _mainEmpresaState extends State<mainEmpresa> {
                                         textColor = Colors.black as Color;
                                       }
 
+                                      if(documents['Status'] == 'Liberado'){
+                                        color = Colors.yellow[400] as Color;
+                                        textColor = Colors.black as Color;
+                                      }
+
                                       if(documents['Status'] == 'Saida'){
                                         color = Colors.green[400] as Color;
                                         textColor = Colors.white as Color;
@@ -287,6 +292,8 @@ class _mainEmpresaState extends State<mainEmpresa> {
                                                   ),
                                                 ),
                                               ),
+                                              documents['Status'] == 'Saida' ?
+                                              Text(''):
                                               ElevatedButton(
                                                   onPressed: (){
 

@@ -64,6 +64,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
     }
 
     String _textoPredefinido = widget.lacradoStr;
+    lacreSt = widget.lacradoStr;
 
     TextEditingController _textEditingController = TextEditingController(text: _textoPredefinido);
     return Scaffold(
@@ -222,7 +223,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                   if(lacrebool == false){
                     FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                       'DataSaida': DateTime.now(),
-                      'Status': 'Saida'
+                      'Status': 'Liberado'
                     });
                     Navigator.pop(context);
                   }
@@ -238,10 +239,11 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                         fontSize: 16.0,
                       );
                     }else{
-                      FirebaseFirestore.instance.collection('Autorizacoes').doc(idDocumento).update({
+                      FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                         'DataSaida': DateTime.now(),
-                        'Status': 'Saida'
+                        'Status': 'Liberado'
                       });
+                      Navigator.pop(context);
                     }
                   }
                 },

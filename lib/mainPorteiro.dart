@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:glk_controls/listas/listaEntrada.dart';
 import 'package:glk_controls/modal/modalVeiculoEdit.dart';
 
+import 'listas/listaSaida.dart';
 import 'modal/modalVeiculo.dart';
 
 
@@ -156,7 +157,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
               onPressed: (){
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context){
-                      return modalVeiculoEdit();
+                      return listaSaida(widget.PorteiroNome);
                     }));
               },
               child: Text(

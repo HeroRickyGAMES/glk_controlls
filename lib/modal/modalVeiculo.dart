@@ -208,7 +208,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
                                   var uuid = Uuid();
 
-                                  String idd = uuid.v4() + "${DateTime.now().toString()}";
+                                  String idd = "${DateTime.now().toString()}" + uuid.v4();
 
                                   final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
 
@@ -242,6 +242,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                       fontSize: 16.0,
                                     );
                                     widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
+                                    widget.galpaes.removeRange(0, widget.galpaes.length);
 
                                     var db = FirebaseFirestore.instance;
                                     var UID = FirebaseAuth.instance.currentUser?.uid;
@@ -299,7 +300,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
                                   var uuid = Uuid();
 
-                                  String idd = uuid.v4() + "${DateTime.now().toString()}";
+                                  String idd = "${DateTime.now().toString()}" + uuid.v4();
 
                                   final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
 
@@ -332,6 +333,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                       fontSize: 16.0,
                                     );
                                     widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
+                                    widget.galpaes.removeRange(0, widget.galpaes.length);
 
                                     var db = FirebaseFirestore.instance;
                                     var UID = FirebaseAuth.instance.currentUser?.uid;
@@ -394,6 +396,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
             ElevatedButton(onPressed: (){
 
               widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
+              widget.galpaes.removeRange(0, widget.galpaes.length);
               galpaes.removeRange(0, galpaes.length);
 
               var db = FirebaseFirestore.instance;
@@ -634,7 +637,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   Container(
                     padding: EdgeInsets.all(16),
                     child: Text(
-                      'Empresa Galpão *',
+                      'Selecione um disponivel Galpão (Selecione o que bate com com o nome da empresa)*',
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold
@@ -801,6 +804,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
               WillPopScope(
                 onWillPop: () async {
                   widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
+                  widget.galpaes.removeRange(0, widget.galpaes.length);
                   galpaes.removeRange(0, galpaes.length);
                   Navigator.pop(context);
                   Navigator.push(context,

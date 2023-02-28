@@ -44,6 +44,7 @@ dependencies:
   firebase_storage: ^11.0.13
   image_picker: ^0.8.6+2
   uuid: ^3.0.7
+  pdf: ^3.9.0
 
 dev_dependencies:
   flutter_test:
