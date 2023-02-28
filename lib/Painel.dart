@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:glk_controls/Painel.dart';
+import 'package:glk_controls/modal/cadastroEmpresa.dart';
 import 'package:glk_controls/modal/cadastroUsuarioADM.dart';
 
 //Programado por HeroRickyGames
 
-class setorADM extends StatefulWidget {
+class painelADM extends StatefulWidget {
   final String ADMName;
-  const setorADM(this.ADMName);
+  const painelADM(this.ADMName);
 
   @override
-  State<setorADM> createState() => _setorADMState();
+  State<painelADM> createState() => _painelADMState();
 }
 
-class _setorADMState extends State<setorADM> {
+class _painelADMState extends State<painelADM> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('SETOR ADIMISTRATIVO'),
+        title: Text('SETOR ADIMISTRATIVO - Painel'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -29,84 +29,99 @@ class _setorADMState extends State<setorADM> {
               padding: EdgeInsets.all(16),
               child: ElevatedButton(
                 onPressed: (){
-
-                },
-                child:
-                Text(
-                  'Cadastrar',
-                  style: TextStyle(
-                      fontSize: 20
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Center(
-            child: Container(
-              padding: EdgeInsets.all(16),
-              child: ElevatedButton(
-                onPressed: (){
-
-                },
-                child:
-                Text(
-                  'Entrada',
-                  style: TextStyle(
-                      fontSize: 20
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Center(
-            child: Container(
-              padding: EdgeInsets.all(16),
-              child: ElevatedButton(
-                onPressed: (){
-
-                },
-                child:
-                Text(
-                  'Saída',
-                  style: TextStyle(
-                      fontSize: 20
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Center(
-            child: Container(
-              padding: EdgeInsets.all(16),
-              child: ElevatedButton(
-                onPressed: (){
-
-                },
-                child:
-                Text(
-                  'Relatorio',
-                  style: TextStyle(
-                      fontSize: 20
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Center(
-            child: Container(
-              padding: EdgeInsets.all(16),
-              child: ElevatedButton(
-                onPressed: (){
-
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context){
-                        return painelADM(widget.ADMName);
+                        return cadastroEmpresa();
                       }));
+                },
+                child:
+                Text(
+                  'Cadastrar Empresa',
+                  style: TextStyle(
+                      fontSize: 20
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Center(
+            child: Container(
+              padding: EdgeInsets.all(16),
+              child: ElevatedButton(
+                onPressed: (){
 
                 },
                 child:
                 Text(
-                  'Painel',
+                  'Cadastrar Operador da Empresa',
+                  style: TextStyle(
+                      fontSize: 20
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Center(
+            child: Container(
+              padding: EdgeInsets.all(16),
+              child: ElevatedButton(
+                onPressed: (){
+
+                },
+                child:
+                Text(
+                  'Cadastrar Operador Interno',
+                  style: TextStyle(
+                      fontSize: 20
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Center(
+            child: Container(
+              padding: EdgeInsets.all(16),
+              child: ElevatedButton(
+                onPressed: (){
+
+                },
+                child:
+                Text(
+                  'Permissões',
+                  style: TextStyle(
+                      fontSize: 20
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Center(
+            child: Container(
+              padding: EdgeInsets.all(16),
+              child: ElevatedButton(
+                onPressed: (){
+
+                },
+                child:
+                Text(
+                  'Cadastro visitantes',
+                  style: TextStyle(
+                      fontSize: 20
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Center(
+            child: Container(
+              padding: EdgeInsets.all(16),
+              child: ElevatedButton(
+                onPressed: (){
+
+                },
+                child:
+                Text(
+                  'Relatorios Gerais',
                   style: TextStyle(
                       fontSize: 20
                   ),
