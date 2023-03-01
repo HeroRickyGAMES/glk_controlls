@@ -31,7 +31,7 @@ class _painelADMState extends State<painelADM> {
           Center(
             child: Container(
               width: double.infinity,
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
               child: ElevatedButton(
                 onPressed: (){
                   Navigator.push(context,
@@ -52,7 +52,7 @@ class _painelADMState extends State<painelADM> {
           Center(
             child: Container(
               width: double.infinity,
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
               child: ElevatedButton(
                 onPressed: () async {
 
@@ -90,7 +90,7 @@ class _painelADMState extends State<painelADM> {
           Center(
             child: Container(
               width: double.infinity,
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
               child: ElevatedButton(
                 onPressed: (){
                   Navigator.push(context,
@@ -111,7 +111,7 @@ class _painelADMState extends State<painelADM> {
           Center(
             child: Container(
               width: double.infinity,
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
               child: ElevatedButton(
                 onPressed: (){
 
@@ -129,7 +129,7 @@ class _painelADMState extends State<painelADM> {
           Center(
             child: Container(
               width: double.infinity,
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
               child: ElevatedButton(
                 onPressed: (){
 
@@ -147,7 +147,7 @@ class _painelADMState extends State<painelADM> {
           Center(
             child: Container(
               width: double.infinity,
-              padding: EdgeInsets.all(16),
+              padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
               child: ElevatedButton(
                 onPressed: (){
 
@@ -168,7 +168,7 @@ class _painelADMState extends State<painelADM> {
               Container(
                   width: 180,
                   height: 180,
-                  padding: EdgeInsets.all(16),
+                  padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                   child:
                   Image.asset(
                     'assets/icon.png',
@@ -176,7 +176,7 @@ class _painelADMState extends State<painelADM> {
                   )
               ),
               Container(
-                padding: EdgeInsets.all(16),
+                padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                 child:
                 Text(
                   'ADM : ' + widget.ADMName,

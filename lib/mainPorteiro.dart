@@ -152,22 +152,22 @@ class _mainPorteiroState extends State<mainPorteiro> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            padding: EdgeInsets.all(16),
-            child: Center(
-              child: ElevatedButton(
-                onPressed: widget.cadastro? openModal: null,
-                  child: Text(
-                      'Novo cadastro',
-                    style: TextStyle(
-                        fontSize: 20
-                    ),
+            width: double.infinity,
+            padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+            child: ElevatedButton(
+              onPressed: widget.cadastro? openModal: null,
+                child: Text(
+                    'Novo cadastro',
+                  style: TextStyle(
+                      fontSize: 20
                   ),
-              ),
+                ),
             ),
           ),
 
           Container(
-            padding: EdgeInsets.all(16),
+            width: double.infinity,
+            padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
             child: ElevatedButton(
               onPressed: widget.entrada? entradaMT : null,
               child: Text(
@@ -182,7 +182,8 @@ class _mainPorteiroState extends State<mainPorteiro> {
             ),
           ),
           Container(
-            padding: EdgeInsets.all(16),
+            width: double.infinity,
+            padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
             child: ElevatedButton(
               onPressed: widget.saida ? saidaMT : null,
               child: Text(
@@ -197,7 +198,8 @@ class _mainPorteiroState extends State<mainPorteiro> {
             ),
           ),
           Container(
-            padding: EdgeInsets.all(16),
+            width: double.infinity,
+            padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
             child: ElevatedButton(
               onPressed: widget.relatorio ? relatorioMT() : null,
               child: Text(
@@ -213,7 +215,8 @@ class _mainPorteiroState extends State<mainPorteiro> {
           ),
           widget.painel ?
           Container(
-            padding: EdgeInsets.all(16),
+            width: double.infinity,
+            padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
             child: ElevatedButton(
               onPressed: painelMT,
               child: Text(
