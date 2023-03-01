@@ -339,15 +339,10 @@ class _loginState extends State<login> {
 
                                     }
                                     );
-
-
                                   }
                                 });
-
                               }
                               );
-
-
                             }).catchError((onError){
 
                               print(onError);

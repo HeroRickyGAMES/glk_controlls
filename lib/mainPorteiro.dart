@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:glk_controls/Painel.dart';
 import 'package:glk_controls/listas/listaEntrada.dart';
 import 'package:glk_controls/modal/modalVeiculoEdit.dart';
 
@@ -126,7 +127,13 @@ class _mainPorteiroState extends State<mainPorteiro> {
     }
 
     painelMT(){
-      //todo ir para o painel
+
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context){
+            return painelADM(widget.PorteiroNome);
+
+          }));
+
     }
 
     return Scaffold(
@@ -208,9 +215,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
           Container(
             padding: EdgeInsets.all(16),
             child: ElevatedButton(
-              onPressed: (){
-
-              },
+              onPressed: painelMT,
               child: Text(
                 'Painel',
                 style: TextStyle(
