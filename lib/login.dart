@@ -9,6 +9,7 @@ import 'package:glk_controls/mainEmpresa.dart';
 import 'package:glk_controls/mainPorteiro.dart';
 import 'package:glk_controls/setorADM.dart';
 import 'firebase_options.dart';
+import 'operadorEmpresarial.dart';
 
 //Programado por HeroRickyGames
 
@@ -244,6 +245,89 @@ class _loginState extends State<login> {
 
                                     }
                                     );
+                                  }
+
+                                  if(value == 'operadorEmpresarial'){
+                                    print('Ele é um Operador Empresarial');
+
+                                    db.collection('Users').doc(UID).get().then((event){
+                                      print("${event.data()}");
+
+                                      event.data()?.forEach((key, value) {
+
+                                        print(key);
+                                        print(value);
+
+                                        if(key == 'nome'){
+                                          print('Ele é um Operador Empresarial');
+                                          String nome = value;
+                                          //Passar o codigo para mandar a tela
+                                          var db = FirebaseFirestore.instance;
+                                          var UID = FirebaseAuth.instance.currentUser?.uid;
+                                          db.collection('Users').doc(UID).get().then((event){
+                                            print("${event.data()}");
+
+                                            event.data()?.forEach((key, value) async {
+
+                                              print(key);
+                                              print(value);
+
+                                              if(key == 'estaativo'){
+                                                if(value == true){
+
+                                                  var result = await FirebaseFirestore.instance
+                                                      .collection("operadorEmpresarial")
+                                                      .doc(UID)
+                                                      .get();
+
+                                                  String empresaName = (result.get('empresa'));
+
+                                                  Navigator.pop(context);
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(builder: (context){
+                                                        return operadorEmpresarial(nome, empresaName);
+                                                      }));
+
+                                                }else{
+
+                                                  print('O está ativo está funcionando!');
+
+                                                  AlertDialog alert = AlertDialog(
+                                                    title: Text("Sua conta ainda não está ativa!"),
+                                                    content: Text("A sua conta não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
+                                                    actions: [
+                                                      TextButton(
+                                                          onPressed: (){
+                                                            SystemNavigator.pop();
+                                                          },
+                                                          child: Text('Ok')
+                                                      ),
+                                                    ],
+                                                  );
+
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext context) {
+                                                      return alert;
+                                                    },
+                                                  );
+                                                }
+
+
+                                              }
+
+                                            });
+
+                                          }
+                                          );
+                                        }
+
+                                      });
+
+                                    }
+                                    );
+
+
                                   }
                                 });
 

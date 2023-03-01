@@ -16,7 +16,6 @@ class painelADM extends StatefulWidget {
 
 class _painelADMState extends State<painelADM> {
   List listaNome = [];
-  List uids = [ ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,6 +29,7 @@ class _painelADMState extends State<painelADM> {
         children: [
           Center(
             child: Container(
+              width: double.infinity,
               padding: EdgeInsets.all(16),
               child: ElevatedButton(
                 onPressed: (){
@@ -50,6 +50,7 @@ class _painelADMState extends State<painelADM> {
           ),
           Center(
             child: Container(
+              width: double.infinity,
               padding: EdgeInsets.all(16),
               child: ElevatedButton(
                 onPressed: () async {
@@ -61,29 +62,15 @@ class _painelADMState extends State<painelADM> {
                   result.docs.forEach((res) {
                     print(res.data()['nome']);
 
-                    setState(() {
-                      listaNome.add(res.data()['nome']);
+                    listaNome.add(res.data()['nome'] + res.data()['id']);
 
-                      uids.add(res.data()['id']);
+                    final dropValue = ValueNotifier('');
 
-                      print('dentro da array: ${uids}');
-                      final dropValue = ValueNotifier('');
-
-                      var db = FirebaseFirestore.instance;
-                      var UID = FirebaseAuth.instance.currentUser?.uid;
-                      db.collection('Users').doc(UID).get().then((event){
-                        print("${event.data()}");
-
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context){
-                              return cadastroUsuarioModal(dropValue, listaNome, uids);
-                            }));
-
-                      }
-                      );
-
-
-                    });
+                    Navigator.pop(context);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context){
+                          return cadastroUsuarioModal(dropValue, listaNome);
+                        }));
 
                   });
                   
@@ -101,6 +88,7 @@ class _painelADMState extends State<painelADM> {
           ),
           Center(
             child: Container(
+              width: double.infinity,
               padding: EdgeInsets.all(16),
               child: ElevatedButton(
                 onPressed: (){
@@ -118,6 +106,7 @@ class _painelADMState extends State<painelADM> {
           ),
           Center(
             child: Container(
+              width: double.infinity,
               padding: EdgeInsets.all(16),
               child: ElevatedButton(
                 onPressed: (){
@@ -135,6 +124,7 @@ class _painelADMState extends State<painelADM> {
           ),
           Center(
             child: Container(
+              width: double.infinity,
               padding: EdgeInsets.all(16),
               child: ElevatedButton(
                 onPressed: (){
@@ -152,6 +142,7 @@ class _painelADMState extends State<painelADM> {
           ),
           Center(
             child: Container(
+              width: double.infinity,
               padding: EdgeInsets.all(16),
               child: ElevatedButton(
                 onPressed: (){
