@@ -249,7 +249,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                     db.collection('Users').doc(UID).get().then((event){
                                       print("${event.data()}");
 
-                                      event.data()?.forEach((key, value) {
+                                      event.data()?.forEach((key, value) async {
 
                                         print(key);
                                         print(value);
@@ -259,10 +259,23 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
                                           print('Porteiro name é' + PorteiroNome);
 
+                                          var UID = FirebaseAuth.instance.currentUser?.uid;
+                                          var result = await FirebaseFirestore.instance
+                                              .collection("porteiro")
+                                              .doc(UID)
+                                              .get();
+
+                                          bool cadastro = result.get('cadastrar');
+                                          bool entrada = result.get('entrada');
+                                          bool saida = result.get('saida');
+                                          bool relatorio = result.get('relatorio');
+                                          bool painel = result.get('painel');
+
+
                                           Navigator.pop(context);
                                           Navigator.push(context,
                                               MaterialPageRoute(builder: (context){
-                                                return mainPorteiro(PorteiroNome);
+                                                return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel);
                                               }));
 
                                         }
@@ -340,7 +353,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                     db.collection('Users').doc(UID).get().then((event){
                                       print("${event.data()}");
 
-                                      event.data()?.forEach((key, value) {
+                                      event.data()?.forEach((key, value) async {
 
                                         print(key);
                                         print(value);
@@ -350,10 +363,23 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
                                           print('Porteiro name é' + PorteiroNome);
 
+                                          var UID = FirebaseAuth.instance.currentUser?.uid;
+                                          var result = await FirebaseFirestore.instance
+                                              .collection("porteiro")
+                                              .doc(UID)
+                                              .get();
+
+                                          bool cadastro = result.get('cadastrar');
+                                          bool entrada = result.get('entrada');
+                                          bool saida = result.get('saida');
+                                          bool relatorio = result.get('relatorio');
+                                          bool painel = result.get('painel');
+
+
                                           Navigator.pop(context);
                                           Navigator.push(context,
                                               MaterialPageRoute(builder: (context){
-                                                return mainPorteiro(PorteiroNome);
+                                                return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel);
                                               }));
 
                                         }
@@ -404,7 +430,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
               db.collection('Users').doc(UID).get().then((event){
                 print("${event.data()}");
 
-                event.data()?.forEach((key, value) {
+                event.data()?.forEach((key, value) async {
 
                   print(key);
                   print(value);
@@ -414,10 +440,23 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
                     print('Porteiro name é' + PorteiroNome);
 
+                    var UID = FirebaseAuth.instance.currentUser?.uid;
+                    var result = await FirebaseFirestore.instance
+                        .collection("porteiro")
+                        .doc(UID)
+                        .get();
+
+                    bool cadastro = result.get('cadastrar');
+                    bool entrada = result.get('entrada');
+                    bool saida = result.get('saida');
+                    bool relatorio = result.get('relatorio');
+                    bool painel = result.get('painel');
+
+
                     Navigator.pop(context);
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context){
-                          return mainPorteiro(PorteiroNome);
+                          return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel);
                         }));
 
                   }
@@ -806,10 +845,24 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
                   widget.galpaes.removeRange(0, widget.galpaes.length);
                   galpaes.removeRange(0, galpaes.length);
+
+                  var UID = FirebaseAuth.instance.currentUser?.uid;
+                  var result = await FirebaseFirestore.instance
+                      .collection("porteiro")
+                      .doc(UID)
+                      .get();
+
+                  bool cadastro = result.get('cadastrar');
+                  bool entrada = result.get('entrada');
+                  bool saida = result.get('saida');
+                  bool relatorio = result.get('relatorio');
+                  bool painel = result.get('painel');
+
+
                   Navigator.pop(context);
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context){
-                        return mainPorteiro(widget.nomeUser);
+                        return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel);
                       }));
                   // retorna false para impedir que a navegação volte à tela anterior
                   return false;

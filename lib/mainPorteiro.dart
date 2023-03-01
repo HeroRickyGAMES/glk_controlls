@@ -19,8 +19,15 @@ List listaNome = [];
 List galpao = [ ];
 
 class mainPorteiro extends StatefulWidget {
+
+  bool cadastro;
+  bool entrada;
+  bool saida;
+  bool relatorio;
+  bool painel;
+
   final String PorteiroNome;
-  const mainPorteiro(this.PorteiroNome);
+  mainPorteiro(this.PorteiroNome, this.cadastro, this.entrada, this.saida, this.relatorio, this.painel);
 
   @override
   State<mainPorteiro> createState() => _mainPorteiroState();
@@ -100,6 +107,28 @@ class _mainPorteiroState extends State<mainPorteiro> {
       print(listaNome);
     }
 
+    entradaMT(){
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context){
+            return listEntrada(widget.PorteiroNome);
+          }));
+    }
+
+    saidaMT(){
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context){
+            return listaSaida(widget.PorteiroNome);
+          }));
+    }
+
+    relatorioMT(){
+      //todo ir para o relatorio
+    }
+
+    painelMT(){
+      //todo ir para o painel
+    }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -119,7 +148,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
             padding: EdgeInsets.all(16),
             child: Center(
               child: ElevatedButton(
-                onPressed: openModal,
+                onPressed: widget.cadastro? openModal: null,
                   child: Text(
                       'Novo cadastro',
                     style: TextStyle(
@@ -133,13 +162,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
           Container(
             padding: EdgeInsets.all(16),
             child: ElevatedButton(
-              onPressed: (){
-
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context){
-                      return listEntrada(widget.PorteiroNome);
-                    }));
-              },
+              onPressed: widget.entrada? entradaMT : null,
               child: Text(
                 'Verificar Entrada',
                 style: TextStyle(
@@ -154,12 +177,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
           Container(
             padding: EdgeInsets.all(16),
             child: ElevatedButton(
-              onPressed: (){
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context){
-                      return listaSaida(widget.PorteiroNome);
-                    }));
-              },
+              onPressed: widget.saida ? saidaMT : null,
               child: Text(
                 'Verificar Saída',
                 style: TextStyle(
@@ -174,9 +192,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
           Container(
             padding: EdgeInsets.all(16),
             child: ElevatedButton(
-              onPressed: (){
-
-              },
+              onPressed: widget.relatorio ? relatorioMT() : null,
               child: Text(
                 'Relatorio',
                 style: TextStyle(
@@ -188,6 +204,24 @@ class _mainPorteiroState extends State<mainPorteiro> {
               ),
             ),
           ),
+          widget.painel ?
+          Container(
+            padding: EdgeInsets.all(16),
+            child: ElevatedButton(
+              onPressed: (){
+
+              },
+              child: Text(
+                'Painel',
+                style: TextStyle(
+                    fontSize: 20
+                ),
+              ),
+              style: ElevatedButton.styleFrom(
+                //primary: Colors.yellow[800]
+              ),
+            ),
+          ) : Text(''),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [

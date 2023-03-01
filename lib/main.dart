@@ -117,7 +117,7 @@ void main() {
                    db.collection('Users').doc(UID).get().then((event){
                      print("${event.data()}");
 
-                     event.data()?.forEach((key, value) {
+                     event.data()?.forEach((key, value) async {
 
                        print(key);
                        print(value);
@@ -127,10 +127,22 @@ void main() {
 
                            print('Porteiro name é' + PorteiroNome);
 
+                           var result = await FirebaseFirestore.instance
+                               .collection("porteiro")
+                               .doc(UID)
+                               .get();
+
+                           bool cadastro = result.get('cadastrar');
+                           bool entrada = result.get('entrada');
+                           bool saida = result.get('saida');
+                           bool relatorio = result.get('relatorio');
+                           bool painel = result.get('painel');
+
+
                            Navigator.pop(context);
                            Navigator.push(context,
                                MaterialPageRoute(builder: (context){
-                                 return mainPorteiro(PorteiroNome);
+                                 return mainPorteiro(PorteiroNome, cadastro, entrada, saida, relatorio, painel);
                                }));
 
                          }else{
