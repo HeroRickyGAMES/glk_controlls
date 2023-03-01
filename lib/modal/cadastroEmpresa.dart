@@ -4,9 +4,14 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-class cadastroEmpresa extends StatelessWidget {
+class cadastroEmpresa extends StatefulWidget {
   const cadastroEmpresa({Key? key}) : super(key: key);
 
+  @override
+  State<cadastroEmpresa> createState() => _cadastroEmpresaState();
+}
+
+class _cadastroEmpresaState extends State<cadastroEmpresa> {
   @override
   Widget build(BuildContext context) {
 
@@ -302,13 +307,14 @@ class cadastroEmpresa extends StatelessWidget {
                           }
                         }
                   },
-                  child: Text(
-                      'Confirmar cadastro',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold
-                  ),),
-                )
+                    child: Text(
+                        'Confirmar cadastro',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

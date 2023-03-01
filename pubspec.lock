@@ -222,6 +222,22 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_calendar_carousel:
+    dependency: "direct main"
+    description:
+      name: flutter_calendar_carousel
+      sha256: da198154b3a7254757ead8d40eee4f2fa53d4500fe8a226cccb951e8763f988b
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.1"
+  flutter_date_pickers:
+    dependency: "direct main"
+    description:
+      name: flutter_date_pickers
+      sha256: "2dfcb07c42a04771885fb35352353fc46eed87b8ad6b96bc369567d0cdb6c6f1"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.4.1"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -230,6 +246,11 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
+  flutter_localizations:
+    dependency: transitive
+    description: flutter
+    source: sdk
+    version: "0.0.0"
   flutter_picker:
     dependency: "direct main"
     description:
