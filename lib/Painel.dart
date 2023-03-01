@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:glk_controls/modal/cadastroEmpresa.dart';
 import 'package:glk_controls/modal/cadastroUsuarioADM.dart';
+import 'package:glk_controls/operadorInterno.dart';
 
 //Programado por HeroRickyGames
 
@@ -92,7 +93,10 @@ class _painelADMState extends State<painelADM> {
               padding: EdgeInsets.all(16),
               child: ElevatedButton(
                 onPressed: (){
-
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context){
+                        return operadorInterno();
+                      }));
                 },
                 child:
                 Text(

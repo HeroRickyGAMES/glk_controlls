@@ -66,7 +66,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                     RG = valor;
                     //Mudou mandou para a String
                   },
-                  keyboardType: TextInputType.name,
+                  keyboardType: TextInputType.number,
                   enableSuggestions: false,
                   autocorrect: false,
                   decoration: InputDecoration(
