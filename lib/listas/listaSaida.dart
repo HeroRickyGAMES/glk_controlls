@@ -26,17 +26,20 @@ class _listaSaidaState extends State<listaSaida> {
 
     double tamanhotexto = 20;
     double tamanhotextomin = 16;
-    double aspect = 1.0;
+    double tamanhotextobtns = 16;
+    double aspect = 1.5;
 
     if(kIsWeb){
       tamanhotexto = 25;
       tamanhotextomin = 16;
-      aspect = 1.0;
+      tamanhotextobtns = 34;
+      aspect = 1.3;
     }else{
       if(Platform.isAndroid){
 
         tamanhotexto = 20;
-        aspect = 0.8;
+        tamanhotextobtns = 34;
+        aspect =  1.3;
 
       }
     }
@@ -45,7 +48,7 @@ class _listaSaidaState extends State<listaSaida> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-            'GLK Controls - ENTRADA',
+            'GLK Controls - SAIDA',
           style: TextStyle(
               color: Colors.black
           ),
@@ -145,9 +148,9 @@ class _listaSaidaState extends State<listaSaida> {
                           ),
                           child: GridView.count(
                             padding: const EdgeInsets.all(5),
-                            crossAxisSpacing: 5,
-                            mainAxisSpacing: 5,
-                            crossAxisCount: 3,
+                            crossAxisSpacing: 30,
+                            mainAxisSpacing: 30,
+                            crossAxisCount: 2,
                             childAspectRatio: aspect,
                             children:
                             snapshot.data!.docs.map((documents) {
@@ -190,25 +193,6 @@ class _listaSaidaState extends State<listaSaida> {
                                   child:
                                   Column(
                                     children: [
-                                      Text(
-                                        documents['PlacaVeiculo'],
-                                        style:
-                                        TextStyle(
-                                            fontSize: tamanhotexto,
-                                            fontWeight: FontWeight.bold
-                                        ),
-                                      ),
-                                      Container(
-                                        padding: EdgeInsets.all(16),
-                                        child: Text(
-                                          'Status: \n' +
-                                              documents['Status'],
-                                          style: TextStyle(
-                                              fontSize: tamanhotexto,
-                                              fontWeight: FontWeight.bold
-                                          ),
-                                        ),
-                                      ),
                                       ElevatedButton(
                                           onPressed: (){
                                             showDialog<void>(
@@ -232,7 +216,9 @@ class _listaSaidaState extends State<listaSaida> {
                                                       },
                                                     ),
                                                     TextButton(
-                                                      child: Text('Permitir Saida'),
+                                                      child: Text(
+                                                          'Permitir Saida',
+                                                      ),
                                                       onPressed: () {
                                                         Navigator.of(context).pop();
 
@@ -249,13 +235,24 @@ class _listaSaidaState extends State<listaSaida> {
                                             );
                                           },
                                           child: Text(
-                                            'Liberar Saída',
+                                            documents['PlacaVeiculo'],
                                             style: TextStyle(
-                                                fontSize: tamanhotexto,
-                                                fontWeight: FontWeight.bold,
+                                              fontSize: tamanhotextobtns,
+                                              fontWeight: FontWeight.bold,
                                             ),
                                           )
-                                      )
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.all(16),
+                                        child: Text(
+                                          'Status: \n' +
+                                              documents['Status'],
+                                          style: TextStyle(
+                                              fontSize: tamanhotexto,
+                                              fontWeight: FontWeight.bold
+                                          ),
+                                        ),
+                                      ),
                                     ],
                                   ),
                                 ),

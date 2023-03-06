@@ -26,21 +26,23 @@ class _listEntradaState extends State<listEntrada> {
 
     double tamanhotexto = 20;
     double tamanhotextomin = 16;
-    double aspect = 1.0;
+    double tamanhotextobtns = 16;
+    double aspect = 1.5;
 
     if(kIsWeb){
       tamanhotexto = 25;
       tamanhotextomin = 16;
-      aspect = 1.0;
+      tamanhotextobtns = 34;
+      aspect = 1.3;
     }else{
       if(Platform.isAndroid){
 
         tamanhotexto = 20;
-        aspect = 0.8;
+        tamanhotextobtns = 34;
+        aspect =  1.3;
 
       }
     }
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -137,13 +139,14 @@ class _listEntradaState extends State<listEntrada> {
                               color: Colors.black,
                               width: 1.0,
                             ),
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                            borderRadius: BorderRadius.all(Radius.circular(5.0)
+                            ),
                           ),
                           child: GridView.count(
-                            padding: const EdgeInsets.all(5),
-                            crossAxisSpacing: 5,
-                            mainAxisSpacing: 5,
-                            crossAxisCount: 3,
+                            padding: const EdgeInsets.all(10),
+                            crossAxisSpacing: 30,
+                            mainAxisSpacing: 30,
+                            crossAxisCount: 2,
                             childAspectRatio: aspect,
                             children:
                             snapshot.data!.docs.map((documents) {
@@ -186,13 +189,17 @@ class _listEntradaState extends State<listEntrada> {
                                       child:
                                       Column(
                                         children: [
-                                          Text(
+                                          ElevatedButton(
+                                              onPressed: (){
+
+                                              },
+                                              child: Text(
                                                 documents['PlacaVeiculo'],
-                                            style:
-                                            TextStyle(
-                                                fontSize: tamanhotexto,
-                                                fontWeight: FontWeight.bold
-                                            ),
+                                                style: TextStyle(
+                                                    fontSize: tamanhotextobtns,
+                                                    fontWeight: FontWeight.bold
+                                                ),
+                                              )
                                           ),
                                           Container(
                                             padding: EdgeInsets.all(16),
@@ -205,18 +212,6 @@ class _listEntradaState extends State<listEntrada> {
                                               ),
                                             ),
                                           ),
-                                          ElevatedButton(
-                                              onPressed: (){
-
-                                              },
-                                              child: Text(
-                                                  'Editar',
-                                                style: TextStyle(
-                                                    fontSize: tamanhotexto,
-                                                  fontWeight: FontWeight.bold
-                                                ),
-                                              )
-                                          )
                                         ],
                                       ),
                                     ),

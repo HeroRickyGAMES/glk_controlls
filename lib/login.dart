@@ -40,43 +40,62 @@ class _loginState extends State<login> {
           ),
         ),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Center(
-                child:
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
                 Container(
-                  padding: EdgeInsets.all(16),
-                  child: TextField(
-                    controller: emailController,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Email',
-                      hintStyle: TextStyle(
-                          fontSize: 20
-                      ),
-                    ),
-                  ),
+                    width: 180,
+                    height: 180,
+                    padding: EdgeInsets.all(16),
+                    child:
+                    Image.asset(
+                      'assets/icon.png',
+                      fit: BoxFit.contain,
+                    )
                 ),
+              ],
             ),
-            Center(
-                child: Container(
-                  padding: EdgeInsets.all(16),
-                  child: TextField(
-                    controller: passController,
-                    keyboardType: TextInputType.visiblePassword,
-                    obscureText: true,
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      hintText: 'Senha',
-                      hintStyle: TextStyle(
-                          fontSize: 20
+            Column(
+              children: [
+                Center(
+                    child:
+                    Container(
+                      padding: EdgeInsets.all(16),
+                      child: TextField(
+                        controller: emailController,
+                        decoration: InputDecoration(
+                          border: OutlineInputBorder(),
+                          hintText: 'Email',
+                          hintStyle: TextStyle(
+                              fontSize: 20
+                          ),
+                        ),
+                      ),
+                    ),
+                ),
+                Center(
+                  child: Container(
+                    padding: EdgeInsets.all(16),
+                    child: TextField(
+                      controller: passController,
+                      keyboardType: TextInputType.visiblePassword,
+                      obscureText: true,
+                      enableSuggestions: false,
+                      autocorrect: false,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Senha',
+                        hintStyle: TextStyle(
+                            fontSize: 20
+                        ),
                       ),
                     ),
                   ),
                 ),
+              ],
             ),
             Center(
               child: Container(
@@ -317,7 +336,6 @@ class _loginState extends State<login> {
                                                       ),
                                                     ],
                                                   );
-
                                                   showDialog(
                                                     context: context,
                                                     builder: (BuildContext context) {
@@ -325,10 +343,7 @@ class _loginState extends State<login> {
                                                     },
                                                   );
                                                 }
-
-
                                               }
-
                                             });
 
                                           }
@@ -379,7 +394,7 @@ class _loginState extends State<login> {
                 ),
               ),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                     width: 180,
@@ -387,7 +402,7 @@ class _loginState extends State<login> {
                     padding: EdgeInsets.all(16),
                     child:
                     Image.asset(
-                      'assets/icon.png',
+                      'assets/sanca.png',
                       fit: BoxFit.contain,
                     )
                 ),

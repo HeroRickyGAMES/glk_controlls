@@ -4,26 +4,28 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:glk_controls/callToAPI.dart';
 import 'package:image_picker/image_picker.dart';
+import '../main.dart';
 import '../mainPorteiro.dart';
 import 'dart:io';
 import 'package:uuid/uuid.dart';
 
 //Programado Por HeroRickyGames
 
-class modalPorteiro extends StatefulWidget {
+class liberacaoOff extends StatefulWidget {
   final List<dynamic> EmpresasOpc;
   final dropValue;
   final String nomeUser;
   final String idEmpresa;
   final dropValue2;
   List galpaes;
-  modalPorteiro(this.EmpresasOpc, this.dropValue, this.nomeUser, this.idEmpresa, this.dropValue2, this.galpaes);
+  liberacaoOff(this.EmpresasOpc, this.dropValue, this.nomeUser, this.idEmpresa, this.dropValue2, this.galpaes);
 
   @override
-  State<modalPorteiro> createState() => _modalPorteiroState();
+  State<liberacaoOff> createState() => _liberacaoOffState();
 }
-class _modalPorteiroState extends State<modalPorteiro> {
+class _liberacaoOffState extends State<liberacaoOff> {
   String? coletaouentrega;
   String? lacreounao;
   String? empresaSelecionada;
@@ -39,6 +41,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
   String? lacreSt;
   String? transportadora;
   bool lacrebool = false;
+  String motivo = '';
   TextEditingController nameMotoristaAllcaps = TextEditingController();
   TextEditingController placaveiculointerface = TextEditingController();
   TextEditingController telefoneinterface = TextEditingController();
@@ -87,19 +90,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 fontSize: 16.0,
               );
             }else{
-            if(originEmpresa == null){
-              Fluttertoast.showToast(
-                msg: 'Digite a empresa de origem',
-                toastLength: Toast.LENGTH_SHORT,
-                timeInSecForIosWeb: 1,
-                backgroundColor: Colors.black,
-                textColor: Colors.white,
-                fontSize: 16.0,
-              );
-            }else{
-              if(galpao == null){
+              if(originEmpresa == null){
                 Fluttertoast.showToast(
-                  msg: 'Digite o galpão',
+                  msg: 'Digite a empresa de origem',
                   toastLength: Toast.LENGTH_SHORT,
                   timeInSecForIosWeb: 1,
                   backgroundColor: Colors.black,
@@ -107,9 +100,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   fontSize: 16.0,
                 );
               }else{
-                if(empresaSelecionada == null){
+                if(galpao == null){
                   Fluttertoast.showToast(
-                    msg: 'Selecione uma empresa!',
+                    msg: 'Digite o galpão',
                     toastLength: Toast.LENGTH_SHORT,
                     timeInSecForIosWeb: 1,
                     backgroundColor: Colors.black,
@@ -117,9 +110,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     fontSize: 16.0,
                   );
                 }else{
-                  if(coletaouentrega == null){
+                  if(empresaSelecionada == null){
                     Fluttertoast.showToast(
-                      msg: 'Selecione se é coleta ou entrega!',
+                      msg: 'Selecione uma empresa!',
                       toastLength: Toast.LENGTH_SHORT,
                       timeInSecForIosWeb: 1,
                       backgroundColor: Colors.black,
@@ -127,9 +120,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
                       fontSize: 16.0,
                     );
                   }else{
-                    if(lacreounao == null){
+                    if(coletaouentrega == null){
                       Fluttertoast.showToast(
-                        msg: 'Selecione se é com lacre ou sem!',
+                        msg: 'Selecione se é coleta ou entrega!',
                         toastLength: Toast.LENGTH_SHORT,
                         timeInSecForIosWeb: 1,
                         backgroundColor: Colors.black,
@@ -137,6 +130,16 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         fontSize: 16.0,
                       );
                     }else{
+                      if(lacreounao == null){
+                        Fluttertoast.showToast(
+                          msg: 'Selecione se é com lacre ou sem!',
+                          toastLength: Toast.LENGTH_SHORT,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.black,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
+                      }else{
                         if(transportadora == ''){
                           Fluttertoast.showToast(
                             msg: 'Digite o campo de Transportadora',
@@ -147,178 +150,177 @@ class _modalPorteiroState extends State<modalPorteiro> {
                             fontSize: 16.0,
                           );
                         }else{
-                          Fluttertoast.showToast(
-                            msg: 'Enviando informações para o servidor...',
-                            toastLength: Toast.LENGTH_SHORT,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.black,
-                            textColor: Colors.white,
-                            fontSize: 16.0,
+                          showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Motivo da liberação manual'),
+                                  actions: [
+                                    Container(
+                                      padding: EdgeInsets.only(top: 16),
+                                      child: TextFormField(
+                                        onChanged: (valor){
+                                          motivo = valor.toUpperCase();
+                                          //Mudou mandou para a String
+                                        },
+                                        keyboardType: TextInputType.multiline,
+                                        enableSuggestions: true,
+                                        autocorrect: true,
+                                        decoration: InputDecoration(
+                                          border: OutlineInputBorder(),
+                                          hintText: 'Motivo *',
+                                          hintStyle: TextStyle(
+                                              fontSize: 20
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text('Cancelar'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            if(motivo == ''){
+                                              Fluttertoast.showToast(
+                                                  msg: 'Por favor, preencha o campo do motivo, isso é de extrema importância!',
+                                                  toastLength: Toast.LENGTH_SHORT,
+                                                  gravity: ToastGravity.CENTER,
+                                                  timeInSecForIosWeb: 1,
+                                                  backgroundColor: Colors.grey[600],
+                                                  textColor: Colors.white,
+                                                  fontSize: 16.0
+                                              );
+                                            }else{
+
+                                              Fluttertoast.showToast(
+                                                msg: 'Enviando informações para o servidor...',
+                                                toastLength: Toast.LENGTH_SHORT,
+                                                timeInSecForIosWeb: 1,
+                                                backgroundColor: Colors.black,
+                                                textColor: Colors.white,
+                                                fontSize: 16.0,
+                                              );
+
+                                              if(lacreounao == 'lacre'){
+
+                                                //registre todos os valores no db
+                                                var UID = FirebaseAuth.instance.currentUser?.uid;
+
+                                                var dateTime= new DateTime.now();
+
+                                                var uuid = Uuid();
+
+                                                String idd = "${DateTime.now().toString()}" + uuid.v4();
+
+                                                FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
+                                                  'nomeMotorista': nomeMotorista,
+                                                  'RGDoMotorista': RGMotorista,
+                                                  'Veiculo': Veiculo,
+                                                  'PlacaVeiculo': VeiculoPlaca,
+                                                  'Telefone': telefone,
+                                                  'EmpresadeOrigin': originEmpresa,
+                                                  'Empresa': empresaSelecionada,
+                                                  'ColetaOuEntrega': coletaouentrega,
+                                                  'Galpão': galpao,
+                                                  'LacreouNao': lacreounao,
+                                                  'QuemAutorizou': widget.nomeUser,
+                                                  'Status': 'Entrada',
+                                                  'Lacre': lacreSt,
+                                                  'lacrenum': lacreSt,
+                                                  'MotivoLiberacao': motivo,
+                                                  'Horario Criado': dateTime,
+                                                }).then((value) {
+
+                                                  Fluttertoast.showToast(
+                                                    msg: 'Enviado com sucesso!',
+                                                    toastLength: Toast.LENGTH_SHORT,
+                                                    timeInSecForIosWeb: 1,
+                                                    backgroundColor: Colors.black,
+                                                    textColor: Colors.white,
+                                                    fontSize: 16.0,
+                                                  );
+
+                                                  getReleAPI1();
+
+                                                  widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
+                                                  widget.galpaes.removeRange(0, widget.galpaes.length);
+
+                                                  var db = FirebaseFirestore.instance;
+
+                                                  Navigator.pop(context);
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(builder: (context){
+                                                        return loginScreen();
+                                                      }));
+                                                });
+                                              }
+                                              if(lacreounao == 'naolacrado'){
+                                                //registre todos os valores no db
+                                                var UID = FirebaseAuth.instance.currentUser?.uid;
+
+                                                var dateTime= new DateTime.now();
+
+                                                var uuid = Uuid();
+
+                                                String idd = "${DateTime.now().toString()}" + uuid.v4();
+
+                                                FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
+                                                  'nomeMotorista': nomeMotorista,
+                                                  'RGDoMotorista': RGMotorista,
+                                                  'Veiculo': Veiculo,
+                                                  'PlacaVeiculo': VeiculoPlaca,
+                                                  'Telefone': telefone,
+                                                  'EmpresadeOrigin': originEmpresa,
+                                                  'Empresa': empresaSelecionada,
+                                                  'ColetaOuEntrega': coletaouentrega,
+                                                  'Galpão': galpao,
+                                                  'LacreouNao': lacreounao,
+                                                  'QuemAutorizou': widget.nomeUser,
+                                                  'Status': 'Entrada',
+                                                  'Horario Criado': dateTime,
+                                                  'MotivoLiberacao': motivo,
+                                                  'lacrenum': '',
+                                                }).then((value) {
+
+                                                  Fluttertoast.showToast(
+                                                    msg: 'Enviado com sucesso!',
+                                                    toastLength: Toast.LENGTH_SHORT,
+                                                    timeInSecForIosWeb: 1,
+                                                    backgroundColor: Colors.black,
+                                                    textColor: Colors.white,
+                                                    fontSize: 16.0,
+                                                  );
+                                                  getReleAPI1();
+
+                                                  widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
+                                                  widget.galpaes.removeRange(0, widget.galpaes.length);
+
+                                                  var db = FirebaseFirestore.instance;
+                                                  Navigator.pop(context);
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(builder: (context){
+                                                        return loginScreen();
+                                                      }));
+                                                });
+                                              }
+
+                                            }
+
+                                          },
+                                          child: Text('Prosseguir'),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                );
+                              },
                           );
-                          print(lacreounao);
-                          if(lacreounao == 'lacre'){
-
-                            //registre todos os valores no db
-                            var UID = FirebaseAuth.instance.currentUser?.uid;
-
-                            var dateTime= new DateTime.now();
-
-                            var uuid = Uuid();
-
-                            String idd = "${DateTime.now().toString()}" + uuid.v4();
-
-                            FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
-                              'nomeMotorista': nomeMotorista,
-                              'RGDoMotorista': RGMotorista,
-                              'Veiculo': Veiculo,
-                              'PlacaVeiculo': VeiculoPlaca,
-                              'Telefone': telefone,
-                              'EmpresadeOrigin': originEmpresa,
-                              'Empresa': empresaSelecionada,
-                              'ColetaOuEntrega': coletaouentrega,
-                              'Galpão': galpao,
-                              'LacreouNao': lacreounao,
-                              'QuemAutorizou': widget.nomeUser,
-                              'Status': 'Aguardando',
-                              'Lacre': lacreSt,
-                              'lacrenum': lacreSt,
-                              'Horario Criado': dateTime,
-                            }).then((value) {
-
-                              Fluttertoast.showToast(
-                                msg: 'Enviado com sucesso!',
-                                toastLength: Toast.LENGTH_SHORT,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.black,
-                                textColor: Colors.white,
-                                fontSize: 16.0,
-                              );
-                              widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
-                              widget.galpaes.removeRange(0, widget.galpaes.length);
-
-                              var db = FirebaseFirestore.instance;
-                              var UID = FirebaseAuth.instance.currentUser?.uid;
-                              db.collection('Users').doc(UID).get().then((event){
-                                print("${event.data()}");
-
-                                event.data()?.forEach((key, value) async {
-
-                                  print(key);
-                                  print(value);
-
-                                  if(key == 'nome'){
-                                    String PorteiroNome = value;
-
-                                    print('Porteiro name é' + PorteiroNome);
-
-                                    var UID = FirebaseAuth.instance.currentUser?.uid;
-                                    var result = await FirebaseFirestore.instance
-                                        .collection("porteiro")
-                                        .doc(UID)
-                                        .get();
-
-                                    bool cadastro = result.get('cadastrar');
-                                    bool entrada = result.get('entrada');
-                                    bool saida = result.get('saida');
-                                    bool relatorio = result.get('relatorio');
-                                    bool painel = result.get('painel');
-
-
-                                    Navigator.pop(context);
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context){
-                                          return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel);
-                                        }));
-
-                                  }
-
-                                });
-
-                              }
-                              );
-                            });
-                          }
-                            if(lacreounao == 'naolacrado'){
-                              //registre todos os valores no db
-                              var UID = FirebaseAuth.instance.currentUser?.uid;
-
-                              var dateTime= new DateTime.now();
-
-                              var uuid = Uuid();
-
-                              String idd = "${DateTime.now().toString()}" + uuid.v4();
-
-                              FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
-                                'nomeMotorista': nomeMotorista,
-                                'RGDoMotorista': RGMotorista,
-                                'Veiculo': Veiculo,
-                                'PlacaVeiculo': VeiculoPlaca,
-                                'Telefone': telefone,
-                                'EmpresadeOrigin': originEmpresa,
-                                'Empresa': empresaSelecionada,
-                                'ColetaOuEntrega': coletaouentrega,
-                                'Galpão': galpao,
-                                'LacreouNao': lacreounao,
-                                'QuemAutorizou': widget.nomeUser,
-                                'Status': 'Aguardando',
-                                'Horario Criado': dateTime,
-                                'lacrenum': '',
-                              }).then((value) {
-
-                                Fluttertoast.showToast(
-                                  msg: 'Enviado com sucesso!',
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  timeInSecForIosWeb: 1,
-                                  backgroundColor: Colors.black,
-                                  textColor: Colors.white,
-                                  fontSize: 16.0,
-                                );
-                                widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
-                                widget.galpaes.removeRange(0, widget.galpaes.length);
-
-                                var db = FirebaseFirestore.instance;
-                                var UID = FirebaseAuth.instance.currentUser?.uid;
-                                db.collection('Users').doc(UID).get().then((event){
-                                  print("${event.data()}");
-
-                                  event.data()?.forEach((key, value) async {
-
-                                    print(key);
-                                    print(value);
-
-                                    if(key == 'nome'){
-                                      String PorteiroNome = value;
-
-                                      print('Porteiro name é' + PorteiroNome);
-
-                                      var UID = FirebaseAuth.instance.currentUser?.uid;
-                                      var result = await FirebaseFirestore.instance
-                                          .collection("porteiro")
-                                          .doc(UID)
-                                          .get();
-
-                                      print('cheguei aqui!');
-
-                                      bool cadastro = result.get('cadastrar');
-                                      bool entrada = result.get('entrada');
-                                      bool saida = result.get('saida');
-                                      bool relatorio = result.get('relatorio');
-                                      bool painel = result.get('painel');
-
-                                      Navigator.pop(context);
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder: (context){
-                                            return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel);
-                                          }));
-                                    }
-                                  });
-                                }
-                                );
-                              });
-
-
-                           }
-                          }
                         }
                       }
                     }
@@ -329,6 +331,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
           }
         }
       }
+    }
     List<dynamic> galpaes = ['Valor 1', 'Valor 2', 'Valor 3'];
     String selectedValue = galpaes[0];
 
@@ -375,7 +378,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         MaterialPageRoute(builder: (context){
                           return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel);
                         }));
-
                   }
 
                 });
@@ -384,12 +386,12 @@ class _modalPorteiroState extends State<modalPorteiro> {
               );
             },
                 child:
-            Icon(
-              Icons.arrow_back,
-              color: Colors.white,
-            )
+                Icon(
+                  Icons.arrow_back,
+                  color: Colors.white,
+                )
             ),
-            Text('GLK Controls - Cadastro: Motorista e Veiculo'),
+            Text('GLK Controls - Cadastro: Motorista e Veiculo Manual'),
           ],
         ),
       ),
@@ -590,9 +592,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         Expanded(
                           child: RadioListTile(
                             title: Text(
-                                "Coleta",
+                              "Coleta",
                               style: TextStyle(
-                                fontSize: 18
+                                  fontSize: 18
                               ),
                             ),
                             value: "coleta",
@@ -608,7 +610,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         Expanded(
                           child: RadioListTile(
                             title: Text(
-                                "Entrega",
+                              "Entrega",
                               style: TextStyle(
                                   fontSize: 18
                               ),
@@ -686,7 +688,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     ),
                     RadioListTile(
                       title: Text(
-                          "Com Lacre",
+                        "Com Lacre",
                         style: TextStyle(
                             fontSize: 18
                         ),
@@ -747,28 +749,28 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 ),
               ),
               ElevatedButton(
-              onPressed: uploadInfos,
-              child:
-              Text(
-                  'Adicionar novo Motorista',
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold
-                ),
-              )
+                  onPressed: uploadInfos,
+                  child:
+                  Text(
+                    'Adicionar novo Motorista',
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold
+                    ),
+                  )
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
-                      width: 180,
-                      height: 180,
-                      padding: EdgeInsets.all(16),
-                      child:
-                      Image.asset(
-                        'assets/sanca.png',
-                        fit: BoxFit.contain,
-                      ),
+                    width: 180,
+                    height: 180,
+                    padding: EdgeInsets.all(16),
+                    child:
+                    Image.asset(
+                      'assets/sanca.png',
+                      fit: BoxFit.contain,
+                    ),
                   ),
                   Container(
                     padding: EdgeInsets.all(16),

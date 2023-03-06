@@ -69,10 +69,12 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
 
     double tamanhotexto = 20;
     double tamanhotextomin = 16;
+    double tamanhotextobtns = 16;
     double aspect = 1.0;
 
     if(kIsWeb){
       tamanhotexto = 25;
+      tamanhotextobtns = 34;
       tamanhotextomin = 16;
       //aspect = 1.0;
       aspect = 1.0;
@@ -82,6 +84,7 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
       if(Platform.isAndroid){
 
         tamanhotexto = 20;
+        tamanhotextobtns = 34;
         aspect = 0.8;
 
       }
@@ -271,30 +274,6 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                                             crossAxisAlignment: CrossAxisAlignment.center,
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
-                                              Text(
-                                                'Placa:\n' +
-                                                    documents['PlacaVeiculo'],
-                                                style:
-                                                TextStyle(
-                                                    fontSize: tamanhotexto,
-                                                    fontWeight: FontWeight.bold,
-                                                    color: textColor
-                                                ),
-                                              ),
-                                              Container(
-                                                padding: EdgeInsets.all(16),
-                                                child: Text(
-                                                  'Status: \n' +
-                                                      documents['Status'],
-                                                  style: TextStyle(
-                                                      fontSize: tamanhotexto,
-                                                      fontWeight: FontWeight.bold,
-                                                      color: textColor
-                                                  ),
-                                                ),
-                                              ),
-                                              documents['Status'] == 'Saida' ?
-                                              Text(''):
                                               ElevatedButton(
                                                   onPressed: (){
 
@@ -382,7 +361,6 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                                                                     'DataEntrada': DateTime.now(),
                                                                     'Status': 'Entrada'
                                                                   });
-
                                                                 },
                                                               ),
                                                             ],
@@ -394,13 +372,25 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                                                     }
                                                   },
                                                   child: Text(
-                                                    'Mudar Status',
+                                                    documents['PlacaVeiculo'],
                                                     style: TextStyle(
-                                                        fontSize: tamanhotexto,
+                                                        fontSize: tamanhotextobtns,
                                                         fontWeight: FontWeight.bold
                                                     ),
                                                   )
-                                              )
+                                              ),
+                                              Container(
+                                                padding: EdgeInsets.all(16),
+                                                child: Text(
+                                                  'Status: \n' +
+                                                      documents['Status'],
+                                                  style: TextStyle(
+                                                      fontSize: tamanhotexto,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: textColor
+                                                  ),
+                                                ),
+                                              ),
                                             ],
                                           ),
                                         ),
