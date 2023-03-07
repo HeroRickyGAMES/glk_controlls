@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/modal/veiculoEntrada.dart';
 import 'package:glk_controls/pesquisaDir/pesquisa.dart';
+import 'package:glk_controls/relatorio.dart';
 import 'package:intl/intl.dart';
 import 'listas/liberacoesOperadorEmpresarial.dart';
 import 'modal/modalVeiculo.dart';
@@ -93,6 +94,11 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
     }
     toRelatorio(){
 
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context){
+            return relatorio(widget.name);
+          }));
+
     }
 
     return Scaffold(
@@ -148,7 +154,7 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                 padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                 child: ElevatedButton(onPressed: widget.relatorio? toRelatorio : null,
                   child: Text(
-                    'Relatorio',
+                    'Relatórios',
                     style: TextStyle(
                       fontSize: tamanhotexto,
                       fontWeight: FontWeight.bold,
