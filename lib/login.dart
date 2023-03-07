@@ -226,19 +226,69 @@ class _loginState extends State<login> {
                                             print("${event.data()}");
 
                                             event.data()?.forEach((key, value) {
-
+                                              bool relatorio = false;
                                               print(key);
                                               print(value);
 
                                               if(key == 'estaativo'){
                                                 if(value == true){
 
-                                                  Navigator.pop(context);
-                                                  Navigator.push(context,
-                                                      MaterialPageRoute(builder: (context){
-                                                        return mainEmpresa(nome);
-                                                      }));
+                                                  var db2 = FirebaseFirestore.instance;
+                                                  db2.collection('Users').doc(UID).get().then((event){
+                                                    print("${event.data()}");
 
+                                                    event.data()?.forEach((key, value) {
+
+                                                      print(key);
+                                                      print(value);
+
+                                                      if(key == 'nome'){
+                                                        print('É uma empresa');
+                                                        String nome = value;
+                                                        //Passar o codigo para mandar a tela
+                                                        var db = FirebaseFirestore.instance;
+                                                        var UID = FirebaseAuth.instance.currentUser?.uid;
+                                                        db.collection('Users').doc(UID).get().then((event){
+                                                          print("${event.data()}");
+
+                                                          event.data()?.forEach((key, value) {
+
+                                                            print(key);
+                                                            print(value);
+
+                                                            if(key == 'RelatorioDays'){
+
+                                                              String dayHj = '${DateTime.now().day}';
+                                                              print('Dia do relatiorio são ${value}');
+                                                              print('Dia de hoje é ${DateTime.now().day}');
+
+                                                              if(value.contains(dayHj)){
+                                                                relatorio = true;
+                                                                Navigator.pop(context);
+                                                                Navigator.push(context,
+                                                                    MaterialPageRoute(builder: (context){
+                                                                      return mainEmpresa(nome, relatorio);
+                                                                    }));
+
+                                                              }else{
+                                                                relatorio = false;
+                                                                Navigator.pop(context);
+                                                                Navigator.push(context,
+                                                                    MaterialPageRoute(builder: (context){
+                                                                      return mainEmpresa(nome, relatorio);
+                                                                    }));
+                                                              }
+                                                            }
+                                                          });
+
+                                                        }
+                                                        );
+                                                      }
+
+                                                    });
+
+                                                  }
+                                                  );
                                                 }else{
 
                                                   print('O está ativo está funcionando!');

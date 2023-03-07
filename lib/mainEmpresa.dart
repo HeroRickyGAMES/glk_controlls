@@ -20,7 +20,8 @@ Map<String, String> map1 = {};
 Map<String, String> mapNome = {};
 class mainEmpresa extends StatefulWidget {
   final String empresaName;
-  const mainEmpresa(this.empresaName);
+  final bool relatorio;
+  const mainEmpresa(this.empresaName, this.relatorio);
 
   @override
   State<mainEmpresa> createState() => _mainEmpresaState();
@@ -89,6 +90,9 @@ class _mainEmpresaState extends State<mainEmpresa> {
       }
     }
 
+    toRelatorio(){
+
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -99,6 +103,19 @@ class _mainEmpresaState extends State<mainEmpresa> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Container(
+              padding: EdgeInsets.all(16),
+              child: ElevatedButton(
+                  onPressed: widget.relatorio ? toRelatorio: null,
+                  child: Text(
+                      'Relatório',
+                    style: TextStyle(
+                        fontSize: tamanhotexto,
+                        fontWeight: FontWeight.bold,
+                    ),
+                  )
+              ),
+            ),
             Container(
               padding: EdgeInsets.all(16),
               child:
