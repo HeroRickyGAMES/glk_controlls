@@ -9,7 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/modal/veiculoEntrada.dart';
 import 'package:glk_controls/pesquisaDir/pesquisa.dart';
 import 'package:intl/intl.dart';
-import 'modal/modalVeiculo.dart';
+
 
 
 //Programado por HeroRickyGames
@@ -18,13 +18,13 @@ Map map = Map();
 
 Map<String, String> map1 = {};
 Map<String, String> mapNome = {};
-class mainEmpresa extends StatefulWidget {
+class liberacoesOperadorEmpresarial extends StatefulWidget {
+  final String name;
   final String empresaName;
-  final bool relatorio;
-  const mainEmpresa(this.empresaName, this.relatorio);
+  liberacoesOperadorEmpresarial(this.name, this.empresaName);
 
   @override
-  State<mainEmpresa> createState() => _mainEmpresaState();
+  State<liberacoesOperadorEmpresarial> createState() => _liberacoesOperadorEmpresarialState();
 }
 
 class _PlateFormatter extends TextInputFormatter {
@@ -60,7 +60,7 @@ class _PlateFormatter extends TextInputFormatter {
   }
 }
 
-class _mainEmpresaState extends State<mainEmpresa> {
+class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpresarial> {
 
   Widget build(BuildContext context) {
     String idDocumento;
@@ -68,8 +68,8 @@ class _mainEmpresaState extends State<mainEmpresa> {
     String holderPlaca = '';
 
     double tamanhotexto = 20;
-    double tamanhotextobtns = 34;
     double tamanhotextomin = 16;
+    double tamanhotextobtns = 16;
     double aspect = 1.0;
 
     if(kIsWeb){
@@ -89,22 +89,17 @@ class _mainEmpresaState extends State<mainEmpresa> {
 
       }
     }
-
-    toRelatorio(){
-
-    }
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('GLK Controls - EMPRESAS'),
+        title: Text('GLK Controls - LIBERAÇÕES'),
         backgroundColor: Colors.red[700],
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                     width: 180,
@@ -118,19 +113,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                 ),
               ],
             ),
-            Container(
-              padding: EdgeInsets.all(16),
-              child: ElevatedButton(
-                  onPressed: widget.relatorio ? toRelatorio: null,
-                  child: Text(
-                      'Relatório',
-                    style: TextStyle(
-                        fontSize: tamanhotexto,
-                        fontWeight: FontWeight.bold,
-                    ),
-                  )
-              ),
-            ),
+
             Container(
               padding: EdgeInsets.all(16),
               child:
@@ -190,9 +173,9 @@ class _mainEmpresaState extends State<mainEmpresa> {
                                   return pesquisa(holderPlaca);
                                 }));
                           }
-                      },
+                        },
                         child: Text(
-                            'Pesquisar',
+                          'Pesquisar',
                           style: TextStyle(
                               fontSize: tamanhotexto,
                               fontWeight: FontWeight.bold
@@ -458,7 +441,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                   padding: EdgeInsets.all(16),
                   child:
                   Text(
-                    'Empresa: ' + widget.empresaName,
+                    'Operador: ' + widget.name,
                     style: TextStyle(
                         fontSize: tamanhotexto
                     ),

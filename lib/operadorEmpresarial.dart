@@ -9,6 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/modal/veiculoEntrada.dart';
 import 'package:glk_controls/pesquisaDir/pesquisa.dart';
 import 'package:intl/intl.dart';
+import 'listas/liberacoesOperadorEmpresarial.dart';
 import 'modal/modalVeiculo.dart';
 
 
@@ -21,7 +22,8 @@ Map<String, String> mapNome = {};
 class operadorEmpresarial extends StatefulWidget {
   final String name;
   final String empresaName;
-  operadorEmpresarial(this.name, this.empresaName);
+  final bool relatorio;
+  operadorEmpresarial(this.name, this.empresaName, this.relatorio);
 
   @override
   State<operadorEmpresarial> createState() => _operadorEmpresarialState();
@@ -89,7 +91,9 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
 
       }
     }
+    toRelatorio(){
 
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -97,346 +101,89 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
         title: Text('GLK Controls - OPERADORES DE EMPRESAS'),
         backgroundColor: Colors.red[700],
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.all(16),
-              child:
-              SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Text(
-                      'Pesquisar Placa:',
-                      style: TextStyle(
-                          fontSize: tamanhotexto
-                      ),
-                    ),
-                    TextFormField(
-                      onChanged: (valor){
-
-                        String value = valor.replaceAll(' ', '').toUpperCase();
-
-                        holderPlaca = value.replaceAllMapped(
-                          RegExp(r'^([a-zA-Z]{3})([0-9]{4})$'),
-                              (Match m) => '${m[1]}-${m[2]}',
-                        );
-                      },
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      decoration: InputDecoration(
-
-                        border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors.green
-                            )
-                        ),
-                        hintStyle: TextStyle(
-                            fontSize: tamanhotexto
-                        ),
-                      ),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(16),
-                      child: ElevatedButton(
-                        onPressed: (){
-                          if(holderPlaca == ''){
-
-                            Fluttertoast.showToast(
-                              msg: 'Preencha a pesquisa!',
-                              toastLength: Toast.LENGTH_SHORT,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.black,
-                              textColor: Colors.white,
-                              fontSize: tamanhotextomin,
-                            );
-
-                          }else{
-
-
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context){
-                                  return pesquisa(holderPlaca);
-                                }));
-                          }
-                        },
-                        child: Text(
-                          'Pesquisar',
-                          style: TextStyle(
-                              fontSize: tamanhotexto,
-                              fontWeight: FontWeight.bold
-                          ),
-                        ),
-                      ),
-                    ),
-                    StreamBuilder(
-                        stream: FirebaseFirestore
-                            .instance
-                            .collection('Autorizacoes')
-                            .where('Empresa', isEqualTo: widget.empresaName)
-                            .snapshots(),
-                        builder: (BuildContext context,
-                            AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (!snapshot.hasData) {
-                            return Center(
-                              child: CircularProgressIndicator(),
-                            );
-                          }
-                          return Container(
-                            height: 700,
-                            width: double.infinity,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 1.0,
-                              ),
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                            ),
-                            child: OrientationBuilder(
-                              builder: (context, orientation) {
-                                return GridView.count(
-                                  crossAxisCount: orientation == Orientation.portrait ? 2 : 4,
-                                  mainAxisSpacing: 10,
-                                  crossAxisSpacing: 10,
-                                  childAspectRatio: orientation == Orientation.portrait ? 1.0 : 0.7,
-                                  children:
-                                  snapshot.data!.docs.map((documents) {
-
-                                    if(documents['Empresa'] == widget.empresaName){
-                                      String lacre = '${documents['LacreouNao']}';
-                                      String ColetaOuEntrega = '${documents['ColetaOuEntrega']}';
-                                      bool lacrebool = false;
-                                      bool coletaBool = false;
-                                      String lacrado = '';
-                                      String ColetaOuEntregast = '';
-                                      idDocumento = documents.id;
-
-                                      if(lacre == 'lacre'){
-                                        lacrebool = true;
-                                        lacrado = 'Lacrado';
-                                      }
-                                      if(lacre == 'naolacrado'){
-                                        lacrebool = false;
-                                        lacrado = 'Não Lacrado';
-                                      }
-                                      if(ColetaOuEntrega == 'coleta'){
-                                        coletaBool = true;
-                                        ColetaOuEntregast = 'Coleta';
-                                      }
-                                      if(ColetaOuEntrega == 'entrega'){
-                                        coletaBool = false;
-                                        ColetaOuEntregast = 'Entrega';
-                                      }
-
-                                      Color color = Colors.white as Color;
-                                      Color textColor = Colors.white as Color;
-
-                                      if(documents['Status'] == 'Aguardando'){
-                                        color = Colors.red[400] as Color;
-                                        textColor = Colors.white as Color;
-                                      }
-
-                                      if(documents['Status'] == 'Rejeitado'){
-                                        color = Colors.red[400] as Color;
-                                        textColor = Colors.white as Color;
-                                      }
-
-                                      if(documents['Status'] == 'Entrada'){
-                                        color = Colors.yellow[400] as Color;
-                                        textColor = Colors.black as Color;
-                                      }
-
-                                      if(documents['Status'] == 'Liberado'){
-                                        color = Colors.yellow[400] as Color;
-                                        textColor = Colors.black as Color;
-                                      }
-
-                                      if(documents['Status'] == 'Saida'){
-                                        color = Colors.green[400] as Color;
-                                        textColor = Colors.white as Color;
-                                      }
-
-                                      return Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Container(
-                                          padding: EdgeInsets.all(16),
-                                          decoration: BoxDecoration(
-                                            color: color,
-                                            border: Border.all(
-                                              color: Colors.black,
-                                              width: 1.0,
-                                            ),
-                                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                                          ),
-                                          child:
-                                          Column(
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              ElevatedButton(
-                                                  onPressed: (){
-
-                                                    if(documents['Status'] == 'Entrada' ){
-
-                                                      String lacre = documents['LacreouNao'];
-
-                                                      if(lacre == 'lacre'){
-                                                        String liberadopor = documents['QuemAutorizou'];
-                                                        Timestamp horarioCriacao = documents['Horario Criado'];
-                                                        String nomeMotorista = documents['nomeMotorista'];
-                                                        String Veiculo = documents['Veiculo'];
-                                                        String PlacaVeiculo = documents['PlacaVeiculo'];
-                                                        String Empresadestino = documents['Empresa'];
-                                                        String EmpresadeOrigin = documents['EmpresadeOrigin'];
-                                                        String Galpao = documents['Galpão'];
-                                                        Timestamp DataEntrada = documents['DataEntrada'];
-                                                        String lacradoStr = documents['lacrenum'];
-
-                                                        String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
-                                                        String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
-
-                                                        Navigator.push(context,
-                                                            MaterialPageRoute(builder: (context){
-                                                              return veiculoEntrada(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, formattedDate2);
-                                                            }));
-
-                                                      }
-                                                      else{
-                                                        if(lacre == 'naolacrado'){
-                                                          String liberadopor = documents['QuemAutorizou'];
-                                                          Timestamp horarioCriacao = documents['Horario Criado'];
-                                                          Timestamp DataEntrada = documents['DataEntrada'];
-                                                          String nomeMotorista = documents['nomeMotorista'];
-                                                          String Veiculo = documents['Veiculo'];
-                                                          String PlacaVeiculo = documents['PlacaVeiculo'];
-                                                          String Empresadestino = documents['Empresa'];
-                                                          String EmpresadeOrigin = documents['EmpresadeOrigin'];
-                                                          String Galpao = documents['Galpão'];
-
-                                                          String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
-                                                          String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
-
-                                                          print(formattedDate);
-
-                                                          Navigator.push(context,
-                                                              MaterialPageRoute(builder: (context){
-                                                                return veiculoEntrada(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, formattedDate2);
-                                                              }));
-                                                        }
-                                                      }
-                                                    }
-
-                                                    if(documents['Status'] == 'Aguardando'){
-                                                      showDialog<void>(
-                                                        context: context,
-                                                        builder: (BuildContext context) {
-                                                          return AlertDialog(
-                                                            title: Text('Deseja autorizar entrada?'),
-                                                            content: SingleChildScrollView(
-                                                              child: ListBody(
-                                                                children: <Widget>[
-                                                                  Text('Deseja autorizar entrada desse veiculo?'),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                            actions: <Widget>[
-                                                              TextButton(
-                                                                child: Text('Rejeitar Entrada'),
-                                                                onPressed: () {
-                                                                  Navigator.of(context).pop();
-
-                                                                  FirebaseFirestore.instance.collection('Autorizacoes').doc(documents.id).update({
-                                                                    'DatadeRejeicao': DateTime.now(),
-                                                                    'Status': 'Rejeitado'
-                                                                  });
-                                                                },
-                                                              ),
-                                                              TextButton(
-                                                                child: Text('Permitir Entrada'),
-                                                                onPressed: () {
-                                                                  Navigator.of(context).pop();
-
-                                                                  FirebaseFirestore.instance.collection('Autorizacoes').doc(documents.id).update({
-                                                                    'DataEntrada': DateTime.now(),
-                                                                    'Status': 'Entrada'
-                                                                  });
-                                                                },
-                                                              ),
-                                                            ],
-                                                          );
-                                                        },
-                                                      );
-                                                    }else{
-
-                                                    }
-                                                  },
-                                                  child: Text(
-                                                    documents['PlacaVeiculo'],
-                                                    style: TextStyle(
-                                                        fontSize: tamanhotextobtns,
-                                                        fontWeight: FontWeight.bold
-                                                    ),
-                                                  )
-                                              ),
-                                              Container(
-                                                padding: EdgeInsets.all(16),
-                                                child: Text(
-                                                  'Status: \n' +
-                                                      documents['Status'],
-                                                  style: TextStyle(
-                                                      fontSize: tamanhotexto,
-                                                      fontWeight: FontWeight.bold,
-                                                      color: textColor
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    }else{
-                                      return SizedBox(width: 0, height: 0);
-                                    }
-                                  }
-                                  ).toList().reversed.toList(),
-                                );
-                              },
-                            ),
-                          );
-                        }
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Container(
-                    width: 180,
-                    height: 180,
-                    padding: EdgeInsets.all(16),
-                    child:
-                    Image.asset(
-                      'assets/icon.png',
-                      fit: BoxFit.contain,
-                    )
-                ),
-                Container(
+      body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                  width: 180,
+                  height: 180,
                   padding: EdgeInsets.all(16),
                   child:
-                  Text(
-                    'Operador: ' + widget.name,
+                  Image.asset(
+                    'assets/icon.png',
+                    fit: BoxFit.contain,
+                  )
+              ),
+            ],
+          ),
+          Column(
+            children: [
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                child: ElevatedButton(onPressed: (){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context){
+                        return liberacoesOperadorEmpresarial(widget.name, widget.empresaName);
+                      }));
+                },
+                    child: Text(
+                        'Liberações',
+                      style: TextStyle(
+                          fontSize: tamanhotexto,
+                          fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.green[700]
+                  ),
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                child: ElevatedButton(onPressed: widget.relatorio? toRelatorio : null,
+                  child: Text(
+                    'Relatorio',
                     style: TextStyle(
-                        fontSize: tamanhotexto
+                      fontSize: tamanhotexto,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Container(
+                  width: 180,
+                  height: 180,
+                  padding: EdgeInsets.all(16),
+                  child:
+                  Image.asset(
+                    'assets/sanca.png',
+                    fit: BoxFit.contain,
+                  )
+              ),
+              Container(
+                padding: EdgeInsets.all(16),
+                child:
+                Text(
+                  'Operador: ' + widget.name,
+                  style: TextStyle(
+                      fontSize: tamanhotexto
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

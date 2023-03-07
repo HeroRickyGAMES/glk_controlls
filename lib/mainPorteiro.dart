@@ -90,7 +90,6 @@ class _mainPorteiroState extends State<mainPorteiro> {
                             return modalPorteiro(listaNome, dropValue, PorteiroNomee, '',dropValue2, galpao);
 
                           }));
-
                     }
 
                   });

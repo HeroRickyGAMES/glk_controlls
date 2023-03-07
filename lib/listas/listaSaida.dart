@@ -58,6 +58,21 @@ class _listaSaidaState extends State<listaSaida> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                Container(
+                    width: 180,
+                    height: 180,
+                    padding: EdgeInsets.all(16),
+                    child:
+                    Image.asset(
+                      'assets/icon.png',
+                      fit: BoxFit.contain,
+                    )
+                ),
+              ],
+            ),
             Container(
               padding: EdgeInsets.all(16),
               child:
@@ -275,7 +290,7 @@ class _listaSaidaState extends State<listaSaida> {
                     padding: EdgeInsets.all(16),
                     child:
                     Image.asset(
-                      'assets/icon.png',
+                      'assets/sanca.png',
                       fit: BoxFit.contain,
                     )
                 ),
