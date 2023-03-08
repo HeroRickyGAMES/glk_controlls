@@ -48,6 +48,7 @@ dependencies:
   pdf: ^3.9.0
   flutter_date_pickers: ^0.4.1
   flutter_calendar_carousel: ^2.4.1
+  path_provider: ^2.0.13
 
 dev_dependencies:
   flutter_test:
@@ -89,10 +90,10 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
+  fonts:
+    - family: Schyler
+      fonts:
+        - asset: assets/fonts/open-sans.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro

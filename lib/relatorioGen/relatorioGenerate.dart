@@ -8,6 +8,8 @@ import 'package:glk_controls/mainEmpresa.dart';
 import 'package:glk_controls/mainPorteiro.dart';
 import 'package:image_picker/image_picker.dart';
 
+import 'generatePDF/gerarPDF.dart';
+
 //Programado por HeroRickyGames
 
 class relatorioGenerate extends StatefulWidget {
@@ -278,6 +280,8 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               padding: EdgeInsets.all(16),
               child: ElevatedButton(
                 onPressed: () {
+
+                  generatePDF();
 
                 },
                 child: Text(
