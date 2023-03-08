@@ -1,8 +1,10 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:glk_controls/cadastrese.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:glk_controls/login.dart';
 import 'package:glk_controls/mainEmpresa.dart';
@@ -422,7 +424,6 @@ void main() {
      }
    });
  }
-
 class loginScreen extends StatefulWidget {
 
   const loginScreen();
@@ -433,24 +434,24 @@ class loginScreen extends StatefulWidget {
 
 class _loginScreenState extends State<loginScreen> {
 
+
+
   final emailController = TextEditingController();
   final passController = TextEditingController();
 
-  toCadastrese(){
-
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context){
-          return registro();
-        }));
-
-  }
 
   @override
   Widget build(BuildContext context) {
-    checkislog(context);
+    
+    Timer(Duration(seconds: 8), () {
+      checkislog(context);
+    });
     return Scaffold(
-      body: Center(
-        child: CircularProgressIndicator(),
+      body: Image.asset(
+          'assets/glkcontrols-init.gif',
+        fit: BoxFit.fill,
+        width: double.infinity,
+        height: double.infinity,
       ),
    );
   }
