@@ -1,7 +1,10 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:glk_controls/pesquisaDir/pesquisaRelatorio.dart';
 
 class relatorio extends StatefulWidget {
 
@@ -42,8 +45,79 @@ class _relatorioState extends State<relatorio> {
       }
     }
 
-    pesquisarmet(){
+    pesquisarmet() async {
 
+
+      if(Pesquisa == null){
+
+        Fluttertoast.showToast(
+          msg: 'Preencha algum parametro na pesquisa!',
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+
+      }else{
+
+        FirebaseFirestore.instance
+            .collection('Autorizacoes')
+            .get()
+            .then((QuerySnapshot querySnapshot) {
+          querySnapshot.docs.forEach((doc) {
+
+            if(doc["nomeMotorista"] == Pesquisa ){
+
+              String oqPesquisar = 'nomeMotorista';
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context){
+                    return pesquisaRelatorio(Pesquisa!, oqPesquisar);
+                  }));
+
+            }else{
+
+              if(doc["PlacaVeiculo"] == Pesquisa ){
+
+                String oqPesquisar = 'PlacaVeiculo';
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context){
+                      return pesquisaRelatorio(Pesquisa!, oqPesquisar);
+                    }));
+              }else{
+                if(doc["Empresa"] == Pesquisa){
+                  String oqPesquisar = 'Empresa';
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context){
+                        return pesquisaRelatorio(Pesquisa!, oqPesquisar);
+                      }));
+                }else{
+                  if(doc["Galpão"] == Pesquisa){
+                    String oqPesquisar = 'Galpão';
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context){
+                          return pesquisaRelatorio(Pesquisa!, oqPesquisar);
+                        }));
+                  }else{
+
+                    Fluttertoast.showToast(
+                      msg: 'Infelizmente não achei nada do que você pesquisou, por favor, tente novamente!',
+                      toastLength: Toast.LENGTH_SHORT,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.black,
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
+
+                  }
+                }
+              }
+            }
+
+          });
+        });
+
+      }
     }
 
     return Scaffold(
@@ -61,7 +135,7 @@ class _relatorioState extends State<relatorio> {
                   padding: EdgeInsets.all(20),
                   child: TextFormField(
                     onChanged: (valor){
-                      Pesquisa = valor;
+                      Pesquisa = valor.toUpperCase();
                       //Mudou mandou para a String
                     },
                     keyboardType: TextInputType.name,

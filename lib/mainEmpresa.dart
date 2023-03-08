@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/modal/veiculoEntrada.dart';
 import 'package:glk_controls/pesquisaDir/pesquisa.dart';
+import 'package:glk_controls/relatorio.dart';
 import 'package:intl/intl.dart';
 import 'modal/modalVeiculo.dart';
 
@@ -91,7 +92,10 @@ class _mainEmpresaState extends State<mainEmpresa> {
     }
 
     toRelatorio(){
-
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context){
+            return relatorio(widget.empresaName);
+          }));
     }
 
     return Scaffold(
@@ -104,7 +108,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
         child: Column(
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                     width: 180,

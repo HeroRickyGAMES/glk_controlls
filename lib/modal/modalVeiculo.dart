@@ -408,7 +408,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 child: TextFormField(
                   controller: nameMotoristaAllcaps,
                   onChanged: (valor){
-                    nomeMotorista = valor.toUpperCase();
+                    nomeMotorista = valor.toUpperCase().replaceAll(" ", '');
                     //Mudou mandou para a String
                   },
                   keyboardType: TextInputType.name,

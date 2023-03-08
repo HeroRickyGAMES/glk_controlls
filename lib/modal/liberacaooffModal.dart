@@ -410,7 +410,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                 child: TextFormField(
                   controller: nameMotoristaAllcaps,
                   onChanged: (valor){
-                    nomeMotorista = valor.toUpperCase();
+                    nomeMotorista = valor.toUpperCase().replaceAll(" ", '');
                     //Mudou mandou para a String
                   },
                   keyboardType: TextInputType.name,
