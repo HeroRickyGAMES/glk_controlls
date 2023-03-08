@@ -166,7 +166,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
                             var uuid = Uuid();
 
                             String idd = "${DateTime.now().toString()}" + uuid.v4();
-
                             FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
                               'nomeMotorista': nomeMotorista,
                               'RGDoMotorista': RGMotorista,
@@ -180,6 +179,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
                               'LacreouNao': lacreounao,
                               'QuemAutorizou': widget.nomeUser,
                               'Status': 'Aguardando',
+                              'idDoc': idd,
+                              'DataEntrada': '',
+                              'DataSaida': '',
                               'Lacre': lacreSt,
                               'lacrenum': lacreSt,
                               'Horario Criado': dateTime,
@@ -247,11 +249,13 @@ class _modalPorteiroState extends State<modalPorteiro> {
                               var uuid = Uuid();
 
                               String idd = "${DateTime.now().toString()}" + uuid.v4();
-
                               FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
                                 'nomeMotorista': nomeMotorista,
                                 'RGDoMotorista': RGMotorista,
                                 'Veiculo': Veiculo,
+                                'idDoc': idd,
+                                'DataEntrada': '',
+                                'DataSaida': '',
                                 'PlacaVeiculo': VeiculoPlaca,
                                 'Telefone': telefone,
                                 'EmpresadeOrigin': originEmpresa,

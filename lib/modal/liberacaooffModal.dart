@@ -217,7 +217,6 @@ class _liberacaoOffState extends State<liberacaoOff> {
                                                 var uuid = Uuid();
 
                                                 String idd = "${DateTime.now().toString()}" + uuid.v4();
-
                                                 FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
                                                   'nomeMotorista': nomeMotorista,
                                                   'RGDoMotorista': RGMotorista,
@@ -234,6 +233,9 @@ class _liberacaoOffState extends State<liberacaoOff> {
                                                   'Lacre': lacreSt,
                                                   'lacrenum': lacreSt,
                                                   'MotivoLiberacao': motivo,
+                                                  'idDoc': idd,
+                                                  'DataEntrada': '',
+                                                  'DataSaida': '',
                                                   'Horario Criado': dateTime,
                                                 }).then((value) {
 
@@ -269,7 +271,6 @@ class _liberacaoOffState extends State<liberacaoOff> {
                                                 var uuid = Uuid();
 
                                                 String idd = "${DateTime.now().toString()}" + uuid.v4();
-
                                                 FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
                                                   'nomeMotorista': nomeMotorista,
                                                   'RGDoMotorista': RGMotorista,
@@ -283,6 +284,9 @@ class _liberacaoOffState extends State<liberacaoOff> {
                                                   'LacreouNao': lacreounao,
                                                   'QuemAutorizou': widget.nomeUser,
                                                   'Status': 'Entrada',
+                                                  'DataEntrada': '',
+                                                  'DataSaida': '',
+                                                  'idDoc': idd,
                                                   'Horario Criado': dateTime,
                                                   'MotivoLiberacao': motivo,
                                                   'lacrenum': '',

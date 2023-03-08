@@ -4,11 +4,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:glk_controls/mainEmpresa.dart';
+import 'package:glk_controls/mainPorteiro.dart';
 import 'package:image_picker/image_picker.dart';
 
 //Programado por HeroRickyGames
 
-class veiculoAguardando extends StatefulWidget {
+class relatorioGenerate extends StatefulWidget {
 
   String lacreounao = '';
   String empresaName = '';
@@ -22,8 +24,10 @@ class veiculoAguardando extends StatefulWidget {
   String Galpao = '';
   String lacradoStr = '';
   String idDocumento = '';
+  String dataEntrada = '';
+  String dataSaida = '';
 
-  veiculoAguardando(
+  relatorioGenerate(
       this.lacreounao,
       this.empresaName,
       this.liberadopor,
@@ -36,16 +40,18 @@ class veiculoAguardando extends StatefulWidget {
       this.Galpao,
       this.lacradoStr,
       this.idDocumento,
+      this.dataEntrada,
+      this.dataSaida
       );
   @override
-  State<veiculoAguardando> createState() => _veiculoAguardandoState();
+  State<relatorioGenerate> createState() => _relatorioGenerateState();
 }
 
 File? imageFile;
 
 final FirebaseStorage storage = FirebaseStorage.instance;
 
-class _veiculoAguardandoState extends State<veiculoAguardando> {
+class _relatorioGenerateState extends State<relatorioGenerate> {
   bool lacrebool = false;
   String? lacreSt;
 
@@ -106,7 +112,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
         backgroundColor: Colors.green[700],
         centerTitle: true,
         title: Text(
-          'GLK Controls - Veiculo Aguardando',
+          'GLK Controls - Relatório',
         ),
       ),
       body: SingleChildScrollView(
@@ -247,86 +253,34 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
               ),
             )
                 :Text(''),
-              Container(
-                padding: EdgeInsets.only(top: 16),
-                child: Text(
-                  'Adicione a foto no icone abaixo',
-                  style: TextStyle(
-                      fontSize: 20
-                  ),
+            Container(
+              padding: EdgeInsets.only(top: 16),
+              child: Text(
+                'Adicione a foto no icone abaixo',
+                style: TextStyle(
+                    fontSize: 20
                 ),
               ),
-              Container(
-                alignment: Alignment.centerRight,
-                child:
-                ElevatedButton(
-                  onPressed: _uploadImage,
-                  child: Icon(
-                    Icons.camera_alt_outlined,
-                    color: Colors.white,
-                  ),
+            ),
+            Container(
+              alignment: Alignment.centerRight,
+              child:
+              ElevatedButton(
+                onPressed: _uploadImage,
+                child: Icon(
+                  Icons.camera_alt_outlined,
+                  color: Colors.white,
                 ),
               ),
+            ),
             Container(
               padding: EdgeInsets.all(16),
               child: ElevatedButton(
-                onPressed: () async {
-                  if(lacrebool == false){
+                onPressed: () {
 
-                    if(imageFile == null){
-                      Fluttertoast.showToast(
-                        msg: 'Tire uma foto do veiculo!',
-                        toastLength: Toast.LENGTH_SHORT,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.black,
-                        textColor: Colors.white,
-                        fontSize: 16.0,
-                      );
-                    }else{
-
-                      final imageUrl = await _uploadImageToFirebase(imageFile!, widget.idDocumento);
-                      FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                        'LacreouNao': 'naolacrado',
-                        'uriImage': imageUrl
-                      });
-                      Navigator.pop(context);
-                    }
-                  }
-                  if(lacrebool == true){
-                    if(lacreSt == null){
-                      Fluttertoast.showToast(
-                        msg: 'Preencha o numero do lacre!',
-                        toastLength: Toast.LENGTH_SHORT,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.black,
-                        textColor: Colors.white,
-                        fontSize: 16.0,
-                      );
-                    }else{
-
-                      if(imageFile == null){
-                        Fluttertoast.showToast(
-                          msg: 'Tire uma foto do veiculo!',
-                          toastLength: Toast.LENGTH_SHORT,
-                          timeInSecForIosWeb: 1,
-                          backgroundColor: Colors.black,
-                          textColor: Colors.white,
-                          fontSize: 16.0,
-                        );
-                      }else{
-
-                        final imageUrl = await _uploadImageToFirebase(imageFile!, widget.idDocumento);
-                        FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                          'LacreouNao': 'lacre',
-                          'uriImage': imageUrl
-                        });
-                        Navigator.pop(context);
-                      }
-                    }
-                  }
                 },
                 child: Text(
-                  'Atualizar Documento',
+                  'Gerar/Imprimir',
                   style: TextStyle(
                       fontSize: 30
                   ),
@@ -347,16 +301,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                           'assets/sanca.png',
                           fit: BoxFit.contain,
                         )
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(16),
-                      child:
-                      Text(
-                        'Operador: ' + widget.empresaName,
-                        style: TextStyle(
-                            fontSize: 20
-                        ),
-                      ),
                     ),
                   ],
                 ),

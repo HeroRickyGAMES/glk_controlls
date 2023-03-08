@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import 'package:glk_controls/relatorioGen/relatorioGenerate.dart';
+import 'package:intl/intl.dart';
 //Programado por HeroRickyGames
 
 class pesquisaRelatorio extends StatefulWidget {
@@ -35,10 +36,6 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
         aspect = 1.0;
 
       }
-    }
-
-    gerarRelatorio(){
-
     }
 
     return Scaffold(
@@ -150,7 +147,152 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
                                             ),
                                           ),
                                           ElevatedButton(
-                                              onPressed: gerarRelatorio(),
+                                              onPressed: (){
+                                                if(lacre == 'lacre'){
+
+
+                                                  String formattedDate = '';
+                                                  String formattedDate2 = '';
+                                                  String formattedDate3 ='';
+                                                  bool dataEntradabool = false;
+                                                  bool datacriadobool = false;
+                                                  bool datasaidabool = false;
+
+                                                  if(documents['DataEntrada'] == ''){
+                                                    dataEntradabool = false;
+                                                  }else{
+                                                    dataEntradabool = true;
+                                                  }
+
+                                                  if(documents['Horario Criado'] == ''){
+                                                    datacriadobool = false;
+                                                  }else{
+                                                    datacriadobool = true;
+                                                  }
+
+                                                  if(documents['DataSaida'] == ''){
+                                                    datasaidabool = false;
+                                                  }else{
+                                                    datasaidabool = true;
+                                                  }
+
+                                                  if(dataEntradabool == false){
+                                                    formattedDate = '';
+                                                  }
+
+                                                  if(dataEntradabool == true){
+
+                                                    Timestamp DataEntrada = documents['DataEntrada'];
+                                                    formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
+                                                  }
+
+                                                  if(datacriadobool == false){
+                                                    formattedDate2 = '';
+                                                  }
+
+                                                  if(datacriadobool == true){
+
+                                                    Timestamp horarioCriacao = documents['Horario Criado'];
+                                                    formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
+                                                  }
+
+                                                  if(datasaidabool == false){
+                                                    formattedDate3 = '';
+                                                  }
+
+                                                  if(datasaidabool == true){
+                                                    Timestamp DataSaida = documents['DataSaida'];
+                                                    formattedDate3 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataSaida.toDate()).replaceAll('-', '/');
+                                                  }
+
+                                                  String liberadopor = documents['QuemAutorizou'];
+                                                  String nomeMotorista = documents['nomeMotorista'];
+                                                  String Veiculo = documents['Veiculo'];
+                                                  String PlacaVeiculo = documents['PlacaVeiculo'];
+                                                  String Empresadestino = documents['Empresa'];
+                                                  String EmpresadeOrigin = documents['EmpresadeOrigin'];
+                                                  String Galpao = documents['Galpão'];
+                                                  String lacradoStr = documents['lacrenum'];
+
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(builder: (context){
+                                                        return relatorioGenerate(lacre, "", liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, formattedDate2, formattedDate3);
+                                                      }));
+
+                                                }
+                                                else{
+                                                  if(lacre == 'naolacrado'){
+
+                                                    String formattedDate = '';
+                                                    String formattedDate2 = '';
+                                                    String formattedDate3 ='';
+                                                    bool dataEntradabool = false;
+                                                    bool datacriadobool = false;
+                                                    bool datasaidabool = false;
+
+                                                    if(documents['DataEntrada'] == ''){
+                                                      dataEntradabool = false;
+                                                    }else{
+                                                      dataEntradabool = true;
+                                                    }
+
+                                                    if(documents['Horario Criado'] == ''){
+                                                      datacriadobool = false;
+                                                    }else{
+                                                      datacriadobool = true;
+                                                    }
+
+                                                    if(documents['DataSaida'] == ''){
+                                                      datasaidabool = false;
+                                                    }else{
+                                                      datasaidabool = true;
+                                                    }
+
+                                                    if(dataEntradabool == false){
+                                                      formattedDate = '';
+                                                    }
+
+                                                    if(dataEntradabool == true){
+
+                                                      Timestamp DataEntrada = documents['DataEntrada'];
+                                                      formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
+                                                    }
+
+                                                    if(datacriadobool == false){
+                                                      formattedDate2 = '';
+                                                    }
+
+                                                    if(datacriadobool == true){
+
+                                                      Timestamp horarioCriacao = documents['Horario Criado'];
+                                                      formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
+                                                    }
+
+                                                    if(datasaidabool == false){
+                                                      formattedDate3 = '';
+                                                    }
+
+                                                    if(datasaidabool == true){
+                                                      Timestamp DataSaida = documents['DataSaida'];
+                                                      formattedDate3 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataSaida.toDate()).replaceAll('-', '/');
+                                                    }
+
+                                                    String liberadopor = documents['QuemAutorizou'];
+                                                    String nomeMotorista = documents['nomeMotorista'];
+                                                    String Veiculo = documents['Veiculo'];
+                                                    String PlacaVeiculo = documents['PlacaVeiculo'];
+                                                    String Empresadestino = documents['Empresa'];
+                                                    String EmpresadeOrigin = documents['EmpresadeOrigin'];
+                                                    String Galpao = documents['Galpão'];
+
+
+                                                    Navigator.push(context,
+                                                        MaterialPageRoute(builder: (context){
+                                                          return relatorioGenerate(lacre, "", liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, formattedDate2, formattedDate3);
+                                                        }));
+                                                  }
+                                                }
+                                              },
                                               child: Text(
                                                 'Gerar Relatório',
                                                 style: TextStyle(
