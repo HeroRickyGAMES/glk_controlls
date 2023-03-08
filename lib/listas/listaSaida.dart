@@ -290,7 +290,8 @@ class _listaSaidaState extends State<listaSaida> {
 
                                                         FirebaseFirestore.instance.collection('Autorizacoes').doc(documents.id).update({
                                                           'DataSaida': DateTime.now(),
-                                                          'Status': 'Saida'
+                                                          'Status': 'Saida',
+                                                          'saidaLiberadaPor': widget.porteiroName
                                                         });
 
                                                       },

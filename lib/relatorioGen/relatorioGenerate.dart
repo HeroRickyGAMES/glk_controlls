@@ -26,6 +26,10 @@ class relatorioGenerate extends StatefulWidget {
   String idDocumento = '';
   String dataEntrada = '';
   String dataSaida = '';
+  String RG = '';
+  String telefone = '';
+  String saidaLiberadaPor = '';
+  String imageURL = '';
 
   relatorioGenerate(
       this.lacreounao,
@@ -41,51 +45,19 @@ class relatorioGenerate extends StatefulWidget {
       this.lacradoStr,
       this.idDocumento,
       this.dataEntrada,
-      this.dataSaida
+      this.dataSaida,
+      this.RG,
+      this.telefone,
+      this.saidaLiberadaPor,
+      this.imageURL,
       );
   @override
   State<relatorioGenerate> createState() => _relatorioGenerateState();
 }
 
-File? imageFile;
-
-final FirebaseStorage storage = FirebaseStorage.instance;
-
 class _relatorioGenerateState extends State<relatorioGenerate> {
   bool lacrebool = false;
   String? lacreSt;
-
-  Future<File?> _getImageFromCamera() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
-    return File(pickedFile!.path);
-  }
-  Future<String> _uploadImageToFirebase(File file, String id) async {
-    // Crie uma referência única para o arquivo
-    final fileName = DateTime.now().millisecondsSinceEpoch.toString();
-    final reference = storage.ref().child('images/$id/$fileName');
-
-    // Faça upload da imagem para o Cloud Storage
-    await reference.putFile(file);
-
-    // Recupere a URL do download da imagem para salvar no banco de dados
-    final url = await reference.getDownloadURL();
-    return url;
-  }
-
-  Future<void> _uploadImage() async {
-    imageFile = await _getImageFromCamera();
-    if (imageFile != null) {
-      setState(() {
-        imageFile = imageFile;
-
-
-      });
-
-      print(imageFile);
-
-      // Salve a URL do download da imagem no banco de dados
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -135,7 +107,7 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               padding: EdgeInsets.all(16),
               child:
               Text(
-                'Data: ${widget.horarioCriacao}' ,
+                'Data de Entrada: ${widget.dataEntrada}' ,
                 style: TextStyle(
                     fontSize: 30
                 ),
@@ -146,6 +118,16 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               child:
               Text(
                 'Nome: ' + widget.nomeMotorista,
+                style: TextStyle(
+                    fontSize: 30
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(16),
+              child:
+              Text(
+                'RG: ' + widget.RG,
                 style: TextStyle(
                     fontSize: 30
                 ),
@@ -185,6 +167,16 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               padding: EdgeInsets.all(16),
               child:
               Text(
+                'Telefone: ' + widget.telefone,
+                style: TextStyle(
+                    fontSize: 30
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(16),
+              child:
+              Text(
                 'Empresa de origem: ' + widget.EmpresadeOrigin,
                 style: TextStyle(
                     fontSize: 30
@@ -196,6 +188,26 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               child:
               Text(
                 'Galpão: ' + widget.Galpao,
+                style: TextStyle(
+                    fontSize: 30
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(16),
+              child:
+              Text(
+                'Saída Liberada por : ' + widget.saidaLiberadaPor,
+                style: TextStyle(
+                    fontSize: 30
+                ),
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(16),
+              child:
+              Text(
+                'Data da liberação de saída: ' + widget.dataSaida,
                 style: TextStyle(
                     fontSize: 30
                 ),
@@ -254,24 +266,13 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
             )
                 :Text(''),
             Container(
-              padding: EdgeInsets.only(top: 16),
-              child: Text(
-                'Adicione a foto no icone abaixo',
-                style: TextStyle(
-                    fontSize: 20
-                ),
-              ),
-            ),
-            Container(
-              alignment: Alignment.centerRight,
-              child:
-              ElevatedButton(
-                onPressed: _uploadImage,
-                child: Icon(
-                  Icons.camera_alt_outlined,
-                  color: Colors.white,
-                ),
-              ),
+                width: 512,
+                height: 512,
+              padding: EdgeInsets.all(16),
+              child: Image.network(
+                  widget.imageURL,
+                fit: BoxFit.contain,
+              )
             ),
             Container(
               padding: EdgeInsets.all(16),

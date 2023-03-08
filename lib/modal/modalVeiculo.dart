@@ -176,6 +176,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
                               'Empresa': empresaSelecionada,
                               'ColetaOuEntrega': coletaouentrega,
                               'Galpão': galpao,
+                              'saidaLiberadaPor': '',
+                              'uriImage': '',
                               'LacreouNao': lacreounao,
                               'QuemAutorizou': widget.nomeUser,
                               'Status': 'Aguardando',
@@ -266,6 +268,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                 'QuemAutorizou': widget.nomeUser,
                                 'Status': 'Aguardando',
                                 'Horario Criado': dateTime,
+                                'saidaLiberadaPor': '',
+                                'uriImage': '',
                                 'lacrenum': '',
                               }).then((value) {
 

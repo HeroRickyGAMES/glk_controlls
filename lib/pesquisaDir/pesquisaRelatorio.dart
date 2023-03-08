@@ -150,7 +150,6 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
                                               onPressed: (){
                                                 if(lacre == 'lacre'){
 
-
                                                   String formattedDate = '';
                                                   String formattedDate2 = '';
                                                   String formattedDate3 ='';
@@ -213,10 +212,14 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
                                                   String EmpresadeOrigin = documents['EmpresadeOrigin'];
                                                   String Galpao = documents['Galpão'];
                                                   String lacradoStr = documents['lacrenum'];
+                                                  String RG = documents['RGDoMotorista'];
+                                                  String telefone = documents['Telefone'];
+                                                  String saidaLiberadaPor = documents['saidaLiberadaPor'];
+                                                  String imageURL = documents['uriImage'];
 
                                                   Navigator.push(context,
                                                       MaterialPageRoute(builder: (context){
-                                                        return relatorioGenerate(lacre, "", liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, formattedDate2, formattedDate3);
+                                                        return relatorioGenerate(lacre, "", liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, formattedDate2, formattedDate3, RG, telefone, saidaLiberadaPor, imageURL);
                                                       }));
 
                                                 }
@@ -277,6 +280,8 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
                                                       formattedDate3 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataSaida.toDate()).replaceAll('-', '/');
                                                     }
 
+                                                    String imageURL = '';
+
                                                     String liberadopor = documents['QuemAutorizou'];
                                                     String nomeMotorista = documents['nomeMotorista'];
                                                     String Veiculo = documents['Veiculo'];
@@ -284,11 +289,20 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
                                                     String Empresadestino = documents['Empresa'];
                                                     String EmpresadeOrigin = documents['EmpresadeOrigin'];
                                                     String Galpao = documents['Galpão'];
+                                                    String RG = documents['RGDoMotorista'];
+                                                    String telefone = documents['Telefone'];
+                                                    String saidaLiberadaPor = documents['saidaLiberadaPor'];
 
+
+                                                    if(documents['uriImage'] == ''){
+                                                      imageURL = 'https://cdn-icons-png.flaticon.com/512/75/75519.png';
+                                                    }else{
+                                                      imageURL = documents['uriImage'];
+                                                    }
 
                                                     Navigator.push(context,
                                                         MaterialPageRoute(builder: (context){
-                                                          return relatorioGenerate(lacre, "", liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, formattedDate2, formattedDate3);
+                                                          return relatorioGenerate(lacre, "", liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, formattedDate2, formattedDate3, RG, telefone, saidaLiberadaPor, imageURL);
                                                         }));
                                                   }
                                                 }
