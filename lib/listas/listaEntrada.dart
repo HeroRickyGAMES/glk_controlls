@@ -4,7 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
+import 'package:glk_controls/modal/veiculoAguardando.dart';
+import 'package:glk_controls/modal/veiculoEntrada.dart';
+import 'package:intl/intl.dart';
 import '../pesquisaDir/pesquisa.dart';
 
 //Programado por HeroRickyGames
@@ -121,10 +123,60 @@ class _listEntradaState extends State<listEntrada> {
                         }else{
 
 
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context){
-                                return pesquisa(holderPlaca);
-                              }));
+                          FirebaseFirestore.instance
+                              .collection('Autorizacoes')
+                              .get()
+                              .then((QuerySnapshot querySnapshot) {
+                            querySnapshot.docs.forEach((doc) {
+
+                              if(doc["nomeMotorista"] == holderPlaca ){
+
+                                String oqPesquisar = 'nomeMotorista';
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context){
+                                      return pesquisa(holderPlaca, oqPesquisar);
+                                    }));
+
+                              }else{
+
+                                if(doc["PlacaVeiculo"] == holderPlaca ){
+
+                                  String oqPesquisar = 'PlacaVeiculo';
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context){
+                                        return pesquisa(holderPlaca, oqPesquisar);
+                                      }));
+                                }else{
+                                  if(doc["Empresa"] == holderPlaca){
+                                    String oqPesquisar = 'Empresa';
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context){
+                                          return pesquisa(holderPlaca, oqPesquisar);
+                                        }));
+                                  }else{
+                                    if(doc["Galpão"] == holderPlaca){
+                                      String oqPesquisar = 'Galpão';
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context){
+                                            return pesquisa(holderPlaca, oqPesquisar);
+                                          }));
+                                    }else{
+
+                                      Fluttertoast.showToast(
+                                        msg: 'Infelizmente não achei nada do que você pesquisou, por favor, tente novamente!',
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.black,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0,
+                                      );
+                                    }
+                                  }
+                                }
+                              }
+
+                            });
+                          });
                         }
                       },
                       child: Text(
@@ -207,6 +259,51 @@ class _listEntradaState extends State<listEntrada> {
                                           ElevatedButton(
                                               onPressed: (){
 
+                                                if(documents['Status'] == 'Aguardando'){
+
+                                                  if(lacre == 'lacre'){
+                                                    String liberadopor = documents['QuemAutorizou'];
+                                                    Timestamp horarioCriacao = documents['Horario Criado'];
+                                                    String nomeMotorista = documents['nomeMotorista'];
+                                                    String Veiculo = documents['Veiculo'];
+                                                    String PlacaVeiculo = documents['PlacaVeiculo'];
+                                                    String Empresadestino = documents['Empresa'];
+                                                    String EmpresadeOrigin = documents['EmpresadeOrigin'];
+                                                    String Galpao = documents['Galpão'];
+                                                    String lacradoStr = documents['lacrenum'];
+
+                                                    String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
+
+                                                    Navigator.push(context,
+                                                        MaterialPageRoute(builder: (context){
+                                                          return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id);
+                                                        }));
+
+                                                  }
+                                                  else{
+                                                    if(lacre == 'naolacrado'){
+                                                      String liberadopor = documents['QuemAutorizou'];
+                                                      Timestamp horarioCriacao = documents['Horario Criado'];
+                                                      Timestamp DataEntrada = documents['DataEntrada'];
+                                                      String nomeMotorista = documents['nomeMotorista'];
+                                                      String Veiculo = documents['Veiculo'];
+                                                      String PlacaVeiculo = documents['PlacaVeiculo'];
+                                                      String Empresadestino = documents['Empresa'];
+                                                      String EmpresadeOrigin = documents['EmpresadeOrigin'];
+                                                      String Galpao = documents['Galpão'];
+
+                                                      String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
+                                                      String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
+
+                                                      print(formattedDate);
+
+                                                      Navigator.push(context,
+                                                          MaterialPageRoute(builder: (context){
+                                                            return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id);
+                                                          }));
+                                                    }
+                                                  }
+                                                }
                                               },
                                               child: Text(
                                                 documents['PlacaVeiculo'],

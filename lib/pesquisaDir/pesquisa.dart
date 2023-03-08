@@ -8,7 +8,8 @@ import 'package:flutter/material.dart';
 
 class pesquisa extends StatefulWidget {
   String pesquisast;
-  pesquisa(this.pesquisast);
+  String oqPesquisar;
+  pesquisa(this.pesquisast, this.oqPesquisar);
 
   @override
   State<pesquisa> createState() => _pesquisaState();
@@ -54,7 +55,7 @@ class _pesquisaState extends State<pesquisa> {
                       stream: FirebaseFirestore
                           .instance
                           .collection('Autorizacoes')
-                          .where('PlacaVeiculo', isEqualTo: widget.pesquisast)
+                          .where(widget.oqPesquisar, isEqualTo: widget.pesquisast)
                           .snapshots(),
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {

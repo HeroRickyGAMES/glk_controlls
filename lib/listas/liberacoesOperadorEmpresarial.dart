@@ -167,11 +167,61 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
 
                           }else{
 
+                            FirebaseFirestore.instance
+                                .collection('Autorizacoes')
+                                .get()
+                                .then((QuerySnapshot querySnapshot) {
+                              querySnapshot.docs.forEach((doc) {
 
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context){
-                                  return pesquisa(holderPlaca);
-                                }));
+                                if(doc["nomeMotorista"] == holderPlaca ){
+
+                                  String oqPesquisar = 'nomeMotorista';
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context){
+                                        return pesquisa(holderPlaca, oqPesquisar);
+                                      }));
+
+                                }else{
+
+                                  if(doc["PlacaVeiculo"] == holderPlaca ){
+
+                                    String oqPesquisar = 'PlacaVeiculo';
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context){
+                                          return pesquisa(holderPlaca, oqPesquisar);
+                                        }));
+                                  }else{
+                                    if(doc["Empresa"] == holderPlaca){
+                                      String oqPesquisar = 'Empresa';
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context){
+                                            return pesquisa(holderPlaca, oqPesquisar);
+                                          }));
+                                    }else{
+                                      if(doc["Galpão"] == holderPlaca){
+                                        String oqPesquisar = 'Galpão';
+                                        Navigator.push(context,
+                                            MaterialPageRoute(builder: (context){
+                                              return pesquisa(holderPlaca, oqPesquisar);
+                                            }));
+                                      }else{
+
+                                        Fluttertoast.showToast(
+                                          msg: 'Infelizmente não achei nada do que você pesquisou, por favor, tente novamente!',
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.black,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0,
+                                        );
+
+                                      }
+                                    }
+                                  }
+                                }
+
+                              });
+                            });
                           }
                         },
                         child: Text(

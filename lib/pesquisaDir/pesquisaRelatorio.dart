@@ -37,6 +37,10 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
       }
     }
 
+    gerarRelatorio(){
+
+    }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -146,9 +150,9 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
                                             ),
                                           ),
                                           ElevatedButton(
-                                              onPressed: null,
+                                              onPressed: gerarRelatorio(),
                                               child: Text(
-                                                'Mudar algo',
+                                                'Gerar Relatório',
                                                 style: TextStyle(
                                                     fontSize: tamanhotexto,
                                                     fontWeight: FontWeight.bold
@@ -159,7 +163,6 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
                                       ),
                                     ),
                                   );
-
                                 }
                                 ).toList().reversed.toList(),
                               );
