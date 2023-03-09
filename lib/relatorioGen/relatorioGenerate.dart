@@ -281,7 +281,7 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               child: ElevatedButton(
                 onPressed: () {
 
-                  generatePDF();
+                  generatePDF(widget.liberadopor, widget.dataEntrada, widget.nomeMotorista, widget.Veiculo, widget.PlacaVeiculo, widget.Empresadestino, widget.telefone, widget.EmpresadeOrigin, widget.Galpao, widget.saidaLiberadaPor, widget.lacradoStr, widget.dataSaida, lacrebool);
 
                 },
                 child: Text(
