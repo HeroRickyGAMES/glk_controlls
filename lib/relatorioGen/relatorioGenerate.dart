@@ -1,13 +1,4 @@
-import 'dart:io';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:glk_controls/mainEmpresa.dart';
-import 'package:glk_controls/mainPorteiro.dart';
-import 'package:image_picker/image_picker.dart';
-
 import 'generatePDF/gerarPDF.dart';
 
 //Programado por HeroRickyGames
@@ -32,6 +23,7 @@ class relatorioGenerate extends StatefulWidget {
   String telefone = '';
   String saidaLiberadaPor = '';
   String imageURL = '';
+  String id = '';
 
   relatorioGenerate(
       this.lacreounao,
@@ -52,6 +44,7 @@ class relatorioGenerate extends StatefulWidget {
       this.telefone,
       this.saidaLiberadaPor,
       this.imageURL,
+      this.id
       );
   @override
   State<relatorioGenerate> createState() => _relatorioGenerateState();
@@ -281,7 +274,10 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               child: ElevatedButton(
                 onPressed: () {
 
-                  generatePDF(widget.liberadopor, widget.dataEntrada, widget.nomeMotorista, widget.Veiculo, widget.PlacaVeiculo, widget.Empresadestino, widget.telefone, widget.EmpresadeOrigin, widget.Galpao, widget.saidaLiberadaPor, widget.lacradoStr, widget.dataSaida, lacrebool);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context){
+                        return generatePDF(widget.liberadopor, widget.dataEntrada, widget.nomeMotorista, widget.Veiculo, widget.PlacaVeiculo, widget.Empresadestino, widget.telefone, widget.EmpresadeOrigin, widget.Galpao, widget.saidaLiberadaPor, widget.lacradoStr, widget.dataSaida, lacrebool, widget.id);
+                      }));
 
                 },
                 child: Text(

@@ -216,10 +216,11 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
                                                   String telefone = documents['Telefone'];
                                                   String saidaLiberadaPor = documents['saidaLiberadaPor'];
                                                   String imageURL = documents['uriImage'];
+                                                  String id = documents['id'];
 
                                                   Navigator.push(context,
                                                       MaterialPageRoute(builder: (context){
-                                                        return relatorioGenerate(lacre, "", liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, formattedDate2, formattedDate3, RG, telefone, saidaLiberadaPor, imageURL);
+                                                        return relatorioGenerate(lacre, "", liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, formattedDate2, formattedDate3, RG, telefone, saidaLiberadaPor, imageURL, id);
                                                       }));
 
                                                 }
@@ -292,7 +293,7 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
                                                     String RG = documents['RGDoMotorista'];
                                                     String telefone = documents['Telefone'];
                                                     String saidaLiberadaPor = documents['saidaLiberadaPor'];
-
+                                                    String id = documents['id'];
 
                                                     if(documents['uriImage'] == ''){
                                                       imageURL = 'https://raw.githubusercontent.com/HeroRickyGAMES/glk_controlls/master/assets/error-image.png';
@@ -302,7 +303,7 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
 
                                                     Navigator.push(context,
                                                         MaterialPageRoute(builder: (context){
-                                                          return relatorioGenerate(lacre, "", liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, formattedDate2, formattedDate3, RG, telefone, saidaLiberadaPor, imageURL);
+                                                          return relatorioGenerate(lacre, "", liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, formattedDate2, formattedDate3, RG, telefone, saidaLiberadaPor, imageURL, id);
                                                         }));
                                                   }
                                                 }
