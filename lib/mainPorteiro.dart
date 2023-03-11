@@ -6,6 +6,7 @@ import 'package:glk_controls/Painel.dart';
 import 'package:glk_controls/callToAPI.dart';
 import 'package:glk_controls/listas/listaEntrada.dart';
 import 'package:glk_controls/modal/modalVeiculoEdit.dart';
+import 'package:glk_controls/pesquisaDir/pesquisaNovoCadastro.dart';
 
 import 'listas/listaSaida.dart';
 import 'modal/liberacaooffModal.dart';
@@ -42,73 +43,12 @@ class _mainPorteiroState extends State<mainPorteiro> {
 
   @override
   Widget build(BuildContext context) {
+
     openModal() async {
-
-      var result = await FirebaseFirestore.instance
-          .collection("empresa")
-          .get();
-      result.docs.forEach((res) {
-        print(res.data()['nome']);
-
-        setState(() {
-          listaNome.add(res.data()['nome']);
-
-          galpao.addAll(res.data()['galpaes']);
-
-          print('dentro da array: ${galpao}' );
-          final dropValue = ValueNotifier('');
-          final dropValue2 = ValueNotifier('');
-
-          var db = FirebaseFirestore.instance;
-          var UID = FirebaseAuth.instance.currentUser?.uid;
-          db.collection('Users').doc(UID).get().then((event){
-            print("${event.data()}");
-
-            event.data()?.forEach((key, value) {
-
-              print(key);
-              print(value);
-
-              if(key == 'nome'){
-                String PorteiroNomee = value;
-
-                var db = FirebaseFirestore.instance;
-                var UID = FirebaseAuth.instance.currentUser?.uid;
-                db.collection('Users').doc(UID).get().then((event){
-                  print("${event.data()}");
-
-                  event.data()?.forEach((key, value) {
-
-                    print(key);
-                    print(value);
-
-                    if(key == 'nome'){
-
-                      Navigator.pop(context);
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context){
-                            return modalPorteiro(listaNome, dropValue, PorteiroNomee, '',dropValue2, galpao);
-
-                          }));
-                    }
-
-                  });
-
-                }
-                );
-
-              }
-
-            });
-
-          }
-          );
-
-
-        });
-
-      });
-      print(listaNome);
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context){
+            return pesquisaCadastro(widget.PorteiroNome);
+          }));
     }
 
     openModalOffline() async {

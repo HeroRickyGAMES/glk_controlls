@@ -227,6 +227,10 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                     bool relatorio = result.get('relatorio');
                                     bool painel = result.get('painel');
 
+                                    FirebaseFirestore.instance.collection('Motoristas').doc().set({
+                                      'nomeMotorista': nomeMotorista,
+                                      'RGDoMotorista': RGMotorista,
+                                    });
 
                                     Navigator.pop(context);
                                     Navigator.push(context,
@@ -272,7 +276,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                 'uriImage': '',
                                 'lacrenum': '',
                               }).then((value) {
-
                                 Fluttertoast.showToast(
                                   msg: 'Enviado com sucesso!',
                                   toastLength: Toast.LENGTH_SHORT,
@@ -313,6 +316,10 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                       bool relatorio = result.get('relatorio');
                                       bool painel = result.get('painel');
 
+                                      FirebaseFirestore.instance.collection('Motoristas').doc().set({
+                                        'nomeMotorista': nomeMotorista,
+                                        'RGDoMotorista': RGMotorista,
+                                      });
                                       Navigator.pop(context);
                                       Navigator.push(context,
                                           MaterialPageRoute(builder: (context){
@@ -323,8 +330,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                 }
                                 );
                               });
-
-
                            }
                           }
                         }
