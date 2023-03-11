@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import '../callToAPI.dart';
 import '../mainPorteiro.dart';
 import 'dart:io';
 import 'package:uuid/uuid.dart';
@@ -231,6 +232,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                       'nomeMotorista': nomeMotorista,
                                       'RGDoMotorista': RGMotorista,
                                     });
+                                    getReleAPI1();
 
                                     Navigator.pop(context);
                                     Navigator.push(context,
@@ -320,6 +322,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                         'nomeMotorista': nomeMotorista,
                                         'RGDoMotorista': RGMotorista,
                                       });
+
+                                      getReleAPI1();
+
                                       Navigator.pop(context);
                                       Navigator.push(context,
                                           MaterialPageRoute(builder: (context){

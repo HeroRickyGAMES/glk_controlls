@@ -45,8 +45,6 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
   bool lacrebool = false;
   String? lacreSt;
 
-
-
   @override
   Widget build(BuildContext context) {
 

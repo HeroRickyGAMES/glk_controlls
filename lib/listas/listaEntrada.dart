@@ -3,9 +3,12 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/modal/veiculoAguardando.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 import '../pesquisaDir/pesquisa.dart';
 
 //Programado por HeroRickyGames
@@ -256,7 +259,7 @@ class _listEntradaState extends State<listEntrada> {
                                       Column(
                                         children: [
                                           ElevatedButton(
-                                              onPressed: (){
+                                              onPressed: () async {
 
                                                 if(documents['Status'] == 'Aguardando'){
 
@@ -273,9 +276,30 @@ class _listEntradaState extends State<listEntrada> {
 
                                                     String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
 
+                                                    final ByteData imageData = await rootBundle.load('assets/insertFoto.png');
+
+                                                    final Uint8List uint8List = imageData.buffer.asUint8List();
+
+                                                    final compressedImage = await FlutterImageCompress.compressWithList(
+                                                      uint8List,
+                                                      quality: 85, // ajuste a qualidade da imagem conforme necessário
+                                                    );
+
+                                                    final tempDir = await getTemporaryDirectory();
+                                                    final file = File('${tempDir.path}/imagem.jpg');
+                                                    await file.writeAsBytes(compressedImage);
+
+                                                    final file2 = File('${tempDir.path}/imagem.jpg');
+                                                    await file2.writeAsBytes(compressedImage);
+
+                                                    final file3 = File('${tempDir.path}/imagem.jpg');
+                                                    await file3.writeAsBytes(compressedImage);
+
+                                                    print(' arquivo temporario é : ${file} ');
+
                                                     Navigator.push(context,
                                                         MaterialPageRoute(builder: (context){
-                                                          return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id);
+                                                          return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, file, file2, file3);
                                                         }));
 
                                                   }
@@ -294,11 +318,31 @@ class _listEntradaState extends State<listEntrada> {
                                                       String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
                                                       String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
 
+                                                      final ByteData imageData = await rootBundle.load('assets/error-image.png');
+
+                                                      final Uint8List uint8List = imageData.buffer.asUint8List();
+
+                                                      final compressedImage = await FlutterImageCompress.compressWithList(
+                                                        uint8List,
+                                                        quality: 85, // ajuste a qualidade da imagem conforme necessário
+                                                      );
+
+                                                      final tempDir = await getTemporaryDirectory();
+                                                      final file = File('${tempDir.path}/imagem.jpg');
+                                                      await file.writeAsBytes(compressedImage);
+
+                                                      final file2 = File('${tempDir.path}/imagem.jpg');
+                                                      await file2.writeAsBytes(compressedImage);
+
+                                                      final file3 = File('${tempDir.path}/imagem.jpg');
+                                                      await file3.writeAsBytes(compressedImage);
+
+                                                      print(' arquivo temporario é : ${file} ');
                                                       print(formattedDate);
 
                                                       Navigator.push(context,
                                                           MaterialPageRoute(builder: (context){
-                                                            return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id);
+                                                            return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3);
                                                           }));
                                                     }
                                                   }

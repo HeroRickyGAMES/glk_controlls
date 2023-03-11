@@ -119,10 +119,7 @@ class _pesquisaCadastroState extends State<pesquisaCadastro> {
 
           }
           );
-
-
         });
-
       });
       print(listaNome);
     }
