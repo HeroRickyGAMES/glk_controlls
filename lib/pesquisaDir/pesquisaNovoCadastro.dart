@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../modal/modalVeiculo.dart';
+import '../modal/modalVeiculoPesquisafill.dart';
 
 class pesquisaCadastro extends StatefulWidget {
 
@@ -26,7 +27,7 @@ class _pesquisaCadastroState extends State<pesquisaCadastro> {
   List listaNome = [];
   List galpao = [ ];
 
-  String? Pesquisa;
+  String? Pesquisa = '';
   @override
   Widget build(BuildContext context) {
 
@@ -54,7 +55,172 @@ class _pesquisaCadastroState extends State<pesquisaCadastro> {
     }
 
     pesquisarmet() async {
-      //todo pesquisa
+
+      if(Pesquisa == ''){
+        Fluttertoast.showToast(
+          msg: 'Preencha a pesquisa para fazer uma pesquisa!',
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      }else{
+        FirebaseFirestore.instance
+            .collection('Motoristas')
+            .get()
+            .then((QuerySnapshot querySnapshot) {
+          querySnapshot.docs.forEach((doc) async {
+            if(doc["nomeMotorista"] == Pesquisa ){
+
+              var result = await FirebaseFirestore.instance
+                  .collection("empresa")
+                  .get();
+              result.docs.forEach((res) {
+                print(res.data()['nome']);
+
+                setState(() {
+                  listaNome.add(res.data()['nome']);
+
+                  galpao.addAll(res.data()['galpaes']);
+
+                  print('dentro da array: ${galpao}' );
+                  final dropValue = ValueNotifier('');
+                  final dropValue2 = ValueNotifier('');
+
+                  var db = FirebaseFirestore.instance;
+                  var UID = FirebaseAuth.instance.currentUser?.uid;
+                  db.collection('Users').doc(UID).get().then((event){
+                    print("${event.data()}");
+
+                    event.data()?.forEach((key, value) {
+
+                      print(key);
+                      print(value);
+
+                      if(key == 'nome'){
+                        String PorteiroNomee = value;
+
+                        var db = FirebaseFirestore.instance;
+                        var UID = FirebaseAuth.instance.currentUser?.uid;
+                        db.collection('Users').doc(UID).get().then((event){
+                          print("${event.data()}");
+
+                          event.data()?.forEach((key, value) {
+
+                            print(key);
+                            print(value);
+
+                            if(key == 'nome'){
+                              String autofillName = doc["nomeMotorista"];
+                              String autofillRG = doc["RGDoMotorista"];
+
+                              Navigator.pop(context);
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context){
+                                    return modalVeiculofill(listaNome, dropValue, PorteiroNomee, '',dropValue2, galpao, autofillName, autofillRG);
+
+                                  }));
+                            }
+
+                          });
+
+                        }
+                        );
+
+                      }
+
+                    });
+
+                  }
+                  );
+                });
+              });
+              print(listaNome);
+
+
+
+            }else{
+              if(doc["RGDoMotorista"] == Pesquisa ){
+
+                var result = await FirebaseFirestore.instance
+                    .collection("empresa")
+                    .get();
+                result.docs.forEach((res) {
+                  print(res.data()['nome']);
+
+                  setState(() {
+                    listaNome.add(res.data()['nome']);
+
+                    galpao.addAll(res.data()['galpaes']);
+
+                    print('dentro da array: ${galpao}' );
+                    final dropValue = ValueNotifier('');
+                    final dropValue2 = ValueNotifier('');
+
+                    var db = FirebaseFirestore.instance;
+                    var UID = FirebaseAuth.instance.currentUser?.uid;
+                    db.collection('Users').doc(UID).get().then((event){
+                      print("${event.data()}");
+
+                      event.data()?.forEach((key, value) {
+
+                        print(key);
+                        print(value);
+
+                        if(key == 'nome'){
+                          String PorteiroNomee = value;
+
+                          var db = FirebaseFirestore.instance;
+                          var UID = FirebaseAuth.instance.currentUser?.uid;
+                          db.collection('Users').doc(UID).get().then((event){
+                            print("${event.data()}");
+
+                            event.data()?.forEach((key, value) {
+
+                              print(key);
+                              print(value);
+
+                              if(key == 'nome'){
+                                String autofillName = doc["nomeMotorista"];
+                                String autofillRG = doc["RGDoMotorista"];
+
+                                Navigator.pop(context);
+                                Navigator.push(context,
+                                    MaterialPageRoute(builder: (context){
+                                      return modalVeiculofill(listaNome, dropValue, PorteiroNomee, '',dropValue2, galpao, autofillName, autofillRG);
+
+                                    }));
+                              }
+
+                            });
+
+                          }
+                          );
+
+                        }
+
+                      });
+
+                    }
+                    );
+                  });
+                });
+                print(listaNome);
+              }else{
+                Fluttertoast.showToast(
+                  msg: 'Infelizmente não achei nada do que você pesquisou, por favor, tente novamente!',
+                  toastLength: Toast.LENGTH_SHORT,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.black,
+                  textColor: Colors.white,
+                  fontSize: 16.0,
+                );
+              }
+            }
+          });
+        });
+      }
     }
 
     novoCadastromt() async {
@@ -136,7 +302,8 @@ class _pesquisaCadastroState extends State<pesquisaCadastro> {
             children: [
               Container(
                 padding: EdgeInsets.all(20),
-                child: ElevatedButton(onPressed: novoCadastromt,
+                child: ElevatedButton(
+                    onPressed: novoCadastromt,
                     child: Text(
                       'Novo cadastro',
                       style: TextStyle(

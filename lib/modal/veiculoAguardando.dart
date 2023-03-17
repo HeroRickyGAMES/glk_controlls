@@ -223,20 +223,32 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
               alignment: Alignment.center,
               child:
               Text(
-                'Entrada Liberada: ' + widget.liberadopor,
+                'Liberação: ' + 'Motorista e Veiculo',
                 style: TextStyle(
                     fontSize: 30
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
-              child:
-              Text(
-                'Data: ${widget.horarioCriacao}' ,
-                style: TextStyle(
-                    fontSize: 30
-                ),
+              height: 50,
+              width: double.infinity,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Data: ${widget.horarioCriacao}' ,
+                    style: TextStyle(
+                        fontSize: 16
+                    ),
+                  ),
+                  Text(
+                    ' - Portaria - ' + widget.liberadopor,
+                    style: TextStyle(
+                        fontSize: 16
+                    ),
+                  ),
+                ],
               ),
             ),
             Container(

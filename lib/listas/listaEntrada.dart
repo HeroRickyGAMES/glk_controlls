@@ -260,9 +260,7 @@ class _listEntradaState extends State<listEntrada> {
                                         children: [
                                           ElevatedButton(
                                               onPressed: () async {
-
-                                                if(documents['Status'] == 'Aguardando'){
-
+                                                if(documents['Status'] == 'Em Verificação'){
                                                   if(lacre == 'lacre'){
                                                     String liberadopor = documents['QuemAutorizou'];
                                                     Timestamp horarioCriacao = documents['Horario Criado'];

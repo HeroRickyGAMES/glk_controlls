@@ -238,6 +238,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                             .instance
                             .collection('Autorizacoes')
                             .where('Empresa', isEqualTo: widget.empresaName)
+                            .where('Status', isNotEqualTo: 'Em Verificação')
                             .snapshots(),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
