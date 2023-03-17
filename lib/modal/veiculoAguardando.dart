@@ -25,6 +25,7 @@ class veiculoAguardando extends StatefulWidget {
   File? imageFile;
   File? imageFile2;
   File? imageFile3;
+  File? imageFile4;
 
   veiculoAguardando(
       this.lacreounao,
@@ -41,7 +42,8 @@ class veiculoAguardando extends StatefulWidget {
       this.idDocumento,
       this.imageFile,
       this.imageFile2,
-      this.imageFile3
+      this.imageFile3,
+      this.imageFile4
       );
   @override
   State<veiculoAguardando> createState() => _veiculoAguardandoState();
@@ -51,6 +53,7 @@ final FirebaseStorage storage = FirebaseStorage.instance;
 bool isTired = false;
 bool isTired2 = false;
 bool isTired3 = false;
+bool isTired4 = false;
 
 class _veiculoAguardandoState extends State<veiculoAguardando> {
   @override
@@ -58,6 +61,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
     File? imageFile = widget.imageFile;
     File? imageFile2 = widget.imageFile2;
     File? imageFile3 = widget.imageFile3;
+    File? imageFile4 = widget.imageFile4;
 
     bool lacrebool = false;
     String? lacreSt;
@@ -93,6 +97,11 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
     trocandoparaverdadeiro3(){
       setState(() {
         isTired3 = true;
+      });
+    }
+    trocandoparaverdadeiro4(){
+      setState(() {
+        isTired4 = true;
       });
     }
 
@@ -152,6 +161,30 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
         widget.imageFile3 = imageFile3;
       });
       trocandoparaverdadeiro3();
+      print(imageFile);
+    }
+
+    Future<String> _uploadImageToFirebase4(File file, String id) async {
+      // Crie uma referência única para o arquivo
+      final fileName = DateTime.now().millisecondsSinceEpoch.toString();
+      final reference = storage.ref().child('images/$id/$fileName');
+
+      // Faça upload da imagem para o Cloud Storage
+      await reference.putFile(file);
+      // Recupere a URL do download da imagem para salvar no banco de dados
+      final url = await reference.getDownloadURL();
+      return url;
+    }
+
+    Future<void> _uploadImage4() async {
+      imageFile4 = await _getImageFromCamera();
+      setState(() {
+
+        imageFile4 = imageFile4;
+        widget.imageFile4 = imageFile4;
+
+      });
+      trocandoparaverdadeiro4();
       print(imageFile);
     }
 
@@ -330,17 +363,34 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
               height: 300,
               width: 700,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
+                    padding: EdgeInsets.all(4),
                     alignment: Alignment.center,
                     child:
                     ElevatedButton(
                       onPressed: _uploadImage,
                       child:
-                      Image.file(
-                        imageFile!,
-                        height: 265,
-                        width: 200,
+                      Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(4),
+                            child: Text(
+                              'Motorista *',
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black
+                              ),
+                            ),
+                          ),
+                          Image.file(
+                            imageFile!,
+                            height: 265,
+                            width: 200,
+                          ),
+                        ],
                       ),
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.transparent
@@ -348,15 +398,30 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                     ),
                   ),
                   Container(
+                    padding: EdgeInsets.all(4),
                     alignment: Alignment.center,
                     child:
                     ElevatedButton(
                       onPressed: _uploadImage2,
                       child:
-                      Image.file(
-                        imageFile2!,
-                        height: 265,
-                        width: 200,
+                      Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(4),
+                            child: Text(
+                              'Placa 1*',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.black
+                              ),
+                            ),
+                          ),
+                          Image.file(
+                            imageFile2!,
+                            height: 265,
+                            width: 200,
+                          ),
+                        ],
                       ),
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.transparent
@@ -370,17 +435,65 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
               height: 300,
               width: 700,
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
+                    padding: EdgeInsets.all(4),
                     alignment: Alignment.center,
                     child:
                     ElevatedButton(
                       onPressed: _uploadImage3,
                       child:
-                      Image.file(
-                        imageFile3!,
-                        height: 265,
-                        width: 200,
+                      Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(4),
+                            child: Text(
+                              'Placa 2 *',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.black
+                              ),
+                            ),
+                          ),
+                          Image.file(
+                            imageFile3!,
+                            height: 265,
+                            width: 200,
+                          ),
+                        ],
+                      ),
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(4),
+                    alignment: Alignment.center,
+                    child:
+                    ElevatedButton(
+                      onPressed: _uploadImage4,
+                      child:
+                      Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(4),
+                            child: Text(
+                              'Placa 3*',
+                              style: TextStyle(
+                                  fontSize: 18,
+                                  color: Colors.black
+                              ),
+                            ),
+                          ),
+                          Image.file(
+                            imageFile4!,
+                            height: 265,
+                            width: 200,
+                          ),
+                        ],
                       ),
                       style: ElevatedButton.styleFrom(
                           backgroundColor: Colors.transparent
@@ -395,27 +508,9 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
               child: ElevatedButton(
                 onPressed: () async {
                   if(lacrebool == false){
-
-                    Fluttertoast.showToast(
-                      msg: 'Atualizando dados... Isso pode demorar um pouco dependendo da',
-                      toastLength: Toast.LENGTH_LONG,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.black,
-                      textColor: Colors.white,
-                      fontSize: 16.0,
-                    );
-                    Fluttertoast.showToast(
-                      msg: 'Sua internet...',
-                      toastLength: Toast.LENGTH_LONG,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.black,
-                      textColor: Colors.white,
-                      fontSize: 16.0,
-                    );
-
                     if(isTired == false){
                       Fluttertoast.showToast(
-                        msg: 'Tire a foto do veiculo!',
+                        msg: 'Tire a foto do motorista!',
                         toastLength: Toast.LENGTH_SHORT,
                         timeInSecForIosWeb: 1,
                         backgroundColor: Colors.black,
@@ -425,7 +520,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                     }else{
                       if(isTired2 == false){
                         Fluttertoast.showToast(
-                          msg: 'Tire a foto do veiculo!',
+                          msg: 'Tire da placa do veiculo!',
                           toastLength: Toast.LENGTH_SHORT,
                           timeInSecForIosWeb: 1,
                           backgroundColor: Colors.black,
@@ -435,7 +530,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                       }else{
                         if(isTired3 == false){
                           Fluttertoast.showToast(
-                            msg: 'Tire a foto do veiculo!',
+                            msg: 'Tire da placa do veiculo!',
                             toastLength: Toast.LENGTH_SHORT,
                             timeInSecForIosWeb: 1,
                             backgroundColor: Colors.black,
@@ -443,48 +538,65 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                             fontSize: 16.0,
                           );
                         }else{
-                          final imageUrl = await _uploadImageToFirebase(imageFile!, widget.idDocumento);
-                          final imageUrl2 = await _uploadImageToFirebase2(imageFile2!, widget.idDocumento);
-                          final imageUrl3 = await _uploadImageToFirebase3(imageFile3!, widget.idDocumento);
-                          FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                            'LacreouNao': 'naolacrado',
-                            'uriImage': imageUrl,
-                            'uriImage2': imageUrl2,
-                            'uriImage3': imageUrl3,
-                          }).then((value){
+
+                          if(isTired4 == false){
                             Fluttertoast.showToast(
-                              msg: 'Dados atualizados!',
+                              msg: 'Tire da placa do veiculo!',
                               toastLength: Toast.LENGTH_SHORT,
                               timeInSecForIosWeb: 1,
                               backgroundColor: Colors.black,
                               textColor: Colors.white,
                               fontSize: 16.0,
                             );
-                          });
-                          Navigator.pop(context);
+                          }else{
+                            Fluttertoast.showToast(
+                              msg: 'Atualizando dados... Isso pode demorar um pouco dependendo da',
+                              toastLength: Toast.LENGTH_LONG,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.black,
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+                            Fluttertoast.showToast(
+                              msg: 'Sua internet...',
+                              toastLength: Toast.LENGTH_LONG,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.black,
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+
+                            final imageUrl = await _uploadImageToFirebase(imageFile!, widget.idDocumento);
+                            final imageUrl2 = await _uploadImageToFirebase2(imageFile2!, widget.idDocumento);
+                            final imageUrl3 = await _uploadImageToFirebase3(imageFile3!, widget.idDocumento);
+                            final imageUrl4 = await _uploadImageToFirebase4(imageFile3!, widget.idDocumento);
+
+                            FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                              'verificadoPor': widget.empresaName,
+                              'LacreouNao': 'naolacrado',
+                              'uriImage': imageUrl,
+                              'uriImage2': imageUrl2,
+                              'uriImage3': imageUrl3,
+                              'uriImage4': imageUrl4,
+                              'Status': 'Aguardando',
+                            }).then((value){
+                              Fluttertoast.showToast(
+                                msg: 'Dados atualizados!',
+                                toastLength: Toast.LENGTH_SHORT,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.black,
+                                textColor: Colors.white,
+                                fontSize: 16.0,
+                              );
+                            });
+                            Navigator.pop(context);
+
+                          }
                         }
                       }
                     }
                   }
                   if(lacrebool == true){
-
-		               Fluttertoast.showToast(
-                      msg: 'Atualizando dados... Isso pode demorar um pouco dependendo da',
-                      toastLength: Toast.LENGTH_LONG,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.black,
-                      textColor: Colors.white,
-                      fontSize: 16.0,
-                    );
-		              Fluttertoast.showToast(
-                      msg: 'Sua internet...',
-                      toastLength: Toast.LENGTH_LONG,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.black,
-                      textColor: Colors.white,
-                      fontSize: 16.0,
-                    );
-
                     if(lacreSt == null){
                       Fluttertoast.showToast(
                         msg: 'Preencha o numero do lacre!',
@@ -499,7 +611,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
                       if(isTired == false){
                         Fluttertoast.showToast(
-                          msg: 'Tire a foto do veiculo!',
+                          msg: 'Tire a foto do motorista!',
                           toastLength: Toast.LENGTH_SHORT,
                           timeInSecForIosWeb: 1,
                           backgroundColor: Colors.black,
@@ -510,7 +622,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
                         if(isTired2 == false){
                           Fluttertoast.showToast(
-                            msg: 'Tire a foto do veiculo!',
+                            msg: 'Tire da placa do veiculo!',
                             toastLength: Toast.LENGTH_SHORT,
                             timeInSecForIosWeb: 1,
                             backgroundColor: Colors.black,
@@ -520,7 +632,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                         }else{
                           if(isTired3 == false){
                             Fluttertoast.showToast(
-                              msg: 'Tire a foto do veiculo!',
+                              msg: 'Tire da placa do veiculo!',
                               toastLength: Toast.LENGTH_SHORT,
                               timeInSecForIosWeb: 1,
                               backgroundColor: Colors.black,
@@ -528,26 +640,62 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                               fontSize: 16.0,
                             );
                           }else{
-                            final imageUrl = await _uploadImageToFirebase(imageFile!, widget.idDocumento);
-                            final imageUrl2 = await _uploadImageToFirebase2(imageFile2!, widget.idDocumento);
-                            final imageUrl3 = await _uploadImageToFirebase3(imageFile3!, widget.idDocumento);
 
-                            FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                              'LacreouNao': 'lacre',
-                              'uriImage': imageUrl,
-                              'uriImage2': imageUrl2,
-                              'uriImage3': imageUrl3,
-                            }).then((value) {
+                            if(isTired4 == false){
                               Fluttertoast.showToast(
-                                msg: 'Dados atualizados!',
+                                msg: 'Tire da placa do veiculo!',
                                 toastLength: Toast.LENGTH_SHORT,
                                 timeInSecForIosWeb: 1,
                                 backgroundColor: Colors.black,
                                 textColor: Colors.white,
                                 fontSize: 16.0,
                               );
-                            });
-                            Navigator.pop(context);
+                            }else{
+
+                              Fluttertoast.showToast(
+                                msg: 'Atualizando dados... Isso pode demorar um pouco dependendo da',
+                                toastLength: Toast.LENGTH_LONG,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.black,
+                                textColor: Colors.white,
+                                fontSize: 16.0,
+                              );
+                              Fluttertoast.showToast(
+                                msg: 'Sua internet...',
+                                toastLength: Toast.LENGTH_LONG,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.black,
+                                textColor: Colors.white,
+                                fontSize: 16.0,
+                              );
+
+                              final imageUrl = await _uploadImageToFirebase(imageFile!, widget.idDocumento);
+                              final imageUrl2 = await _uploadImageToFirebase2(imageFile2!, widget.idDocumento);
+                              final imageUrl3 = await _uploadImageToFirebase3(imageFile3!, widget.idDocumento);
+                              final imageUrl4 = await _uploadImageToFirebase3(imageFile4!, widget.idDocumento);
+
+                              FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                                'verificadoPor': widget.empresaName,
+                                'LacreouNao': 'lacre',
+                                'uriImage': imageUrl,
+                                'uriImage2': imageUrl2,
+                                'uriImage3': imageUrl3,
+                                'uriImage4': imageUrl4,
+                                'Status': 'Aguardando',
+                              }).then((value) {
+                                Fluttertoast.showToast(
+                                  msg: 'Dados atualizados!',
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.black,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0,
+                                );
+                              });
+                              Navigator.pop(context);
+
+
+                            }
                           }
                         }
                       }

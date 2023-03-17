@@ -188,6 +188,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                               'Lacre': lacreSt,
                               'lacrenum': lacreSt,
                               'Horario Criado': dateTime,
+                              'verificadoPor': '',
                             }).then((value) {
 
                               Fluttertoast.showToast(
@@ -277,6 +278,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                 'saidaLiberadaPor': '',
                                 'uriImage': '',
                                 'lacrenum': '',
+                                'verificadoPor': '',
                               }).then((value) {
                                 Fluttertoast.showToast(
                                   msg: 'Enviado com sucesso!',

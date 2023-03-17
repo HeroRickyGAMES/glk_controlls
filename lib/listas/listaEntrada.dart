@@ -295,11 +295,14 @@ class _listEntradaState extends State<listEntrada> {
                                                     final file3 = File('${tempDir.path}/imagem.jpg');
                                                     await file3.writeAsBytes(compressedImage);
 
+                                                    final file4 = File('${tempDir.path}/imagem.jpg');
+                                                    await file4.writeAsBytes(compressedImage);
+
                                                     print(' arquivo temporario é : ${file} ');
 
                                                     Navigator.push(context,
                                                         MaterialPageRoute(builder: (context){
-                                                          return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, file, file2, file3);
+                                                          return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, file, file2, file3, file4);
                                                         }));
 
                                                   }
@@ -337,12 +340,15 @@ class _listEntradaState extends State<listEntrada> {
                                                       final file3 = File('${tempDir.path}/imagem.jpg');
                                                       await file3.writeAsBytes(compressedImage);
 
+                                                      final file4 = File('${tempDir.path}/imagem.jpg');
+                                                      await file4.writeAsBytes(compressedImage);
+
                                                       print(' arquivo temporario é : ${file} ');
                                                       print(formattedDate);
 
                                                       Navigator.push(context,
                                                           MaterialPageRoute(builder: (context){
-                                                            return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3);
+                                                            return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4);
                                                           }));
                                                     }
                                                   }

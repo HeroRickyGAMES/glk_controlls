@@ -239,6 +239,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                                                   'DataEntrada': '',
                                                   'DataSaida': '',
                                                   'Horario Criado': dateTime,
+                                                  'verificadoPor': '',
                                                 }).then((value) {
 
                                                   Fluttertoast.showToast(
@@ -256,6 +257,11 @@ class _liberacaoOffState extends State<liberacaoOff> {
                                                   widget.galpaes.removeRange(0, widget.galpaes.length);
 
                                                   var db = FirebaseFirestore.instance;
+
+                                                  FirebaseFirestore.instance.collection('Motoristas').doc().set({
+                                                    'nomeMotorista': nomeMotorista,
+                                                    'RGDoMotorista': RGMotorista,
+                                                  });
 
                                                   Navigator.pop(context);
                                                   Navigator.push(context,
@@ -294,7 +300,13 @@ class _liberacaoOffState extends State<liberacaoOff> {
                                                   'Horario Criado': dateTime,
                                                   'MotivoLiberacao': motivo,
                                                   'lacrenum': '',
+                                                  'verificadoPor': '',
                                                 }).then((value) {
+
+                                                  FirebaseFirestore.instance.collection('Motoristas').doc().set({
+                                                    'nomeMotorista': nomeMotorista,
+                                                    'RGDoMotorista': RGMotorista,
+                                                  });
 
                                                   Fluttertoast.showToast(
                                                     msg: 'Enviado com sucesso!',
