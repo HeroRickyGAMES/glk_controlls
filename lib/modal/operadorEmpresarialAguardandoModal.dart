@@ -23,6 +23,10 @@ class operadorEmpresarialAguardando extends StatefulWidget {
   String DateEntrada = '';
   String DateAnalise = '';
   String verificadoPor = '';
+  String urlImage1 = '';
+  String urlImage2 = '';
+  String urlImage3 = '';
+  String urlImage4 = '';
 
   operadorEmpresarialAguardando(
       this.lacreounao,
@@ -40,6 +44,10 @@ class operadorEmpresarialAguardando extends StatefulWidget {
       this.DateEntrada,
       this.DateAnalise,
       this.verificadoPor,
+      this.urlImage1,
+      this.urlImage2,
+      this.urlImage3,
+      this.urlImage4
       );
   @override
   State<operadorEmpresarialAguardando> createState() => _operadorEmpresarialAguardandoState();
@@ -243,6 +251,58 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
             )
                 :Text(''),
             Container(
+              height: 300,
+              width: 700,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(4),
+                    alignment: Alignment.center,
+                    child:
+                    Image.network(
+                        widget.urlImage1
+                    )
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(4),
+                    alignment: Alignment.center,
+                    child:
+                    Image.network(
+                        widget.urlImage2
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: 300,
+              width: 700,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(4),
+                    alignment: Alignment.center,
+                    child:
+                    Image.network(
+                        widget.urlImage3
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(4),
+                    alignment: Alignment.center,
+                    child:
+                    Image.network(
+                        widget.urlImage4
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
               child:
               CheckboxListTile(
                 title: Text('Autorizo Entrada'),
@@ -327,41 +387,6 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                   ),
                 ),
               ),
-            ),
-            Column(
-              children: [
-                Text(
-                  'Entrada data: ' + widget.DateEntrada,
-                  style: TextStyle(
-                      fontSize: 30
-                  ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                        width: 180,
-                        height: 180,
-                        padding: EdgeInsets.all(16),
-                        child:
-                        Image.asset(
-                          'assets/icon.png',
-                          fit: BoxFit.contain,
-                        )
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(16),
-                      child:
-                      Text(
-                        'Operador: ' + widget.empresaName,
-                        style: TextStyle(
-                            fontSize: 20
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
             ),
           ],
         ),

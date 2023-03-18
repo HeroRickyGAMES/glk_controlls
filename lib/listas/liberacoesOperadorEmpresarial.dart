@@ -458,6 +458,10 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                                         String verificadoPor = documents['verificadoPor'];
                                                         Timestamp DataDeAnalise = documents['DataDeAnalise'];
                                                         Timestamp DataEntrada = documents['DataEntrada'];
+                                                        String urlImage1 = documents['uriImage'];
+                                                        String urlImage2 = documents['uriImage2'];
+                                                        String urlImage3 = documents['uriImage3'];
+                                                        String urlImage4 = documents['uriImage4'];
 
                                                         String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
                                                         String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
@@ -465,9 +469,8 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
 
                                                         Navigator.push(context,
                                                             MaterialPageRoute(builder: (context){
-                                                              return operadorEmpresarialAguardando(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, verificadoPor, formattedDate2, formattedDate3);
+                                                              return operadorEmpresarialAguardando(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, verificadoPor, formattedDate2, formattedDate3, urlImage1, urlImage2, urlImage3, urlImage4);
                                                             }));
-
                                                       }
                                                       else{
                                                         if(lacre == 'naolacrado'){
@@ -482,6 +485,10 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                                           String Galpao = documents['Galpão'];
                                                           String verificadoPor = documents['verificadoPor'];
                                                           Timestamp DataDeAnalise = documents['DataDeAnalise'];
+                                                          String urlImage1 = documents['uriImage'];
+                                                          String urlImage2 = documents['uriImage2'];
+                                                          String urlImage3 = documents['uriImage3'];
+                                                          String urlImage4 = documents['uriImage4'];
 
                                                           String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
                                                           String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
@@ -489,7 +496,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
 
                                                           Navigator.push(context,
                                                               MaterialPageRoute(builder: (context){
-                                                                return operadorEmpresarialAguardando(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, verificadoPor, formattedDate2, formattedDate3);
+                                                                return operadorEmpresarialAguardando(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, verificadoPor, formattedDate2, formattedDate3, urlImage1, urlImage2, urlImage3, urlImage4);
                                                               }));
                                                         }
                                                       }

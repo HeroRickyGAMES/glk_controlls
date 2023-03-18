@@ -711,8 +711,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                                 getReleAPI1();
                               });
                               Navigator.pop(context);
-
-
                             }
                           }
                         }
