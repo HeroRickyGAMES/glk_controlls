@@ -49,6 +49,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
   bool lacrebool = false;
   String? lacreSt;
   bool entradabool = false;
+  bool regeitado = false;
   @override
   Widget build(BuildContext context) {
 
@@ -249,6 +250,23 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                 onChanged: (value) {
                   setState(() {
                     entradabool = value!;
+                    regeitado = false;
+                  });
+                },
+                activeColor: Colors.blue,
+                checkColor: Colors.white,
+                controlAffinity: ListTileControlAffinity.leading,
+              ),
+            ),
+            Container(
+              child:
+              CheckboxListTile(
+                title: Text('Rejeito a Entrada'),
+                value: regeitado,
+                onChanged: (value) {
+                  setState(() {
+                    regeitado = value!;
+                    entradabool = false;
                   });
                 },
                 activeColor: Colors.blue,
@@ -261,13 +279,20 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
               child: ElevatedButton(
                 onPressed: (){
                   if(lacrebool == false){
-                    FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                      'DataEntradaEmpresa': DateTime.now(),
-                      'Status': 'Entrada'
-                    });
-                    Navigator.pop(context);
+                    if(entradabool == true){
+                      FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                        'DataEntradaEmpresa': DateTime.now(),
+                        'Status': 'Entrada'
+                      });
+                      Navigator.pop(context);
+                    }
+                    if(regeitado == true){
+                      FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                        'DataEntradaEmpresa': DateTime.now(),
+                        'Status': 'Rejeitado'
+                      });
+                    }
                   }
-
                   if(lacrebool == true){
                     if(lacreSt == null){
                       Fluttertoast.showToast(
@@ -279,11 +304,19 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                         fontSize: 16.0,
                       );
                     }else{
-                      FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                        'DataEntradaEmpresa': DateTime.now(),
-                        'Status': 'Entrada'
-                      });
-                      Navigator.pop(context);
+                      if(entradabool == true){
+                        FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                          'DataEntradaEmpresa': DateTime.now(),
+                          'Status': 'Entrada'
+                        });
+                        Navigator.pop(context);
+                      }
+                      if(regeitado == true){
+                        FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                          'DataEntradaEmpresa': DateTime.now(),
+                          'Status': 'Rejeitado'
+                        });
+                      }
                     }
                   }
                 },
