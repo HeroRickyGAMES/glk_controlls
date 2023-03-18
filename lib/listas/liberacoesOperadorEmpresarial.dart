@@ -10,6 +10,8 @@ import 'package:glk_controls/modal/veiculoEntrada.dart';
 import 'package:glk_controls/pesquisaDir/pesquisa.dart';
 import 'package:intl/intl.dart';
 
+import '../modal/operadorEmpresarialAguardandoModal.dart';
+
 
 
 //Programado por HeroRickyGames
@@ -340,7 +342,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             children: [
                                               ElevatedButton(
-                                                  onPressed: (){
+                                                  onPressed: () async {
 
                                                     if(documents['Status'] == 'Entrada' ){
 
@@ -444,45 +446,53 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                                     }
 
                                                     if(documents['Status'] == 'Aguardando'){
-                                                      showDialog<void>(
-                                                        context: context,
-                                                        builder: (BuildContext context) {
-                                                          return AlertDialog(
-                                                            title: Text('Deseja autorizar entrada?'),
-                                                            content: SingleChildScrollView(
-                                                              child: ListBody(
-                                                                children: <Widget>[
-                                                                  Text('Deseja autorizar entrada desse veiculo?'),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                            actions: <Widget>[
-                                                              TextButton(
-                                                                child: Text('Rejeitar Entrada'),
-                                                                onPressed: () {
-                                                                  Navigator.of(context).pop();
+                                                      if(lacre == 'lacre'){
+                                                        String liberadopor = documents['QuemAutorizou'];
+                                                        Timestamp horarioCriacao = documents['Horario Criado'];
+                                                        String nomeMotorista = documents['nomeMotorista'];
+                                                        String Veiculo = documents['Veiculo'];
+                                                        String PlacaVeiculo = documents['PlacaVeiculo'];
+                                                        String Empresadestino = documents['Empresa'];
+                                                        String EmpresadeOrigin = documents['EmpresadeOrigin'];
+                                                        String Galpao = documents['Galpão'];
+                                                        String verificadoPor = documents['verificadoPor'];
+                                                        Timestamp DataDeAnalise = documents['DataDeAnalise'];
+                                                        Timestamp DataEntrada = documents['DataEntrada'];
 
-                                                                  FirebaseFirestore.instance.collection('Autorizacoes').doc(documents.id).update({
-                                                                    'DatadeRejeicao': DateTime.now(),
-                                                                    'Status': 'Rejeitado'
-                                                                  });
-                                                                },
-                                                              ),
-                                                              TextButton(
-                                                                child: Text('Permitir Entrada'),
-                                                                onPressed: () {
-                                                                  Navigator.of(context).pop();
+                                                        String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
+                                                        String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
+                                                        String formattedDate3 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataDeAnalise.toDate()).replaceAll('-', '/');
 
-                                                                  FirebaseFirestore.instance.collection('Autorizacoes').doc(documents.id).update({
-                                                                    'DataEntrada': DateTime.now(),
-                                                                    'Status': 'Entrada'
-                                                                  });
-                                                                },
-                                                              ),
-                                                            ],
-                                                          );
-                                                        },
-                                                      );
+                                                        Navigator.push(context,
+                                                            MaterialPageRoute(builder: (context){
+                                                              return operadorEmpresarialAguardando(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, verificadoPor, formattedDate2, formattedDate3);
+                                                            }));
+
+                                                      }
+                                                      else{
+                                                        if(lacre == 'naolacrado'){
+                                                          String liberadopor = documents['QuemAutorizou'];
+                                                          Timestamp horarioCriacao = documents['Horario Criado'];
+                                                          Timestamp DataEntrada = documents['DataEntrada'];
+                                                          String nomeMotorista = documents['nomeMotorista'];
+                                                          String Veiculo = documents['Veiculo'];
+                                                          String PlacaVeiculo = documents['PlacaVeiculo'];
+                                                          String Empresadestino = documents['Empresa'];
+                                                          String EmpresadeOrigin = documents['EmpresadeOrigin'];
+                                                          String Galpao = documents['Galpão'];
+                                                          String verificadoPor = documents['verificadoPor'];
+                                                          Timestamp DataDeAnalise = documents['DataDeAnalise'];
+
+                                                          String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
+                                                          String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
+                                                          String formattedDate3 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataDeAnalise.toDate()).replaceAll('-', '/');
+
+                                                          Navigator.push(context,
+                                                              MaterialPageRoute(builder: (context){
+                                                                return operadorEmpresarialAguardando(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, verificadoPor, formattedDate2, formattedDate3);
+                                                              }));
+                                                        }
+                                                      }
                                                     }else{
 
                                                     }

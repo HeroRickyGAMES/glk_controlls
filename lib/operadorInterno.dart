@@ -293,7 +293,7 @@ class _operadorInternoState extends State<operadorInterno> {
                                       'saida': saidabool,
                                       'tipoConta': 'porteiro',
                                       'estaativo': true,
-                                      'id': userCredential.user?.uid
+                                      'id': userCredential.user?.uid,
                                     }
                                 );
                                 FirebaseFirestore.instance.collection('Users').doc(userCredential.user?.uid).set(

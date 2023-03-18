@@ -189,6 +189,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
                               'lacrenum': lacreSt,
                               'Horario Criado': dateTime,
                               'verificadoPor': '',
+                              'DataDeAnalise': '',
+                              'DataEntradaEmpresa': ''
                             }).then((value) {
 
                               Fluttertoast.showToast(
@@ -233,7 +235,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                       'nomeMotorista': nomeMotorista,
                                       'RGDoMotorista': RGMotorista,
                                     });
-                                    getReleAPI1();
 
                                     Navigator.pop(context);
                                     Navigator.push(context,
@@ -279,6 +280,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                 'uriImage': '',
                                 'lacrenum': '',
                                 'verificadoPor': '',
+                                'DataDeAnalise': '',
+                                'DataEntradaEmpresa': ''
                               }).then((value) {
                                 Fluttertoast.showToast(
                                   msg: 'Enviado com sucesso!',
@@ -324,8 +327,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                         'nomeMotorista': nomeMotorista,
                                         'RGDoMotorista': RGMotorista,
                                       });
-
-                                      getReleAPI1();
 
                                       Navigator.pop(context);
                                       Navigator.push(context,

@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../callToAPI.dart';
+
 //Programado por HeroRickyGames
 
 class veiculoAguardando extends StatefulWidget {
@@ -586,6 +588,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                             FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                               'verificadoPor': widget.empresaName,
                               'LacreouNao': 'naolacrado',
+                              'DataDeAnalise': DateTime.now(),
                               'uriImage': imageUrl,
                               'uriImage2': imageUrl2,
                               'uriImage3': imageUrl3,
@@ -600,6 +603,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                                 textColor: Colors.white,
                                 fontSize: 16.0,
                               );
+                              getReleAPI1();
                             });
                             Navigator.pop(context);
 
@@ -694,6 +698,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                                 'uriImage3': imageUrl3,
                                 'uriImage4': imageUrl4,
                                 'Status': 'Aguardando',
+                                'DataDeAnalise': DateTime.now(),
                               }).then((value) {
                                 Fluttertoast.showToast(
                                   msg: 'Dados atualizados!',
@@ -703,6 +708,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                                   textColor: Colors.white,
                                   fontSize: 16.0,
                                 );
+                                getReleAPI1();
                               });
                               Navigator.pop(context);
 

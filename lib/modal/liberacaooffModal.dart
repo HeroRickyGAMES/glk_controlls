@@ -240,6 +240,8 @@ class _liberacaoOffState extends State<liberacaoOff> {
                                                   'DataSaida': '',
                                                   'Horario Criado': dateTime,
                                                   'verificadoPor': '',
+                                                  'DataDeAnalise': '',
+                                                  'DataEntradaEmpresa': ''
                                                 }).then((value) {
 
                                                   Fluttertoast.showToast(
@@ -301,6 +303,8 @@ class _liberacaoOffState extends State<liberacaoOff> {
                                                   'MotivoLiberacao': motivo,
                                                   'lacrenum': '',
                                                   'verificadoPor': '',
+                                                  'DataDeAnalise': '',
+                                                  'DataEntradaEmpresa': ''
                                                 }).then((value) {
 
                                                   FirebaseFirestore.instance.collection('Motoristas').doc().set({
