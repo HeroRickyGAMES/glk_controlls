@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
-Future<void> getReleAPI1() async {
+Future<void> getReleAPI5() async {
   await Future.delayed(Duration(seconds: 1));
 
-  final String urlst = 'http://192.168.3.175/?b=1';
+  final String urlst = 'http://192.168.3.175/?b=0';
 
   final response = await http.get(Uri.parse(urlst));
 
@@ -15,14 +15,14 @@ Future<void> getReleAPI1() async {
     print('Request failed with status: ${response.statusCode}.');
   }
 
-  getReleAPI2();
+  getReleAPI6();
 
 }
 
-Future<void> getReleAPI2() async {
+Future<void> getReleAPI6() async {
   await Future.delayed(Duration(seconds: 5));
 
-  final String urlst = 'http://192.168.3.175/?b=3';
+  final String urlst = 'http://192.168.3.175/?b=2';
 
   final response = await http.get(Uri.parse(urlst));
 
@@ -31,13 +31,13 @@ Future<void> getReleAPI2() async {
   } else {
     print('Request failed with status: ${response.statusCode}.');
   }
-  getReleAPI3();
+  getReleAPI7();
 }
 
-Future<void> getReleAPI3() async {
+Future<void> getReleAPI7() async {
   await Future.delayed(Duration(seconds: 5));
 
-  final String urlst = 'http://192.168.3.175/?b=5';
+  final String urlst = 'http://192.168.3.175/?b=4';
 
   final response = await http.get(Uri.parse(urlst));
 
@@ -46,13 +46,13 @@ Future<void> getReleAPI3() async {
   } else {
     print('Request failed with status: ${response.statusCode}.');
   }
-  getReleAPI4();
+  getReleAPI8();
 }
 
-Future<void> getReleAPI4() async {
+Future<void> getReleAPI8() async {
   await Future.delayed(Duration(seconds: 5));
 
-  final String urlst = 'http://192.168.3.175/?b=7';
+  final String urlst = 'http://192.168.3.175/?b=6';
 
   final response = await http.get(Uri.parse(urlst));
 

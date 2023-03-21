@@ -240,6 +240,7 @@ class _pesquisaCadastroState extends State<pesquisaCadastro> {
           print('dentro da array: ${galpao}' );
           final dropValue = ValueNotifier('');
           final dropValue2 = ValueNotifier('');
+          final dropValue3 = ValueNotifier('');
 
           var db = FirebaseFirestore.instance;
           var UID = FirebaseAuth.instance.currentUser?.uid;
@@ -269,7 +270,7 @@ class _pesquisaCadastroState extends State<pesquisaCadastro> {
                       Navigator.pop(context);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context){
-                            return modalPorteiro(listaNome, dropValue, PorteiroNomee, '',dropValue2, galpao);
+                            return modalPorteiro(listaNome, dropValue, PorteiroNomee, '',dropValue2, galpao, dropValue3);
 
                           }));
                     }

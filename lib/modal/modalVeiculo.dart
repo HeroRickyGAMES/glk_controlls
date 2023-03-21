@@ -13,8 +13,9 @@ class modalPorteiro extends StatefulWidget {
   final String nomeUser;
   final String idEmpresa;
   final dropValue2;
+  final dropValue3;
   List galpaes;
-  modalPorteiro(this.EmpresasOpc, this.dropValue, this.nomeUser, this.idEmpresa, this.dropValue2, this.galpaes);
+  modalPorteiro(this.EmpresasOpc, this.dropValue, this.nomeUser, this.idEmpresa, this.dropValue2, this.galpaes, this.dropValue3);
 
   @override
   State<modalPorteiro> createState() => _modalPorteiroState();
@@ -38,6 +39,14 @@ class _modalPorteiroState extends State<modalPorteiro> {
   TextEditingController nameMotoristaAllcaps = TextEditingController();
   TextEditingController placaveiculointerface = TextEditingController();
   TextEditingController telefoneinterface = TextEditingController();
+
+
+  List VeiculoOPC = [
+    'Caminhão',
+    'Caminhonete',
+    'Carro de passeio',
+    'Moto',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -464,20 +473,44 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
-                child: TextFormField(
-                  onChanged: (valor){
-                    Veiculo = valor;
-                    //Mudou mandou para a String
-                  },
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Veiculo * ',
-                    hintStyle: TextStyle(
-                        fontSize: 20
-                    ),
+                padding: EdgeInsets.all(16),
+                child: Text(
+                  'Veiculo *',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold
                   ),
                 ),
+              ),
+              Center(
+                  child: ValueListenableBuilder(valueListenable: widget.dropValue3, builder: (context, String value, _){
+                    return DropdownButton(
+                      hint: Text(
+                        'Selecione um tipo de Veiculo *',
+                        style: TextStyle(
+                            fontSize: 18
+                        ),
+                      ),
+                      value: (value.isEmpty)? null : value,
+                      onChanged: (escolha) async {
+                        widget.dropValue3.value = escolha.toString();
+
+                        Veiculo = escolha.toString();
+
+                      },
+                      items: VeiculoOPC.map((opcao) => DropdownMenuItem(
+                        value: opcao,
+                        child:
+                        Text(
+                          opcao,
+                          style: TextStyle(
+                              fontSize: 18
+                          ),
+                        ),
+                      ),
+                      ).toList(),
+                    );
+                  })
               ),
               Container(
                 padding: EdgeInsets.only(top: 16),

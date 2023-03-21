@@ -7,6 +7,9 @@ import 'package:glk_controls/operadorInterno.dart';
 import 'package:glk_controls/permissoes/permissoes.dart';
 import 'package:glk_controls/relatorio.dart';
 
+import 'callToAPI.dart';
+import 'callToAPItoOFF.dart';
+
 //Programado por HeroRickyGames
 
 class painelADM extends StatefulWidget {
@@ -145,6 +148,42 @@ class _painelADMState extends State<painelADM> {
                 child:
                 Text(
                   'Relatorios Gerais',
+                  style: TextStyle(
+                      fontSize: 20
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Center(
+            child: Container(
+              width: double.infinity,
+              padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+              child: ElevatedButton(
+                onPressed: (){
+                  getReleAPI1();
+                },
+                child:
+                Text(
+                  'Ligar Relês',
+                  style: TextStyle(
+                      fontSize: 20
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Center(
+            child: Container(
+              width: double.infinity,
+              padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+              child: ElevatedButton(
+                onPressed: (){
+                  getReleAPI5();
+                },
+                child:
+                Text(
+                  'Desligar Relês',
                   style: TextStyle(
                       fontSize: 20
                   ),

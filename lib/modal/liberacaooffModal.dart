@@ -20,7 +20,8 @@ class liberacaoOff extends StatefulWidget {
   final String idEmpresa;
   final dropValue2;
   List galpaes;
-  liberacaoOff(this.EmpresasOpc, this.dropValue, this.nomeUser, this.idEmpresa, this.dropValue2, this.galpaes);
+  final dropValue3;
+  liberacaoOff(this.EmpresasOpc, this.dropValue, this.nomeUser, this.idEmpresa, this.dropValue2, this.galpaes, this.dropValue3);
 
   @override
   State<liberacaoOff> createState() => _liberacaoOffState();
@@ -45,6 +46,13 @@ class _liberacaoOffState extends State<liberacaoOff> {
   TextEditingController nameMotoristaAllcaps = TextEditingController();
   TextEditingController placaveiculointerface = TextEditingController();
   TextEditingController telefoneinterface = TextEditingController();
+
+  List VeiculoOPC = [
+    'Caminhão',
+    'Caminhonete',
+    'Carro de passeio',
+    'Moto',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -473,21 +481,35 @@ class _liberacaoOffState extends State<liberacaoOff> {
                   ),
                 ),
               ),
-              Container(
-                padding: EdgeInsets.only(top: 16),
-                child: TextFormField(
-                  onChanged: (valor){
-                    Veiculo = valor;
-                    //Mudou mandou para a String
-                  },
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Veiculo * ',
-                    hintStyle: TextStyle(
-                        fontSize: 20
-                    ),
-                  ),
-                ),
+              Center(
+                  child: ValueListenableBuilder(valueListenable: widget.dropValue3, builder: (context, String value, _){
+                    return DropdownButton(
+                      hint: Text(
+                        'Selecione um tipo de Veiculo *',
+                        style: TextStyle(
+                            fontSize: 18
+                        ),
+                      ),
+                      value: (value.isEmpty)? null : value,
+                      onChanged: (escolha) async {
+                        widget.dropValue3.value = escolha.toString();
+
+                        Veiculo = escolha.toString();
+
+                      },
+                      items: VeiculoOPC.map((opcao) => DropdownMenuItem(
+                        value: opcao,
+                        child:
+                        Text(
+                          opcao,
+                          style: TextStyle(
+                              fontSize: 18
+                          ),
+                        ),
+                      ),
+                      ).toList(),
+                    );
+                  })
               ),
               Container(
                 padding: EdgeInsets.only(top: 16),

@@ -68,6 +68,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
           print('dentro da array: ${galpao}' );
           final dropValue = ValueNotifier('');
           final dropValue2 = ValueNotifier('');
+          final dropValue3 = ValueNotifier('');
 
           var db = FirebaseFirestore.instance;
           var UID = FirebaseAuth.instance.currentUser?.uid;
@@ -97,7 +98,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                       Navigator.pop(context);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context){
-                            return liberacaoOff(listaNome, dropValue, PorteiroNomee, '',dropValue2, galpao);
+                            return liberacaoOff(listaNome, dropValue, PorteiroNomee, '',dropValue2, galpao, dropValue3);
 
                           }));
 
