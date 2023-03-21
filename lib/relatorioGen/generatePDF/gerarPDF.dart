@@ -20,9 +20,14 @@ class generatePDF extends StatelessWidget {
   String SaidaLiberadapor = '';
   String lacrado = '';
   String dataLiberacao = '';
+
+  String dataEntradaex = '';
+  String dataAnaliseex = '';
+  String dataEntradaEmpresaex = '';
+  String dataSaidaex = '';
   bool lacrebool = false;
   String id = '';
-  generatePDF(this.entradapor, this.dataEntrada, this.nomeMotorista, this.Veiculo, this.Placa, this.EmpresaDestino, this.telefone, this.EmpresaOrigin, this.Galpao, this.SaidaLiberadapor, this.lacrado,this.dataLiberacao, this.lacrebool, id);
+  generatePDF(this.entradapor, this.dataEntrada, this.nomeMotorista, this.Veiculo, this.Placa, this.EmpresaDestino, this.telefone, this.EmpresaOrigin, this.Galpao, this.SaidaLiberadapor, this.lacrado,this.dataLiberacao, this.lacrebool, id , this.dataEntradaex , this.dataAnaliseex , this.dataEntradaEmpresaex , this.dataSaidaex );
 
   @override
   Widget build(BuildContext context) {
@@ -30,13 +35,13 @@ class generatePDF extends StatelessWidget {
       home: Scaffold(
         appBar: AppBar(title: Text('Gerar PDF')),
         body: PdfPreview(
-          build: (format) => _generatePdf(format, 'Gerar PDF', entradapor, dataEntrada, nomeMotorista, Veiculo, Placa, EmpresaDestino, telefone, EmpresaOrigin, Galpao, SaidaLiberadapor, lacrado, dataLiberacao, lacrebool, id),
+          build: (format) => _generatePdf(format, 'Gerar PDF', entradapor, dataEntrada, nomeMotorista, Veiculo, Placa, EmpresaDestino, telefone, EmpresaOrigin, Galpao, SaidaLiberadapor, lacrado, dataLiberacao, lacrebool, id, dataEntradaex , dataAnaliseex , dataEntradaEmpresaex , dataSaidaex),
         ),
       ),
     );
   }
 
-  Future<Uint8List> _generatePdf(PdfPageFormat format, String title, String entradapor, String dataEntrada, String nomeMotorista, String Veiculo, String Placa, String EmpresaDestino, String telefone, String EmpresaOrigin, String Galpao, String SaidaLiberadapor, String lacrado, String dataLiberacao, bool lacrebool, String id) async {
+  Future<Uint8List> _generatePdf(PdfPageFormat format, String title, String entradapor, String dataEntrada, String nomeMotorista, String Veiculo, String Placa, String EmpresaDestino, String telefone, String EmpresaOrigin, String Galpao, String SaidaLiberadapor, String lacrado, String dataLiberacao, bool lacrebool, String id, String dataEntradaex, String dataAnaliseex, String dataEntradaEmpresaex, String dataSaidaex) async {
     final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
 
     String lacreString = '';
@@ -66,12 +71,29 @@ class generatePDF extends StatelessWidget {
                   ),
                   pw.Container(
                     padding: pw.EdgeInsets.all(15),
-                    child: pw.Text('Entrada Liberada: ' + entradapor,
+                    child: pw.Text(dataEntradaex,
                         style: pw.TextStyle(fontSize: 16)),
                   ),
                   pw.Container(
                     padding: pw.EdgeInsets.all(15),
-                    child: pw.Text('Data de Entrada: ' + dataEntrada,
+                    child: pw.Text(dataAnaliseex,
+                        style: pw.TextStyle(fontSize: 16)),
+                  ),
+                  pw.Column(
+                    crossAxisAlignment: pw.CrossAxisAlignment.center,
+                    mainAxisAlignment: pw.MainAxisAlignment.center,
+                    children: [
+                      pw.Container(
+                        padding: pw.EdgeInsets.all(15),
+                        child: pw.Text(dataEntradaEmpresaex,
+                            style: pw.TextStyle(fontSize: 16)
+                        ),
+                      ),
+                    ]
+                  ),
+                  pw.Container(
+                    padding: pw.EdgeInsets.all(15),
+                    child: pw.Text(dataSaidaex,
                         style: pw.TextStyle(fontSize: 16)),
                   ),
                   pw.Container(
@@ -112,17 +134,6 @@ class generatePDF extends StatelessWidget {
                   pw.Container(
                     padding: pw.EdgeInsets.all(15),
                     child: pw.Text('Galpão: ' + Galpao,
-                        style: pw.TextStyle(fontSize: 16)),
-                  ),
-
-                  pw.Container(
-                    padding: pw.EdgeInsets.all(15),
-                    child: pw.Text('Saída liberada por: ' + SaidaLiberadapor,
-                        style: pw.TextStyle(fontSize: 16)),
-                  ),
-                  pw.Container(
-                    padding: pw.EdgeInsets.all(15),
-                    child: pw.Text('Data de liberação: ' + dataLiberacao,
                         style: pw.TextStyle(fontSize: 16)),
                   ),
                   pw.Container(

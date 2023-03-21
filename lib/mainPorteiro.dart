@@ -7,6 +7,7 @@ import 'package:glk_controls/callToAPI.dart';
 import 'package:glk_controls/listas/listaEntrada.dart';
 import 'package:glk_controls/modal/modalVeiculoEdit.dart';
 import 'package:glk_controls/pesquisaDir/pesquisaNovoCadastro.dart';
+import 'package:glk_controls/relatorio.dart';
 
 import 'listas/listaSaida.dart';
 import 'modal/liberacaooffModal.dart';
@@ -136,7 +137,10 @@ class _mainPorteiroState extends State<mainPorteiro> {
     }
 
     relatorioMT(){
-      //todo ir para o relatorio
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context){
+            return relatorio(widget.PorteiroNome);
+          }));
     }
 
     painelMT(){
@@ -231,7 +235,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                   width: double.infinity,
                   padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                   child: ElevatedButton(
-                    onPressed: widget.relatorio ? relatorioMT() : null,
+                    onPressed: widget.relatorio ? relatorioMT : null,
                     child: Text(
                       'Relatorio',
                       style: TextStyle(

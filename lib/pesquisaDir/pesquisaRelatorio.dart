@@ -150,60 +150,6 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
                                               onPressed: (){
                                                 if(lacre == 'lacre'){
 
-                                                  String formattedDate = '';
-                                                  String formattedDate2 = '';
-                                                  String formattedDate3 ='';
-                                                  bool dataEntradabool = false;
-                                                  bool datacriadobool = false;
-                                                  bool datasaidabool = false;
-
-                                                  if(documents['DataEntrada'] == ''){
-                                                    dataEntradabool = false;
-                                                  }else{
-                                                    dataEntradabool = true;
-                                                  }
-
-                                                  if(documents['Horario Criado'] == ''){
-                                                    datacriadobool = false;
-                                                  }else{
-                                                    datacriadobool = true;
-                                                  }
-
-                                                  if(documents['DataSaida'] == ''){
-                                                    datasaidabool = false;
-                                                  }else{
-                                                    datasaidabool = true;
-                                                  }
-
-                                                  if(dataEntradabool == false){
-                                                    formattedDate = '';
-                                                  }
-
-                                                  if(dataEntradabool == true){
-
-                                                    Timestamp DataEntrada = documents['DataEntrada'];
-                                                    formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
-                                                  }
-
-                                                  if(datacriadobool == false){
-                                                    formattedDate2 = '';
-                                                  }
-
-                                                  if(datacriadobool == true){
-
-                                                    Timestamp horarioCriacao = documents['Horario Criado'];
-                                                    formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
-                                                  }
-
-                                                  if(datasaidabool == false){
-                                                    formattedDate3 = '';
-                                                  }
-
-                                                  if(datasaidabool == true){
-                                                    Timestamp DataSaida = documents['DataSaida'];
-                                                    formattedDate3 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataSaida.toDate()).replaceAll('-', '/');
-                                                  }
-
                                                   String liberadopor = documents['QuemAutorizou'];
                                                   String nomeMotorista = documents['nomeMotorista'];
                                                   String Veiculo = documents['Veiculo'];
@@ -217,71 +163,36 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
                                                   String saidaLiberadaPor = documents['saidaLiberadaPor'];
                                                   String imageURL = documents['uriImage'];
                                                   String id = documents['id'];
+                                                  String imageURL2 = documents['uriImage2'];
+                                                  String imageURL3 = documents['uriImage3'];
+                                                  String imageURL4 = documents['uriImage4'];
+                                                  String empresaDoc = documents['Empresa'];
+
+                                                  Timestamp horarioCriacao = documents['Horario Criado'];
+                                                  Timestamp DataEntrada = documents['DataEntradaEmpresa'];
+                                                  Timestamp DataSaidaPortariast = documents['DataSaida'];
+                                                  String verificadoPor = documents['verificadoPor'];
+
+                                                  Timestamp DatadeAnalise = documents['DataDeAnalise'];
+
+                                                  String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
+                                                  String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
+                                                  String formattedDate3 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DatadeAnalise.toDate()).replaceAll('-', '/');
+                                                  String DataSaidaPortaria = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataSaidaPortariast.toDate()).replaceAll('-', '/');
+
 
                                                   Navigator.push(context,
                                                       MaterialPageRoute(builder: (context){
-                                                        return relatorioGenerate(lacre, "", liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, formattedDate2, formattedDate3, RG, telefone, saidaLiberadaPor, imageURL, id);
+                                                        return relatorioGenerate(lacre, "", liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, formattedDate2, formattedDate3, RG, telefone, saidaLiberadaPor, imageURL, id, imageURL2, imageURL3, imageURL4, formattedDate3, verificadoPor, formattedDate2, empresaDoc, DataSaidaPortaria);
                                                       }));
 
                                                 }
                                                 else{
                                                   if(lacre == 'naolacrado'){
-
-                                                    String formattedDate = '';
-                                                    String formattedDate2 = '';
-                                                    String formattedDate3 ='';
-                                                    bool dataEntradabool = false;
-                                                    bool datacriadobool = false;
-                                                    bool datasaidabool = false;
-
-                                                    if(documents['DataEntrada'] == ''){
-                                                      dataEntradabool = false;
-                                                    }else{
-                                                      dataEntradabool = true;
-                                                    }
-
-                                                    if(documents['Horario Criado'] == ''){
-                                                      datacriadobool = false;
-                                                    }else{
-                                                      datacriadobool = true;
-                                                    }
-
-                                                    if(documents['DataSaida'] == ''){
-                                                      datasaidabool = false;
-                                                    }else{
-                                                      datasaidabool = true;
-                                                    }
-
-                                                    if(dataEntradabool == false){
-                                                      formattedDate = '';
-                                                    }
-
-                                                    if(dataEntradabool == true){
-
-                                                      Timestamp DataEntrada = documents['DataEntrada'];
-                                                      formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
-                                                    }
-
-                                                    if(datacriadobool == false){
-                                                      formattedDate2 = '';
-                                                    }
-
-                                                    if(datacriadobool == true){
-
-                                                      Timestamp horarioCriacao = documents['Horario Criado'];
-                                                      formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
-                                                    }
-
-                                                    if(datasaidabool == false){
-                                                      formattedDate3 = '';
-                                                    }
-
-                                                    if(datasaidabool == true){
-                                                      Timestamp DataSaida = documents['DataSaida'];
-                                                      formattedDate3 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataSaida.toDate()).replaceAll('-', '/');
-                                                    }
-
                                                     String imageURL = '';
+                                                    String imageURL2 = '';
+                                                    String imageURL3 = '';
+                                                    String imageURL4 = '';
 
                                                     String liberadopor = documents['QuemAutorizou'];
                                                     String nomeMotorista = documents['nomeMotorista'];
@@ -293,17 +204,49 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
                                                     String RG = documents['RGDoMotorista'];
                                                     String telefone = documents['Telefone'];
                                                     String saidaLiberadaPor = documents['saidaLiberadaPor'];
-                                                    String id = documents['id'];
+                                                    String id = documents['idDoc'];
+
+                                                    Timestamp DataSaidaPortariast = documents['DataSaida'];
+
+                                                    String DataSaidaPortaria = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataSaidaPortariast.toDate()).replaceAll('-', '/');
+
+                                                    String empresaDoc = documents['Empresa'];
+
+                                                    Timestamp horarioCriacao = documents['Horario Criado'];
+                                                    Timestamp DataEntrada = documents['DataEntradaEmpresa'];
+                                                    String verificadoPor = documents['verificadoPor'];
+
+                                                    Timestamp DatadeAnalise = documents['DataDeAnalise'];
+
+                                                    String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
+                                                    String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
+                                                    String formattedDate3 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DatadeAnalise.toDate()).replaceAll('-', '/');
 
                                                     if(documents['uriImage'] == ''){
                                                       imageURL = 'https://raw.githubusercontent.com/HeroRickyGAMES/glk_controlls/master/assets/error-image.png';
                                                     }else{
                                                       imageURL = documents['uriImage'];
+
+                                                      if(documents['uriImage2'] == ''){
+                                                        imageURL2 = 'https://raw.githubusercontent.com/HeroRickyGAMES/glk_controlls/master/assets/error-image.png';
+                                                      }else{
+                                                        imageURL2 = documents['uriImage2'];
+                                                        if(documents['uriImage3'] == ''){
+                                                          imageURL3 = 'https://raw.githubusercontent.com/HeroRickyGAMES/glk_controlls/master/assets/error-image.png';
+                                                        }else{
+                                                          imageURL3 = documents['uriImage3'];
+                                                          if(documents['uriImage4'] == ''){
+                                                            imageURL4 = 'https://raw.githubusercontent.com/HeroRickyGAMES/glk_controlls/master/assets/error-image.png';
+                                                          }else{
+                                                            imageURL4 = documents['uriImage4'];
+                                                          }
+                                                        }
+                                                      }
                                                     }
 
                                                     Navigator.push(context,
                                                         MaterialPageRoute(builder: (context){
-                                                          return relatorioGenerate(lacre, "", liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, formattedDate2, formattedDate3, RG, telefone, saidaLiberadaPor, imageURL, id);
+                                                          return relatorioGenerate(lacre, "", liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, formattedDate2, formattedDate3, RG, telefone, saidaLiberadaPor, imageURL, id, imageURL2, imageURL3, imageURL4, formattedDate3, verificadoPor, formattedDate2, empresaDoc, DataSaidaPortaria);
                                                         }));
                                                   }
                                                 }

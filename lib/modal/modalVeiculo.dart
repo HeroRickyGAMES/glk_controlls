@@ -186,7 +186,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
                               'verificadoPor': '',
                               'DataDeAnalise': '',
                               'DataEntradaEmpresa': '',
-                              'DateSaidaPortaria': ''
+                              'DateSaidaPortaria': '',
+                              'liberouSaida': ''
                             }).then((value) {
 
                               Fluttertoast.showToast(
@@ -278,7 +279,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                 'verificadoPor': '',
                                 'DataDeAnalise': '',
                                 'DataEntradaEmpresa': '',
-                                'DateSaidaPortaria': ''
+                                'DateSaidaPortaria': '',
+                                'liberouSaida': ''
                               }).then((value) {
                                 Fluttertoast.showToast(
                                   msg: 'Enviado com sucesso!',

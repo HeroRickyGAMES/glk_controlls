@@ -24,6 +24,14 @@ class relatorioGenerate extends StatefulWidget {
   String saidaLiberadaPor = '';
   String imageURL = '';
   String id = '';
+  String imageURL2 = '';
+  String imageURL3 = '';
+  String imageURL4 = '';
+  String DatadeAnalise = '';
+  String verificadoPor = '';
+  String DateEntrada = '';
+  String EmpresaDoc = '';
+  String DataSaidaPortaria = '';
 
   relatorioGenerate(
       this.lacreounao,
@@ -44,7 +52,15 @@ class relatorioGenerate extends StatefulWidget {
       this.telefone,
       this.saidaLiberadaPor,
       this.imageURL,
-      this.id
+      this.id,
+      this.imageURL2,
+      this.imageURL3,
+      this.imageURL4,
+      this.DatadeAnalise,
+      this.verificadoPor,
+      this.DateEntrada,
+      this.EmpresaDoc,
+      this.DataSaidaPortaria,
       );
   @override
   State<relatorioGenerate> createState() => _relatorioGenerateState();
@@ -92,20 +108,98 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               alignment: Alignment.center,
               child:
               Text(
-                'Entrada Liberada: ' + widget.liberadopor,
+                'Liberação: ' + 'Motorista e Veiculo',
                 style: TextStyle(
                     fontSize: 30
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
-              child:
-              Text(
-                'Data de Entrada: ${widget.dataEntrada}' ,
-                style: TextStyle(
-                    fontSize: 30
-                ),
+              height: 50,
+              width: double.infinity,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Data: ${widget.horarioCriacao}' ,
+                    style: TextStyle(
+                        fontSize: 16
+                    ),
+                  ),
+                  Text(
+                    ' - Portaria - ' + widget.liberadopor,
+                    style: TextStyle(
+                        fontSize: 16
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: 50,
+              width: double.infinity,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Data: ${widget.DatadeAnalise}' ,
+                    style: TextStyle(
+                        fontSize: 16
+                    ),
+                  ),
+                  Text(
+                    ' - Analise - ' + widget.verificadoPor,
+                    style: TextStyle(
+                        fontSize: 16
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: 50,
+              width: double.infinity,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Data: ${widget.DateEntrada}' ,
+                    style: TextStyle(
+                        fontSize: 16
+                    ),
+                  ),
+                  Text(
+                    ' - Entrada Empresa - ' + widget.EmpresaDoc,
+                    style: TextStyle(
+                        fontSize: 16
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: 50,
+              width: double.infinity,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Data: ${widget.DataSaidaPortaria}' ,
+                    style: TextStyle(
+                        fontSize: 16
+                    ),
+                  ),
+                  Text(
+                    ' - Saida - ' + widget.saidaLiberadaPor,
+                    style: TextStyle(
+                        fontSize: 16
+                    ),
+                  ),
+                ],
               ),
             ),
             Container(
@@ -188,26 +282,6 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
                 ),
               ),
             ),
-            Container(
-              padding: EdgeInsets.all(16),
-              child:
-              Text(
-                'Saída Liberada por : ' + widget.saidaLiberadaPor,
-                style: TextStyle(
-                    fontSize: 30
-                ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(16),
-              child:
-              Text(
-                'Data da liberação de saída: ' + widget.dataSaida,
-                style: TextStyle(
-                    fontSize: 30
-                ),
-              ),
-            ),
             RadioListTile(
               title: Text(
                   "Com Lacre"
@@ -261,22 +335,70 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
             )
                 :Text(''),
             Container(
-                width: 512,
-                height: 512,
-              padding: EdgeInsets.all(16),
-              child: Image.network(
-                  widget.imageURL,
-                fit: BoxFit.contain,
-              )
+              height: 300,
+              width: 700,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                      padding: EdgeInsets.all(4),
+                      alignment: Alignment.center,
+                      child:
+                      Image.network(
+                          widget.imageURL
+                      )
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(4),
+                    alignment: Alignment.center,
+                    child:
+                    Image.network(
+                        widget.imageURL2
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: 300,
+              width: 700,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(4),
+                    alignment: Alignment.center,
+                    child:
+                    Image.network(
+                        widget.imageURL3
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(4),
+                    alignment: Alignment.center,
+                    child:
+                    Image.network(
+                        widget.imageURL4
+                    ),
+                  ),
+                ],
+              ),
             ),
             Container(
               padding: EdgeInsets.all(16),
               child: ElevatedButton(
                 onPressed: () {
 
+                  String portaria =  'Data: ${widget.horarioCriacao}' + ' - Portaria - ' + widget.liberadopor;
+                  String analise =  'Data: ${widget.DatadeAnalise}' +  ' - Analise - ' + widget.verificadoPor;
+                  String EntradaEmpresa =   'Data: ${widget.DateEntrada}'  + ' - Entrada Empresa - ' + widget.EmpresaDoc;
+                  String SaidaEmpresa =  'Data: ${widget.DataSaidaPortaria}' + ' - Saida - ' + widget.saidaLiberadaPor;
+
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context){
-                        return generatePDF(widget.liberadopor, widget.dataEntrada, widget.nomeMotorista, widget.Veiculo, widget.PlacaVeiculo, widget.Empresadestino, widget.telefone, widget.EmpresadeOrigin, widget.Galpao, widget.saidaLiberadaPor, widget.lacradoStr, widget.dataSaida, lacrebool, widget.id);
+                        return generatePDF(widget.liberadopor, widget.dataEntrada, widget.nomeMotorista, widget.Veiculo, widget.PlacaVeiculo, widget.Empresadestino, widget.telefone, widget.EmpresadeOrigin, widget.Galpao, widget.saidaLiberadaPor, widget.lacradoStr, widget.dataSaida, lacrebool, widget.id, portaria, analise, EntradaEmpresa, SaidaEmpresa);
                       }));
 
                 },
