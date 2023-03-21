@@ -20,7 +20,6 @@ class operadorEmpresarialAguardando extends StatefulWidget {
   String Galpao = '';
   String lacradoStr = '';
   String idDocumento = '';
-  String DateEntrada = '';
   String DateAnalise = '';
   String verificadoPor = '';
   String urlImage1 = '';
@@ -41,7 +40,6 @@ class operadorEmpresarialAguardando extends StatefulWidget {
       this.Galpao,
       this.lacradoStr,
       this.idDocumento,
-      this.DateEntrada,
       this.DateAnalise,
       this.verificadoPor,
       this.urlImage1,
@@ -124,7 +122,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Data: ${widget.horarioCriacao}' ,
+                    'Data: ${widget.DateAnalise}' ,
                     style: TextStyle(
                         fontSize: 16
                     ),
@@ -381,7 +379,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                   }
                 },
                 child: Text(
-                  'Autorizar saída',
+                  'Prosseguir',
                   style: TextStyle(
                       fontSize: 30
                   ),

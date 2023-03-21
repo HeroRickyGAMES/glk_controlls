@@ -171,7 +171,7 @@ class _painelADMState extends State<painelADM> {
                   padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                   child:
                   Image.asset(
-                    'assets/icon.png',
+                    'assets/sanca.png',
                     fit: BoxFit.contain,
                   )
               ),

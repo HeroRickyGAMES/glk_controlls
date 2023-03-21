@@ -45,7 +45,7 @@ class veiculoAguardando extends StatefulWidget {
       this.imageFile,
       this.imageFile2,
       this.imageFile3,
-      this.imageFile4
+      this.imageFile4,
       );
   @override
   State<veiculoAguardando> createState() => _veiculoAguardandoState();
@@ -719,7 +719,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                   }
                 },
                 child: Text(
-                  'Atualizar Documento',
+                  'Prosseguir',
                   style: TextStyle(
                       fontSize: 30
                   ),

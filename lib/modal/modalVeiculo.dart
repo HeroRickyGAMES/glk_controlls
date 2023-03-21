@@ -185,7 +185,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
                               'Horario Criado': dateTime,
                               'verificadoPor': '',
                               'DataDeAnalise': '',
-                              'DataEntradaEmpresa': ''
+                              'DataEntradaEmpresa': '',
+                              'DateSaidaPortaria': ''
                             }).then((value) {
 
                               Fluttertoast.showToast(
@@ -276,7 +277,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                 'lacrenum': '',
                                 'verificadoPor': '',
                                 'DataDeAnalise': '',
-                                'DataEntradaEmpresa': ''
+                                'DataEntradaEmpresa': '',
+                                'DateSaidaPortaria': ''
                               }).then((value) {
                                 Fluttertoast.showToast(
                                   msg: 'Enviado com sucesso!',
@@ -766,7 +768,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
               onPressed: uploadInfos,
               child:
               Text(
-                  'Adicionar novo Motorista',
+                  'Prosseguir',
                 style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold

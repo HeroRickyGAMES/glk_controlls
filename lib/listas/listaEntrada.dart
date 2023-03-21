@@ -271,8 +271,13 @@ class _listEntradaState extends State<listEntrada> {
                                                     String EmpresadeOrigin = documents['EmpresadeOrigin'];
                                                     String Galpao = documents['Galpão'];
                                                     String lacradoStr = documents['lacrenum'];
+                                                    String verificadoPor = documents['verificadoPor'];
+                                                    Timestamp DataDeAnalise = documents['DataDeAnalise'];
+                                                    Timestamp DataEntrada = documents['DataEntrada'];
 
                                                     String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
+                                                    String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataDeAnalise.toDate()).replaceAll('-', '/');
+                                                    String formattedDate3 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
 
                                                     final ByteData imageData = await rootBundle.load('assets/insertFoto.png');
 
@@ -300,7 +305,7 @@ class _listEntradaState extends State<listEntrada> {
 
                                                     Navigator.push(context,
                                                         MaterialPageRoute(builder: (context){
-                                                          return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, file, file2, file3, file4);
+                                                          return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, file, file2, file3, file);
                                                         }));
 
                                                   }
@@ -308,16 +313,15 @@ class _listEntradaState extends State<listEntrada> {
                                                     if(lacre == 'naolacrado'){
                                                       String liberadopor = documents['QuemAutorizou'];
                                                       Timestamp horarioCriacao = documents['Horario Criado'];
-                                                      Timestamp DataEntrada = documents['DataEntrada'];
                                                       String nomeMotorista = documents['nomeMotorista'];
                                                       String Veiculo = documents['Veiculo'];
                                                       String PlacaVeiculo = documents['PlacaVeiculo'];
                                                       String Empresadestino = documents['Empresa'];
                                                       String EmpresadeOrigin = documents['EmpresadeOrigin'];
                                                       String Galpao = documents['Galpão'];
+                                                      String verificadoPor = documents['verificadoPor'];
 
                                                       String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
-                                                      String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
 
                                                       final ByteData imageData = await rootBundle.load('assets/error-image.png');
 

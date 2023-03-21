@@ -4,6 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:glk_controls/modal/ModalSaida.dart';
+
+import 'package:intl/intl.dart';
 
 import '../pesquisaDir/pesquisa.dart';
 
@@ -261,45 +264,33 @@ class _listaSaidaState extends State<listaSaida> {
                                     children: [
                                       ElevatedButton(
                                           onPressed: (){
-                                            showDialog<void>(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return AlertDialog(
-                                                  title: Text('Deseja liberar a saída?'),
-                                                  content: SingleChildScrollView(
-                                                    child: ListBody(
-                                                      children: <Widget>[
-                                                        Text('Deseja liberar a saída desse veiculo?'),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  actions: <Widget>[
-                                                    TextButton(
-                                                      child: Text('Rejeitar Saida'),
-                                                      onPressed: () {
-                                                        Navigator.of(context).pop();
+                                            String lacreounao = documents['LacreouNao'];
+                                            String empresaName = documents['EmpresadeOrigin'];
+                                            String liberadopor = documents['QuemAutorizou'];
+                                            Timestamp horarioCriacaost = documents['Horario Criado'];
+                                            String nomeMotorista = documents['nomeMotorista'];
+                                            String Veiculo = documents['Veiculo'];
+                                            String PlacaVeiculo = documents['PlacaVeiculo'];
+                                            String Empresadestino = documents['Empresa'];
+                                            String Galpao = documents['Galpão'];
+                                            String lacradoStr = documents['lacrenum'];
 
-                                                      },
-                                                    ),
-                                                    TextButton(
-                                                      child: Text(
-                                                          'Permitir Saida',
-                                                      ),
-                                                      onPressed: () {
-                                                        Navigator.of(context).pop();
+                                            String idDocumento = documents.id;
+                                            Timestamp DatadeAnalisest = documents['DataDeAnalise'];
+                                            Timestamp DateEntradast = documents['DataEntradaEmpresa'];
+                                            Timestamp DataSaidast = documents['DataSaida'];
 
-                                                        FirebaseFirestore.instance.collection('Autorizacoes').doc(documents.id).update({
-                                                          'DataSaida': DateTime.now(),
-                                                          'Status': 'Saida',
-                                                          'saidaLiberadaPor': widget.porteiroName
-                                                        });
+                                            String verificadoPor = documents['verificadoPor'];
 
-                                                      },
-                                                    ),
-                                                  ],
-                                                );
-                                              },
-                                            );
+                                            String horarioCriacao = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacaost.toDate()).replaceAll('-', '/');
+                                            String DatadeAnalise = DateFormat('dd-MM-yyyy HH:mm:ss').format(DatadeAnalisest.toDate()).replaceAll('-', '/');
+                                            String DateEntrada = DateFormat('dd-MM-yyyy HH:mm:ss').format(DateEntradast.toDate()).replaceAll('-', '/');
+                                            String DataSaida = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataSaidast.toDate()).replaceAll('-', '/');
+
+                                            Navigator.push(context,
+                                                MaterialPageRoute(builder: (context){
+                                                  return modalSaidaVeiculo(lacreounao, empresaName, liberadopor, horarioCriacao, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, empresaName, Galpao, lacradoStr, idDocumento, DatadeAnalise, verificadoPor, DateEntrada, empresaName, widget.porteiroName, DataSaida);
+                                                }));
                                           },
                                           child: Text(
                                             documents['PlacaVeiculo'],

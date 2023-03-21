@@ -1,12 +1,16 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:glk_controls/mainEmpresa.dart';
-import 'package:glk_controls/mainPorteiro.dart';
+import 'package:image_picker/image_picker.dart';
+
+import '../callToAPI.dart';
 
 //Programado por HeroRickyGames
 
-class veiculoEntrada extends StatefulWidget {
+class modalSaidaVeiculo extends StatefulWidget {
 
   String lacreounao = '';
   String empresaName = '';
@@ -20,11 +24,14 @@ class veiculoEntrada extends StatefulWidget {
   String Galpao = '';
   String lacradoStr = '';
   String idDocumento = '';
-  String DateEntrada = '';
-  String verificadoPor = '';
   String DatadeAnalise = '';
+  String verificadoPor = '';
+  String DateEntrada = '';
+  String EmpresaDoc = '';
+  String porteiroName = '';
+  String DataSaida = '';
 
-  veiculoEntrada(
+  modalSaidaVeiculo(
       this.lacreounao,
       this.empresaName,
       this.liberadopor,
@@ -37,21 +44,23 @@ class veiculoEntrada extends StatefulWidget {
       this.Galpao,
       this.lacradoStr,
       this.idDocumento,
-      this.DateEntrada,
-      this.verificadoPor,
       this.DatadeAnalise,
+      this.verificadoPor,
+      this.DateEntrada,
+      this.EmpresaDoc,
+      this.porteiroName,
+      this.DataSaida
       );
   @override
-  State<veiculoEntrada> createState() => _veiculoEntradaState();
+  State<modalSaidaVeiculo> createState() => _modalSaidaVeiculoState();
 }
 
-class _veiculoEntradaState extends State<veiculoEntrada> {
-  bool lacrebool = false;
-  String? lacreSt;
-
+class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
   @override
   Widget build(BuildContext context) {
 
+    bool lacrebool = false;
+    String? lacreSt;
 
     if(widget.lacreounao == 'lacre'){
 
@@ -71,13 +80,10 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
     TextEditingController _textEditingController = TextEditingController(text: _textoPredefinido);
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.yellow,
+        backgroundColor: Colors.green[700],
         centerTitle: true,
         title: Text(
-            'GLK Controls - Entrada',
-          style: TextStyle(
-            color: Colors.black
-          ),
+          'GLK Controls - Veiculo Saida',
         ),
       ),
       body: SingleChildScrollView(
@@ -85,6 +91,17 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Container(
+              padding: EdgeInsets.all(16),
+              alignment: Alignment.center,
+              child:
+              Text(
+                'Liberação: ' + 'Motorista e Veiculo',
+                style: TextStyle(
+                    fontSize: 30
+                ),
+              ),
+            ),
             Container(
               height: 50,
               width: double.infinity,
@@ -143,7 +160,29 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                     ),
                   ),
                   Text(
-                    ' - Entrada Empresa - ' + widget.empresaName,
+                    ' - Entrada Empresa - ' + widget.EmpresaDoc,
+                    style: TextStyle(
+                        fontSize: 16
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: 50,
+              width: double.infinity,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Data: ${widget.DataSaida}' ,
+                    style: TextStyle(
+                        fontSize: 16
+                    ),
+                  ),
+                  Text(
+                    ' - Saida Empresa - ' + widget.EmpresaDoc,
                     style: TextStyle(
                         fontSize: 16
                     ),
@@ -155,7 +194,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
               padding: EdgeInsets.all(16),
               child:
               Text(
-                  'Nome: ' + widget.nomeMotorista,
+                'Nome: ' + widget.nomeMotorista,
                 style: TextStyle(
                     fontSize: 30
                 ),
@@ -165,7 +204,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
               padding: EdgeInsets.all(16),
               child:
               Text(
-                  'Veiculo: ' + widget.Veiculo,
+                'Veiculo: ' + widget.Veiculo,
                 style: TextStyle(
                     fontSize: 30
                 ),
@@ -175,7 +214,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
               padding: EdgeInsets.all(16),
               child:
               Text(
-                  'Placa: ' + widget.PlacaVeiculo,
+                'Placa: ' + widget.PlacaVeiculo,
                 style: TextStyle(
                     fontSize: 30
                 ),
@@ -185,7 +224,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
               padding: EdgeInsets.all(16),
               child:
               Text(
-                  'Empresa de destino: ' + widget.Empresadestino,
+                'Empresa de destino: ' + widget.Empresadestino,
                 style: TextStyle(
                     fontSize: 30
                 ),
@@ -195,7 +234,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
               padding: EdgeInsets.all(16),
               child:
               Text(
-                  'Empresa de origem: ' + widget.EmpresadeOrigin,
+                'Empresa de origem: ' + widget.EmpresadeOrigin,
                 style: TextStyle(
                     fontSize: 30
                 ),
@@ -205,7 +244,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
               padding: EdgeInsets.all(16),
               child:
               Text(
-                  'Galpão: ' + widget.Galpao,
+                'Galpão: ' + widget.Galpao,
                 style: TextStyle(
                     fontSize: 30
                 ),
@@ -227,54 +266,54 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                 });
               },
             ),
-              RadioListTile(
-                title: Text("Sem Lacre",),
-                value: "naolacrado",
-                groupValue: widget.lacreounao,
-                onChanged: (value){
-                  setState(() {
-                    widget.lacreounao = value.toString();
-
-                    if(value == 'naolacrado'){
-                      lacrebool = false;
-                    }
-                  });
+            RadioListTile(
+              title: Text("Sem Lacre",),
+              value: "naolacrado",
+              groupValue: widget.lacreounao,
+              onChanged: (value){
+                setState(() {
+                  widget.lacreounao = value.toString();
+                  if(value == 'naolacrado'){
+                    lacrebool = false;
+                  }
+                });
+              },
+            ),
+            lacrebool ?
+            Container(
+              padding: EdgeInsets.all(16),
+              child: TextFormField(
+                controller: _textEditingController,
+                onChanged: (valor){
+                  lacreSt = valor;
+                  //Mudou mandou para a String
                 },
-              ),
-              lacrebool ?
-              Container(
-                padding: EdgeInsets.all(16),
-                child: TextFormField(
-                  controller: _textEditingController,
-                  onChanged: (valor){
-                    lacreSt = valor;
-                    //Mudou mandou para a String
-                  },
-                  keyboardType: TextInputType.number,
-                  //enableSuggestions: false,
-                  //autocorrect: false,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Numero do lacre *',
-                    hintStyle: TextStyle(
-                        fontSize: 20
-                    ),
+                keyboardType: TextInputType.number,
+                //enableSuggestions: false,
+                //autocorrect: false,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Numero do lacre *',
+                  hintStyle: TextStyle(
+                      fontSize: 20
                   ),
                 ),
-              )
-                  :Text(''),
+              ),
+            )
+                :Text(''),
             Container(
               padding: EdgeInsets.all(16),
               child: ElevatedButton(
-                onPressed: (){
+                onPressed: () async {
                   if(lacrebool == false){
                     FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                       'DataSaida': DateTime.now(),
-                      'Status': 'Liberado'
+                      'Status': 'Saida',
+                      'saidaLiberadaPor': widget.porteiroName
+                    }).then((value){
+                      Navigator.pop(context);
                     });
-                    Navigator.pop(context);
                   }
-
                   if(lacrebool == true){
                     if(lacreSt == null){
                       Fluttertoast.showToast(
@@ -288,9 +327,11 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                     }else{
                       FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                         'DataSaida': DateTime.now(),
-                        'Status': 'Liberado'
+                        'Status': 'Saida',
+                        'saidaLiberadaPor': widget.porteiroName
+                      }).then((value){
+                        Navigator.pop(context);
                       });
-                      Navigator.pop(context);
                     }
                   }
                 },
@@ -313,7 +354,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                         padding: EdgeInsets.all(16),
                         child:
                         Image.asset(
-                          'assets/icon.png',
+                          'assets/sanca.png',
                           fit: BoxFit.contain,
                         )
                     ),
@@ -321,7 +362,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                       padding: EdgeInsets.all(16),
                       child:
                       Text(
-                        'Operador: ' + widget.empresaName,
+                        'Operador: ' + widget.porteiroName,
                         style: TextStyle(
                             fontSize: 20
                         ),

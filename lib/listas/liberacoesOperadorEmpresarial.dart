@@ -357,89 +357,48 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                                         String Empresadestino = documents['Empresa'];
                                                         String EmpresadeOrigin = documents['EmpresadeOrigin'];
                                                         String Galpao = documents['Galpão'];
-                                                        Timestamp DataEntrada = documents['DataEntrada'];
                                                         String lacradoStr = documents['lacrenum'];
+
+                                                        Timestamp DataEntrada = documents['DataEntradaEmpresa'];
+                                                        String verificadoPor = documents['verificadoPor'];
+
+                                                        Timestamp DatadeAnalise = documents['DataDeAnalise'];
 
                                                         String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
                                                         String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
+                                                        String formattedDate3 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DatadeAnalise.toDate()).replaceAll('-', '/');
 
                                                         Navigator.push(context,
                                                             MaterialPageRoute(builder: (context){
-                                                              return veiculoEntrada(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, formattedDate2);
+                                                              return veiculoEntrada(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, formattedDate2, verificadoPor, formattedDate3);
                                                             }));
 
                                                       }
                                                       else{
                                                         if(lacre == 'naolacrado'){
 
-
-                                                          String formattedDate = '';
-                                                          String formattedDate2 = '';
-                                                          String formattedDate3 ='';
-                                                          bool dataEntradabool = false;
-                                                          bool datacriadobool = false;
-                                                          bool datasaidabool = false;
-
-                                                          if(documents['DataEntrada'] == ''){
-                                                            dataEntradabool = false;
-                                                          }else{
-                                                            dataEntradabool = true;
-                                                          }
-
-                                                          if(documents['Horario Criado'] == ''){
-                                                            datacriadobool = false;
-                                                          }else{
-                                                            datacriadobool = true;
-                                                          }
-
-                                                          if(documents['DataSaida'] == ''){
-                                                            datasaidabool = false;
-                                                          }else{
-                                                            datasaidabool = true;
-                                                          }
-
-                                                          if(dataEntradabool == false){
-                                                            formattedDate = '';
-                                                          }
-
-                                                          if(dataEntradabool == true){
-
-                                                            Timestamp DataEntrada = documents['DataEntrada'];
-                                                            formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
-                                                          }
-
-                                                          if(datacriadobool == false){
-                                                            formattedDate2 = '';
-                                                          }
-
-                                                          if(datacriadobool == true){
-
-                                                            Timestamp horarioCriacao = documents['Horario Criado'];
-                                                            formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
-                                                          }
-
-                                                          if(datasaidabool == false){
-                                                            formattedDate3 = '';
-                                                          }
-
-                                                          if(datasaidabool == true){
-                                                            Timestamp DataSaida = documents['DataSaida'];
-                                                            formattedDate3 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataSaida.toDate()).replaceAll('-', '/');
-                                                          }
-
                                                           String liberadopor = documents['QuemAutorizou'];
+                                                          Timestamp horarioCriacao = documents['Horario Criado'];
                                                           String nomeMotorista = documents['nomeMotorista'];
                                                           String Veiculo = documents['Veiculo'];
                                                           String PlacaVeiculo = documents['PlacaVeiculo'];
                                                           String Empresadestino = documents['Empresa'];
                                                           String EmpresadeOrigin = documents['EmpresadeOrigin'];
                                                           String Galpao = documents['Galpão'];
+                                                          String lacradoStr = documents['lacrenum'];
 
-                                                          print(formattedDate);
+                                                          Timestamp DataEntrada = documents['DataEntradaEmpresa'];
+                                                          String verificadoPor = documents['verificadoPor'];
+
+                                                          Timestamp DatadeAnalise = documents['DataDeAnalise'];
+
+                                                          String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
+                                                          String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
+                                                          String formattedDate3 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DatadeAnalise.toDate()).replaceAll('-', '/');
 
                                                           Navigator.push(context,
                                                               MaterialPageRoute(builder: (context){
-                                                                return veiculoEntrada(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, formattedDate2);
+                                                                return veiculoEntrada(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, formattedDate2, verificadoPor, formattedDate3);
                                                               }));
                                                         }
                                                       }
@@ -469,14 +428,13 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
 
                                                         Navigator.push(context,
                                                             MaterialPageRoute(builder: (context){
-                                                              return operadorEmpresarialAguardando(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, verificadoPor, formattedDate2, formattedDate3, urlImage1, urlImage2, urlImage3, urlImage4);
+                                                              return operadorEmpresarialAguardando(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, verificadoPor, formattedDate3, urlImage1, urlImage2, urlImage3, urlImage4);
                                                             }));
                                                       }
                                                       else{
                                                         if(lacre == 'naolacrado'){
                                                           String liberadopor = documents['QuemAutorizou'];
                                                           Timestamp horarioCriacao = documents['Horario Criado'];
-                                                          Timestamp DataEntrada = documents['DataEntrada'];
                                                           String nomeMotorista = documents['nomeMotorista'];
                                                           String Veiculo = documents['Veiculo'];
                                                           String PlacaVeiculo = documents['PlacaVeiculo'];
@@ -491,12 +449,11 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                                           String urlImage4 = documents['uriImage4'];
 
                                                           String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
-                                                          String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
                                                           String formattedDate3 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataDeAnalise.toDate()).replaceAll('-', '/');
 
                                                           Navigator.push(context,
                                                               MaterialPageRoute(builder: (context){
-                                                                return operadorEmpresarialAguardando(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, verificadoPor, formattedDate2, formattedDate3, urlImage1, urlImage2, urlImage3, urlImage4);
+                                                                return operadorEmpresarialAguardando(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, verificadoPor, formattedDate3, urlImage1, urlImage2, urlImage3, urlImage4);
                                                               }));
                                                         }
                                                       }

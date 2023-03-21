@@ -241,7 +241,8 @@ class _liberacaoOffState extends State<liberacaoOff> {
                                                   'Horario Criado': dateTime,
                                                   'verificadoPor': '',
                                                   'DataDeAnalise': '',
-                                                  'DataEntradaEmpresa': ''
+                                                  'DataEntradaEmpresa': '',
+                                                  'DateSaidaPortaria': ''
                                                 }).then((value) {
 
                                                   Fluttertoast.showToast(
@@ -304,7 +305,8 @@ class _liberacaoOffState extends State<liberacaoOff> {
                                                   'lacrenum': '',
                                                   'verificadoPor': '',
                                                   'DataDeAnalise': '',
-                                                  'DataEntradaEmpresa': ''
+                                                  'DataEntradaEmpresa': '',
+                                                  'DateSaidaPortaria': ''
                                                 }).then((value) {
 
                                                   FirebaseFirestore.instance.collection('Motoristas').doc().set({
@@ -776,7 +778,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                   onPressed: uploadInfos,
                   child:
                   Text(
-                    'Adicionar novo Motorista',
+                    'Prosseguir',
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold
