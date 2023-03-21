@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:glk_controls/modal/cadastroEmpresa.dart';
 import 'package:glk_controls/modal/cadastroUsuarioADM.dart';
 import 'package:glk_controls/operadorInterno.dart';
+import 'package:glk_controls/permissoes/permissoes.dart';
 
 //Programado por HeroRickyGames
 
@@ -114,29 +115,14 @@ class _painelADMState extends State<painelADM> {
               padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
               child: ElevatedButton(
                 onPressed: (){
-
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context){
+                        return permissoes();
+                      }));
                 },
                 child:
                 Text(
                   'Permissões',
-                  style: TextStyle(
-                      fontSize: 20
-                  ),
-                ),
-              ),
-            ),
-          ),
-          Center(
-            child: Container(
-              width: double.infinity,
-              padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
-              child: ElevatedButton(
-                onPressed: (){
-
-                },
-                child:
-                Text(
-                  'Cadastro visitantes',
                   style: TextStyle(
                       fontSize: 20
                   ),

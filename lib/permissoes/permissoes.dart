@@ -1,42 +1,155 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class NomesDePessoas extends StatefulWidget {
+class permissoes extends StatefulWidget {
   @override
-  permissoes createState() => permissoes();
+  _permissoesState createState() => _permissoesState();
 }
 
-class permissoes extends State<NomesDePessoas> {
+class _permissoesState extends State<permissoes> {
+  bool painelbool = false;
+  bool relatoriosbool = false;
+  bool entradabool = false;
+  bool cadastrarbool = false;
+  bool saidabool = false;
+
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: StreamBuilder(
-          stream: FirebaseFirestore.instance
-              .collection('porteiro')
-              .snapshots(),
-          builder: (BuildContext context,
-              AsyncSnapshot<QuerySnapshot> snapshot) {
-            if (!snapshot.hasData) {
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            }
-            return ListView(
-              children: snapshot.data!.docs.map((documents) {
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    height: 30,
-                    width: 100,
-                    color: Colors.amber,
-                    child: Text(documents['nome']),
-                  ),
-                );
-              }).toList(),
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text('Permissões dos Operadores Internos'),
+      ),
+      body: StreamBuilder(
+        stream: FirebaseFirestore.instance
+            .collection('porteiro')
+            .snapshots(),
+        builder: (BuildContext context,
+            AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(),
             );
-          },
-        ),
+          }
+          return ListView(
+            children: snapshot.data!.docs.map((documents) {
+
+              bool Cadastrarbl = documents['cadastrar'];
+              bool saidabl = documents['saida'];
+              bool entradabl = documents['entrada'];
+              bool Relatoriobl = documents['relatorio'];
+              bool painelbl = documents['painel'];
+
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    border: Border.all(
+                      color: Colors.blue,
+                      width: 1.0,
+                    ),
+                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  ),
+                  child:
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                          'Nome do Operador: '+ documents['nome'],
+                        style: TextStyle(
+                          fontSize: 18
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          CheckboxListTile(
+                            title: Text('Cadastrar'),
+                            value: documents['cadastrar'],
+                            onChanged: (value) {
+                              setState(() {
+                                Cadastrarbl = value!;
+
+                                FirebaseFirestore.instance.collection('porteiro').doc(documents.id).update({
+                                  'cadastrar': Cadastrarbl
+                                });
+                              });
+                            },
+                            activeColor: Colors.blue,
+                            checkColor: Colors.white,
+                            controlAffinity: ListTileControlAffinity.leading,
+                          ),
+                          CheckboxListTile(
+                            title: Text('Saida'),
+                            value: saidabl,
+                            onChanged: (value) {
+                              setState(() {
+                                saidabl = value!;
+                                FirebaseFirestore.instance.collection('porteiro').doc(documents.id).update({
+                                  'saida': saidabl
+                                });
+                              });
+                            },
+                            activeColor: Colors.blue,
+                            checkColor: Colors.white,
+                            controlAffinity: ListTileControlAffinity.leading,
+                          ),
+                          CheckboxListTile(
+                            title: Text('Entrada'),
+                            value: documents['entrada'],
+                            onChanged: (value) {
+                              setState(() {
+                                entradabl = value!;
+                                FirebaseFirestore.instance.collection('porteiro').doc(documents.id).update({
+                                  'entrada': value
+                                });
+                              });
+                            },
+                            activeColor: Colors.blue,
+                            checkColor: Colors.white,
+                            controlAffinity: ListTileControlAffinity.leading,
+                          ),
+                          CheckboxListTile(
+                            title: Text('Relatórios'),
+                            value: documents['relatorio'],
+                            onChanged: (value) {
+                              setState(() {
+                                Relatoriobl = value!;
+                                FirebaseFirestore.instance.collection('porteiro').doc(documents.id).update({
+                                  'relatorio': value
+                                });
+                              });
+                            },
+                            activeColor: Colors.blue,
+                            checkColor: Colors.white,
+                            controlAffinity: ListTileControlAffinity.leading,
+                          ),
+                          CheckboxListTile(
+                            title: Text('Painel'),
+                            value: documents['painel'],
+                            onChanged: (value) {
+                              setState(() {
+                                painelbl = value!;
+                                FirebaseFirestore.instance.collection('porteiro').doc(documents.id).update({
+                                  'painel': value
+                                });
+                              });
+                            },
+                            activeColor: Colors.blue,
+                            checkColor: Colors.white,
+                            controlAffinity: ListTileControlAffinity.leading,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }).toList(),
+          );
+        },
       ),
     );
   }
