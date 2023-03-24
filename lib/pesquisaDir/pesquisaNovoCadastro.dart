@@ -67,11 +67,12 @@ class _pesquisaCadastroState extends State<pesquisaCadastro> {
           fontSize: 16.0,
         );
       }else{
-        final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance.collection('Motoristas').snapshots();
+
         Navigator.pop(context);
         Navigator.push(context,
             MaterialPageRoute(builder: (context){
-              return listaUsuarios();
+
+              return listaUsuarios(Pesquisa!);
             }));
       }
     }
