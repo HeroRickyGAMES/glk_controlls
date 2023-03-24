@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/modal/cadastroEmpresa.dart';
 import 'package:glk_controls/modal/cadastroUsuarioADM.dart';
 import 'package:glk_controls/operadorInterno.dart';
@@ -24,6 +25,8 @@ class painelADM extends StatefulWidget {
 
 class _painelADMState extends State<painelADM> {
   List listaNome = [];
+  String pass = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,8 +65,6 @@ class _painelADMState extends State<painelADM> {
               padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
               child: ElevatedButton(
                 onPressed: () async {
-
-
                   var result = await FirebaseFirestore.instance
                       .collection("empresa")
                       .get();
@@ -163,7 +164,79 @@ class _painelADMState extends State<painelADM> {
               padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
               child: ElevatedButton(
                 onPressed: (){
-                  getReleAPI1adm();
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Ligação de Relês'),
+                        actions: [
+                          TextFormField(
+                            onChanged: (valor){
+                              pass = valor;
+                              //Mudou mandou para a String
+                            },
+                            keyboardType: TextInputType.name,
+                            enableSuggestions: false,
+                            obscureText: true,
+                            autocorrect: false,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: 'Senha',
+                              hintStyle: TextStyle(
+                                  fontSize: 20
+                              ),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('Cancelar'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+
+                                  if(pass == ''){
+
+                                    Fluttertoast.showToast(
+                                        msg: 'Preencha a senha!',
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.CENTER,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.grey[600],
+                                        textColor: Colors.white,
+                                        fontSize: 16.0
+                                    );
+
+                                  }else{
+                                    if(pass == '1234'){
+
+                                      getReleAPI1adm();
+
+                                    }else{
+                                      Fluttertoast.showToast(
+                                          msg: 'Senha invalida!',
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.CENTER,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.grey[600],
+                                          textColor: Colors.white,
+                                          fontSize: 16.0
+                                      );
+                                    }
+                                  }
+                                },
+                                child: Text('Prosseguir'),
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 },
                 child:
                 Text(
@@ -181,7 +254,79 @@ class _painelADMState extends State<painelADM> {
               padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
               child: ElevatedButton(
                 onPressed: (){
-                  getReleAPI5();
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Ligação de Relês'),
+                        actions: [
+                          TextFormField(
+                            onChanged: (valor){
+                              pass = valor;
+                              //Mudou mandou para a String
+                            },
+                            keyboardType: TextInputType.name,
+                            enableSuggestions: false,
+                            obscureText: true,
+                            autocorrect: false,
+                            decoration: InputDecoration(
+                              border: OutlineInputBorder(),
+                              hintText: 'Senha',
+                              hintStyle: TextStyle(
+                                  fontSize: 20
+                              ),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('Cancelar'),
+                              ),
+                              TextButton(
+                                onPressed: () {
+
+                                  if(pass == ''){
+
+                                    Fluttertoast.showToast(
+                                        msg: 'Preencha a senha!',
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        gravity: ToastGravity.CENTER,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.grey[600],
+                                        textColor: Colors.white,
+                                        fontSize: 16.0
+                                    );
+
+                                  }else{
+                                    if(pass == '1234'){
+
+                                      getReleAPI5();
+
+                                    }else{
+                                      Fluttertoast.showToast(
+                                          msg: 'Senha invalida!',
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.CENTER,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.grey[600],
+                                          textColor: Colors.white,
+                                          fontSize: 16.0
+                                      );
+                                    }
+                                  }
+                                },
+                                child: Text('Prosseguir'),
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    },
+                  );
                 },
                 child:
                 Text(

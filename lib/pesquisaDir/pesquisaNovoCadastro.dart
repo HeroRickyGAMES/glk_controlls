@@ -180,7 +180,7 @@ class _pesquisaCadastroState extends State<pesquisaCadastro> {
                   autocorrect: false,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Pesquisa',
+                    hintText: 'Pesquisa (Nome apenas letras) / (RG apenas digitos) * ',
                     hintStyle: TextStyle(
                         fontSize: 20
                     ),
