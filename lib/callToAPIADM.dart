@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
-Future<void> getReleAPI5() async {
+import 'callToAPItoOFF.dart';
+
+Future<void> getReleAPI1adm() async {
   await Future.delayed(Duration(seconds: 1));
 
   var result = await FirebaseFirestore.instance
@@ -12,7 +14,7 @@ Future<void> getReleAPI5() async {
       .get();
   String urlRele = (result.get('URLRele'));
 
-  final String urlst = 'http://${urlRele}/relay_set.cgi?relay=0&on=0&';
+  final String urlst = 'http://${urlRele}/relay_set.cgi?relay=0&on=1&';
 
   final response = await http.get(Uri.parse(urlst));
 
@@ -22,11 +24,11 @@ Future<void> getReleAPI5() async {
     print('Request failed with status: ${response.statusCode}.');
   }
 
-  getReleAPI6();
+  getReleAPI2();
 
 }
 
-Future<void> getReleAPI6() async {
+Future<void> getReleAPI2() async {
   await Future.delayed(Duration(seconds: 5));
 
   var result = await FirebaseFirestore.instance
@@ -35,7 +37,7 @@ Future<void> getReleAPI6() async {
       .get();
   String urlRele = (result.get('URLRele'));
 
-  final String urlst = 'http://${urlRele}/relay_set.cgi?relay=1&on=0&';
+  final String urlst = 'http://${urlRele}/relay_set.cgi?relay=1&on=1&';
 
   final response = await http.get(Uri.parse(urlst));
 
@@ -44,10 +46,10 @@ Future<void> getReleAPI6() async {
   } else {
     print('Request failed with status: ${response.statusCode}.');
   }
-  getReleAPI7();
+  getReleAPI3();
 }
 
-Future<void> getReleAPI7() async {
+Future<void> getReleAPI3() async {
   await Future.delayed(Duration(seconds: 5));
 
   var result = await FirebaseFirestore.instance
@@ -56,7 +58,7 @@ Future<void> getReleAPI7() async {
       .get();
   String urlRele = (result.get('URLRele'));
 
-  final String urlst = 'http://${urlRele}/relay_set.cgi?relay=2&on=0&';
+  final String urlst = 'http://${urlRele}/relay_set.cgi?relay=2&on=1&';
 
   final response = await http.get(Uri.parse(urlst));
 
@@ -65,10 +67,10 @@ Future<void> getReleAPI7() async {
   } else {
     print('Request failed with status: ${response.statusCode}.');
   }
-  getReleAPI8();
+  getReleAPI4();
 }
 
-Future<void> getReleAPI8() async {
+Future<void> getReleAPI4() async {
   await Future.delayed(Duration(seconds: 5));
 
   var result = await FirebaseFirestore.instance
@@ -77,19 +79,21 @@ Future<void> getReleAPI8() async {
       .get();
   String urlRele = (result.get('URLRele'));
 
-  final String urlst = 'http://${urlRele}/relay_set.cgi?relay=3&on=0&';
+  final String urlst = 'http://${urlRele}/relay_set.cgi?relay=3&on=1&';
 
   final response = await http.get(Uri.parse(urlst));
 
   if (response.statusCode == 200) {
+
     Fluttertoast.showToast(
-      msg: 'Todos os relês foram desligados com sucesso!',
+      msg: 'Todos os relês foram ligados com sucesso!',
       toastLength: Toast.LENGTH_SHORT,
       timeInSecForIosWeb: 1,
       backgroundColor: Colors.black,
       textColor: Colors.white,
       fontSize: 16.0,
     );
+
   } else {
     print('Request failed with status: ${response.statusCode}.');
   }

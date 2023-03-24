@@ -8,6 +8,7 @@ import 'package:glk_controls/permissoes/permissoes.dart';
 import 'package:glk_controls/relatorio.dart';
 
 import 'callToAPI.dart';
+import 'callToAPIADM.dart';
 import 'callToAPItoOFF.dart';
 import 'modal/ReleModalConfig.dart';
 
@@ -162,7 +163,7 @@ class _painelADMState extends State<painelADM> {
               padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
               child: ElevatedButton(
                 onPressed: (){
-                  getReleAPI1();
+                  getReleAPI1adm();
                 },
                 child:
                 Text(

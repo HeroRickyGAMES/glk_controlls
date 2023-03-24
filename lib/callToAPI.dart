@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
+import 'callToAPItoOFF.dart';
+
 Future<void> getReleAPI1() async {
   await Future.delayed(Duration(seconds: 1));
 
@@ -12,7 +14,7 @@ Future<void> getReleAPI1() async {
       .get();
   String urlRele = (result.get('URLRele'));
 
-  final String urlst = 'http://${urlRele}/?b=1';
+  final String urlst = 'http://${urlRele}/relay_set.cgi?relay=0&on=1&';
 
   final response = await http.get(Uri.parse(urlst));
 
@@ -35,7 +37,7 @@ Future<void> getReleAPI2() async {
       .get();
   String urlRele = (result.get('URLRele'));
 
-  final String urlst = 'http://${urlRele}/?b=3';
+  final String urlst = 'http://${urlRele}/relay_set.cgi?relay=1&on=1&';
 
   final response = await http.get(Uri.parse(urlst));
 
@@ -56,7 +58,7 @@ Future<void> getReleAPI3() async {
       .get();
   String urlRele = (result.get('URLRele'));
 
-  final String urlst = 'http://${urlRele}/?b=5';
+  final String urlst = 'http://${urlRele}/relay_set.cgi?relay=2&on=1&';
 
   final response = await http.get(Uri.parse(urlst));
 
@@ -77,11 +79,13 @@ Future<void> getReleAPI4() async {
       .get();
   String urlRele = (result.get('URLRele'));
 
-  final String urlst = 'http://${urlRele}/?b=7';
+  final String urlst = 'http://${urlRele}/relay_set.cgi?relay=3&on=1&';
 
   final response = await http.get(Uri.parse(urlst));
 
   if (response.statusCode == 200) {
+
+    getReleAPI5();
 
   } else {
     print('Request failed with status: ${response.statusCode}.');
