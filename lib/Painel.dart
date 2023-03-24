@@ -9,6 +9,7 @@ import 'package:glk_controls/relatorio.dart';
 
 import 'callToAPI.dart';
 import 'callToAPItoOFF.dart';
+import 'modal/ReleModalConfig.dart';
 
 //Programado por HeroRickyGames
 
@@ -184,6 +185,33 @@ class _painelADMState extends State<painelADM> {
                 child:
                 Text(
                   'Desligar Relês',
+                  style: TextStyle(
+                      fontSize: 20
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Center(
+            child: Container(
+              width: double.infinity,
+              padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+              child: ElevatedButton(
+                onPressed: () async {
+                  var result = await FirebaseFirestore.instance
+                      .collection("Server")
+                      .doc('serverValues')
+                      .get();
+                  String urlRele = (result.get('URLRele'));
+
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context){
+                        return releModalConfig(urlRele);
+                      }));
+                },
+                child:
+                Text(
+                  'Configurações de Relês',
                   style: TextStyle(
                       fontSize: 20
                   ),

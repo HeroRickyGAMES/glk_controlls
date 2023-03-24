@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -9,6 +10,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/modal/veiculoAguardando.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
+import '../modal/liberacaooffModal.dart';
 import '../pesquisaDir/pesquisa.dart';
 
 //Programado por HeroRickyGames
@@ -32,6 +34,9 @@ class _listEntradaState extends State<listEntrada> {
     double tamanhotextomin = 16;
     double tamanhotextobtns = 16;
     double aspect = 1.5;
+    List listaNome = [];
+    List galpao = [ ];
+    String pass = '';
 
     if(kIsWeb){
       tamanhotexto = 25;
@@ -47,6 +52,78 @@ class _listEntradaState extends State<listEntrada> {
 
       }
     }
+
+    openModalOffline() async {
+
+      var result = await FirebaseFirestore.instance
+          .collection("empresa")
+          .get();
+      result.docs.forEach((res) {
+        print(res.data()['nome']);
+
+        setState(() {
+          listaNome.add(res.data()['nome']);
+
+          galpao.addAll(res.data()['galpaes']);
+
+          print('dentro da array: ${galpao}' );
+          final dropValue = ValueNotifier('');
+          final dropValue2 = ValueNotifier('');
+          final dropValue3 = ValueNotifier('');
+
+          var db = FirebaseFirestore.instance;
+          var UID = FirebaseAuth.instance.currentUser?.uid;
+          db.collection('Users').doc(UID).get().then((event){
+            print("${event.data()}");
+
+            event.data()?.forEach((key, value) {
+
+              print(key);
+              print(value);
+
+              if(key == 'nome'){
+                String PorteiroNomee = value;
+
+                var db = FirebaseFirestore.instance;
+                var UID = FirebaseAuth.instance.currentUser?.uid;
+                db.collection('Users').doc(UID).get().then((event){
+                  print("${event.data()}");
+
+                  event.data()?.forEach((key, value) {
+
+                    print(key);
+                    print(value);
+
+                    if(key == 'nome'){
+
+                      Navigator.pop(context);
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context){
+                            return liberacaoOff(listaNome, dropValue, PorteiroNomee, '',dropValue2, galpao, dropValue3);
+
+                          }));
+
+                    }
+
+                  });
+
+                }
+                );
+
+              }
+
+            });
+
+          }
+          );
+
+
+        });
+
+      });
+      print(listaNome);
+    }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -384,28 +461,128 @@ class _listEntradaState extends State<listEntrada> {
                 ],
               ),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+            Column(
               children: [
-                Container(
-                    width: 180,
-                    height: 180,
-                    padding: EdgeInsets.all(16),
-                    child:
-                    Image.asset(
-                      'assets/sanca.png',
-                      fit: BoxFit.contain,
-                    )
-                ),
-                Container(
-                  padding: EdgeInsets.all(16),
-                  child:
-                  Text(
-                    'Operador: ' + widget.porteiroName,
-                    style: TextStyle(
-                        fontSize: tamanhotexto
-                    ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 16.0),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      ElevatedButton(onPressed: (){
+
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('Liberação Manual'),
+                              actions: [
+                                TextFormField(
+                                  onChanged: (valor){
+                                    pass = valor;
+                                    //Mudou mandou para a String
+                                  },
+                                  keyboardType: TextInputType.name,
+                                  enableSuggestions: false,
+                                  obscureText: true,
+                                  autocorrect: false,
+                                  decoration: InputDecoration(
+                                    border: OutlineInputBorder(),
+                                    hintText: 'Senha',
+                                    hintStyle: TextStyle(
+                                        fontSize: 20
+                                    ),
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text('Cancelar'),
+                                    ),
+                                    TextButton(
+                                      onPressed: () {
+
+                                        if(pass == ''){
+
+                                          Fluttertoast.showToast(
+                                              msg: 'Preencha a senha!',
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.CENTER,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor: Colors.grey[600],
+                                              textColor: Colors.white,
+                                              fontSize: 16.0
+                                          );
+
+                                        }else{
+                                          if(pass == '1234'){
+
+                                            Navigator.of(context).pop();
+                                            openModalOffline();
+
+                                          }else{
+                                            Fluttertoast.showToast(
+                                                msg: 'Senha invalida!',
+                                                toastLength: Toast.LENGTH_SHORT,
+                                                gravity: ToastGravity.CENTER,
+                                                timeInSecForIosWeb: 1,
+                                                backgroundColor: Colors.grey[600],
+                                                textColor: Colors.white,
+                                                fontSize: 16.0
+                                            );
+                                          }
+                                        }
+                                      },
+                                      child: Text('Prosseguir'),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      },
+                        child: Text(
+                          'Entrada Manual',
+                        style: TextStyle(
+                          fontSize: 18
+                        ),
+                      ),
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.red
+                        ),
+                      ),
+                    ],
                   ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                        width: 180,
+                        height: 180,
+                        padding: EdgeInsets.all(16),
+                        child:
+                        Image.asset(
+                          'assets/sanca.png',
+                          fit: BoxFit.contain,
+                        )
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(16),
+                      child:
+                      Text(
+                        'Operador: ' + widget.porteiroName,
+                        style: TextStyle(
+                            fontSize: tamanhotexto
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

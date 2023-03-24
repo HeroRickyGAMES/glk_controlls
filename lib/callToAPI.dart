@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
@@ -5,7 +6,13 @@ import 'package:http/http.dart' as http;
 Future<void> getReleAPI1() async {
   await Future.delayed(Duration(seconds: 1));
 
-  final String urlst = 'http://192.168.3.175/?b=1';
+  var result = await FirebaseFirestore.instance
+      .collection("Server")
+      .doc('serverValues')
+      .get();
+  String urlRele = (result.get('URLRele'));
+
+  final String urlst = 'http://${urlRele}/?b=1';
 
   final response = await http.get(Uri.parse(urlst));
 
@@ -22,7 +29,13 @@ Future<void> getReleAPI1() async {
 Future<void> getReleAPI2() async {
   await Future.delayed(Duration(seconds: 5));
 
-  final String urlst = 'http://192.168.3.175/?b=3';
+  var result = await FirebaseFirestore.instance
+      .collection("Server")
+      .doc('serverValues')
+      .get();
+  String urlRele = (result.get('URLRele'));
+
+  final String urlst = 'http://${urlRele}/?b=3';
 
   final response = await http.get(Uri.parse(urlst));
 
@@ -37,7 +50,13 @@ Future<void> getReleAPI2() async {
 Future<void> getReleAPI3() async {
   await Future.delayed(Duration(seconds: 5));
 
-  final String urlst = 'http://192.168.3.175/?b=5';
+  var result = await FirebaseFirestore.instance
+      .collection("Server")
+      .doc('serverValues')
+      .get();
+  String urlRele = (result.get('URLRele'));
+
+  final String urlst = 'http://${urlRele}/?b=5';
 
   final response = await http.get(Uri.parse(urlst));
 
@@ -52,7 +71,13 @@ Future<void> getReleAPI3() async {
 Future<void> getReleAPI4() async {
   await Future.delayed(Duration(seconds: 5));
 
-  final String urlst = 'http://192.168.3.175/?b=7';
+  var result = await FirebaseFirestore.instance
+      .collection("Server")
+      .doc('serverValues')
+      .get();
+  String urlRele = (result.get('URLRele'));
+
+  final String urlst = 'http://${urlRele}/?b=7';
 
   final response = await http.get(Uri.parse(urlst));
 

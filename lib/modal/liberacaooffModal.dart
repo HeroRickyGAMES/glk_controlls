@@ -239,7 +239,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                                                   'uriImage': '',
                                                   'LacreouNao': lacreounao,
                                                   'QuemAutorizou': widget.nomeUser,
-                                                  'Status': 'Entrada',
+                                                  'Status': 'Em Verificação',
                                                   'Lacre': lacreSt,
                                                   'lacrenum': lacreSt,
                                                   'MotivoLiberacao': motivo,
@@ -262,8 +262,6 @@ class _liberacaoOffState extends State<liberacaoOff> {
                                                     textColor: Colors.white,
                                                     fontSize: 16.0,
                                                   );
-
-                                                  getReleAPI1();
 
                                                   widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
                                                   widget.galpaes.removeRange(0, widget.galpaes.length);
@@ -305,7 +303,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                                                   'uriImage': '',
                                                   'LacreouNao': lacreounao,
                                                   'QuemAutorizou': widget.nomeUser,
-                                                  'Status': 'Entrada',
+                                                  'Status': 'Em Verificação',
                                                   'DataEntrada': '',
                                                   'DataSaida': '',
                                                   'idDoc': idd,
@@ -332,7 +330,6 @@ class _liberacaoOffState extends State<liberacaoOff> {
                                                     textColor: Colors.white,
                                                     fontSize: 16.0,
                                                   );
-                                                  getReleAPI1();
 
                                                   widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
                                                   widget.galpaes.removeRange(0, widget.galpaes.length);
