@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import '../listas/listaUsuarios.dart';
 import '../modal/modalVeiculo.dart';
 import '../modal/modalVeiculoPesquisafill.dart';
 
@@ -66,160 +67,12 @@ class _pesquisaCadastroState extends State<pesquisaCadastro> {
           fontSize: 16.0,
         );
       }else{
-        FirebaseFirestore.instance
-            .collection('Motoristas')
-            .get()
-            .then((QuerySnapshot querySnapshot) {
-          querySnapshot.docs.forEach((doc) async {
-            if(doc["nomeMotorista"] == Pesquisa ){
-
-              var result = await FirebaseFirestore.instance
-                  .collection("empresa")
-                  .get();
-              result.docs.forEach((res) {
-                print(res.data()['nome']);
-
-                setState(() {
-                  listaNome.add(res.data()['nome']);
-
-                  galpao.addAll(res.data()['galpaes']);
-
-                  print('dentro da array: ${galpao}' );
-                  final dropValue = ValueNotifier('');
-                  final dropValue2 = ValueNotifier('');
-
-                  var db = FirebaseFirestore.instance;
-                  var UID = FirebaseAuth.instance.currentUser?.uid;
-                  db.collection('Users').doc(UID).get().then((event){
-                    print("${event.data()}");
-
-                    event.data()?.forEach((key, value) {
-
-                      print(key);
-                      print(value);
-
-                      if(key == 'nome'){
-                        String PorteiroNomee = value;
-
-                        var db = FirebaseFirestore.instance;
-                        var UID = FirebaseAuth.instance.currentUser?.uid;
-                        db.collection('Users').doc(UID).get().then((event){
-                          print("${event.data()}");
-
-                          event.data()?.forEach((key, value) {
-
-                            print(key);
-                            print(value);
-
-                            if(key == 'nome'){
-                              String autofillName = doc["nomeMotorista"];
-                              String autofillRG = doc["RGDoMotorista"];
-
-                              Navigator.pop(context);
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context){
-                                    return modalVeiculofill(listaNome, dropValue, PorteiroNomee, '',dropValue2, galpao, autofillName, autofillRG);
-
-                                  }));
-                            }
-
-                          });
-
-                        }
-                        );
-
-                      }
-
-                    });
-
-                  }
-                  );
-                });
-              });
-              print(listaNome);
-
-
-
-            }else{
-              if(doc["RGDoMotorista"] == Pesquisa ){
-
-                var result = await FirebaseFirestore.instance
-                    .collection("empresa")
-                    .get();
-                result.docs.forEach((res) {
-                  print(res.data()['nome']);
-
-                  setState(() {
-                    listaNome.add(res.data()['nome']);
-
-                    galpao.addAll(res.data()['galpaes']);
-
-                    print('dentro da array: ${galpao}' );
-                    final dropValue = ValueNotifier('');
-                    final dropValue2 = ValueNotifier('');
-
-                    var db = FirebaseFirestore.instance;
-                    var UID = FirebaseAuth.instance.currentUser?.uid;
-                    db.collection('Users').doc(UID).get().then((event){
-                      print("${event.data()}");
-
-                      event.data()?.forEach((key, value) {
-
-                        print(key);
-                        print(value);
-
-                        if(key == 'nome'){
-                          String PorteiroNomee = value;
-
-                          var db = FirebaseFirestore.instance;
-                          var UID = FirebaseAuth.instance.currentUser?.uid;
-                          db.collection('Users').doc(UID).get().then((event){
-                            print("${event.data()}");
-
-                            event.data()?.forEach((key, value) {
-
-                              print(key);
-                              print(value);
-
-                              if(key == 'nome'){
-                                String autofillName = doc["nomeMotorista"];
-                                String autofillRG = doc["RGDoMotorista"];
-
-                                Navigator.pop(context);
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context){
-                                      return modalVeiculofill(listaNome, dropValue, PorteiroNomee, '',dropValue2, galpao, autofillName, autofillRG);
-
-                                    }));
-                              }
-
-                            });
-
-                          }
-                          );
-
-                        }
-
-                      });
-
-                    }
-                    );
-                  });
-                });
-                print(listaNome);
-              }else{
-                Fluttertoast.showToast(
-                  msg: 'Infelizmente não achei nada do que você pesquisou, por favor, tente novamente!',
-                  toastLength: Toast.LENGTH_SHORT,
-                  timeInSecForIosWeb: 1,
-                  backgroundColor: Colors.black,
-                  textColor: Colors.white,
-                  fontSize: 16.0,
-                );
-              }
-            }
-          });
-        });
+        final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance.collection('Motoristas').snapshots();
+        Navigator.pop(context);
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context){
+              return listaUsuarios();
+            }));
       }
     }
 
@@ -229,7 +82,7 @@ class _pesquisaCadastroState extends State<pesquisaCadastro> {
       var result = await FirebaseFirestore.instance
           .collection("empresa")
           .get();
-      result.docs.forEach((res) {
+      for (var res in result.docs) {
         print(res.data()['nome']);
 
         setState(() {
@@ -287,7 +140,7 @@ class _pesquisaCadastroState extends State<pesquisaCadastro> {
           }
           );
         });
-      });
+      }
       print(listaNome);
     }
     return Scaffold(
