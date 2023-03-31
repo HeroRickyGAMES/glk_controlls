@@ -11,6 +11,7 @@ import 'package:glk_controls/mainEmpresa.dart';
 import 'package:glk_controls/mainPorteiro.dart';
 import 'package:glk_controls/operadorEmpresarial.dart';
 import 'package:glk_controls/setorADM.dart';
+import 'anteLogin.dart';
 import 'firebase_options.dart';
 
 //Programado por HeroRickyGames
@@ -42,7 +43,7 @@ void main() {
        Navigator.pop(context);
        Navigator.push(context,
            MaterialPageRoute(builder: (context){
-             return login();
+             return anteLogin();
            }));
 
      } else {

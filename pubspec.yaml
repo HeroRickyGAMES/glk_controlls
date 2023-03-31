@@ -84,6 +84,7 @@ flutter:
     - assets/glkcontrols-init.gif
     - assets/insertFoto.png
     - assets/error-image.png
+    - assets/white.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
