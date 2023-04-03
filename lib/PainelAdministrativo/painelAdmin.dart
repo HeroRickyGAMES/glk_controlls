@@ -4,10 +4,12 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../CadastrarCondominio.dart';
 import '../anteLogin.dart';
+
 
 class painelAdmin extends StatefulWidget {
   const painelAdmin({Key? key}) : super(key: key);
@@ -34,35 +36,54 @@ class _painelAdminState extends State<painelAdmin> {
               child: ElevatedButton(
                 onPressed: () async {
 
-                  final dropValue = ValueNotifier('');
+                  if(kIsWeb){
 
-                  final ByteData imageData = await rootBundle.load('assets/insertFoto.png');
+                    Fluttertoast.showToast(
+                        msg: 'Essa função só é disponivel na versão Mobile do app!',
+                        toastLength: Toast.LENGTH_LONG,
+                        gravity: ToastGravity.CENTER,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.grey[600],
+                        textColor: Colors.white,
+                        fontSize: 16.0
+                    );
 
-                  final ByteData imageData2 = await rootBundle.load('assets/white.png');
+                  }else{
+                    if(Platform.isAndroid){
 
-                  final Uint8List uint8List = imageData.buffer.asUint8List();
-                  final Uint8List uint8List2 = imageData2.buffer.asUint8List();
+                      final dropValue = ValueNotifier('');
 
-                  final compressedImage = await FlutterImageCompress.compressWithList(
-                    uint8List,
-                    quality: 85, // ajuste a qualidade da imagem conforme necessário
-                  );
-                  final compressedImage2 = await FlutterImageCompress.compressWithList(
-                    uint8List2,
-                    quality: 85, // ajuste a qualidade da imagem conforme necessário
-                  );
+                      final ByteData imageData = await rootBundle.load('assets/insertFoto.png');
 
-                  final tempDir = await getTemporaryDirectory();
-                  final file = File('${tempDir.path}/imagem.jpg');
-                  final file2 = File('${tempDir.path}/imagem2.jpg');
-                  await file.writeAsBytes(compressedImage);
-                  await file2.writeAsBytes(compressedImage2);
+                      final ByteData imageData2 = await rootBundle.load('assets/white.png');
 
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context){
-                        return CadastroCondominio(dropValue, file, file2);
-                      }));
+                      final Uint8List uint8List = imageData.buffer.asUint8List();
+                      final Uint8List uint8List2 = imageData2.buffer.asUint8List();
 
+                      final compressedImage = await FlutterImageCompress.compressWithList(
+                        uint8List,
+                        quality: 85, // ajuste a qualidade da imagem conforme necessário
+                      );
+                      final compressedImage2 = await FlutterImageCompress.compressWithList(
+                        uint8List2,
+                        quality: 85, // ajuste a qualidade da imagem conforme necessário
+                      );
+
+                      final tempDir = await getTemporaryDirectory();
+
+                      print(tempDir);
+                      final file = File('${tempDir.path}/imagem.jpg');
+                      final file2 = File('${tempDir.path}/imagem2.jpg');
+                      await file.writeAsBytes(compressedImage);
+                      await file2.writeAsBytes(compressedImage2);
+
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context){
+                            return CadastroCondominio(dropValue, file, file2);
+                          }));
+
+                    }
+                  }
                 },
                 child: Text(
                     'Configuração',

@@ -1,8 +1,11 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:uuid/uuid.dart';
 
 class CadastroCondominio extends StatefulWidget {
 
@@ -16,49 +19,52 @@ class CadastroCondominio extends StatefulWidget {
 }
 
 class _CadastroCondominioState extends State<CadastroCondominio> {
+
+
+  String empresa = '';
+  String endereco = '';
+  String cep = '';
+  String cidade = '';
+  String estadoSelecionado = '';
+  String galpaost = '';
+  String vagas = '';
+  String tags = '';
+  bool tirado = false;
+
+  List EmpresasOpc = [
+    'Acre',
+    'Alagoas',
+    'Amapá',
+    'Amazonas',
+    'Bahia',
+    'Ceará',
+    'Distrito Federal',
+    'Espírito Santo',
+    'Goiás',
+    'Maranhão',
+    'Mato Grosso',
+    'Mato Grosso do Sul',
+    'Minas Gerais',
+    'Pará',
+    'Paraíba',
+    'Paraná',
+    'Pernambuco',
+    'Piauí',
+    'Rio de Janeiro',
+    'Rio Grande do Norte',
+    'Rio Grande do Sul',
+    'Rondônia',
+    'Roraima',
+    'Santa Catarina',
+    'São Paulo',
+    'Sergipe',
+    'Tocantins',
+  ];
+
   @override
   Widget build(BuildContext context) {
     File? imageFile = widget.imageFile;
     File? imageFile2 = widget.imageFile2;
-    String empresa = '';
-    String endereco = '';
-    String cep = '';
-    String cidade = '';
-    String estadoSelecionado = '';
-    String galpaost = '';
-    String vagas = '';
-    String tags = '';
-    bool tirado = true;
-
-    List EmpresasOpc = [
-      'Acre',
-      'Alagoas',
-      'Amapá',
-      'Amazonas',
-      'Bahia',
-      'Ceará',
-      'Distrito Federal',
-      'Espírito Santo',
-      'Goiás',
-      'Maranhão',
-      'Mato Grosso',
-      'Mato Grosso do Sul',
-      'Minas Gerais',
-      'Pará',
-      'Paraíba',
-      'Paraná',
-      'Pernambuco',
-      'Piauí',
-      'Rio de Janeiro',
-      'Rio Grande do Norte',
-      'Rio Grande do Sul',
-      'Rondônia',
-      'Roraima',
-      'Santa Catarina',
-      'São Paulo',
-      'Sergipe',
-      'Tocantins',
-    ];
 
     final FirebaseStorage storage = FirebaseStorage.instance;
 
@@ -69,6 +75,8 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
     Future<void> _uploadImage() async {
       imageFile = await _getImageFromCamera();
       setState(() {
+
+        tirado = true;
 
         imageFile = imageFile;
         imageFile2 = imageFile;
@@ -115,6 +123,17 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
 
     Future<String> _uploadImageToFirebase(File file, String id) async {
       // Crie uma referência única para o arquivo
+
+      Fluttertoast.showToast(
+          msg: 'Fazendo upload do logo para o banco de dados!',
+          toastLength: Toast.LENGTH_LONG,
+          gravity: ToastGravity.CENTER,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.grey[600],
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+
       final fileName = DateTime.now().millisecondsSinceEpoch.toString();
       final reference = storage.ref().child('images/$id/$fileName');
 
@@ -130,7 +149,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Cadastro de Condominio'),
+        title: Text('Configuração do Condominio'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -141,7 +160,11 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
               padding: EdgeInsets.all(16),
               child: TextFormField(
                 onChanged: (valor){
-                  empresa = valor;
+                  setState(() {
+                    empresa = valor;
+                  });
+
+
                   //Mudou mandou para a String
                 },
                 decoration: InputDecoration(
@@ -360,8 +383,147 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                 ),
 
                 ElevatedButton(
-                    onPressed: (){
-                      
+                    onPressed: () async {
+
+                      if(empresa == ''){
+                        Fluttertoast.showToast(
+                            msg: 'Preencha o campo de Empresa',
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.CENTER,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.grey[600],
+                            textColor: Colors.white,
+                            fontSize: 16.0
+                        );
+                      }else{
+                        if(endereco == ''){
+                          Fluttertoast.showToast(
+                              msg: 'Preencha o campo do Endereço',
+                              toastLength: Toast.LENGTH_LONG,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.grey[600],
+                              textColor: Colors.white,
+                              fontSize: 16.0
+                          );
+                        }else{
+                          if(cep == ''){
+                            Fluttertoast.showToast(
+                                msg: 'Preencha o campo do CEP',
+                                toastLength: Toast.LENGTH_LONG,
+                                gravity: ToastGravity.CENTER,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.grey[600],
+                                textColor: Colors.white,
+                                fontSize: 16.0
+                            );
+                          }else{
+                            if(cidade == ''){
+                              Fluttertoast.showToast(
+                                  msg: 'Preencha o campo da cidade',
+                                  toastLength: Toast.LENGTH_LONG,
+                                  gravity: ToastGravity.CENTER,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.grey[600],
+                                  textColor: Colors.white,
+                                  fontSize: 16.0
+                              );
+                            }else{
+                              if(estadoSelecionado == ''){
+                                Fluttertoast.showToast(
+                                    msg: 'Selecione um Estado',
+                                    toastLength: Toast.LENGTH_LONG,
+                                    gravity: ToastGravity.CENTER,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.grey[600],
+                                    textColor: Colors.white,
+                                    fontSize: 16.0
+                                );
+                              }else{
+                                if(galpaost == ''){
+                                  Fluttertoast.showToast(
+                                      msg: 'Preencha o campo de galpão',
+                                      toastLength: Toast.LENGTH_LONG,
+                                      gravity: ToastGravity.CENTER,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.grey[600],
+                                      textColor: Colors.white,
+                                      fontSize: 16.0
+                                  );
+                                }else{
+                                  if(vagas == ''){
+                                    Fluttertoast.showToast(
+                                        msg: 'Preencha o campo de vagas',
+                                        toastLength: Toast.LENGTH_LONG,
+                                        gravity: ToastGravity.CENTER,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.grey[600],
+                                        textColor: Colors.white,
+                                        fontSize: 16.0
+                                    );
+                                  }else{
+                                    if(tags == ''){
+                                      Fluttertoast.showToast(
+                                          msg: 'Preencha o campo de tags disponiveis',
+                                          toastLength: Toast.LENGTH_LONG,
+                                          gravity: ToastGravity.CENTER,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.grey[600],
+                                          textColor: Colors.white,
+                                          fontSize: 16.0
+                                      );
+                                    }else{
+                                      if(tirado == false){
+                                        Fluttertoast.showToast(
+                                            msg: 'Coloque um logo!',
+                                            toastLength: Toast.LENGTH_LONG,
+                                            gravity: ToastGravity.CENTER,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.grey[600],
+                                            textColor: Colors.white,
+                                            fontSize: 16.0
+                                        );
+                                      }else{
+                                        //todo para o db firebase
+
+                                        var uuid = Uuid();
+
+                                        String idd = "${DateTime.now().toString()}" + uuid.v4();
+
+                                        final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
+
+                                        FirebaseFirestore.instance.collection('Condominio').doc().set({
+                                          'Empresa': empresa,
+                                          'Endereço': endereco,
+                                          'cep': cep,
+                                          'cidade': cidade,
+                                          'estado': estadoSelecionado,
+                                          'galpoes': int.parse(galpaost),
+                                          'vagas': int.parse(vagas),
+                                          'tags': int.parse(tags),
+                                          'imageURL': imageUrl
+                                        }).then((value){
+                                          Fluttertoast.showToast(
+                                              msg: 'Dados enviados com sucesso!',
+                                              toastLength: Toast.LENGTH_LONG,
+                                              gravity: ToastGravity.CENTER,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor: Colors.grey[600],
+                                              textColor: Colors.white,
+                                              fontSize: 16.0
+                                          );
+                                        });
+
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+
                     },
                     child:
                 Text(
