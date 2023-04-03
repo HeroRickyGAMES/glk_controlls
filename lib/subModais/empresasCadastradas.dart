@@ -107,11 +107,15 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                                         .get();
 
                                     List galpoesUsados = result.get('galpoesUsados');
+                                    int galpoesRestantes = result.get('galpoes');
                                     List galpoes = documents['galpaes'];
 
                                     print(galpoesUsados);
 
                                     int vagasDisp = result.get('vagas');
+
+                                    int galpoesRestantesResult = galpoesRestantes + galpoes.length;
+
                                     galpoesUsados.remove(galpoes[0]);
 
                                     int number = galpoesUsados.length;
@@ -127,11 +131,12 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
 
                                         FirebaseFirestore.instance
                                             .collection('empresa')
-                                            .doc(documents['id'].replaceAll(' ', ''))
+                                            .doc(documents['id'])
                                             .delete().then((value){
                                           FirebaseFirestore.instance.collection('Condominio').doc('condominio').update({
                                             'galpoesUsados': galpoesUsados,
-                                            'vagas': resultadoVagas
+                                            'vagas': resultadoVagas,
+                                            'galpoes': galpoesRestantesResult
                                           }).then((value){
                                           });
                                         });
