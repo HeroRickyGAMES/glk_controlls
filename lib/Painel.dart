@@ -17,7 +17,8 @@ import 'modal/ReleModalConfig.dart';
 
 class painelADM extends StatefulWidget {
   final String ADMName;
-  const painelADM(this.ADMName);
+  final String LogoPath;
+  const painelADM(this.ADMName, this.LogoPath);
 
   @override
   State<painelADM> createState() => _painelADMState();
@@ -373,10 +374,10 @@ class _painelADMState extends State<painelADM> {
                   height: 180,
                   padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                   child:
-                  Image.asset(
-                    'assets/sanca.png',
+                  Image.network(
+                    widget.LogoPath,
                     fit: BoxFit.contain,
-                  )
+                  ),
               ),
               Container(
                 padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),

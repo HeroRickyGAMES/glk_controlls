@@ -12,7 +12,15 @@ class CadastroCondominio extends StatefulWidget {
   var dropValue;
   File? imageFile;
   File? imageFile2;
-  CadastroCondominio(this.dropValue, this.imageFile, this.imageFile2);
+  String empresa = '';
+  String endereco = '';
+  String cep = '';
+  String cidade = '';
+  String estadoSelecionado = '';
+  String galpaost = '';
+  String vagas = '';
+  String tags = '';
+  CadastroCondominio(this.dropValue, this.imageFile, this.imageFile2, this.empresa, this.endereco, this.cep, this.cidade, this.estadoSelecionado, this.galpaost, this.vagas, this.tags);
 
   @override
   State<CadastroCondominio> createState() => _CadastroCondominioState();
@@ -65,6 +73,23 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
   Widget build(BuildContext context) {
     File? imageFile = widget.imageFile;
     File? imageFile2 = widget.imageFile2;
+
+    empresa = widget.empresa;
+    endereco = widget.endereco;
+    cep = widget.cep;
+    cidade = widget.cidade;
+    galpaost = widget.galpaost;
+    vagas = widget.vagas;
+    tags = widget.tags;
+
+    TextEditingController empresaController = TextEditingController(text: widget.empresa);
+    TextEditingController enderecoController = TextEditingController(text: widget.endereco);
+    TextEditingController cepController = TextEditingController(text: widget.cep);
+    TextEditingController cidadeController = TextEditingController(text: widget.cidade);
+    TextEditingController galpaoController = TextEditingController(text: widget.galpaost);
+    TextEditingController vagasController = TextEditingController(text: widget.vagas);
+    TextEditingController tagsController = TextEditingController(text: widget.tags);
+
 
     final FirebaseStorage storage = FirebaseStorage.instance;
 
@@ -159,12 +184,11 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
             Container(
               padding: EdgeInsets.all(16),
               child: TextFormField(
+                controller: empresaController,
                 onChanged: (valor){
                   setState(() {
                     empresa = valor;
                   });
-
-
                   //Mudou mandou para a String
                 },
                 decoration: InputDecoration(
@@ -179,6 +203,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
             Container(
               padding: EdgeInsets.all(16),
               child: TextFormField(
+                controller: enderecoController,
                 onChanged: (valor){
                   endereco = valor;
                   //Mudou mandou para a String
@@ -195,6 +220,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
             Container(
               padding: EdgeInsets.all(16),
               child: TextFormField(
+                controller: cepController,
                 onChanged: (valor){
                   cep = valor;
                   //Mudou mandou para a String
@@ -211,6 +237,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
             Container(
               padding: EdgeInsets.all(16),
               child: TextFormField(
+                controller: cidadeController,
                 onChanged: (valor){
                   cidade = valor;
                   //Mudou mandou para a String
@@ -257,6 +284,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
             Container(
               padding: EdgeInsets.all(16),
               child: TextFormField(
+                controller: galpaoController,
                 onChanged: (valor){
                   galpaost = valor;
                   //Mudou mandou para a String
@@ -273,6 +301,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
             Container(
               padding: EdgeInsets.all(16),
               child: TextFormField(
+                controller: vagasController,
                 onChanged: (valor){
                   vagas = valor;
                   //Mudou mandou para a String
@@ -289,6 +318,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
             Container(
               padding: EdgeInsets.all(16),
               child: TextFormField(
+                controller: tagsController,
                 onChanged: (valor){
                   tags = valor;
                   //Mudou mandou para a String
@@ -486,13 +516,11 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                                       }else{
                                         //todo para o db firebase
 
-                                        var uuid = Uuid();
-
-                                        String idd = "${DateTime.now().toString()}" + uuid.v4();
+                                        String idd = 'condominio';
 
                                         final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
 
-                                        FirebaseFirestore.instance.collection('Condominio').doc().set({
+                                        FirebaseFirestore.instance.collection('Condominio').doc(idd).update({
                                           'Empresa': empresa,
                                           'Endereço': endereco,
                                           'cep': cep,
@@ -503,6 +531,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                                           'tags': int.parse(tags),
                                           'imageURL': imageUrl
                                         }).then((value){
+                                          Navigator.pop(context);
                                           Fluttertoast.showToast(
                                               msg: 'Dados enviados com sucesso!',
                                               toastLength: Toast.LENGTH_LONG,
@@ -513,7 +542,6 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                                               fontSize: 16.0
                                           );
                                         });
-
                                       }
                                     }
                                   }
@@ -523,7 +551,6 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                           }
                         }
                       }
-
                     },
                     child:
                 Text(

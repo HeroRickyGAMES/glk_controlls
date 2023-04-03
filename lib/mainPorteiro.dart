@@ -144,11 +144,18 @@ class _mainPorteiroState extends State<mainPorteiro> {
           }));
     }
 
-    painelMT(){
+    painelMT() async {
+
+      var result = await FirebaseFirestore.instance
+          .collection("Condominio")
+          .doc('condominio')
+          .get();
+
+      String logoPath = result.get('imageURL');
 
       Navigator.push(context,
           MaterialPageRoute(builder: (context){
-            return painelADM(widget.PorteiroNome);
+            return painelADM(widget.PorteiroNome, logoPath);
 
           }));
 

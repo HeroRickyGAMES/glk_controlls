@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:glk_controls/Painel.dart';
 import 'package:glk_controls/modal/cadastroUsuarioADM.dart';
@@ -96,11 +97,18 @@ class _setorADMState extends State<setorADM> {
             child: Container(
               padding: EdgeInsets.all(16),
               child: ElevatedButton(
-                onPressed: (){
+                onPressed: () async {
+
+                  var result = await FirebaseFirestore.instance
+                      .collection("Condominio")
+                      .doc('condominio')
+                      .get();
+
+                  String logoPath = result.get('imageURL');
 
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context){
-                        return painelADM(widget.ADMName);
+                        return painelADM(widget.ADMName, logoPath);
                       }));
 
                 },

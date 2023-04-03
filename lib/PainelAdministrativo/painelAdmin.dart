@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -8,6 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../CadastrarCondominio.dart';
+import '../Painel.dart';
 import '../anteLogin.dart';
 
 
@@ -77,9 +79,23 @@ class _painelAdminState extends State<painelAdmin> {
                       await file.writeAsBytes(compressedImage);
                       await file2.writeAsBytes(compressedImage2);
 
+                      var result = await FirebaseFirestore.instance
+                          .collection("Condominio")
+                          .doc('condominio')
+                          .get();
+
+                      String empresaName = result.get('Empresa');
+                      String endereco = result.get('Endereço');
+                      String cep = result.get('cep');
+                      String cidade = result.get('cidade');
+                      String estado = result.get('estado');
+                      String galpao = '${result.get('galpoes')}';
+                      String vagas = '${result.get('vagas')}';
+                      String tags = '${result.get('tags')}';
+
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context){
-                            return CadastroCondominio(dropValue, file, file2);
+                            return CadastroCondominio(dropValue, file, file2, empresaName, endereco, cep, cidade, estado, galpao, vagas, tags);
                           }));
 
                     }
@@ -97,8 +113,18 @@ class _painelAdminState extends State<painelAdmin> {
             padding: EdgeInsets.all(16),
             width: double.infinity,
             child: ElevatedButton(
-              onPressed: (){
+              onPressed: () async {
+                var result = await FirebaseFirestore.instance
+                    .collection("Condominio")
+                    .doc('condominio')
+                    .get();
 
+                String logoPath = result.get('imageURL');
+
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context){
+                      return painelADM('ADM GLK', logoPath);
+                    }));
               },
               child: Text(
                   'Painel',
