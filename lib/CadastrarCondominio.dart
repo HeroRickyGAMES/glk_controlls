@@ -515,7 +515,6 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                                         );
                                       }else{
                                         //todo para o db firebase
-
                                         String idd = 'condominio';
 
                                         final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
@@ -529,7 +528,8 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                                           'galpoes': int.parse(galpaost),
                                           'vagas': int.parse(vagas),
                                           'tags': int.parse(tags),
-                                          'imageURL': imageUrl
+                                          'imageURL': imageUrl,
+                                          'maxGalpoes': int.parse(galpaost),
                                         }).then((value){
                                           Navigator.pop(context);
                                           Fluttertoast.showToast(

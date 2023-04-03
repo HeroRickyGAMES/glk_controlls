@@ -359,7 +359,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                       fontSize: 20,
                                                     );
                                                     tags.clear();
-                                                    //Navigator.pop(context);
+                                                    Navigator.pop(context);
                                                   });
                                                 });
                                               }

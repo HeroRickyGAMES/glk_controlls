@@ -38,6 +38,8 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
       }
     }
 
+    DateTime dataAtual = DateTime.now();
+    DateTime dataDe30DiasAtras = dataAtual.subtract(Duration(days: 30));
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -57,6 +59,8 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
                           .instance
                           .collection('Autorizacoes')
                           .where(widget.oqPesquisar, isEqualTo: widget.pesquisaRelatoriost)
+                          .where('Horario Criado', isGreaterThanOrEqualTo: dataDe30DiasAtras)
+                          .where('Horario Criado', isLessThan: dataAtual)
                           .snapshots(),
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {

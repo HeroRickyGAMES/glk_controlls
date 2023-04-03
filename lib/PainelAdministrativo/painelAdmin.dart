@@ -53,6 +53,20 @@ class _painelAdminState extends State<painelAdmin> {
                   }else{
                     if(Platform.isAndroid){
 
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Aguarde!'),
+                            actions: [
+                              Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            ],
+                          );
+                        },
+                      );
+
                       final dropValue = ValueNotifier('');
 
                       final ByteData imageData = await rootBundle.load('assets/insertFoto.png');
@@ -83,7 +97,6 @@ class _painelAdminState extends State<painelAdmin> {
                           .collection("Condominio")
                           .doc('condominio')
                           .get();
-
                       String empresaName = result.get('Empresa');
                       String endereco = result.get('Endereço');
                       String cep = result.get('cep');
@@ -92,6 +105,8 @@ class _painelAdminState extends State<painelAdmin> {
                       String galpao = '${result.get('galpoes')}';
                       String vagas = '${result.get('vagas')}';
                       String tags = '${result.get('tags')}';
+
+                      Navigator.of(context).pop();
 
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context){
@@ -114,6 +129,20 @@ class _painelAdminState extends State<painelAdmin> {
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () async {
+
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      title: Text('Aguarde!'),
+                      actions: [
+                        Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      ],
+                    );
+                  },
+                );
                 var result = await FirebaseFirestore.instance
                     .collection("Condominio")
                     .doc('condominio')
@@ -121,6 +150,7 @@ class _painelAdminState extends State<painelAdmin> {
 
                 String logoPath = result.get('imageURL');
 
+                Navigator.of(context).pop();
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context){
                       return painelADM('ADM GLK', logoPath);

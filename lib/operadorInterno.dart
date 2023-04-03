@@ -18,6 +18,7 @@ class _operadorInternoState extends State<operadorInterno> {
   String email = '';
   String pass = '';
   bool painelbool = false;
+  bool liberacao = false;
   bool relatoriosbool = false;
   bool entradabool = false;
   bool cadastrarbool = false;
@@ -201,6 +202,18 @@ class _operadorInternoState extends State<operadorInterno> {
                     onChanged: (value) {
                       setState(() {
                         painelbool = value!;
+                      });
+                    },
+                    activeColor: Colors.blue,
+                    checkColor: Colors.white,
+                    controlAffinity: ListTileControlAffinity.leading,
+                  ),
+                  CheckboxListTile(
+                    title: Text('Liberação Manual'),
+                    value: liberacao,
+                    onChanged: (value) {
+                      setState(() {
+                        liberacao = value!;
                       });
                     },
                     activeColor: Colors.blue,

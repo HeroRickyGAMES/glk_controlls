@@ -7,6 +7,7 @@ import 'package:glk_controls/modal/cadastroUsuarioADM.dart';
 import 'package:glk_controls/operadorInterno.dart';
 import 'package:glk_controls/permissoes/permissoes.dart';
 import 'package:glk_controls/relatorio.dart';
+import 'package:glk_controls/subModais/empresasCadastradas.dart';
 
 import 'callToAPI.dart';
 import 'callToAPIADM.dart';
@@ -46,7 +47,23 @@ class _painelADMState extends State<painelADM> {
               child: ElevatedButton(
                 onPressed: (){
 
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Aguarde!'),
+                        actions: [
+                          Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        ],
+                      );
+                    },
+                  );
+
                   final dropValue = ValueNotifier('');
+
+                  Navigator.of(context).pop();
 
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context){
@@ -69,6 +86,21 @@ class _painelADMState extends State<painelADM> {
               padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
               child: ElevatedButton(
                 onPressed: () async {
+
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Aguarde!'),
+                        actions: [
+                          Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        ],
+                      );
+                    },
+                  );
+
                   var result = await FirebaseFirestore.instance
                       .collection("empresa")
                       .get();
@@ -78,6 +110,8 @@ class _painelADMState extends State<painelADM> {
                     listaNome.add(res.data()['nome'] + res.data()['id']);
 
                     final dropValue = ValueNotifier('');
+
+
 
                     Navigator.pop(context);
                     Navigator.push(context,
@@ -108,6 +142,22 @@ class _painelADMState extends State<painelADM> {
               padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
               child: ElevatedButton(
                 onPressed: (){
+
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Aguarde!'),
+                        actions: [
+                          Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        ],
+                      );
+                    },
+                  );
+                  Navigator.of(context).pop();
+
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context){
                         return operadorInterno();
@@ -157,6 +207,26 @@ class _painelADMState extends State<painelADM> {
               padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
               child: ElevatedButton(
                 onPressed: (){
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: Text('Aguarde!'),
+                        actions: [
+                          Center(
+                          child: CircularProgressIndicator(),
+                          )
+                        ],
+                      );
+                    },
+                  );
+
+                  Navigator.of(context).pop();
+
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context){
+                        return empresaCadastrada();
+                      }));
 
                 },
                 child:
