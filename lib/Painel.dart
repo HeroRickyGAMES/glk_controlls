@@ -45,9 +45,12 @@ class _painelADMState extends State<painelADM> {
               padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
               child: ElevatedButton(
                 onPressed: (){
+
+                  final dropValue = ValueNotifier('');
+
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context){
-                        return cadastroEmpresa();
+                        return cadastroEmpresa(dropValue);
                       }));
                 },
                 child:
@@ -93,6 +96,9 @@ class _painelADMState extends State<painelADM> {
                       fontSize: 20
                   ),
                 ),
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.green
+                ),
               ),
             ),
           ),
@@ -111,29 +117,12 @@ class _painelADMState extends State<painelADM> {
                 Text(
                   'Cadastrar Operador Interno',
                   style: TextStyle(
-                      fontSize: 20
+                      fontSize: 20,
+                      color: Colors.black
                   ),
                 ),
-              ),
-            ),
-          ),
-          Center(
-            child: Container(
-              width: double.infinity,
-              padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
-              child: ElevatedButton(
-                onPressed: (){
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context){
-                        return permissoes();
-                      }));
-                },
-                child:
-                Text(
-                  'Permissões',
-                  style: TextStyle(
-                      fontSize: 20
-                  ),
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.yellow
                 ),
               ),
             ),
@@ -156,95 +145,8 @@ class _painelADMState extends State<painelADM> {
                       fontSize: 20
                   ),
                 ),
-              ),
-            ),
-          ),
-          Center(
-            child: Container(
-              width: double.infinity,
-              padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
-              child: ElevatedButton(
-                onPressed: (){
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text('Ligação de Relês'),
-                        actions: [
-                          TextFormField(
-                            onChanged: (valor){
-                              pass = valor;
-                              //Mudou mandou para a String
-                            },
-                            keyboardType: TextInputType.name,
-                            enableSuggestions: false,
-                            obscureText: true,
-                            autocorrect: false,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              hintText: 'Senha',
-                              hintStyle: TextStyle(
-                                  fontSize: 20
-                              ),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text('Cancelar'),
-                              ),
-                              TextButton(
-                                onPressed: () {
-
-                                  if(pass == ''){
-
-                                    Fluttertoast.showToast(
-                                        msg: 'Preencha a senha!',
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.CENTER,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: Colors.grey[600],
-                                        textColor: Colors.white,
-                                        fontSize: 16.0
-                                    );
-
-                                  }else{
-                                    if(pass == '1234'){
-
-                                      getReleAPI1adm();
-
-                                    }else{
-                                      Fluttertoast.showToast(
-                                          msg: 'Senha invalida!',
-                                          toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.CENTER,
-                                          timeInSecForIosWeb: 1,
-                                          backgroundColor: Colors.grey[600],
-                                          textColor: Colors.white,
-                                          fontSize: 16.0
-                                      );
-                                    }
-                                  }
-                                },
-                                child: Text('Prosseguir'),
-                              ),
-                            ],
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-                child:
-                Text(
-                  'Ligar Relês',
-                  style: TextStyle(
-                      fontSize: 20
-                  ),
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.grey
                 ),
               ),
             ),
@@ -255,86 +157,38 @@ class _painelADMState extends State<painelADM> {
               padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
               child: ElevatedButton(
                 onPressed: (){
-                  showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        title: Text('Ligação de Relês'),
-                        actions: [
-                          TextFormField(
-                            onChanged: (valor){
-                              pass = valor;
-                              //Mudou mandou para a String
-                            },
-                            keyboardType: TextInputType.name,
-                            enableSuggestions: false,
-                            obscureText: true,
-                            autocorrect: false,
-                            decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              hintText: 'Senha',
-                              hintStyle: TextStyle(
-                                  fontSize: 20
-                              ),
-                            ),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text('Cancelar'),
-                              ),
-                              TextButton(
-                                onPressed: () {
 
-                                  if(pass == ''){
-
-                                    Fluttertoast.showToast(
-                                        msg: 'Preencha a senha!',
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        gravity: ToastGravity.CENTER,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: Colors.grey[600],
-                                        textColor: Colors.white,
-                                        fontSize: 16.0
-                                    );
-
-                                  }else{
-                                    if(pass == '1234'){
-
-                                      getReleAPI5();
-
-                                    }else{
-                                      Fluttertoast.showToast(
-                                          msg: 'Senha invalida!',
-                                          toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.CENTER,
-                                          timeInSecForIosWeb: 1,
-                                          backgroundColor: Colors.grey[600],
-                                          textColor: Colors.white,
-                                          fontSize: 16.0
-                                      );
-                                    }
-                                  }
-                                },
-                                child: Text('Prosseguir'),
-                              ),
-                            ],
-                          ),
-                        ],
-                      );
-                    },
-                  );
                 },
                 child:
                 Text(
-                  'Desligar Relês',
+                  'Empresas Cadastrados',
                   style: TextStyle(
                       fontSize: 20
                   ),
+                ),
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.grey[400]
+                ),
+              ),
+            ),
+          ),
+          Center(
+            child: Container(
+              width: double.infinity,
+              padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+              child: ElevatedButton(
+                onPressed: (){
+
+                },
+                child:
+                Text(
+                  'Usuarios Cadastrados',
+                  style: TextStyle(
+                      fontSize: 20
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.purple
                 ),
               ),
             ),
@@ -362,6 +216,48 @@ class _painelADMState extends State<painelADM> {
                   style: TextStyle(
                       fontSize: 20
                   ),
+                ),
+              ),
+            ),
+          ),
+          Center(
+            child: Container(
+              width: double.infinity,
+              padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+              child: ElevatedButton(
+                onPressed: (){
+
+                },
+                child:
+                Text(
+                  'Bloqueio de veiculos',
+                  style: TextStyle(
+                      fontSize: 20
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.red
+                ),
+              ),
+            ),
+          ),
+          Center(
+            child: Container(
+              width: double.infinity,
+              padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+              child: ElevatedButton(
+                onPressed: (){
+
+                },
+                child:
+                Text(
+                  'Bloqueio de visitantes',
+                  style: TextStyle(
+                      fontSize: 20
+                  ),
+                ),
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.red
                 ),
               ),
             ),

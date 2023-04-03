@@ -101,22 +101,14 @@ class _mainPorteiroState extends State<mainPorteiro> {
                             return liberacaoOff(listaNome, dropValue, PorteiroNomee, '',dropValue2, galpao, dropValue3);
 
                           }));
-
                     }
-
                   });
-
                 }
                 );
-
               }
-
             });
-
           }
           );
-
-
         });
 
       });

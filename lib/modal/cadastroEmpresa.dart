@@ -3,48 +3,59 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:uuid/uuid.dart';
 
 List<String> tags = [];
 class cadastroEmpresa extends StatefulWidget {
-  const cadastroEmpresa({Key? key}) : super(key: key);
+  var dropValue;
 
+  cadastroEmpresa(this.dropValue);
   @override
   State<cadastroEmpresa> createState() => _cadastroEmpresaState();
 }
 
 class _cadastroEmpresaState extends State<cadastroEmpresa> {
+
+  String empresaName = '';
+  String galpaoNum = '';
+  String vagas = '';
+  String respName = '';
+  String telNum = '';
+  List vagasList = [
+    '01',
+    '02',
+    '03',
+    '04,',
+    '05',
+    '06',
+    '07',
+    '08',
+    '09',
+    '10',
+  ];
+  final _textController = TextEditingController();
+  final respNameController = TextEditingController();
+  final telNumController = TextEditingController();
+
+  void _addTag(String tag) {
+    if (tag.isNotEmpty) {
+      setState(() {
+        galpaoNum = 'G-0' +  tag;
+        tags.add('G-0' + tag);
+      });
+      _textController.clear();
+    }
+  }
+
+  void _removeTag(String tag) {
+    setState(() {
+      galpaoNum = '';
+      tags.remove(tag);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-
-    final _textController = TextEditingController();
-    final respNameController = TextEditingController();
-    final telNumController = TextEditingController();
-
-    print(tags);
-
-    void _addTag(String tag) {
-      if (tag.isNotEmpty) {
-        setState(() {
-          tags.add(tag);
-        });
-        _textController.clear();
-      }
-    }
-
-    void _removeTag(String tag) {
-      setState(() {
-        tags.remove(tag);
-      });
-    }
-
-    String empresaName = '';
-    String galpaoNum = '';
-    String respName = '';
-    String telNum = '';
-    String email = '';
-    String pass = '';
-    List<String> lista = [];
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Cadastro de Empresas'),
@@ -57,45 +68,6 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                  'Preencha o campo de Dias primeiro!\n(Aperte Enter quando adicionar um dia)',
-                style: TextStyle(
-                  fontSize: 20
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Wrap(
-                      spacing: 8.0,
-                      runSpacing: 4.0,
-                      children: tags.map((tag) {
-                        return InputChip(
-                          label: Text(tag),
-                          onDeleted: () => _removeTag(tag),
-                        );
-                      }).toList(),
-                    ),
-                    TextFormField(
-                      controller: _textController,
-                      keyboardType: TextInputType.number,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        hintText: 'Dias em que a empresa pode usar o relatorio',
-                        hintStyle: TextStyle(
-                            fontSize: 20
-                        ),
-                      ),
-                      onFieldSubmitted: _addTag,
-                    ),
-                  ],
-                ),
-              ),
               Container(
                 padding: EdgeInsets.all(16),
                 child: TextFormField(
@@ -117,51 +89,66 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
               ),
               Container(
                 padding: EdgeInsets.all(16),
-                child: TextFormField(
-                  onChanged: (valor){
-                    galpaoNum = valor;
-                    //Mudou mandou para a String
-                  },
-                  keyboardType: TextInputType.number,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Quantidade de Galpões (Preencha depois de preencher o nome da empresa por favor!) *',
-                    hintStyle: TextStyle(
-                        fontSize: 20
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Wrap(
+                      spacing: 8.0,
+                      runSpacing: 4.0,
+                      children: tags.map((tag) {
+                        return InputChip(
+                          label: Text(tag),
+                          onDeleted: () => _removeTag( tag),
+                        );
+                      }).toList(),
                     ),
-                  ),
+                    TextFormField(
+                      controller: _textController,
+                      keyboardType: TextInputType.number,
+                      enableSuggestions: false,
+                      autocorrect: false,
+                      obscureText: false,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Galpões *',
+                        hintStyle: TextStyle(
+                            fontSize: 20
+                        ),
+                      ),
+                      onFieldSubmitted: _addTag,
+                    ),
+                  ],
                 ),
               ),
-              Container(
-                padding: EdgeInsets.all(16),
-                child: ElevatedButton(
-                  onPressed: (){
-                    int number = int.parse(galpaoNum);
+              Center(
+                  child: ValueListenableBuilder(valueListenable: widget.dropValue, builder: (context, String value, _){
+                    return DropdownButton(
+                      hint: Text(
+                        'Quantidade de vagas *',
+                        style: TextStyle(
+                            fontSize: 18
+                        ),
+                      ),
+                      value: (value.isEmpty)? null : value,
+                      onChanged: (escolha) async {
+                        widget.dropValue.value = escolha.toString();
 
-                    Fluttertoast.showToast(
-                      msg: 'Calculando.',
-                      toastLength: Toast.LENGTH_SHORT,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.black,
-                      textColor: Colors.white,
-                      fontSize: 20,
+                        vagas = escolha.toString();
+
+                      },
+                      items: vagasList.map((opcao) => DropdownMenuItem(
+                        value: opcao,
+                        child:
+                        Text(
+                          opcao,
+                          style: TextStyle(
+                              fontSize: 18
+                          ),
+                        ),
+                      ),
+                      ).toList(),
                     );
-                    for (int i = number; i >= 1; i--) {
-                      print(i);
-                      lista.add('G-0${i} ' + empresaName);
-                      print(lista);
-                    }
-                  },
-                  child: Text(
-                      'Calcular quantidade de Galpões',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold
-                    ),
-                  ),
-                )
+                  })
               ),
               Container(
                 padding: EdgeInsets.all(16),
@@ -212,82 +199,35 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
               ),
               Container(
                 padding: EdgeInsets.all(16),
-                child: TextFormField(
-                  onChanged: (valor){
-                    email = valor;
-                    telNumController.text = telNum;
-                    //Mudou mandou para a String
-                  },
-                  keyboardType: TextInputType.emailAddress,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Email',
-                    hintStyle: TextStyle(
-                        fontSize: 20
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.all(16),
-                child: TextFormField(
-                  onChanged: (valor){
-                    pass = valor;
-                    //Mudou mandou para a String
-                  },
-                  keyboardType: TextInputType.visiblePassword,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'Senha',
-                    hintStyle: TextStyle(
-                        fontSize: 20
-                    ),
-                  ),
-                ),
-              ),
-              Container(
-                padding: EdgeInsets.all(16),
-                child: ElevatedButton(
-                  onPressed: () async {
-
-                        if(empresaName == ''){
-                          Fluttertoast.showToast(
-                            msg: 'Preencha o nome da empresa!',
-                            toastLength: Toast.LENGTH_SHORT,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.black,
-                            textColor: Colors.white,
-                            fontSize: 20,
-                          );
-                        }else{
-                          if(galpaoNum == ''){
-                            Fluttertoast.showToast(
-                              msg: 'Preencha a quantidade de galpões disponiveis!',
-                              toastLength: Toast.LENGTH_SHORT,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.black,
-                              textColor: Colors.white,
-                              fontSize: 20,
-                            );
-                          }else{
-                            if(respName == ''){
-                              Fluttertoast.showToast(
-                                msg: 'Preencha o nome do responsavel pela Empresa!',
-                                toastLength: Toast.LENGTH_SHORT,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.black,
-                                textColor: Colors.white,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(16),
+                      child: ElevatedButton(onPressed: (){
+                        tags.clear();
+                      },
+                          child: Text(
+                              'Cancelar',
+                            style: TextStyle(
                                 fontSize: 20,
-                              );
-                            }else{
-                              if(telNum == ''){
+                                fontWeight: FontWeight.bold
+                            ),
+                          ),
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.red
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(16),
+                      child: ElevatedButton(
+                        onPressed: () async {
+
+                              if(empresaName == ''){
                                 Fluttertoast.showToast(
-                                  msg: 'Preencha o telefone!',
+                                  msg: 'Preencha o nome da empresa!',
                                   toastLength: Toast.LENGTH_SHORT,
                                   timeInSecForIosWeb: 1,
                                   backgroundColor: Colors.black,
@@ -295,9 +235,9 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                   fontSize: 20,
                                 );
                               }else{
-                                if(email == ''){
+                                if(galpaoNum == ''){
                                   Fluttertoast.showToast(
-                                    msg: 'Preencha o email da empresa!',
+                                    msg: 'Preencha a quantidade de galpões disponiveis!',
                                     toastLength: Toast.LENGTH_SHORT,
                                     timeInSecForIosWeb: 1,
                                     backgroundColor: Colors.black,
@@ -305,109 +245,146 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                     fontSize: 20,
                                   );
                                 }else{
-                                  if(pass == ''){
+                                  if(tags.isEmpty){
                                     Fluttertoast.showToast(
-                                      msg: 'Preencha a senha da empresa!',
-                                      toastLength: Toast.LENGTH_SHORT,
+                                      msg: 'Preencha a quantidade de galpões disponiveis! (Não esqueça de apertar confirmar no seu teclado!)',
+                                      toastLength: Toast.LENGTH_LONG,
                                       timeInSecForIosWeb: 1,
                                       backgroundColor: Colors.black,
                                       textColor: Colors.white,
                                       fontSize: 20,
                                     );
                                   }else{
+                                    if(respName == ''){
+                                      Fluttertoast.showToast(
+                                        msg: 'Preencha o nome do responsavel pela Empresa!',
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.black,
+                                        textColor: Colors.white,
+                                        fontSize: 20,
+                                      );
+                                    }else{
+                                      if(telNum == ''){
+                                        Fluttertoast.showToast(
+                                          msg: 'Preencha o telefone!',
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.black,
+                                          textColor: Colors.white,
+                                          fontSize: 20,
+                                        );
+                                      }else{
+                                        if(vagas == ''){
+                                          Fluttertoast.showToast(
+                                            msg: 'Preencha as vagas!',
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.black,
+                                            textColor: Colors.white,
+                                            fontSize: 20,
+                                          );
+                                        }else{
+                                          var result = await FirebaseFirestore.instance
+                                              .collection("Condominio")
+                                              .doc('condominio')
+                                              .get();
 
-                                     if(tags.isEmpty){
-                                       Fluttertoast.showToast(
-                                         msg: 'Adicione pelo menos um dia!',
-                                         toastLength: Toast.LENGTH_SHORT,
-                                         timeInSecForIosWeb: 1,
-                                         backgroundColor: Colors.black,
-                                         textColor: Colors.white,
-                                         fontSize: 20,
-                                       );
+                                          List galpoesUsados = result.get('galpoesUsados');
+                                          int galpoesDisponiveis = result.get('galpoes');
+                                          int vagasDisponiveis = result.get('vagas');
+                                          int number = tags.length;
 
-                                     }else{
+                                          print(tags);
+                                          print(galpoesUsados.contains(tags));
 
-                                       FirebaseApp app = await Firebase.initializeApp(
-                                           name: 'Secondary', options: Firebase.app().options);
-                                       try {
-                                         UserCredential userCredential = await FirebaseAuth.instanceFor(app: app)
-                                             .createUserWithEmailAndPassword(email: email, password: pass);
+                                          for (int i = number; i >= 1; i--) {
+                                            print(galpoesUsados);
+                                            print(tags);
+                                            print(i-1);
 
-                                         Fluttertoast.showToast(
-                                           msg: 'Cadastrando empresa...',
-                                           toastLength: Toast.LENGTH_SHORT,
-                                           timeInSecForIosWeb: 1,
-                                           backgroundColor: Colors.black,
-                                           textColor: Colors.white,
-                                           fontSize: 20,
-                                         );
-                                         FirebaseFirestore.instance.collection('empresa').doc(userCredential.user?.uid).set(
-                                             {
-                                               'nome': empresaName,
-                                               'galpaes': lista,
-                                               'NameResponsavel': respName,
-                                               'Telefone': telNum,
-                                               'email': email,
-                                               'tipoConta': 'empresa',
-                                               'estaativo': true,
-                                               'RelatorioDays': tags,
-                                               'id': userCredential.user?.uid
-                                             }
-                                         );
-                                         FirebaseFirestore.instance.collection('Users').doc(userCredential.user?.uid).set(
-                                             {
-                                               'nome': empresaName,
-                                               'galpaes': lista,
-                                               'NameResponsavel': respName,
-                                               'Telefone': telNum,
-                                               'email': email,
-                                               'tipoConta': 'empresa',
-                                               'estaativo': true,
-                                               'id': userCredential.user?.uid,
-                                               'RelatorioDays': tags,
-                                             }
-                                         ).then((value) {
-                                           Fluttertoast.showToast(
-                                             msg: 'Empresa cadastrada com sucesso!',
-                                             toastLength: Toast.LENGTH_SHORT,
-                                             timeInSecForIosWeb: 1,
-                                             backgroundColor: Colors.black,
-                                             textColor: Colors.white,
-                                             fontSize: 20,
-                                           );
+                                            if(galpoesUsados.contains(tags[i-1])){
+                                              Fluttertoast.showToast(
+                                                msg: 'Os Galpões Selecionados já estão sendo usados por outra empresa!',
+                                                toastLength: Toast.LENGTH_SHORT,
+                                                timeInSecForIosWeb: 1,
+                                                backgroundColor: Colors.black,
+                                                textColor: Colors.white,
+                                                fontSize: 20,
+                                              );
+                                            }else{
+                                              if(i == tags.length){
+                                                Fluttertoast.showToast(
+                                                  msg: 'Cadastrando empresa...',
+                                                  toastLength: Toast.LENGTH_SHORT,
+                                                  timeInSecForIosWeb: 1,
+                                                  backgroundColor: Colors.black,
+                                                  textColor: Colors.white,
+                                                  fontSize: 20,
+                                                );
+                                                var uuid = Uuid();
 
-                                           tags.removeRange(0, tags.length);
-                                           Navigator.pop(context);
-                                         });
+                                                String idd = "${DateTime.now().toString()}" + uuid.v4();
 
-                                       }
-                                       on FirebaseAuthException catch (e) {
-                                         Fluttertoast.showToast(
-                                           msg: e.message.toString(),
-                                           toastLength: Toast.LENGTH_SHORT,
-                                           timeInSecForIosWeb: 1,
-                                           backgroundColor: Colors.black,
-                                           textColor: Colors.white,
-                                           fontSize: 20,
-                                         );
-                                       }
-                                       await app.delete();
-                                     }
+                                                FirebaseFirestore.instance.collection('empresa').doc(idd).set(
+                                                    {
+                                                      'nome': empresaName,
+                                                      'galpaes': tags,
+                                                      'NameResponsavel': respName,
+                                                      'Telefone': telNum,
+                                                      'tipoConta': 'empresa',
+                                                      'id': idd,
+                                                      'vagas': vagas
+                                                    }
+                                                ).then((value) {
+
+                                                  int galpaoPass = tags.length;
+                                                  int subtracaoGalpao = galpoesDisponiveis - galpaoPass;
+                                                  int vagasSubtracao = vagasDisponiveis - int.parse(vagas);
+                                                  galpoesUsados.addAll(tags);
+                                                  print(galpoesUsados);
+                                                  print(subtracaoGalpao);
+
+                                                  FirebaseFirestore.instance.collection('Condominio').doc('condominio').update({
+                                                    'galpoes': subtracaoGalpao,
+                                                    'galpoesUsados': galpoesUsados,
+                                                    'vagas': vagasSubtracao
+                                                  }).then((value){
+                                                    Fluttertoast.showToast(
+                                                      msg: 'Empresa cadastrada com sucesso!',
+                                                      toastLength: Toast.LENGTH_SHORT,
+                                                      timeInSecForIosWeb: 1,
+                                                      backgroundColor: Colors.black,
+                                                      textColor: Colors.white,
+                                                      fontSize: 20,
+                                                    );
+                                                    tags.clear();
+                                                    //Navigator.pop(context);
+                                                  });
+                                                });
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
                                   }
                                 }
                               }
-                            }
-                          }
-                        }
-                  },
-                    child: Text(
-                        'Confirmar cadastro',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold
+                        },
+                          child: Text(
+                              'Prosseguir',
+                          style: TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.green
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ],
