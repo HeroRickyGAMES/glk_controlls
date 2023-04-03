@@ -101,47 +101,90 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                                   ),
                                   ElevatedButton(onPressed: () async {
 
-                                    var result = await FirebaseFirestore.instance
-                                        .collection("Condominio")
-                                        .doc('condominio')
-                                        .get();
+                                    showDialog(
+                                      context: context,
+                                      builder: (BuildContext context) {
+                                        return AlertDialog(
+                                          title: Text(documents['nome']),
+                                          actions: [
+                                            Center(
+                                              child: Text(
+                                                  'Deseja Excluir?',
+                                                style: TextStyle(
+                                                    fontSize: 20
+                                                ),
+                                              ),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              children: [
+                                                TextButton(onPressed: (){
+                                                  Navigator.of(context);
+                                                },
+                                                    child: Text(
+                                                        'Cancelar',
+                                                      style: TextStyle(
+                                                          fontSize: 18
+                                                      ),
+                                                    )
+                                                ),
+                                                TextButton(onPressed: () async {
+                                                  var result = await FirebaseFirestore.instance
+                                                      .collection("Condominio")
+                                                      .doc('condominio')
+                                                      .get();
 
-                                    List galpoesUsados = result.get('galpoesUsados');
-                                    int galpoesRestantes = result.get('galpoes');
-                                    List galpoes = documents['galpaes'];
+                                                  List galpoesUsados = result.get('galpoesUsados');
+                                                  int galpoesRestantes = result.get('galpoes');
+                                                  List galpoes = documents['galpaes'];
 
-                                    print(galpoesUsados);
+                                                  print(galpoesUsados);
 
-                                    int vagasDisp = result.get('vagas');
+                                                  int vagasDisp = result.get('vagas');
 
-                                    int galpoesRestantesResult = galpoesRestantes + galpoes.length;
+                                                  int galpoesRestantesResult = galpoesRestantes + galpoes.length;
 
-                                    galpoesUsados.remove(galpoes[0]);
+                                                  galpoesUsados.remove(galpoes[0]);
 
-                                    int number = galpoesUsados.length;
+                                                  int number = galpoesUsados.length;
 
-                                    for (int i = number; i >= 1; i--) {
+                                                  for (int i = number; i >= 1; i--) {
 
-                                      if(i == galpoesUsados.length){
+                                                    if(i == galpoesUsados.length){
 
-                                        int resultadoVagas = vagasDisp + int.parse(documents['vagas']);
+                                                      int resultadoVagas = vagasDisp + int.parse(documents['vagas']);
 
-                                        print(galpoesUsados);
-                                        print(documents['id']);
+                                                      print(galpoesUsados);
+                                                      print(documents['id']);
 
-                                        FirebaseFirestore.instance
-                                            .collection('empresa')
-                                            .doc(documents['id'])
-                                            .delete().then((value){
-                                          FirebaseFirestore.instance.collection('Condominio').doc('condominio').update({
-                                            'galpoesUsados': galpoesUsados,
-                                            'vagas': resultadoVagas,
-                                            'galpoes': galpoesRestantesResult
-                                          }).then((value){
-                                          });
-                                        });
-                                      }
-                                    }
+                                                      FirebaseFirestore.instance
+                                                          .collection('empresa')
+                                                          .doc(documents['id'])
+                                                          .delete().then((value){
+                                                        FirebaseFirestore.instance.collection('Condominio').doc('condominio').update({
+                                                          'galpoesUsados': galpoesUsados,
+                                                          'vagas': resultadoVagas,
+                                                          'galpoes': galpoesRestantesResult
+                                                        }).then((value){
+                                                        });
+                                                      });
+                                                    }
+                                                  }
+                                                },
+                                                    child: Text(
+                                                        'Proceguir',
+                                                      style: TextStyle(
+                                                          fontSize: 18
+                                                      ),
+                                                    )
+                                                )
+                                              ],
+                                            )
+                                          ],
+                                        );
+                                      },
+                                    );
+
                                   }, child: Icon(Icons.delete),)
                                 ],
                               ),
