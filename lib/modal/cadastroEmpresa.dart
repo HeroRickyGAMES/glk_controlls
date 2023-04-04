@@ -437,12 +437,20 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
               ),
               Container(
                 child: Text(
-                  'Galpões Usados: ${GpUsados}'
+                  'Galpões Usados: ${GpUsados}',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold
+                  ),
                 ),
               ),
               Container(
                 child: Text(
-                    'Numero de Galpões Disponiveis: ${GpDisp}'
+                    'Numero de Galpões Disponiveis: ${GpDisp}',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold
+                  ),
                 ),
               )
             ],
