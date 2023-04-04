@@ -12,6 +12,7 @@ import 'package:glk_controls/subModais/empresasCadastradas.dart';
 import 'callToAPI.dart';
 import 'callToAPIADM.dart';
 import 'callToAPItoOFF.dart';
+import 'listas/UsuariosCadastrados.dart';
 import 'modal/ReleModalConfig.dart';
 
 //Programado por HeroRickyGames
@@ -248,7 +249,10 @@ class _painelADMState extends State<painelADM> {
               padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
               child: ElevatedButton(
                 onPressed: (){
-
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context){
+                        return UsuariosCadastrados();
+                      }));
                 },
                 child:
                 Text(

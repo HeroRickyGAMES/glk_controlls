@@ -172,7 +172,7 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                                                   }
                                                 },
                                                     child: Text(
-                                                        'Proceguir',
+                                                        'Prosseguir',
                                                       style: TextStyle(
                                                           fontSize: 18
                                                       ),
