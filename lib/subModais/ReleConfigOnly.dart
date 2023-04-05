@@ -612,7 +612,6 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
 
                                           Navigator.pop(context);
                                         });
-
                                       }
                                     }
                                   }

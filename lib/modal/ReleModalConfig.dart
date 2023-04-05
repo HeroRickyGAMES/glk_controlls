@@ -149,8 +149,34 @@ class _releModalConfigState extends State<releModalConfig> {
                   child: Column(
                     children: [
                       TextButton(
-                        onPressed: (){
+                        onPressed: () async {
+                          final dropValue = ValueNotifier('');
+                          final dropValue2 = ValueNotifier('');
+                          final dropValue3 = ValueNotifier('');
+                          final dropValue4 = ValueNotifier('');
+                          final dropValue5 = ValueNotifier('');
+                          final dropValue6 = ValueNotifier('');
+                          final dropValue7 = ValueNotifier('');
+                          final dropValue8 = ValueNotifier('');
 
+
+                          var result = await FirebaseFirestore.instance
+                              .collection("Reles")
+                              .doc('Rele02')
+                              .get();
+                          String ipRele = (result.get('ip'));
+
+                          String funcao1 = (result.get('funcao-rele1'));
+                          String funcao2 = (result.get('funcao-rele2'));
+                          String funcao3 = (result.get('funcao-rele3'));
+                          String funcao4 = (result.get('funcao-rele4'));
+                          String EntradaouSaida = 'Saida';
+                          String DocRele = 'Rele02';
+
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context){
+                                return ReleConfigOnly(dropValue, dropValue2, funcao1, dropValue3, dropValue4, dropValue5, dropValue6, dropValue7, dropValue8, funcao2, funcao3, funcao4, EntradaouSaida, ipRele, DocRele);
+                              }));
                         },
                         child: Text(
                           'Saida 01',
