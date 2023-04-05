@@ -274,14 +274,20 @@ class _painelADMState extends State<painelADM> {
               child: ElevatedButton(
                 onPressed: () async {
                   var result = await FirebaseFirestore.instance
-                      .collection("Server")
-                      .doc('serverValues')
+                      .collection("Reles")
+                      .doc('Rele01')
                       .get();
-                  String urlRele = (result.get('URLRele'));
+                  var result2 = await FirebaseFirestore.instance
+                      .collection("Reles")
+                      .doc('Rele02')
+                      .get();
+
+                  String urlRele1 = (result.get('ip'));
+                  String urlRele2 = (result2.get('ip'));
 
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context){
-                        return releModalConfig(urlRele);
+                        return releModalConfig(urlRele1, urlRele2);
                       }));
                 },
                 child:
