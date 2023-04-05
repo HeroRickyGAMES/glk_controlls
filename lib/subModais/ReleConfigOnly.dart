@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class ReleConfigOnly extends StatefulWidget {
   var dropValue;
@@ -11,11 +13,13 @@ class ReleConfigOnly extends StatefulWidget {
   var dropValue7;
   var dropValue8;
 
+  String ipRele;
   String funcao;
   String funcao2;
   String funcao3;
   String funcao4;
   String EntradaOuSaida;
+  String DocRele;
 
   ReleConfigOnly(this.dropValue,
       this.dropValue2,
@@ -29,7 +33,10 @@ class ReleConfigOnly extends StatefulWidget {
       this.funcao2,
       this.funcao3,
       this.funcao4,
-      this.EntradaOuSaida);
+      this.EntradaOuSaida,
+      this.ipRele,
+      this.DocRele,
+      );
 
   @override
   State<ReleConfigOnly> createState() => _ReleConfigOnlyState();
@@ -55,14 +62,29 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
     'Cancela',
     'Farol',
     'Fechamento',
+    'Nada'
   ];
 
   String rele1fuc1 = '';
+  String rele2fuc1 = '';
+  String rele3fuc2 = '';
+  String rele4fuc2 = '';
   String Local = '';
+  String Local2 = '';
+  String Local3 = '';
+  String Local4 = '';
+  String ipRele = '';
 
   @override
   Widget build(BuildContext context) {
     rele1fuc1 = widget.funcao;
+    rele2fuc1 = widget.funcao2;
+    rele3fuc2 = widget.funcao3;
+    rele4fuc2 = widget.funcao4;
+    ipRele = widget.ipRele;
+
+    TextEditingController releIpController = TextEditingController(text: widget.ipRele);
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -97,25 +119,34 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Container(
-                            padding: EdgeInsets.all(16),
-                            child: Text(
-                                "IP:",
-                              style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.bold
-                              ),
+                      Container(
+                        child: Text(
+                          "IP:",
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: EdgeInsets.all(16),
+                        child: TextFormField(
+                          controller: releIpController,
+                          onChanged: (valor){
+                            ipRele = valor;
+                            //Mudou mandou para a String
+                          },
+                          keyboardType: TextInputType.name,
+                          enableSuggestions: false,
+                          autocorrect: false,
+                          decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            hintText: 'IP *',
+                            hintStyle: TextStyle(
+                                fontSize: 20
                             ),
                           ),
-                          Text(
-                              "x",
-                            style: TextStyle(
-                                fontSize: 18
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ],
                   ),
@@ -199,6 +230,409 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                       ),
                     ],
                   ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(16),
+                        child: Text(
+                          "Rele 02:",
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                      Center(
+                          child: ValueListenableBuilder(valueListenable: widget.dropValue3, builder: (context, String value, _){
+                            return DropdownButton(
+                              hint: Text(
+                                'Local *',
+                                style: TextStyle(
+                                    fontSize: 18
+                                ),
+                              ),
+                              value: (value.isEmpty)? null : value,
+                              onChanged: (escolha) async {
+                                widget.dropValue3.value = escolha.toString();
+
+                                Local2 = escolha.toString();
+
+                              },
+                              items: listLocal.map((opcao) => DropdownMenuItem(
+                                value: opcao,
+                                child:
+                                Text(
+                                  opcao,
+                                  style: TextStyle(
+                                      fontSize: 18
+                                  ),
+                                ),
+                              ),
+                              ).toList(),
+                            );
+                          })
+                      ),
+                      Text(
+                        "Função: " + rele2fuc1,
+                        style: TextStyle(
+                            fontSize: 18
+                        ),
+                      ),
+                      Center(
+                          child: ValueListenableBuilder(valueListenable: widget.dropValue4, builder: (context, String value, _){
+                            return DropdownButton(
+                              hint: Text(
+                                'Selecione a função *',
+                                style: TextStyle(
+                                    fontSize: 18
+                                ),
+                              ),
+                              value: (value.isEmpty)? null : value,
+                              onChanged: (escolha) async {
+                                widget.dropValue4.value = escolha.toString();
+
+                                rele2fuc1 = escolha.toString();
+
+                              },
+                              items: func.map((opcao) => DropdownMenuItem(
+                                value: opcao,
+                                child:
+                                Text(
+                                  opcao,
+                                  style: TextStyle(
+                                      fontSize: 18
+                                  ),
+                                ),
+                              ),
+                              ).toList(),
+                            );
+                          })
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(16),
+                        child: Text(
+                          "Rele 03:",
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                      Center(
+                          child: ValueListenableBuilder(valueListenable: widget.dropValue5, builder: (context, String value, _){
+                            return DropdownButton(
+                              hint: Text(
+                                'Local *',
+                                style: TextStyle(
+                                    fontSize: 18
+                                ),
+                              ),
+                              value: (value.isEmpty)? null : value,
+                              onChanged: (escolha) async {
+                                widget.dropValue5.value = escolha.toString();
+
+                                Local3 = escolha.toString();
+
+                              },
+                              items: listLocal.map((opcao) => DropdownMenuItem(
+                                value: opcao,
+                                child:
+                                Text(
+                                  opcao,
+                                  style: TextStyle(
+                                      fontSize: 18
+                                  ),
+                                ),
+                              ),
+                              ).toList(),
+                            );
+                          })
+                      ),
+                      Text(
+                        "Função: " + rele4fuc2,
+                        style: TextStyle(
+                            fontSize: 18
+                        ),
+                      ),
+                      Center(
+                          child: ValueListenableBuilder(valueListenable: widget.dropValue6, builder: (context, String value, _){
+                            return DropdownButton(
+                              hint: Text(
+                                'Selecione a função *',
+                                style: TextStyle(
+                                    fontSize: 18
+                                ),
+                              ),
+                              value: (value.isEmpty)? null : value,
+                              onChanged: (escolha) async {
+                                widget.dropValue6.value = escolha.toString();
+
+                                rele4fuc2 = escolha.toString();
+
+                              },
+                              items: func.map((opcao) => DropdownMenuItem(
+                                value: opcao,
+                                child:
+                                Text(
+                                  opcao,
+                                  style: TextStyle(
+                                      fontSize: 18
+                                  ),
+                                ),
+                              ),
+                              ).toList(),
+                            );
+                          })
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(16),
+                        child: Text(
+                          "Rele 04:",
+                          style: TextStyle(
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+                      Center(
+                          child: ValueListenableBuilder(valueListenable: widget.dropValue8, builder: (context, String value, _){
+                            return DropdownButton(
+                              hint: Text(
+                                'Local *',
+                                style: TextStyle(
+                                    fontSize: 18
+                                ),
+                              ),
+                              value: (value.isEmpty)? null : value,
+                              onChanged: (escolha) async {
+                                widget.dropValue8.value = escolha.toString();
+
+                                Local4 = escolha.toString();
+
+                              },
+                              items: listLocal.map((opcao) => DropdownMenuItem(
+                                value: opcao,
+                                child:
+                                Text(
+                                  opcao,
+                                  style: TextStyle(
+                                      fontSize: 18
+                                  ),
+                                ),
+                              ),
+                              ).toList(),
+                            );
+                          })
+                      ),
+                      Text(
+                        "Função: " + rele3fuc2,
+                        style: TextStyle(
+                            fontSize: 18
+                        ),
+                      ),
+                      Center(
+                          child: ValueListenableBuilder(valueListenable: widget.dropValue7, builder: (context, String value, _){
+                            return DropdownButton(
+                              hint: Text(
+                                'Selecione a função *',
+                                style: TextStyle(
+                                    fontSize: 18
+                                ),
+                              ),
+                              value: (value.isEmpty)? null : value,
+                              onChanged: (escolha) async {
+                                widget.dropValue7.value = escolha.toString();
+
+                                rele3fuc2 = escolha.toString();
+
+                              },
+                              items: func.map((opcao) => DropdownMenuItem(
+                                value: opcao,
+                                child:
+                                Text(
+                                  opcao,
+                                  style: TextStyle(
+                                      fontSize: 18
+                                  ),
+                                ),
+                              ),
+                              ).toList(),
+                            );
+                          })
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                      onPressed: (){
+                        Navigator.pop(context);
+                      },
+                      child: Text(
+                          'Cancelar',
+                        style: TextStyle(
+                            fontSize: 18
+                        ),
+                      ),
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.red
+                    ),
+                  ),
+                  ElevatedButton(
+                    onPressed: (){
+                      //todo magica
+
+                      if(ipRele == ''){
+                        Fluttertoast.showToast(
+                          msg: 'Digite o IP do rele!',
+                          toastLength: Toast.LENGTH_SHORT,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.black,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
+                      }else{
+
+                        if(rele1fuc1 == ''){
+                          Fluttertoast.showToast(
+                            msg: 'Selecione a função do Relê 1!',
+                            toastLength: Toast.LENGTH_SHORT,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.black,
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
+                        }else{
+                          if(Local == ""){
+                            Fluttertoast.showToast(
+                              msg: 'Selecione o local de aplicação do Relê 1!',
+                              toastLength: Toast.LENGTH_SHORT,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.black,
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+                          }else{
+                            if(rele2fuc1 == ''){
+                              Fluttertoast.showToast(
+                                msg: 'Selecione a função do Relê 2!',
+                                toastLength: Toast.LENGTH_SHORT,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.black,
+                                textColor: Colors.white,
+                                fontSize: 16.0,
+                              );
+                            }else{
+                              if(Local2  == ''){
+                                Fluttertoast.showToast(
+                                  msg: 'Selecione o local de aplicação do Relê 2!',
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.black,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0,
+                                );
+                              }else{
+                                if(rele3fuc2 == ''){
+                                  Fluttertoast.showToast(
+                                    msg: 'Selecione a função do Relê 3!',
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.black,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0,
+                                  );
+                                }else{
+                                  if(Local3 == ''){
+                                    Fluttertoast.showToast(
+                                      msg: 'Selecione o local de aplicação do Relê 3!',
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.black,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0,
+                                    );
+                                  }else{
+                                    if(rele4fuc2 == ''){
+                                      Fluttertoast.showToast(
+                                        msg: 'Selecione a função do Relê 4!',
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.black,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0,
+                                      );
+                                    }else{
+                                      if(Local4 == ''){
+                                        Fluttertoast.showToast(
+                                          msg: 'Selecione o local de aplicação do Relê 4!',
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.black,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0,
+                                        );
+                                      }else{
+                                        //todo mandar para o db
+
+                                        FirebaseFirestore.instance.collection('Reles').doc(widget.DocRele).update({
+                                          'ip': ipRele,
+                                          'funcao-rele1': rele1fuc1,
+                                          'funcao-rele2': rele2fuc1,
+                                          'funcao-rele3': rele3fuc2,
+                                          'funcao-rele4': rele4fuc2,
+                                          'localAplicacao1': Local,
+                                          'localAplicacao2': Local2,
+                                          'localAplicacao3': Local3,
+                                          'localAplicacao4': Local4,
+                                        }).then((value){
+
+                                          Fluttertoast.showToast(
+                                            msg: 'Configuração feita com sucesso!',
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.black,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0,
+                                          );
+
+                                          Navigator.pop(context);
+                                        });
+
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    },
+                    child: Text(
+                      'Prosseguir',
+                      style: TextStyle(
+                          fontSize: 18
+                      ),
+                    ),
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.green
+                    ),
+                  )
                 ],
               ),
             )

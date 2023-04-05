@@ -1,17 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/modal/cadastroEmpresa.dart';
 import 'package:glk_controls/modal/cadastroUsuarioADM.dart';
 import 'package:glk_controls/operadorInterno.dart';
-import 'package:glk_controls/permissoes/permissoes.dart';
 import 'package:glk_controls/relatorio.dart';
 import 'package:glk_controls/subModais/empresasCadastradas.dart';
-
-import 'callToAPI.dart';
-import 'callToAPIADM.dart';
-import 'callToAPItoOFF.dart';
 import 'listas/UsuariosCadastrados.dart';
 import 'modal/ReleModalConfig.dart';
 
