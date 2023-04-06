@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class operadorInterno extends StatefulWidget {
-  const operadorInterno({Key? key}) : super(key: key);
+  String ADMName;
+  String LogoPath;
+  operadorInterno(this.ADMName, this.LogoPath);
 
   @override
   State<operadorInterno> createState() => _operadorInternoState();
@@ -364,7 +366,35 @@ class _operadorInternoState extends State<operadorInterno> {
                     ),
                   ),
                 ),
-              )
+              ),
+              Container(
+                padding: EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 180,
+                      height: 180,
+                      padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                      child:
+                      Image.network(
+                        widget.LogoPath,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                      child:
+                      Text(
+                        'ADM : ' + widget.ADMName,
+                        style: TextStyle(
+                            fontSize: 20
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

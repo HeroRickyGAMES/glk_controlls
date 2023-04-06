@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -84,11 +85,32 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
 
       }
     }
-    toRelatorio(){
+    toRelatorio() async {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Aguarde!'),
+            actions: [
+              Center(
+                child: CircularProgressIndicator(),
+              )
+            ],
+          );
+        },
+      );
 
+
+      var result = await FirebaseFirestore.instance
+          .collection("Condominio")
+          .doc('condominio')
+          .get();
+
+      String logoPath = result.get('imageURL');
+      Navigator.of(context).pop();
       Navigator.push(context,
           MaterialPageRoute(builder: (context){
-            return relatorio(widget.name);
+            return relatorio(widget.name, logoPath);
           }));
 
     }

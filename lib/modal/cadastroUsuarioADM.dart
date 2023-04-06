@@ -8,8 +8,9 @@ class cadastroUsuarioModal extends StatefulWidget {
   var dropValue;
   List listaNome;
 
-
-  cadastroUsuarioModal(this.dropValue, this.listaNome);
+  String ADMName;
+  String LogoPath;
+  cadastroUsuarioModal(this.dropValue, this.listaNome, this.ADMName, this.LogoPath);
 
   @override
   State<cadastroUsuarioModal> createState() => _cadastroUsuarioModalState();
@@ -340,6 +341,34 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                           fontWeight: FontWeight.bold
                       ),),
                   )
+              ),
+              Container(
+                padding: EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 180,
+                      height: 180,
+                      padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                      child:
+                      Image.network(
+                        widget.LogoPath,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                    Container(
+                      padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                      child:
+                      Text(
+                        'ADM : ' + widget.ADMName,
+                        style: TextStyle(
+                            fontSize: 20
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

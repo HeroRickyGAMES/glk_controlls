@@ -103,15 +103,17 @@ class _painelADMState extends State<painelADM> {
                   result.docs.forEach((res) {
                     print(res.data()['nome']);
 
-                    listaNome.add(res.data()['nome'] + res.data()['id']);
+                    listaNome.add(res.data()['nome'] + " " +  res.data()['id']);
 
                     final dropValue = ValueNotifier('');
 
+                    Navigator.of(context).pop();
                     Navigator.pop(context);
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context){
-                          return cadastroUsuarioModal(dropValue, listaNome);
+                          return cadastroUsuarioModal(dropValue, listaNome, widget.ADMName, widget.LogoPath);
                         }));
+
 
                   });
                 },
@@ -148,11 +150,11 @@ class _painelADMState extends State<painelADM> {
                       );
                     },
                   );
-                  Navigator.of(context).pop();
 
+                  Navigator.of(context).pop();
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context){
-                        return operadorInterno();
+                        return operadorInterno(widget.ADMName, widget.LogoPath);
                       }));
                 },
                 child:
@@ -177,7 +179,7 @@ class _painelADMState extends State<painelADM> {
                 onPressed: (){
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context){
-                        return relatorio(widget.ADMName);
+                        return relatorio(widget.ADMName, widget.LogoPath);
                       }));
                 },
                 child:

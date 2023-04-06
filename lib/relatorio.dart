@@ -9,8 +9,9 @@ import 'package:glk_controls/pesquisaDir/pesquisaRelatorio.dart';
 class relatorio extends StatefulWidget {
 
   String operadorName;
+  String LogoPath;
 
-  relatorio(this.operadorName);
+  relatorio(this.operadorName, this.LogoPath);
 
   @override
   State<relatorio> createState() => _relatorioState();
@@ -167,10 +168,10 @@ class _relatorioState extends State<relatorio> {
                       height: 180,
                       padding: EdgeInsets.all(16),
                       child:
-                      Image.asset(
-                        'assets/sanca.png',
+                      Image.network(
+                        widget.LogoPath,
                         fit: BoxFit.contain,
-                      )
+                      ),
                   ),
                   Container(
                     padding: EdgeInsets.all(16),

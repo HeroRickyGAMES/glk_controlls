@@ -129,10 +129,34 @@ class _mainPorteiroState extends State<mainPorteiro> {
           }));
     }
 
-    relatorioMT(){
+    relatorioMT() async {
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Aguarde!'),
+            actions: [
+              Center(
+                child: CircularProgressIndicator(),
+              )
+            ],
+          );
+        },
+      );
+
+
+      var result = await FirebaseFirestore.instance
+          .collection("Condominio")
+          .doc('condominio')
+          .get();
+
+      String logoPath = result.get('imageURL');
+      Navigator.of(context).pop();
+
       Navigator.push(context,
           MaterialPageRoute(builder: (context){
-            return relatorio(widget.PorteiroNome);
+            return relatorio(widget.PorteiroNome, logoPath);
           }));
     }
 
