@@ -300,7 +300,7 @@ class _painelADMState extends State<painelADM> {
                 onPressed: (){
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context){
-                        return bloqueioDePlacas();
+                        return bloqueioDePlacas(widget.ADMName, widget.LogoPath);
                       }));
                 },
                 child:
