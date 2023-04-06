@@ -517,6 +517,20 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                                         //todo para o db firebase
                                         String idd = 'condominio';
 
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              title: Text('Aguarde!'),
+                                              actions: [
+                                                Center(
+                                                  child: CircularProgressIndicator(),
+                                                )
+                                              ],
+                                            );
+                                          },
+                                        );
+
                                         final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
 
                                         FirebaseFirestore.instance.collection('Condominio').doc(idd).update({
@@ -531,6 +545,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                                           'imageURL': imageUrl,
                                           'maxGalpoes': int.parse(galpaost),
                                         }).then((value){
+                                          Navigator.of(context).pop();
                                           Navigator.pop(context);
                                           Fluttertoast.showToast(
                                               msg: 'Dados enviados com sucesso!',
