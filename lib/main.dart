@@ -362,37 +362,13 @@ void main() {
                                .get();
 
                            String empresaName = (result.get('empresa'));
-                           String empresaID = (result.get('idEmpresa'));
 
-                           var result2 = await FirebaseFirestore.instance
-                               .collection("empresa")
-                               .doc(empresaID)
-                               .get();
+                           Navigator.pop(context);
+                           Navigator.push(context,
+                               MaterialPageRoute(builder: (context){
+                                 return operadorEmpresarial(nome, empresaName);
+                               }));
 
-                           List<dynamic> dias = (result2.get('RelatorioDays'));
-
-                           String dayHj = '${DateTime.now().day}';
-                           print('Dia do relatiorio são ${dias}');
-                           print('Dia de hoje é ${DateTime.now().day}');
-
-                           if(dias.contains(dayHj)){
-                             relatorio = true;
-
-                             Navigator.pop(context);
-                             Navigator.push(context,
-                                 MaterialPageRoute(builder: (context){
-                                   return operadorEmpresarial(nome, empresaName, relatorio);
-                                 }));
-                           }else{
-                             relatorio = false;
-
-                             Navigator.pop(context);
-                             Navigator.push(context,
-                                 MaterialPageRoute(builder: (context){
-                                   return operadorEmpresarial(nome, empresaName, relatorio);
-                                 }));
-
-                           }
                          }else{
 
                            print('O está ativo está funcionando!');

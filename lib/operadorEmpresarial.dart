@@ -16,8 +16,7 @@ Map<String, String> mapNome = {};
 class operadorEmpresarial extends StatefulWidget {
   final String name;
   final String empresaName;
-  final bool relatorio;
-  operadorEmpresarial(this.name, this.empresaName, this.relatorio);
+  operadorEmpresarial(this.name, this.empresaName);
 
   @override
   State<operadorEmpresarial> createState() => _operadorEmpresarialState();
@@ -165,7 +164,7 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
               Container(
                 width: double.infinity,
                 padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
-                child: ElevatedButton(onPressed: widget.relatorio? toRelatorio : null,
+                child: ElevatedButton(onPressed: toRelatorio,
                   child: Text(
                     'Relatórios',
                     style: TextStyle(

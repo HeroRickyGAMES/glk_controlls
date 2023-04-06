@@ -384,23 +384,12 @@ class _loginState extends State<login> {
                                                   print('Dia do relatiorio são ${dias}');
                                                   print('Dia de hoje é ${DateTime.now().day}');
 
-                                                  if(dias.contains(dayHj)){
-                                                    relatorio = true;
+                                                  Navigator.pop(context);
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(builder: (context){
+                                                        return operadorEmpresarial(nome, empresaName);
+                                                      }));
 
-                                                    Navigator.pop(context);
-                                                    Navigator.push(context,
-                                                        MaterialPageRoute(builder: (context){
-                                                          return operadorEmpresarial(nome, empresaName, relatorio);
-                                                        }));
-                                                  }else{
-                                                    relatorio = false;
-
-                                                    Navigator.pop(context);
-                                                    Navigator.push(context,
-                                                        MaterialPageRoute(builder: (context){
-                                                          return operadorEmpresarial(nome, empresaName, relatorio);
-                                                        }));
-                                                  }
                                                 }else{
 
                                                   print('O está ativo está funcionando!');

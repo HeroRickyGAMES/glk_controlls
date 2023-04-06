@@ -22,6 +22,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
   String? coletaouentrega;
   String? lacreounao;
   String? empresaSelecionada;
+  String? galpaoSelecionado;
 
   //fields
   String? nomeMotorista;
@@ -36,6 +37,10 @@ class _modalPorteiroState extends State<modalPorteiro> {
   TextEditingController placaveiculointerface = TextEditingController();
   TextEditingController telefoneinterface = TextEditingController();
 
+  final dropValue3 = ValueNotifier('');
+
+  List Galpoes = [ ];
+  bool empresaPikada = false;
 
   List VeiculoOPC = [
     'Caminhão',
@@ -677,6 +682,30 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
                         empresaSelecionada = escolha.toString();
 
+
+                        adicionarMaisGalpoes() async {
+                          var result = await FirebaseFirestore.instance
+                              .collection("empresa")
+                              .get();
+
+                          for (var res in result.docs) {
+                            for (int i = result.docs.length; i >= 1; i--) {
+                              if(i == result.docs.length){
+
+                                if(res.data()['nome'] == empresaSelecionada){
+
+                                  Galpoes.addAll(res.data()['galpaes']);
+
+                                  setState(() {
+                                    empresaPikada = true;
+                                  });
+                                }
+                              }
+                            }
+                          }
+                        }
+                        adicionarMaisGalpoes();
+
                       },
                       items: widget.EmpresasOpc.map((opcao) => DropdownMenuItem(
                         value: opcao,
@@ -692,6 +721,49 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     );
                   })
               ),
+              empresaPikada == true ? Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    child: Text(
+                      'Galpões da Empresa *',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold
+                      ),
+                    ),
+                  ),
+                 Center(
+                      child: ValueListenableBuilder(valueListenable: dropValue3, builder: (context, String value, _){
+                        return DropdownButton(
+                          hint: Text(
+                            'Selecione um galpão',
+                            style: TextStyle(
+                                fontSize: 18
+                            ),
+                          ),
+                          value: (value.isEmpty)? null : value,
+                          onChanged: (escolha) async {
+                            dropValue3.value = escolha.toString();
+
+                            galpaoSelecionado = escolha.toString();
+                          },
+                          items: Galpoes.map((opcao) => DropdownMenuItem(
+                            value: opcao,
+                            child:
+                            Text(
+                              opcao,
+                              style: TextStyle(
+                                  fontSize: 18
+                              ),
+                            ),
+                          ),
+                          ).toList(),
+                        );
+                      })
+                  ),
+                ],
+              ) : Text(''),
               Container(
                 padding: EdgeInsets.only(top: 16),
                 child:
