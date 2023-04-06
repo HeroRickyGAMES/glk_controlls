@@ -136,7 +136,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                             ipRele = valor;
                             //Mudou mandou para a String
                           },
-                          keyboardType: TextInputType.name,
+                          keyboardType: TextInputType.number,
                           enableSuggestions: false,
                           autocorrect: false,
                           decoration: InputDecoration(
