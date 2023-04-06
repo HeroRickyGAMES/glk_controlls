@@ -62,8 +62,9 @@ class _painelADMState extends State<painelADM> {
 
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context){
-                        return cadastroEmpresa(dropValue);
+                        return cadastroEmpresa(dropValue, widget.ADMName, widget.LogoPath);
                       }));
+
                 },
                 child:
                 Text(
@@ -105,8 +106,6 @@ class _painelADMState extends State<painelADM> {
                     listaNome.add(res.data()['nome'] + res.data()['id']);
 
                     final dropValue = ValueNotifier('');
-
-
 
                     Navigator.pop(context);
                     Navigator.push(context,
