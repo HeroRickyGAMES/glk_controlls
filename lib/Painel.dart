@@ -5,6 +5,7 @@ import 'package:glk_controls/modal/cadastroUsuarioADM.dart';
 import 'package:glk_controls/operadorInterno.dart';
 import 'package:glk_controls/relatorio.dart';
 import 'package:glk_controls/subModais/BloqueioDeVeiculos.dart';
+import 'package:glk_controls/subModais/bloqueiodeVisitantes.dart';
 import 'package:glk_controls/subModais/empresasCadastradas.dart';
 import 'listas/UsuariosCadastrados.dart';
 import 'modal/ReleModalConfig.dart';
@@ -330,7 +331,10 @@ class _painelADMState extends State<painelADM> {
                       padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                       child: ElevatedButton(
                         onPressed: (){
-
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context){
+                                return bloqueioDeVisitantes(widget.ADMName, widget.LogoPath);
+                              }));
                         },
                         child:
                         Text(
