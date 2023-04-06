@@ -6,7 +6,9 @@ import '../subModais/ReleConfigOnly.dart';
 class releModalConfig extends StatefulWidget {
   String urlPadrao;
   String urlPadrao2;
-  releModalConfig(this.urlPadrao, this.urlPadrao2);
+  String ADMName;
+  String LogoPath;
+  releModalConfig(this.urlPadrao, this.urlPadrao2, this.ADMName, this.LogoPath);
 
   @override
   State<releModalConfig> createState() => _releModalConfigState();
@@ -205,9 +207,37 @@ class _releModalConfigState extends State<releModalConfig> {
                     ],
                   ),
                 ),
-              )
+              ),
             ],
-          )
+          ),
+          Container(
+            padding: EdgeInsets.all(16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                  width: 180,
+                  height: 180,
+                  padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                  child:
+                  Image.network(
+                    widget.LogoPath,
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                Container(
+                  padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                  child:
+                  Text(
+                    'ADM : ' + widget.ADMName,
+                    style: TextStyle(
+                        fontSize: 20
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );

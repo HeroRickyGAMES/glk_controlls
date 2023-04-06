@@ -114,7 +114,6 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
           }));
 
     }
-
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
