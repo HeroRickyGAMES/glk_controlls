@@ -22,11 +22,10 @@ Map<String, String> map1 = {};
 Map<String, String> mapNome = {};
 String idDocumento = '';
 List listaNome = [];
-List galpao = [ ];
 String pass = '';
 
 class mainPorteiro extends StatefulWidget {
-
+  final String LogoPath;
   bool cadastro;
   bool entrada;
   bool saida;
@@ -34,7 +33,7 @@ class mainPorteiro extends StatefulWidget {
   bool painel;
 
   final String PorteiroNome;
-  mainPorteiro(this.PorteiroNome, this.cadastro, this.entrada, this.saida, this.relatorio, this.painel);
+  mainPorteiro(this.PorteiroNome, this.cadastro, this.entrada, this.saida, this.relatorio, this.painel, this.LogoPath);
 
   @override
   State<mainPorteiro> createState() => _mainPorteiroState();
@@ -46,29 +45,33 @@ class _mainPorteiroState extends State<mainPorteiro> {
   Widget build(BuildContext context) {
 
     openModal() async {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context){
-            return pesquisaCadastro(widget.PorteiroNome);
-          }));
-    }
+  //todo novo cadastro
 
-    openModalOffline() async {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Aguarde!'),
+            actions: [
+              Center(
+                child: CircularProgressIndicator(),
+              )
+            ],
+          );
+        },
+      );
 
       var result = await FirebaseFirestore.instance
           .collection("empresa")
           .get();
-      result.docs.forEach((res) {
+      for (var res in result.docs) {
         print(res.data()['nome']);
 
         setState(() {
           listaNome.add(res.data()['nome']);
 
-          galpao.addAll(res.data()['galpaes']);
-
-          print('dentro da array: ${galpao}' );
           final dropValue = ValueNotifier('');
           final dropValue2 = ValueNotifier('');
-          final dropValue3 = ValueNotifier('');
 
           var db = FirebaseFirestore.instance;
           var UID = FirebaseAuth.instance.currentUser?.uid;
@@ -95,11 +98,11 @@ class _mainPorteiroState extends State<mainPorteiro> {
 
                     if(key == 'nome'){
 
+                      Navigator.of(context).pop();
                       Navigator.pop(context);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context){
-                            return liberacaoOff(listaNome, dropValue, PorteiroNomee, '',dropValue2, galpao, dropValue3);
-
+                            return modalPorteiro(listaNome, dropValue, PorteiroNomee, '',dropValue2);
                           }));
                     }
                   });
@@ -110,9 +113,12 @@ class _mainPorteiroState extends State<mainPorteiro> {
           }
           );
         });
-
-      });
+      }
       print(listaNome);
+    }
+
+    openModalOffline() async {
+
     }
 
     entradaMT(){
@@ -144,7 +150,6 @@ class _mainPorteiroState extends State<mainPorteiro> {
           );
         },
       );
-
 
       var result = await FirebaseFirestore.instance
           .collection("Condominio")
@@ -298,7 +303,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text('Liberação Manual'),
+                            title: Text('Liberação Off-Line'),
                             actions: [
                               TextFormField(
                                 onChanged: (valor){
@@ -390,10 +395,10 @@ class _mainPorteiroState extends State<mainPorteiro> {
                     height: 180,
                     padding: EdgeInsets.all(16),
                     child:
-                    Image.asset(
-                      'assets/sanca.png',
+                    Image.network(
+                      widget.LogoPath,
                       fit: BoxFit.contain,
-                    )
+                    ),
                 ),
                 Container(
                   padding: EdgeInsets.all(16),

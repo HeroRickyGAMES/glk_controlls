@@ -142,10 +142,17 @@ void main() {
                            bool painel = result.get('painel');
 
 
+                           var resulte = await FirebaseFirestore.instance
+                               .collection("Condominio")
+                               .doc('condominio')
+                               .get();
+
+                           String logoPath = resulte.get('imageURL');
+
                            Navigator.pop(context);
                            Navigator.push(context,
                                MaterialPageRoute(builder: (context){
-                                 return mainPorteiro(PorteiroNome, cadastro, entrada, saida, relatorio, painel);
+                                 return mainPorteiro(PorteiroNome, cadastro, entrada, saida, relatorio, painel, logoPath);
                                }));
 
                          }else{

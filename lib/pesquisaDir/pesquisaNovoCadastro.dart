@@ -120,24 +120,17 @@ class _pesquisaCadastroState extends State<pesquisaCadastro> {
                     print(value);
 
                     if(key == 'nome'){
-
                       Navigator.pop(context);
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context){
-                            return modalPorteiro(listaNome, dropValue, PorteiroNomee, '',dropValue2, galpao, dropValue3);
-
+                            return modalPorteiro(listaNome, dropValue, PorteiroNomee, '',dropValue2);
                           }));
                     }
-
                   });
-
                 }
                 );
-
               }
-
             });
-
           }
           );
         });

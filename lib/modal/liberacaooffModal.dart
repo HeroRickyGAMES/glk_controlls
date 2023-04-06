@@ -405,11 +405,17 @@ class _liberacaoOffState extends State<liberacaoOff> {
                     bool relatorio = result.get('relatorio');
                     bool painel = result.get('painel');
 
+                    var resulte = await FirebaseFirestore.instance
+                        .collection("Condominio")
+                        .doc('condominio')
+                        .get();
+
+                    String logoPath = resulte.get('imageURL');
 
                     Navigator.pop(context);
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context){
-                          return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel);
+                          return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath);
                         }));
                   }
 
@@ -849,11 +855,17 @@ class _liberacaoOffState extends State<liberacaoOff> {
                   bool relatorio = result.get('relatorio');
                   bool painel = result.get('painel');
 
+                  var resulte = await FirebaseFirestore.instance
+                      .collection("Condominio")
+                      .doc('condominio')
+                      .get();
+
+                  String logoPath = resulte.get('imageURL');
 
                   Navigator.pop(context);
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context){
-                        return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel);
+                        return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath);
                       }));
                   // retorna false para impedir que a navegação volte à tela anterior
                   return false;
