@@ -26,6 +26,8 @@ class operadorEmpresarialAguardando extends StatefulWidget {
   String urlImage2 = '';
   String urlImage3 = '';
   String urlImage4 = '';
+  Map Galpoes;
+  String UIDEmpresa;
 
   operadorEmpresarialAguardando(
       this.lacreounao,
@@ -45,7 +47,9 @@ class operadorEmpresarialAguardando extends StatefulWidget {
       this.urlImage1,
       this.urlImage2,
       this.urlImage3,
-      this.urlImage4
+      this.urlImage4,
+      this.Galpoes,
+      this.UIDEmpresa
       );
   @override
   State<operadorEmpresarialAguardando> createState() => _operadorEmpresarialAguardandoState();
@@ -56,6 +60,10 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
   String? lacreSt;
   bool entradabool = false;
   bool regeitado = false;
+  String galpaoSelecionado = '';
+  final dropValue = ValueNotifier('');
+
+  bool empresaPikada = false;
   @override
   Widget build(BuildContext context) {
 
@@ -115,28 +123,6 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
               ),
             ),
             Container(
-              height: 50,
-              width: double.infinity,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Data: ${widget.DateAnalise}' ,
-                    style: TextStyle(
-                        fontSize: 16
-                    ),
-                  ),
-                  Text(
-                    ' - Analise - ' + widget.verificadoPor,
-                    style: TextStyle(
-                        fontSize: 16
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
               padding: EdgeInsets.all(16),
               child:
               Text(
@@ -186,15 +172,51 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                 ),
               ),
             ),
-            Container(
-              padding: EdgeInsets.all(16),
-              child:
-              Text(
-                'Galpão: ' + widget.Galpao,
-                style: TextStyle(
-                    fontSize: 30
+            Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(16),
+                  child: Text(
+                    'Galpões da Empresa *',
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold
+                    ),
+                  ),
                 ),
-              ),
+                Center(
+                    child: ValueListenableBuilder(valueListenable: dropValue, builder: (context, String value, _){
+                      return DropdownButton(
+                        hint: Text(
+                          'Selecione um galpão',
+                          style: TextStyle(
+                              fontSize: 18
+                          ),
+                        ),
+                        value: (value.isEmpty)? null : value,
+                        onChanged: (escolha) async {
+                          dropValue.value = escolha.toString();
+
+                          galpaoSelecionado = escolha.toString();
+
+                          print(galpaoSelecionado);
+
+                        },
+                        items: widget.Galpoes.keys.map((opcao) => DropdownMenuItem(
+                          value: opcao,
+                          child:
+                          Text(
+                            opcao,
+                            style: TextStyle(
+                                fontSize: 18
+                            ),
+                          ),
+                        ),
+                        ).toList(),
+                      );
+                    })
+                ),
+              ],
             ),
             RadioListTile(
               title: Text(
@@ -249,58 +271,6 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
             )
                 :Text(''),
             Container(
-              height: 300,
-              width: 700,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(4),
-                    alignment: Alignment.center,
-                    child:
-                    Image.network(
-                        widget.urlImage1
-                    )
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(4),
-                    alignment: Alignment.center,
-                    child:
-                    Image.network(
-                        widget.urlImage2
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              height: 300,
-              width: 700,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(4),
-                    alignment: Alignment.center,
-                    child:
-                    Image.network(
-                        widget.urlImage3
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(4),
-                    alignment: Alignment.center,
-                    child:
-                    Image.network(
-                        widget.urlImage4
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Container(
               child:
               CheckboxListTile(
                 title: Text('Autorizo Entrada'),
@@ -335,45 +305,98 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
             Container(
               padding: EdgeInsets.all(16),
               child: ElevatedButton(
-                onPressed: (){
-                  if(lacrebool == false){
-                    if(entradabool == true){
-                      FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                        'DataEntradaEmpresa': DateTime.now(),
-                        'Status': 'Entrada'
-                      });
-                      Navigator.pop(context);
-                    }
-                    if(regeitado == true){
-                      FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                        'DataEntradaEmpresa': DateTime.now(),
-                        'Status': 'Rejeitado'
-                      });
-                    }
-                  }
-                  if(lacrebool == true){
-                    if(lacreSt == null){
-                      Fluttertoast.showToast(
-                        msg: 'Preencha o numero do lacre!',
-                        toastLength: Toast.LENGTH_SHORT,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.black,
-                        textColor: Colors.white,
-                        fontSize: 16.0,
-                      );
-                    }else{
-                      if(entradabool == true){
-                        FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                          'DataEntradaEmpresa': DateTime.now(),
-                          'Status': 'Entrada'
-                        });
-                        Navigator.pop(context);
+                onPressed: () async {
+
+                  var valorEmpresas = await FirebaseFirestore.instance
+                      .collection("empresa")
+                      .doc(widget.UIDEmpresa)
+                      .get();
+
+
+                  if(valorEmpresas.get('galpaes')[galpaoSelecionado] == 0){
+                    Fluttertoast.showToast(
+                      msg: 'Infelizmente não existe mais vagas disponiveis, selecione outro galpão!',
+                      toastLength: Toast.LENGTH_LONG,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.black,
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
+                  }else{
+
+                    if(widget.Galpoes.containsKey(galpaoSelecionado)){
+
+                      print("Antes da Subtração ${widget.Galpoes.values}");
+
+                      widget.Galpoes[galpaoSelecionado] = widget.Galpoes[galpaoSelecionado] - 1;
+
+                      print("Depois da Subtração ${widget.Galpoes.values}");
+
+                      if(lacrebool == false){
+                        if(entradabool == true){
+                          FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                            'DataEntradaEmpresa': DateTime.now(),
+                            'Galpão': galpaoSelecionado,
+                            'Status': 'Em Verificação'
+                          }).then((value){
+                            FirebaseFirestore.instance.collection('empresa').doc(widget.UIDEmpresa).update(
+                                {
+                                  "galpaes": widget.Galpoes
+                                }
+                            ).then((value){
+                              Navigator.pop(context);
+                            });
+                          });
+                        }
+                        if(regeitado == true){
+
+                          FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                            'DataAnaliseEmpresa': DateTime.now(),
+                            'Status': 'Rejeitado'
+                          }).then((value){
+                            Navigator.pop(context);
+                          });
+
+                        }
                       }
-                      if(regeitado == true){
-                        FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                          'DataEntradaEmpresa': DateTime.now(),
-                          'Status': 'Rejeitado'
-                        });
+                      if(lacrebool == true){
+                        if(lacreSt == null){
+                          Fluttertoast.showToast(
+                            msg: 'Preencha o numero do lacre!',
+                            toastLength: Toast.LENGTH_SHORT,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.black,
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
+                        }else{
+                          if(entradabool == true){
+                            FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                              'DataEntradaEmpresa': DateTime.now(),
+                              'Galpão': galpaoSelecionado,
+                              'Status': 'Em Verificação'
+                            }).then((value){
+
+                              FirebaseFirestore.instance.collection('empresa').doc(widget.UIDEmpresa).update(
+                                  {
+                                    "galpaes": widget.Galpoes
+                                  }
+                              ).then((value){
+                                Navigator.pop(context);
+                              });
+
+                            });
+                          }
+                          if(regeitado == true){
+                            FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                              'DataEntradaEmpresa': DateTime.now(),
+                              'Galpão': galpaoSelecionado,
+                              'Status': 'Rejeitado'
+                            }).then((value){
+                              Navigator.pop(context);
+                            });
+                          }
+                        }
                       }
                     }
                   }

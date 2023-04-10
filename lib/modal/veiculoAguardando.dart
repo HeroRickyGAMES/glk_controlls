@@ -28,6 +28,7 @@ class veiculoAguardando extends StatefulWidget {
   File? imageFile2;
   File? imageFile3;
   File? imageFile4;
+  String DataAnaliseEmpresa;
 
   veiculoAguardando(
       this.lacreounao,
@@ -46,6 +47,7 @@ class veiculoAguardando extends StatefulWidget {
       this.imageFile2,
       this.imageFile3,
       this.imageFile4,
+      this.DataAnaliseEmpresa
       );
   @override
   State<veiculoAguardando> createState() => _veiculoAguardandoState();
@@ -203,6 +205,333 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
     }
 
+    callToVerifyReles() async {
+      var result = await FirebaseFirestore.instance
+          .collection("Reles")
+          .doc('Rele01')
+          .get();
+
+      print('aqui');
+      print(result.get('localAplicacao1'));
+
+      //rele 1
+      if(result.get('localAplicacao1') == "Cancela"){
+          //Verifica a função dos outros relês
+
+          if(result.get('funcao-rele1').contains('Pulso')){
+
+            print(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+
+            rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            releCancelaEntrada();
+          }
+
+          if(result.get('localAplicacao2') == 'Fechamento'){
+
+            if(result.get('funcao-rele2').contains('Pulso')){
+
+              rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+            }else{
+              await Future.delayed(Duration(seconds: 5));
+              releFechamento02();
+            }
+
+          }
+
+          if(result.get('localAplicacao2') == 'Farol'){
+            if(result.get('funcao-rele2').contains('Pulso')){
+
+              rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+            }else{
+              await Future.delayed(Duration(seconds: 5));
+              releFechamento02();
+            }
+          }
+
+          //Verifica a função dos outros relês
+
+          if(result.get('localAplicacao3') == 'Fechamento'){
+            if(result.get('funcao-rele3').contains('Pulso')){
+
+              rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+            }else{
+              await Future.delayed(Duration(seconds: 5));
+              releFarol03();
+            }
+          }
+
+          if(result.get('localAplicacao3') == 'Farol'){
+
+            if(result.get('funcao-rele3').contains('Pulso')){
+
+              rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+            }else{
+              await Future.delayed(Duration(seconds: 5));
+              releFarol03();
+            }
+          }
+
+          //Verifica a função dos outros relês
+
+
+          if(result.get('localAplicacao4') == 'Fechamento'){
+            if(result.get('funcao-rele4').contains('Pulso')){
+
+              rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+            }else{
+              await Future.delayed(Duration(seconds: 5));
+              releFarol04();
+            }
+          }
+
+          if(result.get('localAplicacao4') == 'Farol'){
+            if(result.get('funcao-rele4').contains('Pulso')){
+
+              rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+            }else{
+              await Future.delayed(Duration(seconds: 5));
+              releFarol04();
+            }
+          }
+
+
+
+      }
+
+      //rele 2
+
+      if(result.get('localAplicacao2') == "Cancela"){
+        if(result.get('funcao-rele2').contains('Pulso')){
+
+          rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+        }else{
+          await Future.delayed(Duration(seconds: 5));
+          releFarol02();
+        }
+
+        if(result.get('localAplicacao1') == 'Fechamento'){
+
+          if(result.get('funcao-rele1').contains('Pulso')){
+
+            rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releCancelaEntrada();
+          }
+
+        }
+
+        if(result.get('localAplicacao1') == 'Farol'){
+
+          if(result.get('funcao-rele1').contains('Pulso')){
+            rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releCancelaEntrada();
+          }
+        }
+
+        //Verifica a função dos outros relês
+
+        if(result.get('localAplicacao3') == 'Fechamento'){
+
+          if(result.get('funcao-rele3').contains('Pulso')){
+
+            rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFarol03();
+          }
+
+        }
+
+        if(result.get('localAplicacao3') == 'Farol'){
+
+          if(result.get('funcao-rele3').contains('Pulso')){
+
+            rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+
+            print(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFarol03();
+          }
+        }
+
+        //Verifica a função dos outros relês
+
+        if(result.get('localAplicacao4') == 'Fechamento'){
+          if(result.get('funcao-rele4').contains('Pulso')){
+
+            rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFarol04();
+          }
+        }
+
+        if(result.get('localAplicacao4') == 'Farol'){
+          if(result.get('funcao-rele4').contains('Pulso')){
+
+            rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFarol04();
+          }
+        }
+
+      }
+
+
+      //Rele3
+
+      if(result.get('localAplicacao3') == "Cancela"){
+        if(result.get('localAplicacao1') == 'Fechamento'){
+
+          if(result.get('funcao-rele1').contains('Pulso')){
+
+            rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releCancelaEntrada();
+          }
+
+        }
+
+        if(result.get('localAplicacao1') == 'Farol'){
+
+          if(result.get('funcao-rele1').contains('Pulso')){
+            rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releCancelaEntrada();
+          }
+        }
+
+        if(result.get('localAplicacao2') == 'Fechamento'){
+
+          if(result.get('funcao-rele2').contains('Pulso')){
+
+            rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFechamento02();
+          }
+
+        }
+
+        if(result.get('localAplicacao2') == 'Farol'){
+          if(result.get('funcao-rele2').contains('Pulso')){
+
+            rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFechamento02();
+          }
+        }
+
+        if(result.get('localAplicacao4') == 'Fechamento'){
+          if(result.get('funcao-rele4').contains('Pulso')){
+
+            rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFarol04();
+          }
+        }
+
+        if(result.get('localAplicacao4') == 'Farol'){
+          if(result.get('funcao-rele4').contains('Pulso')){
+
+            rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFarol04();
+          }
+        }
+      }
+
+      //rele 4
+
+      if(result.get('localAplicacao4') == 'Cancela'){
+        if(result.get('funcao-rele4').contains('Pulso')){
+
+          rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+        }else{
+          await Future.delayed(Duration(seconds: 5));
+          releFarol04();
+        }
+
+        if(result.get('localAplicacao1') == 'Fechamento'){
+
+          if(result.get('funcao-rele1').contains('Pulso')){
+
+            rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releCancelaEntrada();
+          }
+
+        }
+
+        if(result.get('localAplicacao1') == 'Farol'){
+
+          if(result.get('funcao-rele1').contains('Pulso')){
+            rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releCancelaEntrada();
+          }
+        }
+
+        if(result.get('localAplicacao2') == 'Fechamento'){
+
+          if(result.get('funcao-rele2').contains('Pulso')){
+
+            rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFechamento02();
+          }
+
+        }
+
+        if(result.get('localAplicacao2') == 'Farol'){
+          if(result.get('funcao-rele2').contains('Pulso')){
+
+            rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFechamento02();
+          }
+        }
+
+        if(result.get('localAplicacao3') == 'Fechamento'){
+
+          if(result.get('funcao-rele3').contains('Pulso')){
+
+            rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFarol03();
+          }
+
+        }
+
+        if(result.get('localAplicacao3') == 'Farol'){
+
+          if(result.get('funcao-rele3').contains('Pulso')){
+
+            rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFarol03();
+          }
+        }
+      }
+    }
+
     String _textoPredefinido = widget.lacradoStr;
     lacreSt = widget.lacradoStr;
 
@@ -246,6 +575,28 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                   ),
                   Text(
                     ' - Portaria - ' + widget.liberadopor,
+                    style: TextStyle(
+                        fontSize: 16
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: 50,
+              width: double.infinity,
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Data: ${widget.DataAnaliseEmpresa}' ,
+                    style: TextStyle(
+                        fontSize: 16
+                    ),
+                  ),
+                  Text(
+                    ' - Empresa - ' + widget.Empresadestino,
                     style: TextStyle(
                         fontSize: 16
                     ),
@@ -563,27 +914,26 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                               fontSize: 16.0,
                             );
                           }else{
-                            Fluttertoast.showToast(
-                              msg: 'Atualizando dados... Isso pode demorar um pouco dependendo da',
-                              toastLength: Toast.LENGTH_LONG,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.black,
-                              textColor: Colors.white,
-                              fontSize: 16.0,
-                            );
-                            Fluttertoast.showToast(
-                              msg: 'Sua internet...',
-                              toastLength: Toast.LENGTH_LONG,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.black,
-                              textColor: Colors.white,
-                              fontSize: 16.0,
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text('Aguarde!'),
+                                  actions: [
+                                    Center(
+                                      child: CircularProgressIndicator(),
+                                    )
+                                  ],
+                                );
+                              },
                             );
 
                             final imageUrl = await _uploadImageToFirebase(imageFile!, widget.idDocumento);
                             final imageUrl2 = await _uploadImageToFirebase2(imageFile2!, widget.idDocumento);
                             final imageUrl3 = await _uploadImageToFirebase3(imageFile3!, widget.idDocumento);
                             final imageUrl4 = await _uploadImageToFirebase4(imageFile3!, widget.idDocumento);
+
+
 
                             FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                               'verificadoPor': widget.empresaName,
@@ -593,8 +943,8 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                               'uriImage2': imageUrl2,
                               'uriImage3': imageUrl3,
                               'uriImage4': imageUrl4,
-                              'Status': 'Aguardando',
-                            }).then((value){
+                              'Status': 'Entrada',
+                            }).then((value) async {
                               Fluttertoast.showToast(
                                 msg: 'Dados atualizados!',
                                 toastLength: Toast.LENGTH_SHORT,
@@ -603,10 +953,12 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                                 textColor: Colors.white,
                                 fontSize: 16.0,
                               );
-                              getReleAPI1();
-                            });
-                            Navigator.pop(context);
+                              //Fazer as regras do Rele
 
+                             callToVerifyReles();
+                            });
+                            Navigator.of(context).pop();
+                            Navigator.pop(context);
                           }
                         }
                       }
@@ -668,21 +1020,18 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                               );
                             }else{
 
-                              Fluttertoast.showToast(
-                                msg: 'Atualizando dados... Isso pode demorar um pouco dependendo da',
-                                toastLength: Toast.LENGTH_LONG,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.black,
-                                textColor: Colors.white,
-                                fontSize: 16.0,
-                              );
-                              Fluttertoast.showToast(
-                                msg: 'Sua internet...',
-                                toastLength: Toast.LENGTH_LONG,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.black,
-                                textColor: Colors.white,
-                                fontSize: 16.0,
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Aguarde!'),
+                                    actions: [
+                                      Center(
+                                        child: CircularProgressIndicator(),
+                                      )
+                                    ],
+                                  );
+                                },
                               );
 
                               final imageUrl = await _uploadImageToFirebase(imageFile!, widget.idDocumento);
@@ -697,9 +1046,10 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                                 'uriImage2': imageUrl2,
                                 'uriImage3': imageUrl3,
                                 'uriImage4': imageUrl4,
-                                'Status': 'Aguardando',
+                                'Status': 'Entrada',
                                 'DataDeAnalise': DateTime.now(),
                               }).then((value) {
+
                                 Fluttertoast.showToast(
                                   msg: 'Dados atualizados!',
                                   toastLength: Toast.LENGTH_SHORT,
@@ -708,9 +1058,11 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                                   textColor: Colors.white,
                                   fontSize: 16.0,
                                 );
-                                getReleAPI1();
+                                //Fazer as regras do Rele
+                                callToVerifyReles();
+                                Navigator.of(context).pop();
+                                Navigator.pop(context);
                               });
-                              Navigator.pop(context);
                             }
                           }
                         }

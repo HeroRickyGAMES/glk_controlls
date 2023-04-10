@@ -348,9 +348,10 @@ class _listEntradaState extends State<listEntrada> {
                                                     String EmpresadeOrigin = documents['EmpresadeOrigin'];
                                                     String Galpao = documents['Galpão'];
                                                     String lacradoStr = documents['lacrenum'];
-                                                    String verificadoPor = documents['verificadoPor'];
+                                                    Timestamp DataEmpresaAnalise = documents['DataEntradaEmpresa'];
 
                                                     String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
+                                                    String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEmpresaAnalise.toDate()).replaceAll('-', '/');
 
                                                     final ByteData imageData = await rootBundle.load('assets/insertFoto.png');
 
@@ -378,7 +379,7 @@ class _listEntradaState extends State<listEntrada> {
 
                                                     Navigator.push(context,
                                                         MaterialPageRoute(builder: (context){
-                                                          return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, file, file2, file3, file);
+                                                          return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, file, file2, file3, file, formattedDate2);
                                                         }));
 
                                                   }
@@ -393,8 +394,10 @@ class _listEntradaState extends State<listEntrada> {
                                                       String EmpresadeOrigin = documents['EmpresadeOrigin'];
                                                       String Galpao = documents['Galpão'];
                                                       String verificadoPor = documents['verificadoPor'];
+                                                      Timestamp DataEmpresaAnalise = documents['DataEntradaEmpresa'];
 
                                                       String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
+                                                      String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEmpresaAnalise.toDate()).replaceAll('-', '/');
 
                                                       final ByteData imageData = await rootBundle.load('assets/error-image.png');
 
@@ -423,7 +426,7 @@ class _listEntradaState extends State<listEntrada> {
 
                                                       Navigator.push(context,
                                                           MaterialPageRoute(builder: (context){
-                                                            return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4);
+                                                            return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2);
                                                           }));
                                                     }
                                                   }

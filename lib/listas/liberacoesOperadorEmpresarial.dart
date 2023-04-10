@@ -74,6 +74,9 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
     double tamanhotextobtns = 16;
     double aspect = 1.0;
 
+    Map Galpoes = { };
+    List GalpoesList = [ ];
+
     if(kIsWeb){
       tamanhotexto = 25;
       tamanhotextobtns = 34;
@@ -344,6 +347,13 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                               ElevatedButton(
                                                   onPressed: () async {
 
+                                                    var UID = FirebaseAuth.instance.currentUser?.uid;
+
+                                                    var userValues = await FirebaseFirestore.instance
+                                                        .collection("operadorEmpresarial")
+                                                        .doc(UID)
+                                                        .get();
+
                                                     if(documents['Status'] == 'Entrada' ){
 
                                                       String lacre = documents['LacreouNao'];
@@ -406,55 +416,98 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
 
                                                     if(documents['Status'] == 'Aguardando'){
                                                       if(lacre == 'lacre'){
-                                                        String liberadopor = documents['QuemAutorizou'];
-                                                        Timestamp horarioCriacao = documents['Horario Criado'];
-                                                        String nomeMotorista = documents['nomeMotorista'];
-                                                        String Veiculo = documents['Veiculo'];
-                                                        String PlacaVeiculo = documents['PlacaVeiculo'];
-                                                        String Empresadestino = documents['Empresa'];
-                                                        String EmpresadeOrigin = documents['EmpresadeOrigin'];
-                                                        String Galpao = documents['Galpão'];
-                                                        String verificadoPor = documents['verificadoPor'];
-                                                        Timestamp DataDeAnalise = documents['DataDeAnalise'];
-                                                        Timestamp DataEntrada = documents['DataEntrada'];
-                                                        String urlImage1 = documents['uriImage'];
-                                                        String urlImage2 = documents['uriImage2'];
-                                                        String urlImage3 = documents['uriImage3'];
-                                                        String urlImage4 = documents['uriImage4'];
 
-                                                        String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
-                                                        String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
-                                                        String formattedDate3 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataDeAnalise.toDate()).replaceAll('-', '/');
 
-                                                        Navigator.push(context,
-                                                            MaterialPageRoute(builder: (context){
-                                                              return operadorEmpresarialAguardando(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, verificadoPor, formattedDate3, urlImage1, urlImage2, urlImage3, urlImage4);
-                                                            }));
+                                                          var result = await FirebaseFirestore.instance
+                                                              .collection("empresa")
+                                                              .get();
+
+                                                          for (var res in result.docs) {
+                                                            for (int i = result.docs.length; i >= 1; i--) {
+                                                              if(i == result.docs.length){
+
+                                                                if(res.data()['nome'] == widget.empresaName){
+
+                                                                  Galpoes.addAll(res.data()['galpaes']);
+
+                                                                  Galpoes.keys.toList();
+
+                                                                  print(Galpoes.keys);
+                                                                  String liberadopor = documents['QuemAutorizou'];
+                                                                  Timestamp horarioCriacao = documents['Horario Criado'];
+                                                                  String nomeMotorista = documents['nomeMotorista'];
+                                                                  String Veiculo = documents['Veiculo'];
+                                                                  String PlacaVeiculo = documents['PlacaVeiculo'];
+                                                                  String Empresadestino = documents['Empresa'];
+                                                                  String EmpresadeOrigin = documents['EmpresadeOrigin'];
+                                                                  String Galpao = documents['Galpão'];
+                                                                  String verificadoPor = documents['verificadoPor'];
+                                                                  String DataDeAnalise = documents['DataDeAnalise'];
+                                                                  String urlImage1 = documents['uriImage'];
+                                                                  String urlImage2 = documents['uriImage2'];
+                                                                  String urlImage3 = documents['uriImage3'];
+                                                                  String urlImage4 = documents['uriImage4'];
+
+                                                                  String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
+
+                                                                  String IDEmpresa = userValues.get('idEmpresa');
+
+                                                                  Navigator.push(context,
+                                                                      MaterialPageRoute(builder: (context){
+                                                                        return operadorEmpresarialAguardando(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, verificadoPor, DataDeAnalise, urlImage1, urlImage2, urlImage3, urlImage4, Galpoes, IDEmpresa);
+                                                                      }));
+
+                                                                }
+                                                              }
+                                                            }
+                                                          }
                                                       }
                                                       else{
                                                         if(lacre == 'naolacrado'){
-                                                          String liberadopor = documents['QuemAutorizou'];
-                                                          Timestamp horarioCriacao = documents['Horario Criado'];
-                                                          String nomeMotorista = documents['nomeMotorista'];
-                                                          String Veiculo = documents['Veiculo'];
-                                                          String PlacaVeiculo = documents['PlacaVeiculo'];
-                                                          String Empresadestino = documents['Empresa'];
-                                                          String EmpresadeOrigin = documents['EmpresadeOrigin'];
-                                                          String Galpao = documents['Galpão'];
-                                                          String verificadoPor = documents['verificadoPor'];
-                                                          Timestamp DataDeAnalise = documents['DataDeAnalise'];
-                                                          String urlImage1 = documents['uriImage'];
-                                                          String urlImage2 = documents['uriImage2'];
-                                                          String urlImage3 = documents['uriImage3'];
-                                                          String urlImage4 = documents['uriImage4'];
 
-                                                          String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
-                                                          String formattedDate3 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataDeAnalise.toDate()).replaceAll('-', '/');
+                                                          var result = await FirebaseFirestore.instance
+                                                              .collection("empresa")
+                                                              .get();
 
-                                                          Navigator.push(context,
-                                                              MaterialPageRoute(builder: (context){
-                                                                return operadorEmpresarialAguardando(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, verificadoPor, formattedDate3, urlImage1, urlImage2, urlImage3, urlImage4);
-                                                              }));
+                                                          for (var res in result.docs) {
+                                                            for (int i = result.docs.length; i >= 1; i--) {
+                                                              if(i == result.docs.length){
+
+                                                                if(res.data()['nome'] == widget.empresaName){
+
+                                                                  Galpoes.addAll(res.data()['galpaes']);
+
+                                                                  Galpoes.keys.toList();
+
+                                                                  print(Galpoes.keys);
+
+                                                                  String liberadopor = documents['QuemAutorizou'];
+                                                                  Timestamp horarioCriacao = documents['Horario Criado'];
+                                                                  String nomeMotorista = documents['nomeMotorista'];
+                                                                  String Veiculo = documents['Veiculo'];
+                                                                  String PlacaVeiculo = documents['PlacaVeiculo'];
+                                                                  String Empresadestino = documents['Empresa'];
+                                                                  String EmpresadeOrigin = documents['EmpresadeOrigin'];
+                                                                  String Galpao = documents['Galpão'];
+                                                                  String verificadoPor = documents['verificadoPor'];
+                                                                  String DataDeAnalise = documents['DataDeAnalise'];
+                                                                  String urlImage1 = documents['uriImage'];
+                                                                  String urlImage2 = documents['uriImage2'];
+                                                                  String urlImage3 = documents['uriImage3'];
+                                                                  String urlImage4 = documents['uriImage4'];
+
+                                                                  String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
+
+                                                                  String IDEmpresa = userValues.get('idEmpresa');
+
+                                                                  Navigator.push(context,
+                                                                      MaterialPageRoute(builder: (context){
+                                                                        return operadorEmpresarialAguardando(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, verificadoPor, DataDeAnalise, urlImage1, urlImage2, urlImage3, urlImage4, Galpoes, IDEmpresa);
+                                                                      }));
+                                                                }
+                                                              }
+                                                            }
+                                                          }
                                                         }
                                                       }
                                                     }else{

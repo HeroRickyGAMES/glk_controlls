@@ -360,7 +360,6 @@ class _loginState extends State<login> {
 
                                               print(key);
                                               print(value);
-                                              bool relatorio = false;
 
                                               if(key == 'estaativo'){
                                                 if(value == true){
@@ -371,18 +370,6 @@ class _loginState extends State<login> {
                                                       .get();
 
                                                   String empresaName = (result.get('empresa'));
-                                                  String empresaID = (result.get('idEmpresa'));
-
-                                                  var result2 = await FirebaseFirestore.instance
-                                                      .collection("empresa")
-                                                      .doc(empresaID)
-                                                      .get();
-
-                                                  List<dynamic> dias = (result2.get('RelatorioDays'));
-
-                                                  String dayHj = '${DateTime.now().day}';
-                                                  print('Dia do relatiorio são ${dias}');
-                                                  print('Dia de hoje é ${DateTime.now().day}');
 
                                                   Navigator.pop(context);
                                                   Navigator.push(context,
@@ -406,6 +393,7 @@ class _loginState extends State<login> {
                                                       ),
                                                     ],
                                                   );
+
                                                   showDialog(
                                                     context: context,
                                                     builder: (BuildContext context) {
@@ -415,13 +403,10 @@ class _loginState extends State<login> {
                                                 }
                                               }
                                             });
-
                                           }
                                           );
                                         }
-
                                       });
-
                                     }
                                     );
                                   }

@@ -351,7 +351,6 @@ void main() {
 
                        print(key);
                        print(value);
-                       bool relatorio = false;
 
                        if(key == 'estaativo'){
                          if(value == true){

@@ -3,16 +3,38 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
-import 'callToAPItoOFF.dart';
+Future<void> releCancelaEntrada() async {
 
-Future<void> getReleAPI1() async {
-  await Future.delayed(Duration(seconds: 1));
-
+  //Contasta para o Relê 1
   var result = await FirebaseFirestore.instance
-      .collection("Server")
-      .doc('serverValues')
+      .collection("Reles")
+      .doc('Rele01')
       .get();
-  String urlRele = (result.get('URLRele'));
+
+  String urlRele = (result.get('ip'));
+
+  final String urlst = 'http://${urlRele}/relay_set.cgi?relay=0&on=1&';
+
+  final response = await http.get(Uri.parse(urlst));
+
+  if (response.statusCode == 200) {
+
+    print('Status 200');
+
+  } else {
+    print('Request failed with status: ${response.statusCode}.');
+  }
+}
+
+Future<void> rele1comDelay(int valorDelay) async {
+  await Future.delayed(Duration(seconds: valorDelay));
+  //Contasta para o Relê 1
+  var result = await FirebaseFirestore.instance
+      .collection("Reles")
+      .doc('Rele01')
+      .get();
+
+  String urlRele = (result.get('ip'));
 
   final String urlst = 'http://${urlRele}/relay_set.cgi?relay=0&on=1&';
 
@@ -23,19 +45,17 @@ Future<void> getReleAPI1() async {
   } else {
     print('Request failed with status: ${response.statusCode}.');
   }
-
-  getReleAPI2();
-
 }
 
-Future<void> getReleAPI2() async {
-  await Future.delayed(Duration(seconds: 5));
+Future<void> releFechamento02() async {
 
+  //Contasta para o Relê 2
   var result = await FirebaseFirestore.instance
-      .collection("Server")
-      .doc('serverValues')
+      .collection("Reles")
+      .doc('Rele01')
       .get();
-  String urlRele = (result.get('URLRele'));
+
+  String urlRele = (result.get('ip'));
 
   final String urlst = 'http://${urlRele}/relay_set.cgi?relay=1&on=1&';
 
@@ -46,17 +66,58 @@ Future<void> getReleAPI2() async {
   } else {
     print('Request failed with status: ${response.statusCode}.');
   }
-  getReleAPI3();
 }
 
-Future<void> getReleAPI3() async {
-  await Future.delayed(Duration(seconds: 5));
+Future<void> releFarol02() async {
+
+  //Contasta para o Relê 2
+  var result = await FirebaseFirestore.instance
+      .collection("Reles")
+      .doc('Rele01')
+      .get();
+
+  String urlRele = (result.get('ip'));
+
+  final String urlst = 'http://${urlRele}/relay_set.cgi?relay=1&on=1&';
+
+  final response = await http.get(Uri.parse(urlst));
+
+  if (response.statusCode == 200) {
+
+  } else {
+    print('Request failed with status: ${response.statusCode}.');
+  }
+}
+
+Future<void> rele2comDelay(int valorDelay) async {
+  await Future.delayed(Duration(seconds: valorDelay));
+  //Contasta para o Relê 2
+  var result = await FirebaseFirestore.instance
+      .collection("Reles")
+      .doc('Rele01')
+      .get();
+
+  String urlRele = (result.get('ip'));
+
+  final String urlst = 'http://${urlRele}/relay_set.cgi?relay=1&on=1&';
+
+  final response = await http.get(Uri.parse(urlst));
+
+  if (response.statusCode == 200) {
+
+  } else {
+    print('Request failed with status: ${response.statusCode}.');
+  }
+}
+
+Future<void> releFarol03() async {
 
   var result = await FirebaseFirestore.instance
-      .collection("Server")
-      .doc('serverValues')
+      .collection("Reles")
+      .doc('Rele01')
       .get();
-  String urlRele = (result.get('URLRele'));
+
+  String urlRele = (result.get('ip'));
 
   final String urlst = 'http://${urlRele}/relay_set.cgi?relay=2&on=1&';
 
@@ -67,17 +128,36 @@ Future<void> getReleAPI3() async {
   } else {
     print('Request failed with status: ${response.statusCode}.');
   }
-  getReleAPI4();
 }
 
-Future<void> getReleAPI4() async {
-  await Future.delayed(Duration(seconds: 5));
+Future<void> rele3comDelay(int valorDelay) async {
+  await Future.delayed(Duration(seconds: valorDelay));
+  var result = await FirebaseFirestore.instance
+      .collection("Reles")
+      .doc('Rele01')
+      .get();
+
+  String urlRele = (result.get('ip'));
+
+  final String urlst = 'http://${urlRele}/relay_set.cgi?relay=2&on=1&';
+
+  final response = await http.get(Uri.parse(urlst));
+
+  if (response.statusCode == 200) {
+
+  } else {
+    print('Request failed with status: ${response.statusCode}.');
+  }
+}
+
+Future<void> releFarol04() async {
 
   var result = await FirebaseFirestore.instance
-      .collection("Server")
-      .doc('serverValues')
+      .collection("Reles")
+      .doc('Rele01')
       .get();
-  String urlRele = (result.get('URLRele'));
+
+  String urlRele = (result.get('ip'));
 
   final String urlst = 'http://${urlRele}/relay_set.cgi?relay=3&on=1&';
 
@@ -85,7 +165,26 @@ Future<void> getReleAPI4() async {
 
   if (response.statusCode == 200) {
 
-    getReleAPI5();
+  } else {
+    print('Request failed with status: ${response.statusCode}.');
+  }
+}
+
+Future<void> rele4comDelay(int valorDelay) async {
+  await Future.delayed(Duration(seconds: valorDelay));
+
+  var result = await FirebaseFirestore.instance
+      .collection("Reles")
+      .doc('Rele01')
+      .get();
+
+  String urlRele = (result.get('ip'));
+
+  final String urlst = 'http://${urlRele}/relay_set.cgi?relay=3&on=1&';
+
+  final response = await http.get(Uri.parse(urlst));
+
+  if (response.statusCode == 200) {
 
   } else {
     print('Request failed with status: ${response.statusCode}.');

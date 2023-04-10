@@ -22,7 +22,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
   String? coletaouentrega;
   String? lacreounao;
   String? empresaSelecionada;
-  String? galpaoSelecionado;
 
   //fields
   String? nomeMotorista;
@@ -36,12 +35,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
   TextEditingController nameMotoristaAllcaps = TextEditingController();
   TextEditingController placaveiculointerface = TextEditingController();
   TextEditingController telefoneinterface = TextEditingController();
-
-  final dropValue3 = ValueNotifier('');
-
-  Map Galpoes = { };
-  List GalpoesList = [ ];
-  bool empresaPikada = false;
 
   List VeiculoOPC = [
     'Caminhão',
@@ -62,8 +55,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
-
-      int ValorSubtract = int.parse(Galpoes[galpaoSelecionado]) - 1;
 
       print(lacreounao);
       if(lacreounao == 'lacre'){
@@ -87,7 +78,11 @@ class _modalPorteiroState extends State<modalPorteiro> {
           'Empresa': empresaSelecionada,
           'ColetaOuEntrega': coletaouentrega,
           'saidaLiberadaPor': '',
+          'DataAnaliseEmpresa': '',
           'uriImage': '',
+          'uriImage2': '',
+          'uriImage3': '',
+          'uriImage4': '',
           'LacreouNao': lacreounao,
           'QuemAutorizou': widget.nomeUser,
           'Status': 'Aguardando',
@@ -101,7 +96,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
           'DataDeAnalise': '',
           'DataEntradaEmpresa': '',
           'DateSaidaPortaria': '',
-          'liberouSaida': ''
+          'liberouSaida': '',
+          'Galpão': '',
         }).then((value) {
 
           Fluttertoast.showToast(
@@ -194,13 +190,18 @@ class _modalPorteiroState extends State<modalPorteiro> {
           'Status': 'Aguardando',
           'Horario Criado': dateTime,
           'saidaLiberadaPor': '',
+          'DataAnaliseEmpresa': '',
           'uriImage': '',
+          'uriImage2': '',
+          'uriImage3': '',
+          'uriImage4': '',
           'lacrenum': '',
           'verificadoPor': '',
           'DataDeAnalise': '',
           'DataEntradaEmpresa': '',
           'DateSaidaPortaria': '',
-          'liberouSaida': ''
+          'liberouSaida': '',
+          'Galpão': '',
         }).then((value) {
           Fluttertoast.showToast(
             msg: 'Enviado com sucesso!',
@@ -683,38 +684,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
                       ),
                       value: (value.isEmpty)? null : value,
                       onChanged: (escolha) async {
-                        Galpoes.clear();
                         widget.dropValue.value = escolha.toString();
 
                         empresaSelecionada = escolha.toString();
-
-
-                        adicionarMaisGalpoes() async {
-                          var result = await FirebaseFirestore.instance
-                              .collection("empresa")
-                              .get();
-
-                          for (var res in result.docs) {
-                            for (int i = result.docs.length; i >= 1; i--) {
-                              if(i == result.docs.length){
-
-                                if(res.data()['nome'] == empresaSelecionada){
-
-                                  Galpoes.addAll(res.data()['galpaes']);
-
-                                  Galpoes.keys.toList();
-
-                                  print(Galpoes.keys);
-
-                                  setState(() {
-                                    empresaPikada = true;
-                                  });
-                                }
-                              }
-                            }
-                          }
-                        }
-                        adicionarMaisGalpoes();
 
                       },
                       items: widget.EmpresasOpc.map((opcao) => DropdownMenuItem(
@@ -731,49 +703,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     );
                   })
               ),
-              empresaPikada == true ? Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    child: Text(
-                      'Galpões da Empresa *',
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold
-                      ),
-                    ),
-                  ),
-                 Center(
-                      child: ValueListenableBuilder(valueListenable: dropValue3, builder: (context, String value, _){
-                        return DropdownButton(
-                          hint: Text(
-                            'Selecione um galpão',
-                            style: TextStyle(
-                                fontSize: 18
-                            ),
-                          ),
-                          value: (value.isEmpty)? null : value,
-                          onChanged: (escolha) async {
-                            dropValue3.value = escolha.toString();
-
-                            galpaoSelecionado = escolha.toString();
-                          },
-                          items: Galpoes.keys.map((opcao) => DropdownMenuItem(
-                            value: opcao,
-                            child:
-                            Text(
-                              opcao,
-                              style: TextStyle(
-                                  fontSize: 18
-                              ),
-                            ),
-                          ),
-                          ).toList(),
-                        );
-                      })
-                  ),
-                ],
-              ) : Text(''),
               Container(
                 padding: EdgeInsets.only(top: 16),
                 child:

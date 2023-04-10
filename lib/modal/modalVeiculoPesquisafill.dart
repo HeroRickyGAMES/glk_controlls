@@ -246,7 +246,6 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                                       'nomeMotorista': nomeMotorista,
                                       'RGDoMotorista': RGMotorista,
                                     });
-                                    getReleAPI1();
 
                                     Navigator.pop(context);
                                     Navigator.push(context,
@@ -337,8 +336,6 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                                       'nomeMotorista': nomeMotorista,
                                       'RGDoMotorista': RGMotorista,
                                     });
-
-                                    getReleAPI1();
 
                                     Navigator.pop(context);
                                     Navigator.push(context,
