@@ -36,6 +36,8 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
     '09',
     '10',
   ];
+  Map<String, String> galpoesMap = { };
+
   final _textController = TextEditingController();
   final respNameController = TextEditingController();
   final telNumController = TextEditingController();
@@ -352,6 +354,10 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                     print(tags);
                                                     print(i-1);
 
+                                                    galpoesMap.putIfAbsent(tags[i-1], () => vagas);
+
+                                                    print("MAP É ${galpoesMap}");
+
                                                     if(galpoesUsados.contains(tags[i-1])){
                                                       Fluttertoast.showToast(
                                                         msg: 'Os Galpões Selecionados já estão sendo usados por outra empresa!',
@@ -375,10 +381,12 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
 
                                                         String idd = "${DateTime.now().toString()}" + uuid.v4();
 
+                                                        print("MAP É DEPOIS ${galpoesMap}");
+
                                                         FirebaseFirestore.instance.collection('empresa').doc(idd).set(
                                                             {
                                                               'nome': empresaName,
-                                                              'galpaes': tags,
+                                                              'galpaes': galpoesMap,
                                                               'NameResponsavel': respName,
                                                               'Telefone': telNum,
                                                               'tipoConta': 'empresa',
