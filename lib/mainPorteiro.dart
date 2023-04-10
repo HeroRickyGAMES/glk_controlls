@@ -98,8 +98,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
 
                     if(key == 'nome'){
 
-                      Navigator.of(context).pop();
-                      Navigator.pop(context);
+
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context){
                             return modalPorteiro(listaNome, dropValue, PorteiroNomee, '',dropValue2);

@@ -39,7 +39,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
   final dropValue3 = ValueNotifier('');
 
-  List Galpoes = [ ];
+  Map Galpoes = { };
+  List GalpoesList = [ ];
   bool empresaPikada = false;
 
   List VeiculoOPC = [
@@ -61,6 +62,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
         textColor: Colors.white,
         fontSize: 16.0,
       );
+
+      int ValorSubtract = int.parse(Galpoes[galpaoSelecionado]) - 1;
+
       print(lacreounao);
       if(lacreounao == 'lacre'){
 
@@ -70,6 +74,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
         var dateTime= new DateTime.now();
 
         var uuid = Uuid();
+
 
         String idd = "${DateTime.now().toString()}" + uuid.v4();
         FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
@@ -678,6 +683,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                       ),
                       value: (value.isEmpty)? null : value,
                       onChanged: (escolha) async {
+                        Galpoes.clear();
                         widget.dropValue.value = escolha.toString();
 
                         empresaSelecionada = escolha.toString();
@@ -695,6 +701,10 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                 if(res.data()['nome'] == empresaSelecionada){
 
                                   Galpoes.addAll(res.data()['galpaes']);
+
+                                  Galpoes.keys.toList();
+
+                                  print(Galpoes.keys);
 
                                   setState(() {
                                     empresaPikada = true;
@@ -748,7 +758,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
                             galpaoSelecionado = escolha.toString();
                           },
-                          items: Galpoes.map((opcao) => DropdownMenuItem(
+                          items: Galpoes.keys.map((opcao) => DropdownMenuItem(
                             value: opcao,
                             child:
                             Text(

@@ -36,7 +36,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
     '09',
     '10',
   ];
-  Map<String, String> galpoesMap = { };
+  Map<String, int> galpoesMap = { };
 
   final _textController = TextEditingController();
   final respNameController = TextEditingController();
@@ -354,7 +354,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                     print(tags);
                                                     print(i-1);
 
-                                                    galpoesMap.putIfAbsent(tags[i-1], () => vagas);
+                                                    galpoesMap.putIfAbsent(tags[i-1], () => int.parse(vagas));
 
                                                     print("MAP É ${galpoesMap}");
 
