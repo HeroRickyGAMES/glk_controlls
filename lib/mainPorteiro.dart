@@ -9,6 +9,7 @@ import 'package:glk_controls/modal/modalVeiculoEdit.dart';
 import 'package:glk_controls/pesquisaDir/pesquisaNovoCadastro.dart';
 import 'package:glk_controls/relatorio.dart';
 
+import 'anteLogin.dart';
 import 'listas/listaSaida.dart';
 import 'modal/liberacaooffModal.dart';
 import 'modal/modalVeiculo.dart';
@@ -386,28 +387,63 @@ class _mainPorteiroState extends State<mainPorteiro> {
                 )
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Container(
-                    width: 180,
-                    height: 180,
-                    padding: EdgeInsets.all(16),
-                    child:
-                    Image.network(
-                      widget.LogoPath,
-                      fit: BoxFit.contain,
-                    ),
+                Column(
+                  children: [
+                    Container(
+                      padding: EdgeInsets.all(16),
+                      child: ElevatedButton(
+                        onPressed: () async {
+                          await FirebaseAuth.instance.signOut().then((value){
+                            Navigator.pop(context);
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context){
+                                  return anteLogin();
+                                }));
+                            print('Usuário desconectado');
+                          });
+
+                        },
+                        child: Text(
+                          'Logoff',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.red
+                        ),
+                      ),
+                    )
+                  ],
                 ),
-                Container(
-                  padding: EdgeInsets.all(16),
-                  child:
-                  Text(
-                    'Operador: ' + widget.PorteiroNome,
-                    style: TextStyle(
-                        fontSize: 20
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                        width: 180,
+                        height: 180,
+                        padding: EdgeInsets.all(16),
+                        child:
+                        Image.network(
+                          widget.LogoPath,
+                          fit: BoxFit.contain,
+                        ),
                     ),
-                  ),
+                    Container(
+                      padding: EdgeInsets.all(16),
+                      child:
+                      Text(
+                        'Operador: ' + widget.PorteiroNome,
+                        style: TextStyle(
+                            fontSize: 20
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),

@@ -217,29 +217,13 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
               ),
               value: "lacre",
               groupValue: widget.lacreounao,
-              onChanged: (value){
-                setState(() {
-                  widget.lacreounao = value.toString();
-
-                  if(value == 'lacre'){
-                    lacrebool = true;
-                  }
-                });
-              },
+              onChanged: null,
             ),
               RadioListTile(
                 title: Text("Sem Lacre",),
                 value: "naolacrado",
                 groupValue: widget.lacreounao,
-                onChanged: (value){
-                  setState(() {
-                    widget.lacreounao = value.toString();
-
-                    if(value == 'naolacrado'){
-                      lacrebool = false;
-                    }
-                  });
-                },
+                onChanged: null,
               ),
               lacrebool ?
               Container(

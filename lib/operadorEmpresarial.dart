@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:glk_controls/anteLogin.dart';
 import 'package:glk_controls/relatorio.dart';
 import 'listas/liberacoesOperadorEmpresarial.dart';
 
@@ -176,28 +178,64 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
               ),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Container(
-                  width: 180,
-                  height: 180,
-                  padding: EdgeInsets.all(16),
-                  child:
-                  Image.asset(
-                    'assets/sanca.png',
-                    fit: BoxFit.contain,
+              Column(
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    child: ElevatedButton(
+                        onPressed: () async {
+                          await FirebaseAuth.instance.signOut().then((value){
+                            Navigator.pop(context);
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context){
+                                  return anteLogin();
+                                }));
+                            print('Usuário desconectado');
+                          });
+
+                        },
+                        child: Text(
+                            'Logoff',
+                          style: TextStyle(
+                            fontSize: tamanhotexto,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.red
+                      ),
+                    ),
                   )
+                ],
               ),
-              Container(
-                padding: EdgeInsets.all(16),
-                child:
-                Text(
-                  'Operador: ' + widget.name,
-                  style: TextStyle(
-                      fontSize: tamanhotexto
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                      width: 180,
+                      height: 180,
+                      padding: EdgeInsets.all(16),
+                      child:
+                      Image.asset(
+                        'assets/sanca.png',
+                        fit: BoxFit.contain,
+                      )
                   ),
-                ),
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    child:
+                    Text(
+                      'Operador: ' + widget.name,
+                      style: TextStyle(
+                          fontSize: tamanhotexto
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
