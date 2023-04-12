@@ -4,24 +4,27 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../mainPorteiro.dart';
 import 'package:uuid/uuid.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
 
 //Programado Por HeroRickyGames
 
-class modalPorteiro extends StatefulWidget {
-  final List<dynamic> EmpresasOpc;
-  final dropValue;
+class modalVeiculoAgendamento extends StatefulWidget {
   final String nomeUser;
-  final String idEmpresa;
+  final String NomeEmpresa;
   final dropValue2;
-  modalPorteiro(this.EmpresasOpc, this.dropValue, this.nomeUser, this.idEmpresa, this.dropValue2);
+  final dropValue;
+  List Galpoes;
+  modalVeiculoAgendamento(this.nomeUser, this.NomeEmpresa, this.dropValue2, this.dropValue, this.Galpoes);
 
   @override
-  State<modalPorteiro> createState() => _modalPorteiroState();
+  State<modalVeiculoAgendamento> createState() => _modalVeiculoAgendamentoState();
 }
-class _modalPorteiroState extends State<modalPorteiro> {
+class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
   String? coletaouentrega;
   String? lacreounao;
   String? empresaSelecionada;
+  String? galpao;
 
   //fields
   String? nomeMotorista;
@@ -35,6 +38,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
   TextEditingController nameMotoristaAllcaps = TextEditingController();
   TextEditingController placaveiculointerface = TextEditingController();
   TextEditingController telefoneinterface = TextEditingController();
+
+  late DateTime dataAgendada;
+  String dataAgendataST = '';
 
   List VeiculoOPC = [
     'Caminhão',
@@ -66,39 +72,38 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
         var uuid = Uuid();
 
-
         String idd = "${DateTime.now().toString()}" + uuid.v4();
         FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
           'nomeMotorista': nomeMotorista,
           'RGDoMotorista': RGMotorista,
           'Veiculo': Veiculo,
-          'PlacaVeiculo': VeiculoPlaca,
+          'idDoc': idd,
+          'DataSaida': '',
+          'PlacaVeiculo': VeiculoPlaca! + "(AG)",
           'Telefone': telefone,
           'EmpresadeOrigin': originEmpresa,
-          'Empresa': empresaSelecionada,
           'ColetaOuEntrega': coletaouentrega,
+          'LacreouNao': lacreounao,
+          'QuemAutorizou': widget.nomeUser,
+          'Status': 'Em Verificação',
+          'Horario Criado': dateTime,
           'saidaLiberadaPor': '',
-          'DataAnaliseEmpresa': '',
           'uriImage': '',
           'uriImage2': '',
           'uriImage3': '',
           'uriImage4': '',
-          'LacreouNao': lacreounao,
-          'QuemAutorizou': widget.nomeUser,
-          'Status': 'Aguardando',
-          'idDoc': idd,
-          'DataEntrada': '',
-          'DataSaida': '',
-          'Lacre': lacreSt,
-          'lacrenum': lacreSt,
-          'Horario Criado': dateTime,
-          'verificadoPor': '',
+          'lacrenum': '',
+          'verificadoPor': 'Agendamento',
+          'Empresa': widget.NomeEmpresa,
           'DataDeAnalise': '',
-          'DataEntradaEmpresa': '',
+          'DataEntradaEmpresa': dataAgendada,
+          'DataEntrada': dataAgendada,
+          'DataAnaliseEmpresa': dataAgendada,
           'DateSaidaPortaria': '',
           'liberouSaida': '',
-          'Galpão': '',
-        }).then((value) {
+          'Galpão': galpao,
+          'Lacre': lacreSt,
+        }).then((value) async {
 
           Fluttertoast.showToast(
             msg: 'Enviado com sucesso!',
@@ -108,59 +113,30 @@ class _modalPorteiroState extends State<modalPorteiro> {
             textColor: Colors.white,
             fontSize: 16.0,
           );
-          widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
 
-          var db = FirebaseFirestore.instance;
           var UID = FirebaseAuth.instance.currentUser?.uid;
-          db.collection('Users').doc(UID).get().then((event){
-            print("${event.data()}");
+          var result = await FirebaseFirestore.instance
+              .collection("operadorEmpresarial")
+              .doc(UID)
+              .get();
 
-            event.data()?.forEach((key, value) async {
+          String idEmpresa = (result.get('idEmpresa'));
 
-              print(key);
-              print(value);
+          var resultEmpresa = await FirebaseFirestore.instance
+              .collection("empresa")
+              .doc(idEmpresa)
+              .get();
 
-              if(key == 'nome'){
-                String PorteiroNome = value;
+          Map galpoes = (resultEmpresa.get('galpaes'));
 
-                print('Porteiro name é' + PorteiroNome);
 
-                var UID = FirebaseAuth.instance.currentUser?.uid;
-                var result = await FirebaseFirestore.instance
-                    .collection("porteiro")
-                    .doc(UID)
-                    .get();
+          galpoes[galpao] = galpoes[galpao] - 1;
 
-                bool cadastro = result.get('cadastrar');
-                bool entrada = result.get('entrada');
-                bool saida = result.get('saida');
-                bool relatorio = result.get('relatorio');
-                bool painel = result.get('painel');
-
-                FirebaseFirestore.instance.collection('Motoristas').doc().set({
-                  'nomeMotorista': nomeMotorista,
-                  'RGDoMotorista': RGMotorista,
-                });
-
-                var resulte = await FirebaseFirestore.instance
-                    .collection("Condominio")
-                    .doc('condominio')
-                    .get();
-
-                String logoPath = resulte.get('imageURL');
-
-                Navigator.pop(context);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context){
-                      return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath);
-                    }));
-
-              }
-
-            });
-
-          }
-          );
+          FirebaseFirestore.instance.collection('empresa').doc(idEmpresa).update({
+            'galpaes': galpoes
+          }).then((value){
+            Navigator.pop(context);
+          });
         });
       }
       if(lacreounao == 'naolacrado'){
@@ -178,31 +154,31 @@ class _modalPorteiroState extends State<modalPorteiro> {
           'RGDoMotorista': RGMotorista,
           'Veiculo': Veiculo,
           'idDoc': idd,
-          'DataEntrada': '',
           'DataSaida': '',
-          'PlacaVeiculo': VeiculoPlaca,
+          'PlacaVeiculo': VeiculoPlaca! + "(AG)",
           'Telefone': telefone,
           'EmpresadeOrigin': originEmpresa,
-          'Empresa': empresaSelecionada,
           'ColetaOuEntrega': coletaouentrega,
           'LacreouNao': lacreounao,
           'QuemAutorizou': widget.nomeUser,
-          'Status': 'Aguardando',
+          'Status': 'Em Verificação',
           'Horario Criado': dateTime,
           'saidaLiberadaPor': '',
-          'DataAnaliseEmpresa': '',
           'uriImage': '',
           'uriImage2': '',
           'uriImage3': '',
           'uriImage4': '',
           'lacrenum': '',
-          'verificadoPor': '',
+          'verificadoPor': 'Agendamento',
+          'Empresa': widget.NomeEmpresa,
           'DataDeAnalise': '',
-          'DataEntradaEmpresa': '',
+          'DataEntradaEmpresa': dataAgendada,
+          'DataEntrada': dataAgendada,
+          'DataAnaliseEmpresa': dataAgendada,
           'DateSaidaPortaria': '',
           'liberouSaida': '',
-          'Galpão': '',
-        }).then((value) {
+          'Galpão': galpao,
+        }).then((value) async {
           Fluttertoast.showToast(
             msg: 'Enviado com sucesso!',
             toastLength: Toast.LENGTH_SHORT,
@@ -211,63 +187,37 @@ class _modalPorteiroState extends State<modalPorteiro> {
             textColor: Colors.white,
             fontSize: 16.0,
           );
-          widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
 
-          var db = FirebaseFirestore.instance;
           var UID = FirebaseAuth.instance.currentUser?.uid;
-          db.collection('Users').doc(UID).get().then((event){
-            print("${event.data()}");
+          var result = await FirebaseFirestore.instance
+              .collection("operadorEmpresarial")
+              .doc(UID)
+              .get();
 
-            event.data()?.forEach((key, value) async {
+          String idEmpresa = (result.get('idEmpresa'));
 
-              print(key);
-              print(value);
+          var resultEmpresa = await FirebaseFirestore.instance
+              .collection("empresa")
+              .doc(idEmpresa)
+              .get();
 
-              if(key == 'nome'){
-                String PorteiroNome = value;
+          Map galpoes = (resultEmpresa.get('galpaes'));
 
-                print('Porteiro name é' + PorteiroNome);
 
-                var UID = FirebaseAuth.instance.currentUser?.uid;
-                var result = await FirebaseFirestore.instance
-                    .collection("porteiro")
-                    .doc(UID)
-                    .get();
+          galpoes[galpao] = galpoes[galpao] - 1;
 
-                print('cheguei aqui!');
-
-                bool cadastro = result.get('cadastrar');
-                bool entrada = result.get('entrada');
-                bool saida = result.get('saida');
-                bool relatorio = result.get('relatorio');
-                bool painel = result.get('painel');
-
-                FirebaseFirestore.instance.collection('Motoristas').doc().set({
-                  'nomeMotorista': nomeMotorista,
-                  'RGDoMotorista': RGMotorista,
-                });
-
-                var resulte = await FirebaseFirestore.instance
-                    .collection("Condominio")
-                    .doc('condominio')
-                    .get();
-
-                String logoPath = resulte.get('imageURL');
-
-                Navigator.pop(context);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context){
-                      return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath);
-                    }));
-              }
-            });
-          }
-          );
+          FirebaseFirestore.instance.collection('empresa').doc(idEmpresa).update({
+            'galpaes': galpoes
+          }).then((value){
+            Navigator.pop(context);
+          });
         });
       }
     }
 
     uploadInfos() async {
+      empresaSelecionada = widget.NomeEmpresa;
+
       if(nomeMotorista == null){
         Fluttertoast.showToast(
           msg: 'Preencha o nome do motorista!',
@@ -425,8 +375,29 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
                                     }else{
 
-                                      MandarMT();
-
+                                      if(galpao == ''){
+                                        Fluttertoast.showToast(
+                                          msg: 'Selecione um galpão!',
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.black,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0,
+                                        );
+                                      }else{
+                                        if(dataAgendataST == ''){
+                                          Fluttertoast.showToast(
+                                            msg: 'Selecione uma data para agendamento!',
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.black,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0,
+                                          );
+                                        }else{
+                                          MandarMT();
+                                        }
+                                      }
                                     }
                                   }
                                 }
@@ -540,6 +511,46 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   })
               ),
               Container(
+                padding: EdgeInsets.all(16),
+                child: Text(
+                  'Galpão *',
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+              Center(
+                  child: ValueListenableBuilder(valueListenable: widget.dropValue, builder: (context, String value, _){
+                    return DropdownButton(
+                      hint: Text(
+                        'Selecione um Galpão *',
+                        style: TextStyle(
+                            fontSize: 18
+                        ),
+                      ),
+                      value: (value.isEmpty)? null : value,
+                      onChanged: (escolha) async {
+                        widget.dropValue.value = escolha.toString();
+
+                        galpao = escolha.toString();
+
+                      },
+                      items: widget.Galpoes.map((opcao) => DropdownMenuItem(
+                        value: opcao,
+                        child:
+                        Text(
+                          opcao,
+                          style: TextStyle(
+                              fontSize: 18
+                          ),
+                        ),
+                      ),
+                      ).toList(),
+                    );
+                  })
+              ),
+              Container(
                 padding: EdgeInsets.only(top: 16),
                 child: TextFormField(
                   controller: placaveiculointerface,
@@ -613,35 +624,15 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   ),
                 ),
               ),
-              Center(
-                  child: ValueListenableBuilder(valueListenable: widget.dropValue, builder: (context, String value, _){
-                    return DropdownButton(
-                      hint: Text(
-                        'Selecione uma empresa',
-                        style: TextStyle(
-                            fontSize: 18
-                        ),
-                      ),
-                      value: (value.isEmpty)? null : value,
-                      onChanged: (escolha) async {
-                        widget.dropValue.value = escolha.toString();
-
-                        empresaSelecionada = escolha.toString();
-
-                      },
-                      items: widget.EmpresasOpc.map((opcao) => DropdownMenuItem(
-                        value: opcao,
-                        child:
-                        Text(
-                          opcao,
-                          style: TextStyle(
-                              fontSize: 18
-                          ),
-                        ),
-                      ),
-                      ).toList(),
-                    );
-                  })
+              Container(
+                padding: EdgeInsets.all(16),
+                child: Text(
+                  widget.NomeEmpresa,
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold
+                  ),
+                ),
               ),
               Container(
                 padding: EdgeInsets.only(top: 16),
@@ -696,7 +687,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   Container(
                     padding: EdgeInsets.all(16),
                     child: Text(
-                      'Selecione um disponivel Galpão (Selecione o que bate com com o nome da empresa)*',
+                      'Selecione um Galpão galpão (Selecione o que bate com com o nome da empresa)*',
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold
@@ -705,6 +696,39 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   ),
                 ],
               ),
+              Text(
+                  'Data de agendamento selecionada ${dataAgendataST}',
+                style: TextStyle(
+                    fontSize: 18
+                ),
+              ),
+              TextButton(
+                  onPressed: () {
+                    DatePicker.showDateTimePicker(context,
+                        showTitleActions: true,
+                        minTime: DateTime.now(),
+                        onChanged: (date) {
+                          print('change $date in time zone ' +
+                              date.timeZoneOffset.inHours.toString());
+                          dataAgendada = date;
+                          print(dataAgendada);
+                        }, onConfirm: (date) {
+                          print('confirm $date');
+                          dataAgendada = date;
+
+                          setState(() {
+                            dataAgendataST = DateFormat('dd-MM-yyyy HH:mm:ss').format(date).replaceAll('-', '/');
+                          });
+
+                        }, locale: LocaleType.pt);
+                  },
+                  child: Text(
+                    'Selecione a data',
+                    style: TextStyle(
+                        color: Colors.blue,
+                      fontSize: 18
+                    ),
+                  )),
               Container(
                 padding: EdgeInsets.only(top: 16),
                 child:
@@ -817,32 +841,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
               ),
               WillPopScope(
                 onWillPop: () async {
-                  widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
-
-                  var UID = FirebaseAuth.instance.currentUser?.uid;
-                  var result = await FirebaseFirestore.instance
-                      .collection("porteiro")
-                      .doc(UID)
-                      .get();
-
-                  bool cadastro = result.get('cadastrar');
-                  bool entrada = result.get('entrada');
-                  bool saida = result.get('saida');
-                  bool relatorio = result.get('relatorio');
-                  bool painel = result.get('painel');
-
-                  var resulte = await FirebaseFirestore.instance
-                      .collection("Condominio")
-                      .doc('condominio')
-                      .get();
-
-                  String logoPath = resulte.get('imageURL');
-
                   Navigator.pop(context);
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context){
-                        return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath);
-                      }));
+
                   // retorna false para impedir que a navegação volte à tela anterior
                   return false;
                 }, child: Text(''),

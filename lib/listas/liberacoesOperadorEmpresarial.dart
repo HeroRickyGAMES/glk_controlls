@@ -243,7 +243,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                             .instance
                             .collection('Autorizacoes')
                             .where('Empresa', isEqualTo: widget.empresaName)
-                            .where('Status', isNotEqualTo: 'Em Verificação')
+                            .where('Status', isNotEqualTo: 'Saida')
                             .snapshots(),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -304,6 +304,10 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
 
                                       if(documents['Status'] == 'Aguardando'){
                                         color = Colors.red[400] as Color;
+                                        textColor = Colors.white as Color;
+                                      }
+                                      if(documents['Status'] == 'Em Verificação'){
+                                        color = Colors.grey as Color;
                                         textColor = Colors.white as Color;
                                       }
 

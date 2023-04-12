@@ -264,6 +264,10 @@ class _listaSaidaState extends State<listaSaida> {
                                     children: [
                                       ElevatedButton(
                                           onPressed: (){
+
+                                            Map Galpoes = {};
+
+
                                             String lacreounao = documents['LacreouNao'];
                                             String empresaName = documents['EmpresadeOrigin'];
                                             String liberadopor = documents['QuemAutorizou'];
@@ -274,6 +278,8 @@ class _listaSaidaState extends State<listaSaida> {
                                             String Empresadestino = documents['Empresa'];
                                             String Galpao = documents['Galpão'];
                                             String lacradoStr = documents['lacrenum'];
+                                            String galpaoSelecionado = documents['galpaoSelecionado'];
+
 
                                             String idDocumento = documents.id;
                                             Timestamp DatadeAnalisest = documents['DataDeAnalise'];

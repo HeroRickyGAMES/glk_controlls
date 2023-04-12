@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/mainEmpresa.dart';
@@ -250,33 +251,58 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
             Container(
               padding: EdgeInsets.all(16),
               child: ElevatedButton(
-                onPressed: (){
-                  if(lacrebool == false){
-                    FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                      'DataSaida': DateTime.now(),
-                      'Status': 'Liberado'
-                    });
-                    Navigator.pop(context);
-                  }
+                onPressed: () async {
 
-                  if(lacrebool == true){
-                    if(lacreSt == null){
-                      Fluttertoast.showToast(
-                        msg: 'Preencha o numero do lacre!',
-                        toastLength: Toast.LENGTH_SHORT,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.black,
-                        textColor: Colors.white,
-                        fontSize: 16.0,
-                      );
-                    }else{
+                  //todo subtract
+
+                  var UID = FirebaseAuth.instance.currentUser?.uid;
+                  var result = await FirebaseFirestore.instance
+                      .collection("operadorEmpresarial")
+                      .doc(UID)
+                      .get();
+
+                  String idEmpresa = (result.get('idEmpresa'));
+
+                  var resultEmpresa = await FirebaseFirestore.instance
+                      .collection("empresa")
+                      .doc(idEmpresa)
+                      .get();
+
+                  Map galpoes = (resultEmpresa.get('galpaes'));
+
+
+                  galpoes[widget.Galpao] = galpoes[widget.Galpao] + 1;
+
+                  FirebaseFirestore.instance.collection('empresa').doc(idEmpresa).update({
+                    'galpaes': galpoes
+                  }).then((value){
+                    if(lacrebool == false){
                       FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                         'DataSaida': DateTime.now(),
                         'Status': 'Liberado'
                       });
                       Navigator.pop(context);
                     }
-                  }
+
+                    if(lacrebool == true){
+                      if(lacreSt == null){
+                        Fluttertoast.showToast(
+                          msg: 'Preencha o numero do lacre!',
+                          toastLength: Toast.LENGTH_SHORT,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.black,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
+                      }else{
+                        FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                          'DataSaida': DateTime.now(),
+                          'Status': 'Liberado'
+                        });
+                        Navigator.pop(context);
+                      }
+                    }
+                  });
                 },
                 child: Text(
                   'Prosseguir',

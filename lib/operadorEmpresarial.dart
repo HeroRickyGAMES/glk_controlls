@@ -5,16 +5,19 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:glk_controls/anteLogin.dart';
+import 'package:glk_controls/modal/modalVeiculoAgendamento.dart';
 import 'package:glk_controls/relatorio.dart';
 import 'listas/liberacoesOperadorEmpresarial.dart';
 
 
 //Programado por HeroRickyGames
 
-Map map = Map();
+  Map map = Map();
+  List listaNome = [];
+  Map Galpoes = { };
 
-Map<String, String> map1 = {};
-Map<String, String> mapNome = {};
+  Map<String, String> map1 = {};
+  Map<String, String> mapNome = {};
 class operadorEmpresarial extends StatefulWidget {
   final String name;
   final String empresaName;
@@ -58,6 +61,97 @@ class _PlateFormatter extends TextInputFormatter {
 }
 
 class _operadorEmpresarialState extends State<operadorEmpresarial> {
+
+  openModal() async {
+    //todo novo cadastro
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Aguarde!'),
+          actions: [
+            Center(
+              child: CircularProgressIndicator(),
+            )
+          ],
+        );
+      },
+    );
+
+    var result = await FirebaseFirestore.instance
+        .collection("empresa")
+        .get();
+    for (var res in result.docs) {
+      print(res.data()['nome']);
+
+      setState(() {
+        listaNome.add(res.data()['nome']);
+
+        final dropValue = ValueNotifier('');
+        final dropValue2 = ValueNotifier('');
+
+        var db = FirebaseFirestore.instance;
+        var UID = FirebaseAuth.instance.currentUser?.uid;
+        db.collection('Users').doc(UID).get().then((event){
+          print("${event.data()}");
+
+          event.data()?.forEach((key, value) {
+
+            print(key);
+            print(value);
+
+            if(key == 'nome'){
+              String PorteiroNomee = value;
+
+              var db = FirebaseFirestore.instance;
+              var UID = FirebaseAuth.instance.currentUser?.uid;
+              db.collection('Users').doc(UID).get().then((event){
+                print("${event.data()}");
+
+                event.data()?.forEach((key, value) async {
+
+                  print(key);
+                  print(value);
+
+                  if(key == 'nome'){
+
+                    var resultEmpresa = await FirebaseFirestore.instance
+                        .collection("empresa")
+                        .get();
+
+                    for (var res in resultEmpresa.docs) {
+
+                      for (int i = resultEmpresa.docs.length; i >= 1; i--) {
+                        if(i == resultEmpresa.docs.length){
+
+                          if(res.data()['nome'] == widget.empresaName){
+
+                            Galpoes.addAll(res.data()['galpaes']);
+
+
+                            Navigator.pop(context);
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context){
+                                  return modalVeiculoAgendamento(PorteiroNomee, widget.empresaName,dropValue2, dropValue, Galpoes.keys.toList());
+                                }));
+
+                          }
+                        }
+                      }
+                    }
+                  }
+                });
+              }
+              );
+            }
+          });
+        }
+        );
+      });
+    }
+    print(listaNome);
+  }
 
   Widget build(BuildContext context) {
     String idDocumento;
@@ -160,6 +254,24 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                     ),
                   style: ElevatedButton.styleFrom(
                       primary: Colors.green[700]
+                  ),
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                child: ElevatedButton(
+                  onPressed: openModal,
+                  child: Text(
+                    'Agendamento',
+                    style: TextStyle(
+                      fontSize: tamanhotexto,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.white24
                   ),
                 ),
               ),
