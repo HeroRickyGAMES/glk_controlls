@@ -115,13 +115,13 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Data: ${widget.DatadeAnalise}' ,
+                    'Data: ${widget.DateEntrada}' ,
                     style: TextStyle(
                         fontSize: 16
                     ),
                   ),
                   Text(
-                    ' - Analise - ' + widget.verificadoPor,
+                    ' - Analise na Empresa - ' + widget.empresaName,
                     style: TextStyle(
                         fontSize: 16
                     ),
@@ -137,13 +137,13 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Data: ${widget.DateEntrada}' ,
+                    'Data: ${widget.DatadeAnalise}' ,
                     style: TextStyle(
                         fontSize: 16
                     ),
                   ),
                   Text(
-                    ' - Entrada Empresa - ' + widget.empresaName,
+                    ' - Entrada - ' + widget.verificadoPor,
                     style: TextStyle(
                         fontSize: 16
                     ),

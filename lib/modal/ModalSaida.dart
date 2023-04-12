@@ -138,7 +138,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                     ),
                   ),
                   Text(
-                    ' - Analise - ' + widget.verificadoPor,
+                    ' - Analise da Empresa - ' + widget.Empresadestino,
                     style: TextStyle(
                         fontSize: 16
                     ),
@@ -160,7 +160,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                     ),
                   ),
                   Text(
-                    ' - Entrada Empresa - ' + widget.EmpresaDoc,
+                    ' - Portaria - ' + widget.verificadoPor,
                     style: TextStyle(
                         fontSize: 16
                     ),
@@ -182,7 +182,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                     ),
                   ),
                   Text(
-                    ' - Saida Empresa - ' + widget.EmpresaDoc,
+                    ' - Solicitação de saída - ' + widget.Empresadestino,
                     style: TextStyle(
                         fontSize: 16
                     ),
@@ -250,57 +250,6 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                 ),
               ),
             ),
-            RadioListTile(
-              title: Text(
-                  "Com Lacre"
-              ),
-              value: "lacre",
-              groupValue: widget.lacreounao,
-              onChanged: (value){
-                setState(() {
-                  widget.lacreounao = value.toString();
-
-                  if(value == 'lacre'){
-                    lacrebool = true;
-                  }
-                });
-              },
-            ),
-            RadioListTile(
-              title: Text("Sem Lacre",),
-              value: "naolacrado",
-              groupValue: widget.lacreounao,
-              onChanged: (value){
-                setState(() {
-                  widget.lacreounao = value.toString();
-                  if(value == 'naolacrado'){
-                    lacrebool = false;
-                  }
-                });
-              },
-            ),
-            lacrebool ?
-            Container(
-              padding: EdgeInsets.all(16),
-              child: TextFormField(
-                controller: _textEditingController,
-                onChanged: (valor){
-                  lacreSt = valor;
-                  //Mudou mandou para a String
-                },
-                keyboardType: TextInputType.number,
-                //enableSuggestions: false,
-                //autocorrect: false,
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Numero do lacre *',
-                  hintStyle: TextStyle(
-                      fontSize: 20
-                  ),
-                ),
-              ),
-            )
-                :Text(''),
             Container(
               padding: EdgeInsets.all(16),
               child: ElevatedButton(

@@ -294,9 +294,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
               releFarol04();
             }
           }
-
-
-
       }
 
       //rele 2
