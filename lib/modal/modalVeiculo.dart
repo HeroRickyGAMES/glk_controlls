@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../mainPorteiro.dart';
 import 'package:uuid/uuid.dart';
-
+import 'package:connectivity_plus/connectivity_plus.dart';
 //Programado Por HeroRickyGames
 
 class modalPorteiro extends StatefulWidget {
@@ -42,11 +42,32 @@ class _modalPorteiroState extends State<modalPorteiro> {
     'Carro de passeio',
     'Moto',
   ];
+  String Status = '';
+  var connectivityResult = (Connectivity().checkConnectivity());
+
+  @override
+  void initState() {
+
+    if(connectivityResult != ConnectivityResult.mobile || connectivityResult != ConnectivityResult.wifi){
+      setState(() {
+        Status = 'Em Verificação';
+      });
+
+    }
+    else if(connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi){
+      setState(() {
+        Status = 'Aguardando';
+      });
+
+    }
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
 
-    MandarMT(){
+    MandarMT() async {
       Fluttertoast.showToast(
         msg: 'Enviando informações para o servidor...',
         toastLength: Toast.LENGTH_SHORT,
@@ -85,7 +106,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
           'uriImage4': '',
           'LacreouNao': lacreounao,
           'QuemAutorizou': widget.nomeUser,
-          'Status': 'Aguardando',
+          'Status': Status,
           'idDoc': idd,
           'DataEntrada': '',
           'DataSaida': '',
@@ -154,13 +175,19 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     MaterialPageRoute(builder: (context){
                       return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath);
                     }));
-
               }
-
             });
-
           }
           );
+        }).catchError((onerror){
+          print('error $onerror');
+        }).whenComplete((){
+          if(connectivityResult != ConnectivityResult.mobile || connectivityResult != ConnectivityResult.wifi){
+            print('Feito com sucesso!');
+            Navigator.pop(context);
+          }else if(connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi){
+
+          }
         });
       }
       if(lacreounao == 'naolacrado'){
@@ -187,7 +214,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
           'ColetaOuEntrega': coletaouentrega,
           'LacreouNao': lacreounao,
           'QuemAutorizou': widget.nomeUser,
-          'Status': 'Aguardando',
+          'Status': Status,
           'Horario Criado': dateTime,
           'saidaLiberadaPor': '',
           'DataAnaliseEmpresa': '',
@@ -263,6 +290,15 @@ class _modalPorteiroState extends State<modalPorteiro> {
             });
           }
           );
+        }).catchError((onerror){
+          print('error $onerror');
+        }).whenComplete((){
+          if(connectivityResult != ConnectivityResult.mobile || connectivityResult != ConnectivityResult.wifi){
+            print('Feito com sucesso!');
+            Navigator.pop(context);
+          }else if(connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi){
+
+          }
         });
       }
     }
@@ -341,6 +377,19 @@ class _modalPorteiroState extends State<modalPorteiro> {
                       //Ele vai verificar se o usuario está bloqueado ou não.
                       print("chegou aqui");
 
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Aguarde!'),
+                            actions: [
+                              Center(
+                                child: CircularProgressIndicator(),
+                              )
+                            ],
+                          );
+                        },
+                      );
 
                       var result = await FirebaseFirestore.instance
                           .collection("VeiculosBloqueados")
@@ -381,7 +430,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                     print(res.data()['rg']);
 
                                     if(res.data()['rg'] == RGMotorista){
-
+                                      Navigator.of(context).pop();
                                       Fluttertoast.showToast(
                                         msg: 'Este visitante está bloqueado!',
                                         toastLength: Toast.LENGTH_SHORT,
@@ -398,7 +447,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
                             }else{
                               //Fez uma vez agora ele vai verificar se o motorista também está bloqueado!
                               print("chegou aqui");
-
 
                               var result = await FirebaseFirestore.instance
                                   .collection("VisitantesBloqueados")
@@ -422,6 +470,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                         textColor: Colors.white,
                                         fontSize: 16.0,
                                       );
+                                      Navigator.of(context).pop();
 
                                     }else{
 
@@ -817,32 +866,37 @@ class _modalPorteiroState extends State<modalPorteiro> {
               ),
               WillPopScope(
                 onWillPop: () async {
-                  widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
+                  if(connectivityResult != ConnectivityResult.mobile || connectivityResult != ConnectivityResult.wifi){
+                    widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
+                    Navigator.pop(context);
+                  }else{
+                    widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
 
-                  var UID = FirebaseAuth.instance.currentUser?.uid;
-                  var result = await FirebaseFirestore.instance
-                      .collection("porteiro")
-                      .doc(UID)
-                      .get();
+                    var UID = FirebaseAuth.instance.currentUser?.uid;
+                    var result = await FirebaseFirestore.instance
+                        .collection("porteiro")
+                        .doc(UID)
+                        .get();
 
-                  bool cadastro = result.get('cadastrar');
-                  bool entrada = result.get('entrada');
-                  bool saida = result.get('saida');
-                  bool relatorio = result.get('relatorio');
-                  bool painel = result.get('painel');
+                    bool cadastro = result.get('cadastrar');
+                    bool entrada = result.get('entrada');
+                    bool saida = result.get('saida');
+                    bool relatorio = result.get('relatorio');
+                    bool painel = result.get('painel');
 
-                  var resulte = await FirebaseFirestore.instance
-                      .collection("Condominio")
-                      .doc('condominio')
-                      .get();
+                    var resulte = await FirebaseFirestore.instance
+                        .collection("Condominio")
+                        .doc('condominio')
+                        .get();
 
-                  String logoPath = resulte.get('imageURL');
+                    String logoPath = resulte.get('imageURL');
 
-                  Navigator.pop(context);
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context){
-                        return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath);
-                      }));
+                    Navigator.pop(context);
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context){
+                          return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath);
+                        }));
+                  }
                   // retorna false para impedir que a navegação volte à tela anterior
                   return false;
                 }, child: Text(''),

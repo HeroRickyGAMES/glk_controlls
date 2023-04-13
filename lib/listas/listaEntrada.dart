@@ -394,40 +394,81 @@ class _listEntradaState extends State<listEntrada> {
                                                       String EmpresadeOrigin = documents['EmpresadeOrigin'];
                                                       String Galpao = documents['Galpão'];
                                                       String verificadoPor = documents['verificadoPor'];
-                                                      Timestamp DataEmpresaAnalise = documents['DataEntradaEmpresa'];
+                                                      String formattedDate2 = '';
 
-                                                      String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
-                                                      String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEmpresaAnalise.toDate()).replaceAll('-', '/');
+                                                      if(documents['DataEntradaEmpresa'] == ''){
+                                                        formattedDate2 = documents['DataEntradaEmpresa'];
 
-                                                      final ByteData imageData = await rootBundle.load('assets/error-image.png');
+                                                        String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
 
-                                                      final Uint8List uint8List = imageData.buffer.asUint8List();
 
-                                                      final compressedImage = await FlutterImageCompress.compressWithList(
-                                                        uint8List,
-                                                        quality: 85, // ajuste a qualidade da imagem conforme necessário
-                                                      );
+                                                        final ByteData imageData = await rootBundle.load('assets/error-image.png');
 
-                                                      final tempDir = await getTemporaryDirectory();
-                                                      final file = File('${tempDir.path}/imagem.jpg');
-                                                      await file.writeAsBytes(compressedImage);
+                                                        final Uint8List uint8List = imageData.buffer.asUint8List();
 
-                                                      final file2 = File('${tempDir.path}/imagem.jpg');
-                                                      await file2.writeAsBytes(compressedImage);
+                                                        final compressedImage = await FlutterImageCompress.compressWithList(
+                                                          uint8List,
+                                                          quality: 85, // ajuste a qualidade da imagem conforme necessário
+                                                        );
 
-                                                      final file3 = File('${tempDir.path}/imagem.jpg');
-                                                      await file3.writeAsBytes(compressedImage);
+                                                        final tempDir = await getTemporaryDirectory();
+                                                        final file = File('${tempDir.path}/imagem.jpg');
+                                                        await file.writeAsBytes(compressedImage);
 
-                                                      final file4 = File('${tempDir.path}/imagem.jpg');
-                                                      await file4.writeAsBytes(compressedImage);
+                                                        final file2 = File('${tempDir.path}/imagem.jpg');
+                                                        await file2.writeAsBytes(compressedImage);
 
-                                                      print(' arquivo temporario é : ${file} ');
-                                                      print(formattedDate);
+                                                        final file3 = File('${tempDir.path}/imagem.jpg');
+                                                        await file3.writeAsBytes(compressedImage);
 
-                                                      Navigator.push(context,
-                                                          MaterialPageRoute(builder: (context){
-                                                            return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2);
-                                                          }));
+                                                        final file4 = File('${tempDir.path}/imagem.jpg');
+                                                        await file4.writeAsBytes(compressedImage);
+
+                                                        print(' arquivo temporario é : ${file} ');
+                                                        print(formattedDate);
+
+                                                        Navigator.push(context,
+                                                            MaterialPageRoute(builder: (context){
+                                                              return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2);
+                                                            }));
+
+                                                      }else{
+                                                        Timestamp DataEmpresaAnalise = documents['DataEntradaEmpresa'];
+                                                        formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEmpresaAnalise.toDate()).replaceAll('-', '/');
+
+                                                        String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
+
+
+                                                        final ByteData imageData = await rootBundle.load('assets/error-image.png');
+
+                                                        final Uint8List uint8List = imageData.buffer.asUint8List();
+
+                                                        final compressedImage = await FlutterImageCompress.compressWithList(
+                                                          uint8List,
+                                                          quality: 85, // ajuste a qualidade da imagem conforme necessário
+                                                        );
+
+                                                        final tempDir = await getTemporaryDirectory();
+                                                        final file = File('${tempDir.path}/imagem.jpg');
+                                                        await file.writeAsBytes(compressedImage);
+
+                                                        final file2 = File('${tempDir.path}/imagem.jpg');
+                                                        await file2.writeAsBytes(compressedImage);
+
+                                                        final file3 = File('${tempDir.path}/imagem.jpg');
+                                                        await file3.writeAsBytes(compressedImage);
+
+                                                        final file4 = File('${tempDir.path}/imagem.jpg');
+                                                        await file4.writeAsBytes(compressedImage);
+
+                                                        print(' arquivo temporario é : ${file} ');
+                                                        print(formattedDate);
+
+                                                        Navigator.push(context,
+                                                            MaterialPageRoute(builder: (context){
+                                                              return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2);
+                                                            }));
+                                                      }
                                                     }
                                                   }
                                                 }

@@ -5,13 +5,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/Painel.dart';
 import 'package:glk_controls/callToAPI.dart';
 import 'package:glk_controls/listas/listaEntrada.dart';
-import 'package:glk_controls/modal/modalVeiculoEdit.dart';
-import 'package:glk_controls/pesquisaDir/pesquisaNovoCadastro.dart';
+import 'package:glk_controls/offlineService/mainPorteiroOffline.dart';
 import 'package:glk_controls/relatorio.dart';
-
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'anteLogin.dart';
 import 'listas/listaSaida.dart';
-import 'modal/liberacaooffModal.dart';
 import 'modal/modalVeiculo.dart';
 
 
@@ -41,6 +39,32 @@ class mainPorteiro extends StatefulWidget {
 }
 
 class _mainPorteiroState extends State<mainPorteiro> {
+  var connectivityResult = (Connectivity().checkConnectivity());
+
+  @override
+  void initState() {
+
+    if(connectivityResult != ConnectivityResult.mobile || connectivityResult != ConnectivityResult.wifi){
+      Fluttertoast.showToast(
+        msg: 'Você está offline, então algumas ações no app irão demorar mais do que o normal,',
+        toastLength: Toast.LENGTH_LONG,
+        timeInSecForIosWeb: 10,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      Fluttertoast.showToast(
+        msg: 'Mas não se preocupe, assim que sua conexão for restaurada tudo voltará ao normal!',
+        toastLength: Toast.LENGTH_LONG,
+        timeInSecForIosWeb: 10,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+    }
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +142,10 @@ class _mainPorteiroState extends State<mainPorteiro> {
     }
 
     openModalOffline() async {
-
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context){
+            return mainPorteiroOff();
+          }));
     }
 
     entradaMT(){
@@ -298,81 +325,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                   padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                   child: ElevatedButton(
                     onPressed: (){
-
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('Liberação Off-Line'),
-                            actions: [
-                              TextFormField(
-                                onChanged: (valor){
-                                  pass = valor;
-                                  //Mudou mandou para a String
-                                },
-                                keyboardType: TextInputType.name,
-                                enableSuggestions: false,
-                                obscureText: true,
-                                autocorrect: false,
-                                decoration: InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  hintText: 'Senha',
-                                  hintStyle: TextStyle(
-                                      fontSize: 20
-                                  ),
-                                ),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text('Cancelar'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-
-                                      if(pass == ''){
-
-                                        Fluttertoast.showToast(
-                                            msg: 'Preencha a senha!',
-                                            toastLength: Toast.LENGTH_SHORT,
-                                            gravity: ToastGravity.CENTER,
-                                            timeInSecForIosWeb: 1,
-                                            backgroundColor: Colors.grey[600],
-                                            textColor: Colors.white,
-                                            fontSize: 16.0
-                                        );
-
-                                      }else{
-                                        if(pass == '1234'){
-
-                                          Navigator.of(context).pop();
-                                          openModalOffline();
-
-                                        }else{
-                                          Fluttertoast.showToast(
-                                              msg: 'Senha invalida!',
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.CENTER,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor: Colors.grey[600],
-                                              textColor: Colors.white,
-                                              fontSize: 16.0
-                                          );
-                                        }
-                                      }
-                                    },
-                                    child: Text('Prosseguir'),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          );
-                        },
-                      );
+                      openModalOffline();
                     },
                     child: Text(
                       'Liberação Manual',
