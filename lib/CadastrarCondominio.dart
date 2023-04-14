@@ -36,7 +36,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
   String estadoSelecionado = '';
   String galpaost = '';
   String vagas = '';
-  String tags = '';
+  int tags = 0;
   bool tirado = false;
 
   List EmpresasOpc = [
@@ -80,7 +80,6 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
     cidade = widget.cidade;
     galpaost = widget.galpaost;
     vagas = widget.vagas;
-    tags = widget.tags;
 
     TextEditingController empresaController = TextEditingController(text: widget.empresa);
     TextEditingController enderecoController = TextEditingController(text: widget.endereco);
@@ -88,7 +87,6 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
     TextEditingController cidadeController = TextEditingController(text: widget.cidade);
     TextEditingController galpaoController = TextEditingController(text: widget.galpaost);
     TextEditingController vagasController = TextEditingController(text: widget.vagas);
-    TextEditingController tagsController = TextEditingController(text: widget.tags);
 
 
     final FirebaseStorage storage = FirebaseStorage.instance;
@@ -318,11 +316,13 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
             Container(
               padding: EdgeInsets.all(16),
               child: TextFormField(
-                controller: tagsController,
                 onChanged: (valor){
-                  tags = valor;
+                  tags = int.parse(valor);
+                  print(tags);
+                  print(valor);
                   //Mudou mandou para a String
                 },
+                keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Quantidade de TAGS *',
@@ -398,7 +398,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                   padding: EdgeInsets.all(16),
                   child: ElevatedButton(
                       onPressed: (){
-
+                        Navigator.pop(context);
                       },
                       child: Text(
                           'Cancelar',
@@ -492,7 +492,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                                         fontSize: 16.0
                                     );
                                   }else{
-                                    if(tags == ''){
+                                    if(tags == 0){
                                       Fluttertoast.showToast(
                                           msg: 'Preencha o campo de tags disponiveis',
                                           toastLength: Toast.LENGTH_LONG,
@@ -532,31 +532,43 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                                         );
 
                                         final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
+                                        Map<String, String> tagsDisp = {};
 
-                                        FirebaseFirestore.instance.collection('Condominio').doc(idd).update({
-                                          'Empresa': empresa,
-                                          'Endereço': endereco,
-                                          'cep': cep,
-                                          'cidade': cidade,
-                                          'estado': estadoSelecionado,
-                                          'galpoes': int.parse(galpaost),
-                                          'vagas': int.parse(vagas),
-                                          'tags': int.parse(tags),
-                                          'imageURL': imageUrl,
-                                          'maxGalpoes': int.parse(galpaost),
-                                        }).then((value){
-                                          Navigator.of(context).pop();
-                                          Navigator.pop(context);
-                                          Fluttertoast.showToast(
-                                              msg: 'Dados enviados com sucesso!',
-                                              toastLength: Toast.LENGTH_LONG,
-                                              gravity: ToastGravity.CENTER,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor: Colors.grey[600],
-                                              textColor: Colors.white,
-                                              fontSize: 16.0
-                                          );
-                                        });
+                                        print(tags);
+                                        int number = tags;
+
+                                        for (int i = number; i >= 1; i--) {
+                                          print(i);
+                                          tagsDisp.addAll({ '$i': 'naoUsado'});
+
+                                          if(tagsDisp.length == number){
+                                            print('pronto!');
+                                            FirebaseFirestore.instance.collection('Condominio').doc(idd).update({
+                                              'Empresa': empresa,
+                                              'Endereço': endereco,
+                                              'cep': cep,
+                                              'cidade': cidade,
+                                              'estado': estadoSelecionado,
+                                              'galpoes': int.parse(galpaost),
+                                              'vagas': int.parse(vagas),
+                                              'tags': tagsDisp,
+                                              'imageURL': imageUrl,
+                                              'maxGalpoes': int.parse(galpaost),
+                                            }).then((value){
+                                              Navigator.of(context).pop();
+                                              Navigator.pop(context);
+                                              Fluttertoast.showToast(
+                                                  msg: 'Dados enviados com sucesso!',
+                                                  toastLength: Toast.LENGTH_LONG,
+                                                  gravity: ToastGravity.CENTER,
+                                                  timeInSecForIosWeb: 1,
+                                                  backgroundColor: Colors.grey[600],
+                                                  textColor: Colors.white,
+                                                  fontSize: 16.0
+                                              );
+                                            });
+                                          }
+                                        }
                                       }
                                     }
                                   }

@@ -339,6 +339,16 @@ class _listEntradaState extends State<listEntrada> {
                                               onPressed: () async {
                                                 if(documents['Status'] == 'Em Verificação'){
                                                   if(lacre == 'lacre'){
+
+                                                    String formattedDate2;
+
+                                                    if(documents['interno'] == true){
+                                                      formattedDate2 = '';
+                                                    }else{
+                                                      Timestamp DataEmpresaAnalise = documents['DataEntradaEmpresa'];
+                                                      formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEmpresaAnalise.toDate()).replaceAll('-', '/');
+                                                    }
+
                                                     String liberadopor = documents['QuemAutorizou'];
                                                     Timestamp horarioCriacao = documents['Horario Criado'];
                                                     String nomeMotorista = documents['nomeMotorista'];
@@ -348,10 +358,7 @@ class _listEntradaState extends State<listEntrada> {
                                                     String EmpresadeOrigin = documents['EmpresadeOrigin'];
                                                     String Galpao = documents['Galpão'];
                                                     String lacradoStr = documents['lacrenum'];
-                                                    Timestamp DataEmpresaAnalise = documents['DataEntradaEmpresa'];
-
                                                     String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
-                                                    String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEmpresaAnalise.toDate()).replaceAll('-', '/');
 
                                                     final ByteData imageData = await rootBundle.load('assets/insertFoto.png');
 
@@ -377,14 +384,31 @@ class _listEntradaState extends State<listEntrada> {
 
                                                     print(' arquivo temporario é : ${file} ');
 
+                                                    var result = await FirebaseFirestore.instance
+                                                        .collection("Condominio")
+                                                        .doc('condominio')
+                                                        .get();
+
+                                                    Map tags = (result.get('tags'));
+                                                    List tagsDisponiveis = [];
+
+                                                    print(tags.values.contains('Usado'));
+
+                                                    tags.removeWhere((key, value) => value == 'Usado');
+                                                    tagsDisponiveis.addAll(tags.keys);
+
+                                                    print(tagsDisponiveis);
+                                                    print(tags.keys);
+
                                                     Navigator.push(context,
                                                         MaterialPageRoute(builder: (context){
-                                                          return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, file, file2, file3, file, formattedDate2);
+                                                          return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, file, file2, file3, file, formattedDate2, tagsDisponiveis);
                                                         }));
 
                                                   }
                                                   else{
                                                     if(lacre == 'naolacrado'){
+
                                                       String liberadopor = documents['QuemAutorizou'];
                                                       Timestamp horarioCriacao = documents['Horario Criado'];
                                                       String nomeMotorista = documents['nomeMotorista'];
@@ -427,9 +451,26 @@ class _listEntradaState extends State<listEntrada> {
                                                         print(' arquivo temporario é : ${file} ');
                                                         print(formattedDate);
 
+
+                                                        var result = await FirebaseFirestore.instance
+                                                            .collection("Condominio")
+                                                            .doc('condominio')
+                                                            .get();
+
+                                                        Map tags = (result.get('tags'));
+                                                        List tagsDisponiveis = [];
+
+                                                        print(tags.values.contains('Usado'));
+
+                                                        tags.removeWhere((key, value) => value == 'Usado');
+                                                        tagsDisponiveis.addAll(tags.keys);
+
+                                                        print(tagsDisponiveis);
+                                                        print(tags.keys);
+
                                                         Navigator.push(context,
                                                             MaterialPageRoute(builder: (context){
-                                                              return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2);
+                                                              return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2, tagsDisponiveis);
                                                             }));
 
                                                       }else{
@@ -464,9 +505,25 @@ class _listEntradaState extends State<listEntrada> {
                                                         print(' arquivo temporario é : ${file} ');
                                                         print(formattedDate);
 
+                                                        var result = await FirebaseFirestore.instance
+                                                            .collection("Condominio")
+                                                            .doc('condominio')
+                                                            .get();
+
+                                                        Map tags = (result.get('tags'));
+                                                        List tagsDisponiveis = [];
+
+                                                        print(tags.values.contains('Usado'));
+
+                                                        tags.removeWhere((key, value) => value == 'Usado');
+                                                        tagsDisponiveis.addAll(tags.keys);
+
+                                                        print(tagsDisponiveis);
+                                                        print(tags.keys);
+
                                                         Navigator.push(context,
                                                             MaterialPageRoute(builder: (context){
-                                                              return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2);
+                                                              return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2, tagsDisponiveis);
                                                             }));
                                                       }
                                                     }

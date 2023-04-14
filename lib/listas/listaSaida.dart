@@ -278,6 +278,7 @@ class _listaSaidaState extends State<listaSaida> {
                                             String Empresadestino = documents['Empresa'];
                                             String Galpao = documents['Galpão'];
                                             String lacradoStr = documents['lacrenum'];
+                                            String tagSelecionada = documents['tag'];
 
 
                                             String idDocumento = documents.id;
@@ -294,7 +295,7 @@ class _listaSaidaState extends State<listaSaida> {
 
                                             Navigator.push(context,
                                                 MaterialPageRoute(builder: (context){
-                                                  return modalSaidaVeiculo(lacreounao, empresaName, liberadopor, horarioCriacao, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, empresaName, Galpao, lacradoStr, idDocumento, DatadeAnalise, verificadoPor, DateEntrada, empresaName, widget.porteiroName, DataSaida);
+                                                  return modalSaidaVeiculo(lacreounao, empresaName, liberadopor, horarioCriacao, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, empresaName, Galpao, lacradoStr, idDocumento, DatadeAnalise, verificadoPor, DateEntrada, empresaName, widget.porteiroName, DataSaida, tagSelecionada );
                                                 }));
                                           },
                                           child: Text(

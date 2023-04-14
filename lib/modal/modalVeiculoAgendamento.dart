@@ -103,6 +103,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
           'liberouSaida': '',
           'Galpão': galpao,
           'Lacre': lacreSt,
+          'tag': ''
         }).then((value) async {
 
           Fluttertoast.showToast(
@@ -178,6 +179,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
           'DateSaidaPortaria': '',
           'liberouSaida': '',
           'Galpão': galpao,
+          'tag': ''
         }).then((value) async {
           Fluttertoast.showToast(
             msg: 'Enviado com sucesso!',

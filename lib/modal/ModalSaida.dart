@@ -30,6 +30,7 @@ class modalSaidaVeiculo extends StatefulWidget {
   String EmpresaDoc = '';
   String porteiroName = '';
   String DataSaida = '';
+  String tagSelecionada = '';
 
   modalSaidaVeiculo(
       this.lacreounao,
@@ -49,7 +50,8 @@ class modalSaidaVeiculo extends StatefulWidget {
       this.DateEntrada,
       this.EmpresaDoc,
       this.porteiroName,
-      this.DataSaida
+      this.DataSaida,
+      this.tagSelecionada
       );
   @override
   State<modalSaidaVeiculo> createState() => _modalSaidaVeiculoState();
@@ -245,6 +247,23 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
               child: ElevatedButton(
                 onPressed: () async {
                   if(lacrebool == false){
+
+                    var result = await FirebaseFirestore.instance
+                        .collection("Condominio")
+                        .doc('condominio')
+                        .get();
+
+                    Map tags = (result.get('tags'));
+
+                    tags[widget.tagSelecionada] = 'naoUsado';
+
+                    print(tags[widget.tagSelecionada]);
+
+                    FirebaseFirestore.instance.collection('Condominio').doc('condominio').update(
+                        {
+                          'tags': tags
+                        });
+
                     FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                       'DataSaida': DateTime.now(),
                       'Status': 'Saida',
@@ -277,6 +296,22 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                         fontSize: 16.0,
                       );
                     }else{
+                      var result = await FirebaseFirestore.instance
+                          .collection("Condominio")
+                          .doc('condominio')
+                          .get();
+
+                      Map tags = (result.get('tags'));
+
+                      tags[widget.tagSelecionada] = 'naoUsado';
+
+                      print(tags[widget.tagSelecionada]);
+
+                      FirebaseFirestore.instance.collection('Condominio').doc('condominio').update(
+                        {
+                         'tags': tags
+                        });
+
                       FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                         'DataSaida': DateTime.now(),
                         'Status': 'Saida',

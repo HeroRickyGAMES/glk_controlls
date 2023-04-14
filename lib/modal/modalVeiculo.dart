@@ -45,6 +45,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
   ];
   String Status = '';
 
+  bool veiculoInterno = false;
+
   Future<void> testPing() async {
     final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar
 
@@ -124,6 +126,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
           'DateSaidaPortaria': '',
           'liberouSaida': '',
           'Galpão': '',
+          'tag': '',
+          'interno': veiculoInterno
         }).then((value) {
 
           Fluttertoast.showToast(
@@ -230,6 +234,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
           'DateSaidaPortaria': '',
           'liberouSaida': '',
           'Galpão': '',
+          'tag': '',
+          'interno': veiculoInterno
         }).then((value) {
           Fluttertoast.showToast(
             msg: 'Enviado com sucesso!',
@@ -487,6 +493,10 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
                                     }else{
 
+                                      if(veiculoInterno == true){
+                                        Status = 'Em Verificação';
+                                      }
+
                                       MandarMT();
 
                                     }
@@ -663,6 +673,60 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         fontSize: 20
                     ),
                   ),
+                ),
+              ),
+              Center(
+                child: CheckboxListTile(
+                  title: Text(
+                      'Veiculo Interno',
+                    style: TextStyle(
+                        fontSize: 20,
+
+                    ),
+                  ),
+                  value: veiculoInterno,
+                  onChanged: (value) {
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text('Liberação de veiculo Interno;'),
+                          content: Text('Confirma essa liberação?'),
+                          actions: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                ElevatedButton(
+                                    onPressed: (){
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text('Cancelar'),
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Colors.red
+                                  ),
+                                ),
+                                ElevatedButton(
+                                  onPressed: (){
+                                    setState(() {
+                                      veiculoInterno = value!;
+                                      Navigator.of(context).pop();
+                                    });
+                                  },
+                                  child: Text('Prosseguir'),
+                                  style: ElevatedButton.styleFrom(
+                                      primary: Colors.green
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  activeColor: Colors.blue,
+                  checkColor: Colors.white,
+                  controlAffinity: ListTileControlAffinity.leading,
                 ),
               ),
               Container(

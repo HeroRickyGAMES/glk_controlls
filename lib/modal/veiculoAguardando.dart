@@ -28,6 +28,7 @@ class veiculoAguardando extends StatefulWidget {
   File? imageFile2;
   File? imageFile3;
   File? imageFile4;
+  List tagList;
   String DataAnaliseEmpresa;
 
   veiculoAguardando(
@@ -47,7 +48,8 @@ class veiculoAguardando extends StatefulWidget {
       this.imageFile2,
       this.imageFile3,
       this.imageFile4,
-      this.DataAnaliseEmpresa
+      this.DataAnaliseEmpresa,
+      this.tagList
       );
   @override
   State<veiculoAguardando> createState() => _veiculoAguardandoState();
@@ -69,6 +71,9 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
     bool lacrebool = false;
     String? lacreSt;
+    String? tagSelecionada = '';
+
+    final dropValue = ValueNotifier('');
 
     Future<File?> _getImageFromCamera() async {
       final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
@@ -854,6 +859,36 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                 ],
               ),
             ),
+            Center(
+                child: ValueListenableBuilder(valueListenable: dropValue, builder: (context, String value, _){
+                  return DropdownButton(
+                    hint: Text(
+                      'Selecione uma TAG.VC - ID *',
+                      style: TextStyle(
+                          fontSize: 18
+                      ),
+                    ),
+                    value: (value.isEmpty)? null : value,
+                    onChanged: (escolha) async {
+                     dropValue.value = escolha.toString();
+
+                      tagSelecionada = escolha.toString();
+
+                    },
+                    items: widget.tagList.map((opcao) => DropdownMenuItem(
+                      value: opcao,
+                      child:
+                      Text(
+                        opcao,
+                        style: TextStyle(
+                            fontSize: 18
+                        ),
+                      ),
+                    ),
+                    ).toList(),
+                  );
+                })
+            ),
             Container(
               padding: EdgeInsets.all(16),
               child: ElevatedButton(
@@ -900,77 +935,119 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                               fontSize: 16.0,
                             );
                           }else{
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return AlertDialog(
-                                  title: Text('Aguarde!'),
-                                  actions: [
-                                    Center(
-                                      child: CircularProgressIndicator(),
-                                    )
-                                  ],
-                                );
-                              },
-                            );
-
-                            final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar
-
-                            try {
-                              final result = await Process.run('ping', ['-c', '1', ip]);
-                              if (result.exitCode == 0) {
-
-                                final imageUrl = await _uploadImageToFirebase(imageFile!, widget.idDocumento);
-                                final imageUrl2 = await _uploadImageToFirebase2(imageFile2!, widget.idDocumento);
-                                final imageUrl3 = await _uploadImageToFirebase3(imageFile3!, widget.idDocumento);
-                                final imageUrl4 = await _uploadImageToFirebase4(imageFile3!, widget.idDocumento);
-
-
-
-                                FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                                  'verificadoPor': widget.empresaName,
-                                  'LacreouNao': 'naolacrado',
-                                  'DataDeAnalise': DateTime.now(),
-                                  'uriImage': imageUrl,
-                                  'uriImage2': imageUrl2,
-                                  'uriImage3': imageUrl3,
-                                  'uriImage4': imageUrl4,
-                                  'Status': 'Entrada',
-                                }).then((value) async {
-                                  Fluttertoast.showToast(
-                                    msg: 'Dados atualizados!',
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    timeInSecForIosWeb: 1,
-                                    backgroundColor: Colors.black,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0,
+                            if(tagSelecionada == ''){
+                              Fluttertoast.showToast(
+                                msg: 'Selecione uma tag disponivel!',
+                                toastLength: Toast.LENGTH_SHORT,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.black,
+                                textColor: Colors.white,
+                                fontSize: 16.0,
+                              );
+                            }else{
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    title: Text('Aguarde!'),
+                                    actions: [
+                                      Center(
+                                        child: CircularProgressIndicator(),
+                                      )
+                                    ],
                                   );
+                                },
+                              );
+
+                              final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar
+
+                              try {
+                                final result = await Process.run('ping', ['-c', '1', ip]);
+                                if (result.exitCode == 0) {
+
+                                  final imageUrl = await _uploadImageToFirebase(imageFile!, widget.idDocumento);
+                                  final imageUrl2 = await _uploadImageToFirebase2(imageFile2!, widget.idDocumento);
+                                  final imageUrl3 = await _uploadImageToFirebase3(imageFile3!, widget.idDocumento);
+                                  final imageUrl4 = await _uploadImageToFirebase4(imageFile3!, widget.idDocumento);
+
+                                  FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                                    'verificadoPor': widget.empresaName,
+                                    'LacreouNao': 'naolacrado',
+                                    'DataDeAnalise': DateTime.now(),
+                                    'uriImage': imageUrl,
+                                    'uriImage2': imageUrl2,
+                                    'uriImage3': imageUrl3,
+                                    'uriImage4': imageUrl4,
+                                    'Status': 'Entrada',
+                                    'tag': tagSelecionada
+                                  }).then((value) async {
+                                    Fluttertoast.showToast(
+                                      msg: 'Dados atualizados!',
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.black,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0,
+                                    );
+
+                                    var result = await FirebaseFirestore.instance
+                                        .collection("Condominio")
+                                        .doc('condominio')
+                                        .get();
+
+                                    Map tags = (result.get('tags'));
+
+                                    tags[tagSelecionada] = 'Usado';
+
+                                    print(tags[tagSelecionada]);
+
+                                    FirebaseFirestore.instance.collection('Condominio').doc('condominio').update({
+                                      'tags': tags
+                                    });
+
+                                    //Fazer as regras do Rele
+                                    callToVerifyReles();
+                                    Navigator.of(context).pop();
+                                    Navigator.pop(context);
+                                  });
+                                  print('Ping realizado com sucesso para o endereço $ip');
+                                } else {
+
+                                  FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                                    'verificadoPor': widget.empresaName,
+                                    'LacreouNao': 'naolacrado',
+                                    'DataDeAnalise': DateTime.now(),
+                                    'tag': tagSelecionada,
+                                    'Status': 'Entrada',
+                                  });
+
+                                  var result = await FirebaseFirestore.instance
+                                      .collection("Condominio")
+                                      .doc('condominio')
+                                      .get();
+
+                                  Map tags = (result.get('tags'));
+
+                                  tags[tagSelecionada] = 'Usado';
+
+                                  print(tags[tagSelecionada]);
+
+                                  FirebaseFirestore.instance.collection('Condominio').doc('condominio').update({
+                                    'tags': tags
+                                  });
+
                                   //Fazer as regras do Rele
-
                                   callToVerifyReles();
-                                });
-                                Navigator.of(context).pop();
-                                Navigator.pop(context);
+                                  Navigator.of(context).pop();
+                                  Navigator.pop(context);
 
-                                print('Ping realizado com sucesso para o endereço $ip');
-                              } else {
-
-                                FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                                  'verificadoPor': widget.empresaName,
-                                  'LacreouNao': 'naolacrado',
-                                  'DataDeAnalise': DateTime.now(),
-                                  'Status': 'Entrada',
-                                });
-
-                                Navigator.of(context).pop();
-                                Navigator.pop(context);
-
-                                print('Falha no ping para o endereço $ip');
+                                  print('Falha no ping para o endereço $ip');
+                                }
+                              } catch (e) {
+                                print('Erro ao executar o comando de ping: $e');
                               }
-                            } catch (e) {
-                              print('Erro ao executar o comando de ping: $e');
                             }
-                          }
+                            }
                         }
                       }
                     }
@@ -1031,71 +1108,104 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                               );
                             }else{
 
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    title: Text('Aguarde!'),
-                                    actions: [
-                                      Center(
-                                        child: CircularProgressIndicator(),
-                                      )
-                                    ],
-                                  );
-                                },
-                              );
-                              final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar
-
-                              try {
-                                final result = await Process.run('ping', ['-c', '1', ip]);
-                                if (result.exitCode == 0) {
-                                  print('Ping realizado com sucesso para o endereço $ip');
-
-                                  final imageUrl = await _uploadImageToFirebase(imageFile!, widget.idDocumento);
-                                  final imageUrl2 = await _uploadImageToFirebase2(imageFile2!, widget.idDocumento);
-                                  final imageUrl3 = await _uploadImageToFirebase3(imageFile3!, widget.idDocumento);
-                                  final imageUrl4 = await _uploadImageToFirebase3(imageFile4!, widget.idDocumento);
-
-                                  FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                                    'verificadoPor': widget.empresaName,
-                                    'LacreouNao': 'lacre',
-                                    'uriImage': imageUrl,
-                                    'uriImage2': imageUrl2,
-                                    'uriImage3': imageUrl3,
-                                    'uriImage4': imageUrl4,
-                                    'Status': 'Entrada',
-                                    'DataDeAnalise': DateTime.now(),
-                                  }).then((value) {
-
-                                    Fluttertoast.showToast(
-                                      msg: 'Dados atualizados!',
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      timeInSecForIosWeb: 1,
-                                      backgroundColor: Colors.black,
-                                      textColor: Colors.white,
-                                      fontSize: 16.0,
+                              if(tagSelecionada == ''){
+                                Fluttertoast.showToast(
+                                  msg: 'Selecione uma tag disponivel!',
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.black,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0,
+                                );
+                              }else{
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: Text('Aguarde!'),
+                                      actions: [
+                                        Center(
+                                          child: CircularProgressIndicator(),
+                                        )
+                                      ],
                                     );
+                                  },
+                                );
+                                final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar
+
+                                try {
+                                  final result = await Process.run('ping', ['-c', '1', ip]);
+                                  if (result.exitCode == 0) {
+                                    print('Ping realizado com sucesso para o endereço $ip');
+
+                                    final imageUrl = await _uploadImageToFirebase(imageFile!, widget.idDocumento);
+                                    final imageUrl2 = await _uploadImageToFirebase2(imageFile2!, widget.idDocumento);
+                                    final imageUrl3 = await _uploadImageToFirebase3(imageFile3!, widget.idDocumento);
+                                    final imageUrl4 = await _uploadImageToFirebase3(imageFile4!, widget.idDocumento);
+
+                                    FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                                      'verificadoPor': widget.empresaName,
+                                      'LacreouNao': 'lacre',
+                                      'uriImage': imageUrl,
+                                      'uriImage2': imageUrl2,
+                                      'uriImage3': imageUrl3,
+                                      'uriImage4': imageUrl4,
+                                      'Status': 'Entrada',
+                                      'DataDeAnalise': DateTime.now(),
+                                      'tag': tagSelecionada,
+                                    }).then((value) {
+
+                                      Fluttertoast.showToast(
+                                        msg: 'Dados atualizados!',
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.black,
+                                        textColor: Colors.white,
+                                        fontSize: 16.0,
+                                      );
+                                      //Fazer as regras do Rele
+                                      callToVerifyReles();
+                                      Navigator.of(context).pop();
+                                      Navigator.pop(context);
+                                    });
+
+
+                                    var result = await FirebaseFirestore.instance
+                                        .collection("Condominio")
+                                        .doc('condominio')
+                                        .get();
+
+                                    Map tags = (result.get('tags'));
+
+                                    tags[tagSelecionada] = 'Usado';
+
+                                    print(tags[tagSelecionada]);
+
+                                    FirebaseFirestore.instance.collection('Condominio').doc('condominio').update({
+                                      'tags': tags
+                                    });
+
+                                  } else {
+                                    FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                                      'verificadoPor': widget.empresaName,
+                                      'LacreouNao': 'lacre',
+                                      'Status': 'Entrada',
+                                      'tag': tagSelecionada,
+                                      'DataDeAnalise': DateTime.now(),
+
+                                    });
                                     //Fazer as regras do Rele
                                     callToVerifyReles();
                                     Navigator.of(context).pop();
                                     Navigator.pop(context);
-                                  });
 
-
-                                } else {
-                                  FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                                    'verificadoPor': widget.empresaName,
-                                    'LacreouNao': 'lacre',
-                                    'Status': 'Entrada',
-                                    'DataDeAnalise': DateTime.now(),
-                                  });
-
-                                  print('Falha no ping para o endereço $ip');
+                                    print('Falha no ping para o endereço $ip');
+                                  }
+                                } catch (e) {
+                                  print('Erro ao executar o comando de ping: $e');
                                 }
-                              } catch (e) {
-                                print('Erro ao executar o comando de ping: $e');
+                                }
                               }
-                            }
                           }
                         }
                       }
