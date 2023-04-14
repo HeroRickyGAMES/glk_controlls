@@ -1,10 +1,11 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import '../mainPorteiro.dart';
 import 'package:uuid/uuid.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 //Programado Por HeroRickyGames
 
 class modalPorteiro extends StatefulWidget {
@@ -43,24 +44,28 @@ class _modalPorteiroState extends State<modalPorteiro> {
     'Moto',
   ];
   String Status = '';
-  var connectivityResult = (Connectivity().checkConnectivity());
+
+  Future<void> testPing() async {
+    final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar
+
+    try {
+      final result = await Process.run('ping', ['-c', '1', ip]);
+      if (result.exitCode == 0) {
+        print('Ping realizado com sucesso para o endereço $ip');
+        Status = 'Aguardando';
+      } else {
+        print('Falha no ping para o endereço $ip');
+        Status = 'Em Verificação';
+      }
+    } catch (e) {
+      print('Erro ao executar o comando de ping: $e');
+    }
+  }
 
   @override
   void initState() {
-
-    if(connectivityResult != ConnectivityResult.mobile || connectivityResult != ConnectivityResult.wifi){
-      setState(() {
-        Status = 'Em Verificação';
-      });
-
-    }
-    else if(connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi){
-      setState(() {
-        Status = 'Aguardando';
-      });
-
-    }
-    // TODO: implement initState
+    testPing();
+    // TODO: implement initState com outras verificações de rede
     super.initState();
   }
 
@@ -182,12 +187,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
         }).catchError((onerror){
           print('error $onerror');
         }).whenComplete((){
-          if(connectivityResult != ConnectivityResult.mobile || connectivityResult != ConnectivityResult.wifi){
-            print('Feito com sucesso!');
-            Navigator.pop(context);
-          }else if(connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi){
+          print('Feito com sucesso!');
 
-          }
         });
       }
       if(lacreounao == 'naolacrado'){
@@ -293,14 +294,26 @@ class _modalPorteiroState extends State<modalPorteiro> {
         }).catchError((onerror){
           print('error $onerror');
         }).whenComplete((){
-          if(connectivityResult != ConnectivityResult.mobile || connectivityResult != ConnectivityResult.wifi){
-            print('Feito com sucesso!');
-            Navigator.pop(context);
-          }else if(connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi){
-
-          }
+          print('Feito com sucesso!');
         });
       }
+
+      final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar
+
+      try {
+        final result = await Process.run('ping', ['-c', '1', ip]);
+        if (result.exitCode == 0) {
+          print('Ping realizado com sucesso para o endereço $ip');
+        } else {
+          widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
+          Navigator.of(context).pop();
+          Navigator.pop(context);
+          print('Falha no ping para o endereço $ip');
+        }
+      } catch (e) {
+        print('Erro ao executar o comando de ping: $e');
+      }
+
     }
 
     uploadInfos() async {
@@ -740,20 +753,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   ],
                 ),
               ),
-              Column(
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(16),
-                    child: Text(
-                      'Selecione um disponivel Galpão (Selecione o que bate com com o nome da empresa)*',
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold
-                      ),
-                    ),
-                  ),
-                ],
-              ),
               Container(
                 padding: EdgeInsets.only(top: 16),
                 child:
@@ -866,38 +865,51 @@ class _modalPorteiroState extends State<modalPorteiro> {
               ),
               WillPopScope(
                 onWillPop: () async {
-                  if(connectivityResult != ConnectivityResult.mobile || connectivityResult != ConnectivityResult.wifi){
-                    widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
-                    Navigator.pop(context);
-                  }else{
-                    widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
 
-                    var UID = FirebaseAuth.instance.currentUser?.uid;
-                    var result = await FirebaseFirestore.instance
-                        .collection("porteiro")
-                        .doc(UID)
-                        .get();
+                  final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar
 
-                    bool cadastro = result.get('cadastrar');
-                    bool entrada = result.get('entrada');
-                    bool saida = result.get('saida');
-                    bool relatorio = result.get('relatorio');
-                    bool painel = result.get('painel');
+                  try {
+                    final result = await Process.run('ping', ['-c', '1', ip]);
+                    if (result.exitCode == 0) {
+                      print('Ping realizado com sucesso para o endereço $ip');
 
-                    var resulte = await FirebaseFirestore.instance
-                        .collection("Condominio")
-                        .doc('condominio')
-                        .get();
+                      widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
 
-                    String logoPath = resulte.get('imageURL');
+                      var UID = FirebaseAuth.instance.currentUser?.uid;
+                      var result = await FirebaseFirestore.instance
+                          .collection("porteiro")
+                          .doc(UID)
+                          .get();
 
-                    Navigator.pop(context);
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context){
-                          return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath);
-                        }));
+                      bool cadastro = result.get('cadastrar');
+                      bool entrada = result.get('entrada');
+                      bool saida = result.get('saida');
+                      bool relatorio = result.get('relatorio');
+                      bool painel = result.get('painel');
+
+                      var resulte = await FirebaseFirestore.instance
+                          .collection("Condominio")
+                          .doc('condominio')
+                          .get();
+
+                      String logoPath = resulte.get('imageURL');
+
+                      Navigator.pop(context);
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context){
+                            return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath);
+                          }));
+                      // retorna false para impedir que a navegação volte à tela anterior
+
+                    } else {
+                      print('Falha no ping para o endereço $ip');
+                      widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
+                      Navigator.pop(context);
+                    }
+                  } catch (e) {
+                    print('Erro ao executar o comando de ping: $e');
+
                   }
-                  // retorna false para impedir que a navegação volte à tela anterior
                   return false;
                 }, child: Text(''),
               ),

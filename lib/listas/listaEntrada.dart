@@ -472,6 +472,35 @@ class _listEntradaState extends State<listEntrada> {
                                                     }
                                                   }
                                                 }
+                                                if(documents['Status'] == 'Entrada'){
+                                                  final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar
+
+                                                  try {
+                                                    final result = await Process.run('ping', ['-c', '1', ip]);
+                                                    if (result.exitCode == 0) {
+                                                      print('Ping realizado com sucesso para o endereço $ip');
+                                                    } else {
+
+                                                      FirebaseFirestore.instance.collection('Autorizacoes').doc(documents['idDoc']).update({
+                                                        'DataSaida': DateTime.now(),
+                                                        'DataEntradaEmpresa': DateTime.now(),
+                                                        'Status': 'Liberado'
+                                                      });
+                                                      Fluttertoast.showToast(
+                                                        msg: 'A solicitação foi movida para a Saida.',
+                                                        toastLength: Toast.LENGTH_SHORT,
+                                                        timeInSecForIosWeb: 1,
+                                                        backgroundColor: Colors.black,
+                                                        textColor: Colors.white,
+                                                        fontSize: 16.0,
+                                                      );
+
+                                                      print('Falha no ping para o endereço $ip');
+                                                    }
+                                                  } catch (e) {
+                                                    print('Erro ao executar o comando de ping: $e');
+                                                  }
+                                                }
                                               },
                                               child: Text(
                                                 documents['PlacaVeiculo'],
@@ -507,102 +536,6 @@ class _listEntradaState extends State<listEntrada> {
             ),
             Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 16.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      ElevatedButton(onPressed: (){
-
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text('Liberação Manual'),
-                              actions: [
-                                TextFormField(
-                                  onChanged: (valor){
-                                    pass = valor;
-                                    //Mudou mandou para a String
-                                  },
-                                  keyboardType: TextInputType.name,
-                                  enableSuggestions: false,
-                                  obscureText: true,
-                                  autocorrect: false,
-                                  decoration: InputDecoration(
-                                    border: OutlineInputBorder(),
-                                    hintText: 'Senha',
-                                    hintStyle: TextStyle(
-                                        fontSize: 20
-                                    ),
-                                  ),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text('Cancelar'),
-                                    ),
-                                    TextButton(
-                                      onPressed: () {
-
-                                        if(pass == ''){
-
-                                          Fluttertoast.showToast(
-                                              msg: 'Preencha a senha!',
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.CENTER,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor: Colors.grey[600],
-                                              textColor: Colors.white,
-                                              fontSize: 16.0
-                                          );
-
-                                        }else{
-                                          if(pass == '1234'){
-
-                                            Navigator.of(context).pop();
-                                            openModalOffline();
-
-                                          }else{
-                                            Fluttertoast.showToast(
-                                                msg: 'Senha invalida!',
-                                                toastLength: Toast.LENGTH_SHORT,
-                                                gravity: ToastGravity.CENTER,
-                                                timeInSecForIosWeb: 1,
-                                                backgroundColor: Colors.grey[600],
-                                                textColor: Colors.white,
-                                                fontSize: 16.0
-                                            );
-                                          }
-                                        }
-                                      },
-                                      child: Text('Prosseguir'),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      },
-                        child: Text(
-                          'Entrada Manual',
-                        style: TextStyle(
-                          fontSize: 18
-                        ),
-                      ),
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.red
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [

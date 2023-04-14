@@ -242,16 +242,6 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
             ),
             Container(
               padding: EdgeInsets.all(16),
-              child:
-              Text(
-                'Galpão: ' + widget.Galpao,
-                style: TextStyle(
-                    fontSize: 30
-                ),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(16),
               child: ElevatedButton(
                 onPressed: () async {
                   if(lacrebool == false){
@@ -262,6 +252,19 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                     }).then((value){
                       Navigator.pop(context);
                     });
+                    final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar
+
+                    try {
+                      final result = await Process.run('ping', ['-c', '1', ip]);
+                      if (result.exitCode == 0) {
+                        print('Ping realizado com sucesso para o endereço $ip');
+                      } else {
+                        Navigator.pop(context);
+                        print('Falha no ping para o endereço $ip');
+                      }
+                    } catch (e) {
+                      print('Erro ao executar o comando de ping: $e');
+                    }
                   }
                   if(lacrebool == true){
                     if(lacreSt == null){
@@ -281,6 +284,20 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                       }).then((value){
                         Navigator.pop(context);
                       });
+
+                      final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar
+
+                      try {
+                        final result = await Process.run('ping', ['-c', '1', ip]);
+                        if (result.exitCode == 0) {
+                          print('Ping realizado com sucesso para o endereço $ip');
+                        } else {
+                          Navigator.pop(context);
+                          print('Falha no ping para o endereço $ip');
+                        }
+                      } catch (e) {
+                        print('Erro ao executar o comando de ping: $e');
+                      }
                     }
                   }
                 },

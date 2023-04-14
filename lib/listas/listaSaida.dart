@@ -278,7 +278,6 @@ class _listaSaidaState extends State<listaSaida> {
                                             String Empresadestino = documents['Empresa'];
                                             String Galpao = documents['Galpão'];
                                             String lacradoStr = documents['lacrenum'];
-                                            String galpaoSelecionado = documents['galpaoSelecionado'];
 
 
                                             String idDocumento = documents.id;
