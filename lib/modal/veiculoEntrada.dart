@@ -24,7 +24,7 @@ class veiculoEntrada extends StatefulWidget {
   String DateEntrada = '';
   String verificadoPor = '';
   String DatadeAnalise = '';
-
+  bool interno;
   veiculoEntrada(
       this.lacreounao,
       this.empresaName,
@@ -41,6 +41,7 @@ class veiculoEntrada extends StatefulWidget {
       this.DateEntrada,
       this.verificadoPor,
       this.DatadeAnalise,
+      this.interno
       );
   @override
   State<veiculoEntrada> createState() => _veiculoEntradaState();
@@ -268,14 +269,19 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                       .doc(idEmpresa)
                       .get();
 
-                  Map galpoes = (resultEmpresa.get('galpaes'));
+
+                  if(widget.interno == false){
+                    Map galpoes = (resultEmpresa.get('galpaes'));
 
 
-                  galpoes[widget.Galpao] = galpoes[widget.Galpao] + 1;
+                    galpoes[widget.Galpao] = galpoes[widget.Galpao] + 1;
 
-                  FirebaseFirestore.instance.collection('empresa').doc(idEmpresa).update({
-                    'galpaes': galpoes
-                  }).then((value){
+                    FirebaseFirestore.instance.collection('empresa').doc(idEmpresa).update({
+                      'galpaes': galpoes
+                    }).then((value){
+
+                    });
+                  }else{
                     if(lacrebool == false){
                       FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                         'DataSaida': DateTime.now(),
@@ -302,7 +308,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                         Navigator.pop(context);
                       }
                     }
-                  });
+                  }
                 },
                 child: Text(
                   'Prosseguir',

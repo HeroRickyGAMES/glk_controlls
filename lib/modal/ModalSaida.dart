@@ -79,6 +79,330 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
     String _textoPredefinido = widget.lacradoStr;
     lacreSt = widget.lacradoStr;
 
+    callToVerifyReles() async {
+      var result = await FirebaseFirestore.instance
+          .collection("Reles")
+          .doc('Rele02')
+          .get();
+
+      print('aqui');
+      print(result.get('localAplicacao1'));
+
+      //rele 1
+      if(result.get('localAplicacao1') == "Cancela"){
+        //Verifica a função dos outros relês
+
+        if(result.get('funcao-rele1').contains('Pulso')){
+
+          print(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+
+          rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+        }else{
+          releCancelaEntrada();
+        }
+
+        if(result.get('localAplicacao2') == 'Fechamento'){
+
+          if(result.get('funcao-rele2').contains('Pulso')){
+
+            rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFechamento02();
+          }
+
+        }
+
+        if(result.get('localAplicacao2') == 'Farol'){
+          if(result.get('funcao-rele2').contains('Pulso')){
+
+            rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFechamento02();
+          }
+        }
+
+        //Verifica a função dos outros relês
+
+        if(result.get('localAplicacao3') == 'Fechamento'){
+          if(result.get('funcao-rele3').contains('Pulso')){
+
+            rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFarol03();
+          }
+        }
+
+        if(result.get('localAplicacao3') == 'Farol'){
+
+          if(result.get('funcao-rele3').contains('Pulso')){
+
+            rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFarol03();
+          }
+        }
+
+        //Verifica a função dos outros relês
+
+
+        if(result.get('localAplicacao4') == 'Fechamento'){
+          if(result.get('funcao-rele4').contains('Pulso')){
+
+            rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFarol04();
+          }
+        }
+
+        if(result.get('localAplicacao4') == 'Farol'){
+          if(result.get('funcao-rele4').contains('Pulso')){
+
+            rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFarol04();
+          }
+        }
+      }
+
+      //rele 2
+
+      if(result.get('localAplicacao2') == "Cancela"){
+        if(result.get('funcao-rele2').contains('Pulso')){
+
+          rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+        }else{
+          await Future.delayed(Duration(seconds: 5));
+          releFarol02();
+        }
+
+        if(result.get('localAplicacao1') == 'Fechamento'){
+
+          if(result.get('funcao-rele1').contains('Pulso')){
+
+            rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releCancelaEntrada();
+          }
+
+        }
+
+        if(result.get('localAplicacao1') == 'Farol'){
+
+          if(result.get('funcao-rele1').contains('Pulso')){
+            rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releCancelaEntrada();
+          }
+        }
+
+        //Verifica a função dos outros relês
+
+        if(result.get('localAplicacao3') == 'Fechamento'){
+
+          if(result.get('funcao-rele3').contains('Pulso')){
+
+            rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFarol03();
+          }
+
+        }
+
+        if(result.get('localAplicacao3') == 'Farol'){
+
+          if(result.get('funcao-rele3').contains('Pulso')){
+
+            rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+
+            print(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFarol03();
+          }
+        }
+
+        //Verifica a função dos outros relês
+
+        if(result.get('localAplicacao4') == 'Fechamento'){
+          if(result.get('funcao-rele4').contains('Pulso')){
+
+            rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFarol04();
+          }
+        }
+
+        if(result.get('localAplicacao4') == 'Farol'){
+          if(result.get('funcao-rele4').contains('Pulso')){
+
+            rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFarol04();
+          }
+        }
+
+      }
+
+
+      //Rele3
+
+      if(result.get('localAplicacao3') == "Cancela"){
+        if(result.get('localAplicacao1') == 'Fechamento'){
+
+          if(result.get('funcao-rele1').contains('Pulso')){
+
+            rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releCancelaEntrada();
+          }
+
+        }
+
+        if(result.get('localAplicacao1') == 'Farol'){
+
+          if(result.get('funcao-rele1').contains('Pulso')){
+            rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releCancelaEntrada();
+          }
+        }
+
+        if(result.get('localAplicacao2') == 'Fechamento'){
+
+          if(result.get('funcao-rele2').contains('Pulso')){
+
+            rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFechamento02();
+          }
+
+        }
+
+        if(result.get('localAplicacao2') == 'Farol'){
+          if(result.get('funcao-rele2').contains('Pulso')){
+
+            rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFechamento02();
+          }
+        }
+
+        if(result.get('localAplicacao4') == 'Fechamento'){
+          if(result.get('funcao-rele4').contains('Pulso')){
+
+            rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFarol04();
+          }
+        }
+
+        if(result.get('localAplicacao4') == 'Farol'){
+          if(result.get('funcao-rele4').contains('Pulso')){
+
+            rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFarol04();
+          }
+        }
+      }
+
+      //rele 4
+
+      if(result.get('localAplicacao4') == 'Cancela'){
+        if(result.get('funcao-rele4').contains('Pulso')){
+
+          rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+        }else{
+          await Future.delayed(Duration(seconds: 5));
+          releFarol04();
+        }
+
+        if(result.get('localAplicacao1') == 'Fechamento'){
+
+          if(result.get('funcao-rele1').contains('Pulso')){
+
+            rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releCancelaEntrada();
+          }
+
+        }
+
+        if(result.get('localAplicacao1') == 'Farol'){
+
+          if(result.get('funcao-rele1').contains('Pulso')){
+            rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releCancelaEntrada();
+          }
+        }
+
+        if(result.get('localAplicacao2') == 'Fechamento'){
+
+          if(result.get('funcao-rele2').contains('Pulso')){
+
+            rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFechamento02();
+          }
+
+        }
+
+        if(result.get('localAplicacao2') == 'Farol'){
+          if(result.get('funcao-rele2').contains('Pulso')){
+
+            rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFechamento02();
+          }
+        }
+
+        if(result.get('localAplicacao3') == 'Fechamento'){
+
+          if(result.get('funcao-rele3').contains('Pulso')){
+
+            rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFarol03();
+          }
+
+        }
+
+        if(result.get('localAplicacao3') == 'Farol'){
+
+          if(result.get('funcao-rele3').contains('Pulso')){
+
+            rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+          }else{
+            await Future.delayed(Duration(seconds: 5));
+            releFarol03();
+          }
+        }
+      }
+    }
+
     TextEditingController _textEditingController = TextEditingController(text: _textoPredefinido);
     return Scaffold(
       appBar: AppBar(
@@ -263,6 +587,8 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                         {
                           'tags': tags
                         });
+
+                    callToVerifyReles();
 
                     FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                       'DataSaida': DateTime.now(),

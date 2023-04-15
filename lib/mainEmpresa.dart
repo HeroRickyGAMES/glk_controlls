@@ -410,10 +410,10 @@ class _mainEmpresaState extends State<mainEmpresa> {
                                                         String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
                                                         String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
                                                         String formattedDate3 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DatadeAnalise.toDate()).replaceAll('-', '/');
-
+                                                        bool interno = documents['interno'];
                                                         Navigator.push(context,
                                                             MaterialPageRoute(builder: (context){
-                                                              return veiculoEntrada(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, formattedDate2, verificadoPor, formattedDate3);
+                                                              return veiculoEntrada(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, formattedDate2, verificadoPor, formattedDate3, interno);
                                                             }));
 
                                                       }
@@ -483,12 +483,12 @@ class _mainEmpresaState extends State<mainEmpresa> {
                                                           String EmpresadeOrigin = documents['EmpresadeOrigin'];
                                                           String Galpao = documents['Galpão'];
                                                           String verificadoPor = documents['verificadoPor'];
-
+                                                          bool interno = documents['interno'];
                                                           print(formattedDate);
 
                                                           Navigator.push(context,
                                                               MaterialPageRoute(builder: (context){
-                                                                return veiculoEntrada(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, formattedDate2, verificadoPor, formattedDate3);
+                                                                return veiculoEntrada(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, formattedDate2, verificadoPor, formattedDate3, interno);
                                                               }));
                                                         }
                                                       }

@@ -29,6 +29,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
   String? RGMotorista;
   String? Veiculo;
   String? telefone = '';
+  String DataEntradaEmpresa = '';
   String? VeiculoPlaca;
   String? originEmpresa;
   String? lacreSt;
@@ -85,223 +86,444 @@ class _modalPorteiroState extends State<modalPorteiro> {
       );
 
       print(lacreounao);
-      if(lacreounao == 'lacre'){
+      if(veiculoInterno == true){
+        if(lacreounao == 'lacre'){
 
-        //registre todos os valores no db
-        var UID = FirebaseAuth.instance.currentUser?.uid;
-
-        var dateTime= new DateTime.now();
-
-        var uuid = Uuid();
-
-
-        String idd = "${DateTime.now().toString()}" + uuid.v4();
-        FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
-          'nomeMotorista': nomeMotorista,
-          'RGDoMotorista': RGMotorista,
-          'Veiculo': Veiculo,
-          'PlacaVeiculo': VeiculoPlaca,
-          'Telefone': telefone,
-          'EmpresadeOrigin': originEmpresa,
-          'Empresa': empresaSelecionada,
-          'ColetaOuEntrega': coletaouentrega,
-          'saidaLiberadaPor': '',
-          'DataAnaliseEmpresa': '',
-          'uriImage': '',
-          'uriImage2': '',
-          'uriImage3': '',
-          'uriImage4': '',
-          'LacreouNao': lacreounao,
-          'QuemAutorizou': widget.nomeUser,
-          'Status': Status,
-          'idDoc': idd,
-          'DataEntrada': '',
-          'DataSaida': '',
-          'Lacre': lacreSt,
-          'lacrenum': lacreSt,
-          'Horario Criado': dateTime,
-          'verificadoPor': '',
-          'DataDeAnalise': '',
-          'DataEntradaEmpresa': '',
-          'DateSaidaPortaria': '',
-          'liberouSaida': '',
-          'Galpão': '',
-          'tag': '',
-          'interno': veiculoInterno
-        }).then((value) {
-
-          Fluttertoast.showToast(
-            msg: 'Enviado com sucesso!',
-            toastLength: Toast.LENGTH_SHORT,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.black,
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
-          widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
-
-          var db = FirebaseFirestore.instance;
+          //registre todos os valores no db
           var UID = FirebaseAuth.instance.currentUser?.uid;
-          db.collection('Users').doc(UID).get().then((event){
-            print("${event.data()}");
 
-            event.data()?.forEach((key, value) async {
+          var dateTime= new DateTime.now();
 
-              print(key);
-              print(value);
+          var uuid = Uuid();
 
-              if(key == 'nome'){
-                String PorteiroNome = value;
+          String idd = "${DateTime.now().toString()}" + uuid.v4();
+          FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
+            'nomeMotorista': nomeMotorista,
+            'RGDoMotorista': RGMotorista,
+            'Veiculo': Veiculo,
+            'PlacaVeiculo': VeiculoPlaca,
+            'Telefone': telefone,
+            'EmpresadeOrigin': originEmpresa,
+            'Empresa': empresaSelecionada,
+            'ColetaOuEntrega': coletaouentrega,
+            'saidaLiberadaPor': '',
+            'DataAnaliseEmpresa': '',
+            'uriImage': '',
+            'uriImage2': '',
+            'uriImage3': '',
+            'uriImage4': '',
+            'LacreouNao': lacreounao,
+            'QuemAutorizou': widget.nomeUser,
+            'Status': Status,
+            'idDoc': idd,
+            'DataEntrada': '',
+            'DataSaida': '',
+            'Lacre': lacreSt,
+            'lacrenum': lacreSt,
+            'Horario Criado': dateTime,
+            'verificadoPor': '',
+            'DataDeAnalise': '',
+            'DataEntradaEmpresa': DateTime.now(),
+            'DateSaidaPortaria': '',
+            'liberouSaida': '',
+            'Galpão': '',
+            'tag': '',
+            'interno': veiculoInterno
+          }).then((value) {
 
-                print('Porteiro name é' + PorteiroNome);
+            Fluttertoast.showToast(
+              msg: 'Enviado com sucesso!',
+              toastLength: Toast.LENGTH_SHORT,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.black,
+              textColor: Colors.white,
+              fontSize: 16.0,
+            );
+            widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
 
-                var UID = FirebaseAuth.instance.currentUser?.uid;
-                var result = await FirebaseFirestore.instance
-                    .collection("porteiro")
-                    .doc(UID)
-                    .get();
+            var db = FirebaseFirestore.instance;
+            var UID = FirebaseAuth.instance.currentUser?.uid;
+            db.collection('Users').doc(UID).get().then((event){
+              print("${event.data()}");
 
-                bool cadastro = result.get('cadastrar');
-                bool entrada = result.get('entrada');
-                bool saida = result.get('saida');
-                bool relatorio = result.get('relatorio');
-                bool painel = result.get('painel');
+              event.data()?.forEach((key, value) async {
 
-                FirebaseFirestore.instance.collection('Motoristas').doc().set({
-                  'nomeMotorista': nomeMotorista,
-                  'RGDoMotorista': RGMotorista,
-                });
+                print(key);
+                print(value);
 
-                var resulte = await FirebaseFirestore.instance
-                    .collection("Condominio")
-                    .doc('condominio')
-                    .get();
+                if(key == 'nome'){
+                  String PorteiroNome = value;
 
-                String logoPath = resulte.get('imageURL');
+                  print('Porteiro name é' + PorteiroNome);
 
-                Navigator.pop(context);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context){
-                      return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath);
-                    }));
-              }
-            });
-          }
-          );
-        }).catchError((onerror){
-          print('error $onerror');
-        }).whenComplete((){
-          print('Feito com sucesso!');
+                  var UID = FirebaseAuth.instance.currentUser?.uid;
+                  var result = await FirebaseFirestore.instance
+                      .collection("porteiro")
+                      .doc(UID)
+                      .get();
 
-        });
-      }
-      if(lacreounao == 'naolacrado'){
+                  bool cadastro = result.get('cadastrar');
+                  bool entrada = result.get('entrada');
+                  bool saida = result.get('saida');
+                  bool relatorio = result.get('relatorio');
+                  bool painel = result.get('painel');
 
-        //registre todos os valores no db
-        var UID = FirebaseAuth.instance.currentUser?.uid;
+                  FirebaseFirestore.instance.collection('Motoristas').doc().set({
+                    'nomeMotorista': nomeMotorista,
+                    'RGDoMotorista': RGMotorista,
+                  });
 
-        var dateTime= new DateTime.now();
+                  var resulte = await FirebaseFirestore.instance
+                      .collection("Condominio")
+                      .doc('condominio')
+                      .get();
 
-        var uuid = Uuid();
+                  String logoPath = resulte.get('imageURL');
 
-        String idd = "${DateTime.now().toString()}" + uuid.v4();
-        FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
-          'nomeMotorista': nomeMotorista,
-          'RGDoMotorista': RGMotorista,
-          'Veiculo': Veiculo,
-          'idDoc': idd,
-          'DataEntrada': '',
-          'DataSaida': '',
-          'PlacaVeiculo': VeiculoPlaca,
-          'Telefone': telefone,
-          'EmpresadeOrigin': originEmpresa,
-          'Empresa': empresaSelecionada,
-          'ColetaOuEntrega': coletaouentrega,
-          'LacreouNao': lacreounao,
-          'QuemAutorizou': widget.nomeUser,
-          'Status': Status,
-          'Horario Criado': dateTime,
-          'saidaLiberadaPor': '',
-          'DataAnaliseEmpresa': '',
-          'uriImage': '',
-          'uriImage2': '',
-          'uriImage3': '',
-          'uriImage4': '',
-          'lacrenum': '',
-          'verificadoPor': '',
-          'DataDeAnalise': '',
-          'DataEntradaEmpresa': '',
-          'DateSaidaPortaria': '',
-          'liberouSaida': '',
-          'Galpão': '',
-          'tag': '',
-          'interno': veiculoInterno
-        }).then((value) {
-          Fluttertoast.showToast(
-            msg: 'Enviado com sucesso!',
-            toastLength: Toast.LENGTH_SHORT,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.black,
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
-          widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
+                  Navigator.pop(context);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context){
+                        return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath);
+                      }));
+                }
+              });
+            }
+            );
+          }).catchError((onerror){
+            print('error $onerror');
+          }).whenComplete((){
+            print('Feito com sucesso!');
 
-          var db = FirebaseFirestore.instance;
+          });
+        }
+        if(lacreounao == 'naolacrado'){
+
+          //registre todos os valores no db
           var UID = FirebaseAuth.instance.currentUser?.uid;
-          db.collection('Users').doc(UID).get().then((event){
-            print("${event.data()}");
 
-            event.data()?.forEach((key, value) async {
+          var dateTime= new DateTime.now();
 
-              print(key);
-              print(value);
+          var uuid = Uuid();
 
-              if(key == 'nome'){
-                String PorteiroNome = value;
+          String idd = "${DateTime.now().toString()}" + uuid.v4();
+          FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
+            'nomeMotorista': nomeMotorista,
+            'RGDoMotorista': RGMotorista,
+            'Veiculo': Veiculo,
+            'idDoc': idd,
+            'DataEntrada': '',
+            'DataSaida': '',
+            'PlacaVeiculo': VeiculoPlaca,
+            'Telefone': telefone,
+            'EmpresadeOrigin': originEmpresa,
+            'Empresa': empresaSelecionada,
+            'ColetaOuEntrega': coletaouentrega,
+            'LacreouNao': lacreounao,
+            'QuemAutorizou': widget.nomeUser,
+            'Status': Status,
+            'Horario Criado': dateTime,
+            'saidaLiberadaPor': '',
+            'DataAnaliseEmpresa': '',
+            'uriImage': '',
+            'uriImage2': '',
+            'uriImage3': '',
+            'uriImage4': '',
+            'lacrenum': '',
+            'verificadoPor': '',
+            'DataDeAnalise': '',
+            'DataEntradaEmpresa': DateTime.now(),
+            'DateSaidaPortaria': '',
+            'liberouSaida': '',
+            'Galpão': '',
+            'tag': '',
+            'interno': veiculoInterno
+          }).then((value) {
+            Fluttertoast.showToast(
+              msg: 'Enviado com sucesso!',
+              toastLength: Toast.LENGTH_SHORT,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.black,
+              textColor: Colors.white,
+              fontSize: 16.0,
+            );
+            widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
 
-                print('Porteiro name é' + PorteiroNome);
+            var db = FirebaseFirestore.instance;
+            var UID = FirebaseAuth.instance.currentUser?.uid;
+            db.collection('Users').doc(UID).get().then((event){
+              print("${event.data()}");
 
-                var UID = FirebaseAuth.instance.currentUser?.uid;
-                var result = await FirebaseFirestore.instance
-                    .collection("porteiro")
-                    .doc(UID)
-                    .get();
+              event.data()?.forEach((key, value) async {
 
-                print('cheguei aqui!');
+                print(key);
+                print(value);
 
-                bool cadastro = result.get('cadastrar');
-                bool entrada = result.get('entrada');
-                bool saida = result.get('saida');
-                bool relatorio = result.get('relatorio');
-                bool painel = result.get('painel');
+                if(key == 'nome'){
+                  String PorteiroNome = value;
 
-                FirebaseFirestore.instance.collection('Motoristas').doc().set({
-                  'nomeMotorista': nomeMotorista,
-                  'RGDoMotorista': RGMotorista,
-                });
+                  print('Porteiro name é' + PorteiroNome);
 
-                var resulte = await FirebaseFirestore.instance
-                    .collection("Condominio")
-                    .doc('condominio')
-                    .get();
+                  var UID = FirebaseAuth.instance.currentUser?.uid;
+                  var result = await FirebaseFirestore.instance
+                      .collection("porteiro")
+                      .doc(UID)
+                      .get();
 
-                String logoPath = resulte.get('imageURL');
+                  print('cheguei aqui!');
 
-                Navigator.pop(context);
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context){
-                      return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath);
-                    }));
-              }
-            });
-          }
-          );
-        }).catchError((onerror){
-          print('error $onerror');
-        }).whenComplete((){
-          print('Feito com sucesso!');
-        });
+                  bool cadastro = result.get('cadastrar');
+                  bool entrada = result.get('entrada');
+                  bool saida = result.get('saida');
+                  bool relatorio = result.get('relatorio');
+                  bool painel = result.get('painel');
+
+                  FirebaseFirestore.instance.collection('Motoristas').doc().set({
+                    'nomeMotorista': nomeMotorista,
+                    'RGDoMotorista': RGMotorista,
+                  });
+
+                  var resulte = await FirebaseFirestore.instance
+                      .collection("Condominio")
+                      .doc('condominio')
+                      .get();
+
+                  String logoPath = resulte.get('imageURL');
+
+                  Navigator.pop(context);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context){
+                        return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath);
+                      }));
+                }
+              });
+            }
+            );
+          }).catchError((onerror){
+            print('error $onerror');
+          }).whenComplete((){
+            print('Feito com sucesso!');
+          });
+        }
+
+      }else{
+        if(lacreounao == 'lacre'){
+
+          //registre todos os valores no db
+          var UID = FirebaseAuth.instance.currentUser?.uid;
+
+          var dateTime= new DateTime.now();
+
+          var uuid = Uuid();
+
+          String idd = "${DateTime.now().toString()}" + uuid.v4();
+          FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
+            'nomeMotorista': nomeMotorista,
+            'RGDoMotorista': RGMotorista,
+            'Veiculo': Veiculo,
+            'PlacaVeiculo': VeiculoPlaca,
+            'Telefone': telefone,
+            'EmpresadeOrigin': originEmpresa,
+            'Empresa': empresaSelecionada,
+            'ColetaOuEntrega': coletaouentrega,
+            'saidaLiberadaPor': '',
+            'DataAnaliseEmpresa': '',
+            'uriImage': '',
+            'uriImage2': '',
+            'uriImage3': '',
+            'uriImage4': '',
+            'LacreouNao': lacreounao,
+            'QuemAutorizou': widget.nomeUser,
+            'Status': Status,
+            'idDoc': idd,
+            'DataEntrada': '',
+            'DataSaida': '',
+            'Lacre': lacreSt,
+            'lacrenum': lacreSt,
+            'Horario Criado': dateTime,
+            'verificadoPor': '',
+            'DataDeAnalise': '',
+            'DataEntradaEmpresa': '',
+            'DateSaidaPortaria': '',
+            'liberouSaida': '',
+            'Galpão': '',
+            'tag': '',
+            'interno': veiculoInterno
+          }).then((value) {
+
+            Fluttertoast.showToast(
+              msg: 'Enviado com sucesso!',
+              toastLength: Toast.LENGTH_SHORT,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.black,
+              textColor: Colors.white,
+              fontSize: 16.0,
+            );
+            widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
+
+            var db = FirebaseFirestore.instance;
+            var UID = FirebaseAuth.instance.currentUser?.uid;
+            db.collection('Users').doc(UID).get().then((event){
+              print("${event.data()}");
+
+              event.data()?.forEach((key, value) async {
+
+                print(key);
+                print(value);
+
+                if(key == 'nome'){
+                  String PorteiroNome = value;
+
+                  print('Porteiro name é' + PorteiroNome);
+
+                  var UID = FirebaseAuth.instance.currentUser?.uid;
+                  var result = await FirebaseFirestore.instance
+                      .collection("porteiro")
+                      .doc(UID)
+                      .get();
+
+                  bool cadastro = result.get('cadastrar');
+                  bool entrada = result.get('entrada');
+                  bool saida = result.get('saida');
+                  bool relatorio = result.get('relatorio');
+                  bool painel = result.get('painel');
+
+                  FirebaseFirestore.instance.collection('Motoristas').doc().set({
+                    'nomeMotorista': nomeMotorista,
+                    'RGDoMotorista': RGMotorista,
+                  });
+
+                  var resulte = await FirebaseFirestore.instance
+                      .collection("Condominio")
+                      .doc('condominio')
+                      .get();
+
+                  String logoPath = resulte.get('imageURL');
+
+                  Navigator.pop(context);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context){
+                        return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath);
+                      }));
+                }
+              });
+            }
+            );
+          }).catchError((onerror){
+            print('error $onerror');
+          }).whenComplete((){
+            print('Feito com sucesso!');
+
+          });
+        }
+        if(lacreounao == 'naolacrado'){
+
+          //registre todos os valores no db
+          var UID = FirebaseAuth.instance.currentUser?.uid;
+
+          var dateTime= new DateTime.now();
+
+          var uuid = Uuid();
+
+          String idd = "${DateTime.now().toString()}" + uuid.v4();
+          FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
+            'nomeMotorista': nomeMotorista,
+            'RGDoMotorista': RGMotorista,
+            'Veiculo': Veiculo,
+            'idDoc': idd,
+            'DataEntrada': '',
+            'DataSaida': '',
+            'PlacaVeiculo': VeiculoPlaca,
+            'Telefone': telefone,
+            'EmpresadeOrigin': originEmpresa,
+            'Empresa': empresaSelecionada,
+            'ColetaOuEntrega': coletaouentrega,
+            'LacreouNao': lacreounao,
+            'QuemAutorizou': widget.nomeUser,
+            'Status': Status,
+            'Horario Criado': dateTime,
+            'saidaLiberadaPor': '',
+            'DataAnaliseEmpresa': '',
+            'uriImage': '',
+            'uriImage2': '',
+            'uriImage3': '',
+            'uriImage4': '',
+            'lacrenum': '',
+            'verificadoPor': '',
+            'DataDeAnalise': '',
+            'DataEntradaEmpresa': '',
+            'DateSaidaPortaria': '',
+            'liberouSaida': '',
+            'Galpão': '',
+            'tag': '',
+            'interno': veiculoInterno
+          }).then((value) {
+            Fluttertoast.showToast(
+              msg: 'Enviado com sucesso!',
+              toastLength: Toast.LENGTH_SHORT,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.black,
+              textColor: Colors.white,
+              fontSize: 16.0,
+            );
+            widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
+
+            var db = FirebaseFirestore.instance;
+            var UID = FirebaseAuth.instance.currentUser?.uid;
+            db.collection('Users').doc(UID).get().then((event){
+              print("${event.data()}");
+
+              event.data()?.forEach((key, value) async {
+
+                print(key);
+                print(value);
+
+                if(key == 'nome'){
+                  String PorteiroNome = value;
+
+                  print('Porteiro name é' + PorteiroNome);
+
+                  var UID = FirebaseAuth.instance.currentUser?.uid;
+                  var result = await FirebaseFirestore.instance
+                      .collection("porteiro")
+                      .doc(UID)
+                      .get();
+
+                  print('cheguei aqui!');
+
+                  bool cadastro = result.get('cadastrar');
+                  bool entrada = result.get('entrada');
+                  bool saida = result.get('saida');
+                  bool relatorio = result.get('relatorio');
+                  bool painel = result.get('painel');
+
+                  FirebaseFirestore.instance.collection('Motoristas').doc().set({
+                    'nomeMotorista': nomeMotorista,
+                    'RGDoMotorista': RGMotorista,
+                  });
+
+                  var resulte = await FirebaseFirestore.instance
+                      .collection("Condominio")
+                      .doc('condominio')
+                      .get();
+
+                  String logoPath = resulte.get('imageURL');
+
+                  Navigator.pop(context);
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context){
+                        return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath);
+                      }));
+                }
+              });
+            }
+            );
+          }).catchError((onerror){
+            print('error $onerror');
+          }).whenComplete((){
+            print('Feito com sucesso!');
+          });
+        }
+
       }
 
       final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar

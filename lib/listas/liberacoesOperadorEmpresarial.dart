@@ -372,7 +372,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                                         String EmpresadeOrigin = documents['EmpresadeOrigin'];
                                                         String Galpao = documents['Galpão'];
                                                         String lacradoStr = documents['lacrenum'];
-
+                                                        bool interno = documents['interno'];
                                                         Timestamp DataEntrada = documents['DataEntradaEmpresa'];
                                                         String verificadoPor = documents['verificadoPor'];
 
@@ -384,7 +384,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
 
                                                         Navigator.push(context,
                                                             MaterialPageRoute(builder: (context){
-                                                              return veiculoEntrada(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, formattedDate2, verificadoPor, formattedDate3);
+                                                              return veiculoEntrada(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, formattedDate2, verificadoPor, formattedDate3, interno);
                                                             }));
 
                                                       }
@@ -398,6 +398,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                                           String PlacaVeiculo = documents['PlacaVeiculo'];
                                                           String Empresadestino = documents['Empresa'];
                                                           String EmpresadeOrigin = documents['EmpresadeOrigin'];
+                                                          bool interno = documents['interno'];
                                                           String Galpao = documents['Galpão'];
                                                           String lacradoStr = documents['lacrenum'];
 
@@ -412,7 +413,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
 
                                                           Navigator.push(context,
                                                               MaterialPageRoute(builder: (context){
-                                                                return veiculoEntrada(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, formattedDate2, verificadoPor, formattedDate3);
+                                                                return veiculoEntrada(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, formattedDate2, verificadoPor, formattedDate3, interno);
                                                               }));
                                                         }
                                                       }
