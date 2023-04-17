@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
-import '../subModais/ReleConfigOnly.dart';
+import 'package:glk_controls/subModais/ReleConfigOnly.dart';
 
 class releModalConfig extends StatefulWidget {
   String urlPadrao;

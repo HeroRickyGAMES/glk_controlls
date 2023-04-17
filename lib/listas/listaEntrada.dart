@@ -8,10 +8,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/modal/veiculoAguardando.dart';
+import 'package:glk_controls/modal/liberacaooffModal.dart';
+import 'package:glk_controls/pesquisaDir/pesquisa.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
-import '../modal/liberacaooffModal.dart';
-import '../pesquisaDir/pesquisa.dart';
 
 //Programado por HeroRickyGames
 

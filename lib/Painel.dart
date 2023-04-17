@@ -7,9 +7,8 @@ import 'package:glk_controls/relatorio.dart';
 import 'package:glk_controls/subModais/BloqueioDeVeiculos.dart';
 import 'package:glk_controls/subModais/bloqueiodeVisitantes.dart';
 import 'package:glk_controls/subModais/empresasCadastradas.dart';
-import 'listas/UsuariosCadastrados.dart';
-import 'modal/ReleModalConfig.dart';
-
+import 'package:glk_controls/modal/ReleModalConfig.dart';
+import 'package:glk_controls/listas/UsuariosCadastrados.dart';
 //Programado por HeroRickyGames
 
 class painelADM extends StatefulWidget {

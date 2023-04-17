@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import 'PainelAdministrativo/painelAdmin.dart';
-import 'login.dart';
-
+import 'package:glk_controls/login.dart';
+import 'package:glk_controls/PainelAdministrativo/painelAdmin.dart';
 class anteLogin extends StatelessWidget {
   const anteLogin({Key? key}) : super(key: key);
 

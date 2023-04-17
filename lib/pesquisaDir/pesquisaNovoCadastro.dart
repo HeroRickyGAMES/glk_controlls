@@ -6,9 +6,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import '../listas/listaUsuarios.dart';
-import '../modal/modalVeiculo.dart';
-import '../modal/modalVeiculoPesquisafill.dart';
+import 'package:glk_controls/modal/modalVeiculo.dart';
+import 'package:glk_controls/listas/listaUsuarios.dart';
 
 class pesquisaCadastro extends StatefulWidget {
 

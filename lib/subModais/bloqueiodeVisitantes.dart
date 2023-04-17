@@ -4,8 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:uuid/uuid.dart';
 
-import '../relatorioGen/generatePDF/gerarPDFBloqueio.dart';
-import '../relatorioGen/generatePDF/gerarPDFBloqueio2.dart';
+import 'package:glk_controls/relatorioGen/generatePDF/gerarPDFBloqueio2.dart';
 
 class bloqueioDeVisitantes extends StatefulWidget {
   String ADMName;

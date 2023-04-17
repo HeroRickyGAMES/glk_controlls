@@ -4,13 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/cadastrese.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:glk_controls/mainEmpresa.dart';
 import 'package:glk_controls/mainPorteiro.dart';
 import 'package:glk_controls/setorADM.dart';
-import 'firebase_options.dart';
-import 'operadorEmpresarial.dart';
-
+import 'package:glk_controls/operadorEmpresarial.dart';
 //Programado por HeroRickyGames
 
 class login extends StatefulWidget {

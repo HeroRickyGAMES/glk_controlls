@@ -9,8 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/modal/veiculoEntrada.dart';
 import 'package:glk_controls/pesquisaDir/pesquisa.dart';
 import 'package:intl/intl.dart';
-
-import '../modal/operadorEmpresarialAguardandoModal.dart';
+import 'package:glk_controls/modal/operadorEmpresarialAguardandoModal.dart';
 
 
 

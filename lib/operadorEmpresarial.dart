@@ -7,8 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:glk_controls/anteLogin.dart';
 import 'package:glk_controls/modal/modalVeiculoAgendamento.dart';
 import 'package:glk_controls/relatorio.dart';
-import 'listas/liberacoesOperadorEmpresarial.dart';
-
+import 'package:glk_controls/listas/liberacoesOperadorEmpresarial.dart';
 
 //Programado por HeroRickyGames
 

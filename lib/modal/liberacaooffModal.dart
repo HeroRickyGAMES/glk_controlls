@@ -1,16 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:glk_controls/callToAPI.dart';
-import 'package:image_picker/image_picker.dart';
-import '../main.dart';
-import '../mainPorteiro.dart';
-import 'dart:io';
 import 'package:uuid/uuid.dart';
-
+import 'package:glk_controls/mainPorteiro.dart';
+import 'package:glk_controls/main.dart';
 //Programado Por HeroRickyGames
 
 class liberacaoOff extends StatefulWidget {

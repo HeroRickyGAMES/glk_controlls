@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:glk_controls/Painel.dart';
-import 'package:glk_controls/modal/cadastroUsuarioADM.dart';
 
 //Programado por HeroRickyGames
 

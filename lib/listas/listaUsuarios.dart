@@ -1,8 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-
-import '../modal/modalVeiculoPesquisafill.dart';
+import 'package:glk_controls/modal/modalVeiculoPesquisafill.dart';
 
 class listaUsuarios extends StatefulWidget {
 

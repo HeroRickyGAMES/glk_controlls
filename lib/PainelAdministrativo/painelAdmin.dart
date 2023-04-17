@@ -7,10 +7,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:path_provider/path_provider.dart';
-
-import '../CadastrarCondominio.dart';
-import '../Painel.dart';
-import '../anteLogin.dart';
+import 'package:glk_controls/CadastrarCondominio.dart';
+import 'package:glk_controls/Painel.dart';
+import 'package:glk_controls/anteLogin.dart';
 
 
 class painelAdmin extends StatefulWidget {

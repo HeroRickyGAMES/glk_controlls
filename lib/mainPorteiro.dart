@@ -5,14 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/Painel.dart';
-import 'package:glk_controls/callToAPI.dart';
 import 'package:glk_controls/listas/listaEntrada.dart';
 import 'package:glk_controls/offlineService/mainPorteiroOffline.dart';
 import 'package:glk_controls/relatorio.dart';
-import 'anteLogin.dart';
-import 'listas/listaSaida.dart';
-import 'modal/modalVeiculo.dart';
-
+import 'package:glk_controls/modal/modalVeiculo.dart';
+import 'package:glk_controls/listas/listaSaida.dart';
+import 'package:glk_controls/anteLogin.dart';
 
 //Programado por HeroRickyGames
 

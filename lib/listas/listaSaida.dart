@@ -5,10 +5,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/modal/ModalSaida.dart';
+import 'package:glk_controls/pesquisaDir/pesquisa.dart';
 
 import 'package:intl/intl.dart';
-
-import '../pesquisaDir/pesquisa.dart';
 
 //Programado por HeroRickyGames
 
