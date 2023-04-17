@@ -126,7 +126,7 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                                                   mainAxisAlignment: MainAxisAlignment.end,
                                                   children: [
                                                     TextButton(onPressed: (){
-                                                      Navigator.of(context);
+                                                      Navigator.of(context).pop();
                                                     },
                                                         child: Text(
                                                             'Cancelar',
@@ -143,7 +143,7 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
 
                                                       List galpoesUsados = result.get('galpoesUsados');
                                                       int galpoesRestantes = result.get('galpoes');
-                                                      List galpoes = documents['galpaes'];
+                                                      Map galpoes = documents['galpaes'];
 
                                                       print(galpoesUsados);
 
@@ -173,6 +173,7 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                                                               'vagas': resultadoVagas,
                                                               'galpoes': galpoesRestantesResult
                                                             }).then((value){
+                                                              Navigator.of(context).pop();
                                                             });
                                                           });
                                                         }

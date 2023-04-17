@@ -187,7 +187,7 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                         mainAxisAlignment: MainAxisAlignment.end,
                                                         children: [
                                                           TextButton(onPressed: (){
-                                                            Navigator.of(context);
+                                                            Navigator.of(context).pop();
                                                           },
                                                               child: Text(
                                                                 'Cancelar',
@@ -201,7 +201,7 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                                 .collection('porteiro')
                                                                 .doc(documents['id'])
                                                                 .delete().then((value){
-
+                                                              Navigator.of(context).pop();
                                                             });
                                                           },
                                                               child: Text(
@@ -313,7 +313,7 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                         mainAxisAlignment: MainAxisAlignment.end,
                                                         children: [
                                                           TextButton(onPressed: (){
-                                                            Navigator.of(context);
+                                                            Navigator.of(context).pop();
                                                           },
                                                               child: Text(
                                                                 'Cancelar',
@@ -327,7 +327,7 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                                 .collection('operadorEmpresarial')
                                                                 .doc(documentos['id'])
                                                                 .delete().then((value){
-
+                                                              Navigator.of(context).pop();
                                                             });
                                                           },
                                                               child: Text(
