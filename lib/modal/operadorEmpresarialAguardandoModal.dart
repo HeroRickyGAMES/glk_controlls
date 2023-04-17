@@ -128,7 +128,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
               Text(
                 'Nome: ' + widget.nomeMotorista,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -138,7 +138,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
               Text(
                 'Veiculo: ' + widget.Veiculo,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -148,7 +148,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
               Text(
                 'Placa: ' + widget.PlacaVeiculo,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -158,7 +158,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
               Text(
                 'Empresa de destino: ' + widget.Empresadestino,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -168,7 +168,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
               Text(
                 'Empresa de origem: ' + widget.EmpresadeOrigin,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -179,7 +179,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                   child: Text(
                     'Galpões da Empresa *',
                     style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold
                     ),
                   ),
@@ -190,7 +190,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                         hint: Text(
                           'Selecione um galpão',
                           style: TextStyle(
-                              fontSize: 18
+                              fontSize: 16
                           ),
                         ),
                         value: (value.isEmpty)? null : value,
@@ -208,7 +208,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                           Text(
                             opcao,
                             style: TextStyle(
-                                fontSize: 18
+                                fontSize: 16
                             ),
                           ),
                         ),
@@ -264,7 +264,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                   border: OutlineInputBorder(),
                   hintText: 'Numero do lacre *',
                   hintStyle: TextStyle(
-                      fontSize: 20
+                      fontSize: 16
                   ),
                 ),
               ),
@@ -404,7 +404,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                 child: Text(
                   'Prosseguir',
                   style: TextStyle(
-                      fontSize: 30
+                      fontSize: 16
                   ),
                 ),
               ),

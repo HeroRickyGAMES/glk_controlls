@@ -75,7 +75,7 @@ class _listaUsuariosState extends State<listaUsuarios> {
                         child: Center(
                             child: Text( 'Nome do Motorista: '+ documents['nomeMotorista'],
                               style: TextStyle(
-                                fontSize: 18
+                                fontSize: 16
                               ),
                             )
                         ),
@@ -86,7 +86,7 @@ class _listaUsuariosState extends State<listaUsuarios> {
                         child: Center(
                             child: Text( 'RG do motorista: '+ documents['RGDoMotorista'],
                               style: TextStyle(
-                                  fontSize: 18
+                                  fontSize: 16
                               ),
                             )
                         ),

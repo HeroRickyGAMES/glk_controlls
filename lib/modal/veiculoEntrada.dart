@@ -159,7 +159,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
               Text(
                   'Nome: ' + widget.nomeMotorista,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -169,7 +169,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
               Text(
                   'Veiculo: ' + widget.Veiculo,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -179,7 +179,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
               Text(
                   'Placa: ' + widget.PlacaVeiculo,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -189,7 +189,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
               Text(
                   'Empresa de destino: ' + widget.Empresadestino,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -199,7 +199,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
               Text(
                   'Empresa de origem: ' + widget.EmpresadeOrigin,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -209,7 +209,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
               Text(
                   'Galpão: ' + widget.Galpao,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -243,7 +243,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                     border: OutlineInputBorder(),
                     hintText: 'Numero do lacre *',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -338,7 +338,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                 child: Text(
                   'Prosseguir',
                   style: TextStyle(
-                      fontSize: 30
+                      fontSize: 16
                   ),
                 ),
               ),
@@ -364,7 +364,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                       Text(
                         'Operador: ' + widget.empresaName,
                         style: TextStyle(
-                            fontSize: 20
+                            fontSize: 16
                         ),
                       ),
                     ),

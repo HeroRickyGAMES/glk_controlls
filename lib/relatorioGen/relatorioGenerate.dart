@@ -110,7 +110,7 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               Text(
                 'Liberação: ' + 'Motorista e Veiculo',
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -208,7 +208,7 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               Text(
                 'Nome: ' + widget.nomeMotorista,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -218,7 +218,7 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               Text(
                 'RG: ' + widget.RG,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -228,7 +228,7 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               Text(
                 'Veiculo: ' + widget.Veiculo,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -238,7 +238,7 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               Text(
                 'Placa: ' + widget.PlacaVeiculo,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -248,7 +248,7 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               Text(
                 'Empresa de destino: ' + widget.Empresadestino,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -258,7 +258,7 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               Text(
                 'Telefone: ' + widget.telefone,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -268,7 +268,7 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               Text(
                 'Empresa de origem: ' + widget.EmpresadeOrigin,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -278,7 +278,7 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               Text(
                 'Galpão: ' + widget.Galpao,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -312,7 +312,7 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
                   border: OutlineInputBorder(),
                   hintText: 'Numero do lacre *',
                   hintStyle: TextStyle(
-                      fontSize: 20
+                      fontSize: 16
                   ),
                 ),
               ),
@@ -389,7 +389,7 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
                 child: Text(
                   'Gerar/Imprimir',
                   style: TextStyle(
-                      fontSize: 30
+                      fontSize: 18
                   ),
                 ),
               ),

@@ -84,8 +84,8 @@ class _mainEmpresaState extends State<mainEmpresa> {
     }else{
       if(Platform.isAndroid){
 
-        tamanhotexto = 20;
-        tamanhotextobtns = 34;
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
         aspect = 0.8;
 
       }

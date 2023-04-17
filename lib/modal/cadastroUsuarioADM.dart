@@ -95,7 +95,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                     border: OutlineInputBorder(),
                     hintText: 'Nome Completo *',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 18
                     ),
                   ),
                 ),
@@ -114,7 +114,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                     border: OutlineInputBorder(),
                     hintText: 'RG * ',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 18
                     ),
                   ),
                 ),
@@ -133,7 +133,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                     border: OutlineInputBorder(),
                     hintText: 'Telefone *',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 18
                     ),
                   ),
                 ),
@@ -152,7 +152,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                     border: OutlineInputBorder(),
                     hintText: 'Email *',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -172,7 +172,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                     border: OutlineInputBorder(),
                     hintText: 'Senha * ',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -182,7 +182,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                 child: Text(
                   'Empresa do Operador *',
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold
                   ),
                 ),
@@ -193,7 +193,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                       hint: Text(
                         'Selecione uma empresa',
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: 16
                         ),
                       ),
                       value: (value.isEmpty)? null : value,
@@ -230,7 +230,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                             timeInSecForIosWeb: 1,
                             backgroundColor: Colors.black,
                             textColor: Colors.white,
-                            fontSize: 20,
+                            fontSize: 18,
                           );
                       }else{
 
@@ -241,7 +241,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                             timeInSecForIosWeb: 1,
                             backgroundColor: Colors.black,
                             textColor: Colors.white,
-                            fontSize: 20,
+                            fontSize: 18,
                           );
                         }else{
                           if(telNum == ''){
@@ -252,7 +252,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                               timeInSecForIosWeb: 1,
                               backgroundColor: Colors.black,
                               textColor: Colors.white,
-                              fontSize: 20,
+                              fontSize: 18,
                             );
 
                           }else{
@@ -263,7 +263,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                                 timeInSecForIosWeb: 1,
                                 backgroundColor: Colors.black,
                                 textColor: Colors.white,
-                                fontSize: 20,
+                                fontSize: 18,
                               );
                             }else{
                               if(empresaSelecionada == ''){
@@ -273,7 +273,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                                   timeInSecForIosWeb: 1,
                                   backgroundColor: Colors.black,
                                   textColor: Colors.white,
-                                  fontSize: 20,
+                                  fontSize: 18,
                                 );
                               }else{
                                 if(pass == ''){
@@ -283,9 +283,22 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                                     timeInSecForIosWeb: 1,
                                     backgroundColor: Colors.black,
                                     textColor: Colors.white,
-                                    fontSize: 20,
+                                    fontSize: 18,
                                   );
                                 }else{
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: Text('Aguarde!'),
+                                        actions: [
+                                          Center(
+                                            child: CircularProgressIndicator(),
+                                          )
+                                        ],
+                                      );
+                                    },
+                                  );
 
                                   List tst = [];
                                   List Names = [];
@@ -334,7 +347,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                                       timeInSecForIosWeb: 1,
                                       backgroundColor: Colors.black,
                                       textColor: Colors.white,
-                                      fontSize: 20,
+                                      fontSize: 18,
                                     );
                                     FirebaseFirestore.instance.collection('operadorEmpresarial').doc(userCredential.user?.uid).set(
                                         {
@@ -368,9 +381,10 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                                         timeInSecForIosWeb: 1,
                                         backgroundColor: Colors.black,
                                         textColor: Colors.white,
-                                        fontSize: 20,
+                                        fontSize: 18,
                                       );
                                       widget.listaNome.clear();
+                                      Navigator.of(context).pop();
                                       Navigator.pop(context);
                                     });
                                   }
@@ -381,7 +395,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                                       timeInSecForIosWeb: 1,
                                       backgroundColor: Colors.black,
                                       textColor: Colors.white,
-                                      fontSize: 20,
+                                      fontSize: 18,
                                     );
                                   }
                                   await app.delete();
@@ -396,7 +410,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                     child: Text(
                       'Confirmar cadastro',
                       style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 18,
                           fontWeight: FontWeight.bold
                       ),),
                   )
@@ -422,7 +436,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                       Text(
                         'ADM : ' + widget.ADMName,
                         style: TextStyle(
-                            fontSize: 20
+                            fontSize: 18
                         ),
                       ),
                     ),

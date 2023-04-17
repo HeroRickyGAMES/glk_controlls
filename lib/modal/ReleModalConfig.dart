@@ -16,8 +16,6 @@ class releModalConfig extends StatefulWidget {
 
 class _releModalConfigState extends State<releModalConfig> {
 
-
-
   @override
   Widget build(BuildContext context) {
     String urlString = widget.urlPadrao;

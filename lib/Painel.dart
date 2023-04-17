@@ -78,7 +78,7 @@ class _painelADMState extends State<painelADM> {
                         Text(
                           'Cadastrar Empresa',
                           style: TextStyle(
-                              fontSize: 20
+                              fontSize: 16
                           ),
                         ),
                       ),
@@ -126,7 +126,7 @@ class _painelADMState extends State<painelADM> {
                         Text(
                           'Cadastrar Operador da Empresa',
                           style: TextStyle(
-                              fontSize: 20
+                              fontSize: 16
                           ),
                         ),
                         style: ElevatedButton.styleFrom(
@@ -166,7 +166,7 @@ class _painelADMState extends State<painelADM> {
                         Text(
                           'Cadastrar Operador Interno',
                           style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 16,
                               color: Colors.black
                           ),
                         ),
@@ -191,7 +191,7 @@ class _painelADMState extends State<painelADM> {
                         Text(
                           'Relatorios Gerais',
                           style: TextStyle(
-                              fontSize: 20
+                              fontSize: 16
                           ),
                         ),
                         style: ElevatedButton.styleFrom(
@@ -232,7 +232,7 @@ class _painelADMState extends State<painelADM> {
                         Text(
                           'Empresas Cadastrados',
                           style: TextStyle(
-                              fontSize: 20
+                              fontSize: 16
                           ),
                         ),
                         style: ElevatedButton.styleFrom(
@@ -256,7 +256,7 @@ class _painelADMState extends State<painelADM> {
                         Text(
                           'Usuarios Cadastrados',
                           style: TextStyle(
-                              fontSize: 20
+                              fontSize: 16
                           ),
                         ),
                         style: ElevatedButton.styleFrom(
@@ -292,7 +292,7 @@ class _painelADMState extends State<painelADM> {
                         Text(
                           'Configurações de Relês',
                           style: TextStyle(
-                              fontSize: 20
+                              fontSize: 16
                           ),
                         ),
                       ),
@@ -313,7 +313,7 @@ class _painelADMState extends State<painelADM> {
                         Text(
                           'Bloqueio de veiculos',
                           style: TextStyle(
-                              fontSize: 20
+                              fontSize: 16
                           ),
                         ),
                         style: ElevatedButton.styleFrom(
@@ -337,7 +337,7 @@ class _painelADMState extends State<painelADM> {
                         Text(
                           'Bloqueio de visitantes',
                           style: TextStyle(
-                              fontSize: 20
+                              fontSize: 16
                           ),
                         ),
                         style: ElevatedButton.styleFrom(
@@ -365,7 +365,7 @@ class _painelADMState extends State<painelADM> {
                         Text(
                           'ADM : ' + widget.ADMName,
                           style: TextStyle(
-                              fontSize: 20
+                              fontSize: 16
                           ),
                         ),
                       ),

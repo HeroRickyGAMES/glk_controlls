@@ -601,7 +601,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
               Text(
                 'Nome: ' + widget.nomeMotorista,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -611,7 +611,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
               Text(
                 'Veiculo: ' + widget.Veiculo,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -621,7 +621,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
               Text(
                 'Placa: ' + widget.PlacaVeiculo,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -631,7 +631,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
               Text(
                 'Empresa de destino: ' + widget.Empresadestino,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -641,7 +641,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
               Text(
                 'Empresa de origem: ' + widget.EmpresadeOrigin,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -651,7 +651,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
               Text(
                 'Galpão: ' + widget.Galpao,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -700,7 +700,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                   border: OutlineInputBorder(),
                   hintText: 'Numero do lacre *',
                   hintStyle: TextStyle(
-                      fontSize: 20
+                      fontSize: 16
                   ),
                 ),
               ),
@@ -711,7 +711,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                 child: Text(
                   'Adicione a foto no icone abaixo',
                   style: TextStyle(
-                      fontSize: 20
+                      fontSize: 16
                   ),
                 ),
               ),
@@ -736,7 +736,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                             child: Text(
                               'Motorista *',
                               style: TextStyle(
-                                fontSize: 18,
+                                fontSize: 16,
                                 color: Colors.black
                               ),
                             ),
@@ -767,7 +767,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                             child: Text(
                               'Placa 1*',
                               style: TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 16,
                                   color: Colors.black
                               ),
                             ),
@@ -808,7 +808,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                             child: Text(
                               'Placa 2 *',
                               style: TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 16,
                                   color: Colors.black
                               ),
                             ),
@@ -839,7 +839,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                             child: Text(
                               'Placa 3*',
                               style: TextStyle(
-                                  fontSize: 18,
+                                  fontSize: 16,
                                   color: Colors.black
                               ),
                             ),
@@ -865,7 +865,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                     hint: Text(
                       'Selecione uma TAG.VC - ID *',
                       style: TextStyle(
-                          fontSize: 18
+                          fontSize: 16
                       ),
                     ),
                     value: (value.isEmpty)? null : value,
@@ -881,7 +881,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                       Text(
                         opcao,
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: 16
                         ),
                       ),
                     ),
@@ -1215,7 +1215,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                 child: Text(
                   'Prosseguir',
                   style: TextStyle(
-                      fontSize: 30
+                      fontSize: 16
                   ),
                 ),
               ),
@@ -1241,7 +1241,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                       Text(
                         'Operador: ' + widget.empresaName,
                         style: TextStyle(
-                            fontSize: 20
+                            fontSize: 16
                         ),
                       ),
                     ),

@@ -48,7 +48,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                     child: Text(
                       'Nome',
                       style: TextStyle(
-                          fontSize: 18
+                          fontSize: 16
                       ),
                     ),
                   ),
@@ -57,7 +57,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                     child: Text(
                       'RG',
                       style: TextStyle(
-                          fontSize: 18
+                          fontSize: 16
                       ),
                     ),
                   ),
@@ -66,7 +66,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                     child: Text(
                       'Data',
                       style: TextStyle(
-                          fontSize: 18
+                          fontSize: 16
                       ),
                     ),
                   ),
@@ -75,7 +75,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                     child: Text(
                       '',
                       style: TextStyle(
-                          fontSize: 18
+                          fontSize: 16
                       ),
                     ),
                   ),
@@ -84,7 +84,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                     child: Text(
                       '',
                       style: TextStyle(
-                          fontSize: 18
+                          fontSize: 16
                       ),
                     ),
                   ),
@@ -123,13 +123,13 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                 Text(
                                   documents['nome'],
                                   style: TextStyle(
-                                      fontSize: 18
+                                      fontSize: 16
                                   ),
                                 ),
                                 Text(
                                   documents['rg'],
                                   style: TextStyle(
-                                      fontSize: 18
+                                      fontSize: 16
                                   ),
                                 ),
                                 Row(
@@ -137,7 +137,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                     Text(
                                       DateFormat('dd-MM-yyyy HH:mm:ss').format(documents['dataDoBloqueio'].toDate()).replaceAll('-', '/'),
                                       style: TextStyle(
-                                          fontSize: 18
+                                          fontSize: 16
                                       ),
                                     ),
                                     TextButton(
@@ -185,7 +185,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                                     }, child: Text(
                                                       'Voltar',
                                                       style: TextStyle(
-                                                          fontSize: 18
+                                                          fontSize: 16
                                                       ),
                                                     ),
                                                       style: ElevatedButton.styleFrom(
@@ -204,7 +204,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                                     }, child: Text(
                                                       'Imprimir',
                                                       style: TextStyle(
-                                                          fontSize: 18
+                                                          fontSize: 16
                                                       ),
                                                     ),
                                                       style: ElevatedButton.styleFrom(
@@ -292,7 +292,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                         border: OutlineInputBorder(),
                                         hintText: 'Nome do Motorista * ',
                                         hintStyle: TextStyle(
-                                            fontSize: 20
+                                            fontSize: 16
                                         ),
                                       ),
                                     ),
@@ -313,7 +313,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                         border: OutlineInputBorder(),
                                         hintText: 'RG do Motorista (Só numeros)* ',
                                         hintStyle: TextStyle(
-                                            fontSize: 20
+                                            fontSize: 16
                                         ),
                                       ),
                                     ),
@@ -341,7 +341,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                         border: OutlineInputBorder(),
                                         hintText: 'Motivo do Bloqueio * ',
                                         hintStyle: TextStyle(
-                                            fontSize: 20
+                                            fontSize: 16
                                         ),
                                       ),
                                     ),
@@ -359,7 +359,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                     }, child: Text(
                                       'Cancelar',
                                       style: TextStyle(
-                                          fontSize: 18
+                                          fontSize: 16
                                       ),
                                     ),
                                       style: ElevatedButton.styleFrom(
@@ -430,7 +430,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                     }, child: Text(
                                       'Prosseguir',
                                       style: TextStyle(
-                                          fontSize: 18
+                                          fontSize: 16
                                       ),
                                     ),
                                       style: ElevatedButton.styleFrom(
@@ -447,7 +447,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                       child: Text(
                         'Bloquear',
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: 16
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
@@ -469,7 +469,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                       child: Text(
                         'Cancelar',
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: 16
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
@@ -483,7 +483,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                       child: Text(
                         'Prosseguir',
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: 16
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
@@ -512,7 +512,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                     Text(
                       'ADM : ' + widget.ADMName,
                       style: TextStyle(
-                          fontSize: 20
+                          fontSize: 16
                       ),
                     ),
                   ),

@@ -34,7 +34,7 @@ class anteLogin extends StatelessWidget {
               child: Text(
                   'Login',
                 style: TextStyle(
-                  fontSize: 18,
+                  fontSize: 16,
                   color: Colors.black
                 ),
               ),
@@ -67,7 +67,7 @@ class anteLogin extends StatelessWidget {
                             border: OutlineInputBorder(),
                             hintText: 'User',
                             hintStyle: TextStyle(
-                                fontSize: 20
+                                fontSize: 16
                             ),
                           ),
                         ),
@@ -84,7 +84,7 @@ class anteLogin extends StatelessWidget {
                             border: OutlineInputBorder(),
                             hintText: 'Senha',
                             hintStyle: TextStyle(
-                                fontSize: 20
+                                fontSize: 16
                             ),
                           ),
                         ),
@@ -175,7 +175,7 @@ class anteLogin extends StatelessWidget {
               child: Text(
                 'Painel',
                 style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                     color: Colors.white
                 ),
               ),

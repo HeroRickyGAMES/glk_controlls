@@ -447,7 +447,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                     border: OutlineInputBorder(),
                     hintText: 'Nome Completo do Motorista *',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -467,7 +467,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                     border: OutlineInputBorder(),
                     hintText: 'RG do Motorista (Sem digitos) * ',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -477,7 +477,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                 child: Text(
                   'Veiculo *',
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold
                   ),
                 ),
@@ -488,7 +488,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                       hint: Text(
                         'Selecione um veiculo *',
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: 16
                         ),
                       ),
                       value: (value.isEmpty)? null : value,
@@ -504,7 +504,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                         Text(
                           opcao,
                           style: TextStyle(
-                              fontSize: 18
+                              fontSize: 16
                           ),
                         ),
                       ),
@@ -517,7 +517,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                 child: Text(
                   'Galpão *',
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold
                   ),
                 ),
@@ -528,7 +528,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                       hint: Text(
                         'Selecione um Galpão *',
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: 16
                         ),
                       ),
                       value: (value.isEmpty)? null : value,
@@ -544,7 +544,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                         Text(
                           opcao,
                           style: TextStyle(
-                              fontSize: 18
+                              fontSize: 16
                           ),
                         ),
                       ),
@@ -569,7 +569,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                     border: OutlineInputBorder(),
                     hintText: 'Placa do Veiculo * ',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -594,7 +594,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                     border: OutlineInputBorder(),
                     hintText: 'Telefone',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -611,7 +611,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                     border: OutlineInputBorder(),
                     hintText: 'Empresa de Origem',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -621,7 +621,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                 child: Text(
                   'Empresa destino *',
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold
                   ),
                 ),
@@ -631,7 +631,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                 child: Text(
                   widget.NomeEmpresa,
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold
                   ),
                 ),
@@ -649,7 +649,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                             title: Text(
                                 "Coleta",
                               style: TextStyle(
-                                fontSize: 18
+                                fontSize: 16
                               ),
                             ),
                             value: "coleta",
@@ -667,7 +667,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                             title: Text(
                                 "Entrega",
                               style: TextStyle(
-                                  fontSize: 18
+                                  fontSize: 16
                               ),
                             ),
                             value: "entrega",
@@ -691,7 +691,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                     child: Text(
                       'Selecione um Galpão galpão (Selecione o que bate com com o nome da empresa)*',
                       style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold
                       ),
                     ),
@@ -701,7 +701,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
               Text(
                   'Data de agendamento selecionada ${dataAgendataST}',
                 style: TextStyle(
-                    fontSize: 18
+                    fontSize: 16
                 ),
               ),
               TextButton(
@@ -728,7 +728,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                     'Selecione a data',
                     style: TextStyle(
                         color: Colors.blue,
-                      fontSize: 18
+                      fontSize: 16
                     ),
                   )),
               Container(
@@ -739,7 +739,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                     Text(
                       'Está Entrando com Lacre ou Sem Lacre?',
                       style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold
                       ),
                     ),
@@ -747,7 +747,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                       title: Text(
                           "Com Lacre",
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: 16
                         ),
                       ),
                       value: "lacre",
@@ -766,7 +766,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                       title: Text(
                         "Sem Lacre",
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: 16
                         ),
                       ),
                       value: "naolacrado",
@@ -796,7 +796,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                           border: OutlineInputBorder(),
                           hintText: 'Numero do lacre *',
                           hintStyle: TextStyle(
-                              fontSize: 20
+                              fontSize: 16
                           ),
                         ),
                       ),
@@ -811,7 +811,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
               Text(
                   'Prosseguir',
                 style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 16,
                     fontWeight: FontWeight.bold
                 ),
               )
@@ -835,7 +835,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                     Text(
                       'Operador: ' + widget.nomeUser,
                       style: TextStyle(
-                          fontSize: 20
+                          fontSize: 16
                       ),
                     ),
                   ),

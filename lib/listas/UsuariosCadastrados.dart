@@ -79,7 +79,7 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                 child: Text(
                     "Nome",
                   style: TextStyle(
-                      fontSize: 18
+                      fontSize: 16
                   ),
                 ),
               ),
@@ -88,7 +88,7 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                   child: Text(
                     "Empresa",
                     style: TextStyle(
-                        fontSize: 18
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -97,7 +97,7 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                   child: Text(
                     "Status",
                     style: TextStyle(
-                        fontSize: 18
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -106,7 +106,7 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                   child: Text(
                     "",
                     style: TextStyle(
-                        fontSize: 18
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -145,19 +145,19 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                             children: [
                               Text(documents['nome'],
                               style: TextStyle(
-                                fontSize: 18
+                                fontSize: 16
                                 ),
                               ),
                               Text('SLG Sanca',
                                 style: TextStyle(
-                                    fontSize: 18
+                                    fontSize: 16
                                 ),
                               ),
                               Row(
                                 children: [
                                   Text('Interno',
                                     style: TextStyle(
-                                        fontSize: 18
+                                        fontSize: 16
                                     ),
                                   ),
                                   Container(
@@ -179,7 +179,7 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                         child: Text(
                                                           'Deseja Excluir?',
                                                           style: TextStyle(
-                                                              fontSize: 20
+                                                              fontSize: 18
                                                           ),
                                                         ),
                                                       ),
@@ -272,19 +272,19 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                             children: [
                               Text(documentos['nome'],
                                 style: TextStyle(
-                                    fontSize: 18
+                                    fontSize: 16
                                 ),
                               ),
                               Text(documentos['empresa'],
                                 style: TextStyle(
-                                    fontSize: 18
+                                    fontSize: 16
                                 ),
                               ),
                               Row(
                                 children: [
                                   Text('Empresa',
                                     style: TextStyle(
-                                        fontSize: 18
+                                        fontSize: 16
                                     ),
                                   ),
                                   Container(
@@ -305,7 +305,7 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                         child: Text(
                                                           'Deseja Excluir?',
                                                           style: TextStyle(
-                                                              fontSize: 20
+                                                              fontSize: 18
                                                           ),
                                                         ),
                                                       ),
@@ -386,7 +386,7 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                     Text(
                       'ADM : ' + widget.ADMName,
                       style: TextStyle(
-                          fontSize: 20
+                          fontSize: 16
                       ),
                     ),
                   ),

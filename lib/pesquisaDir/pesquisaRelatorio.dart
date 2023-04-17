@@ -32,7 +32,7 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
     }else{
       if(Platform.isAndroid){
 
-        tamanhotexto = 20;
+        tamanhotexto = 16;
         aspect = 1.0;
 
       }

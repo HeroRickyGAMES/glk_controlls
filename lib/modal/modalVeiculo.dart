@@ -768,7 +768,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     border: OutlineInputBorder(),
                     hintText: 'Nome Completo do Motorista *',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -788,7 +788,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     border: OutlineInputBorder(),
                     hintText: 'RG do Motorista (Sem digitos) * ',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -798,7 +798,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 child: Text(
                   'Veiculo *',
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold
                   ),
                 ),
@@ -809,7 +809,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                       hint: Text(
                         'Selecione um veiculo *',
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: 16
                         ),
                       ),
                       value: (value.isEmpty)? null : value,
@@ -825,7 +825,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         Text(
                           opcao,
                           style: TextStyle(
-                              fontSize: 18
+                              fontSize: 16
                           ),
                         ),
                       ),
@@ -850,7 +850,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     border: OutlineInputBorder(),
                     hintText: 'Placa do Veiculo * ',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -875,7 +875,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     border: OutlineInputBorder(),
                     hintText: 'Telefone',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -892,7 +892,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     border: OutlineInputBorder(),
                     hintText: 'Empresa de Origem',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -902,7 +902,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   title: Text(
                       'Veiculo Interno',
                     style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 16,
 
                     ),
                   ),
@@ -956,7 +956,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 child: Text(
                   'Empresa destino *',
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold
                   ),
                 ),
@@ -967,7 +967,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                       hint: Text(
                         'Selecione uma empresa',
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: 16
                         ),
                       ),
                       value: (value.isEmpty)? null : value,
@@ -983,7 +983,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         Text(
                           opcao,
                           style: TextStyle(
-                              fontSize: 18
+                              fontSize: 16
                           ),
                         ),
                       ),
@@ -1004,7 +1004,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                             title: Text(
                                 "Coleta",
                               style: TextStyle(
-                                fontSize: 18
+                                fontSize: 16
                               ),
                             ),
                             value: "coleta",
@@ -1022,7 +1022,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                             title: Text(
                                 "Entrega",
                               style: TextStyle(
-                                  fontSize: 18
+                                  fontSize: 16
                               ),
                             ),
                             value: "entrega",
@@ -1047,7 +1047,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     Text(
                       'Está Entrando com Lacre ou Sem Lacre?',
                       style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold
                       ),
                     ),
@@ -1055,7 +1055,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                       title: Text(
                           "Com Lacre",
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: 16
                         ),
                       ),
                       value: "lacre",
@@ -1074,7 +1074,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                       title: Text(
                         "Sem Lacre",
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: 16
                         ),
                       ),
                       value: "naolacrado",
@@ -1104,7 +1104,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                           border: OutlineInputBorder(),
                           hintText: 'Numero do lacre *',
                           hintStyle: TextStyle(
-                              fontSize: 20
+                              fontSize: 16
                           ),
                         ),
                       ),
@@ -1143,7 +1143,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     Text(
                       'Operador: ' + widget.nomeUser,
                       style: TextStyle(
-                          fontSize: 20
+                          fontSize: 16
                       ),
                     ),
                   ),

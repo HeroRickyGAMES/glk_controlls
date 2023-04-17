@@ -31,7 +31,7 @@ class _pesquisaState extends State<pesquisa> {
     }else{
       if(Platform.isAndroid){
 
-        tamanhotexto = 20;
+        tamanhotexto = 16;
         aspect = 1.0;
 
       }

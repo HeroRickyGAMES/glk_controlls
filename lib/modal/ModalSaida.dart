@@ -424,7 +424,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
               Text(
                 'Liberação: ' + 'Motorista e Veiculo',
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -522,7 +522,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
               Text(
                 'Nome: ' + widget.nomeMotorista,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -532,7 +532,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
               Text(
                 'Veiculo: ' + widget.Veiculo,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -542,7 +542,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
               Text(
                 'Placa: ' + widget.PlacaVeiculo,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 16
                 ),
               ),
             ),
@@ -552,7 +552,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
               Text(
                 'Empresa de destino: ' + widget.Empresadestino,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 18
                 ),
               ),
             ),
@@ -562,7 +562,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
               Text(
                 'Empresa de origem: ' + widget.EmpresadeOrigin,
                 style: TextStyle(
-                    fontSize: 30
+                    fontSize: 18
                 ),
               ),
             ),
@@ -665,7 +665,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                 child: Text(
                   'Prosseguir',
                   style: TextStyle(
-                      fontSize: 30
+                      fontSize: 18
                   ),
                 ),
               ),
@@ -691,7 +691,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                       Text(
                         'Operador: ' + widget.porteiroName,
                         style: TextStyle(
-                            fontSize: 20
+                            fontSize: 16
                         ),
                       ),
                     ),

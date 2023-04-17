@@ -119,7 +119,7 @@ class _painelAdminState extends State<painelAdmin> {
                 child: Text(
                     'Configuração',
                   style: TextStyle(
-                      fontSize: 19,
+                      fontSize: 18,
                   ),
                 ),
               ),
@@ -159,7 +159,7 @@ class _painelAdminState extends State<painelAdmin> {
               child: Text(
                   'Painel',
                 style: TextStyle(
-                  fontSize: 19,
+                  fontSize: 18,
                   color: Colors.white
                 ),
               ),
@@ -186,7 +186,7 @@ class _painelAdminState extends State<painelAdmin> {
                   child: Text(
                     'Sair',
                     style: TextStyle(
-                        fontSize: 19,
+                        fontSize: 16,
                         color: Colors.white
                     ),
                   ),

@@ -36,7 +36,7 @@ class _setorADMState extends State<setorADM> {
                 Text(
                   'Cadastrar',
                   style: TextStyle(
-                      fontSize: 20
+                      fontSize: 16
                   ),
                 ),
               ),
@@ -53,7 +53,7 @@ class _setorADMState extends State<setorADM> {
                 Text(
                   'Entrada',
                   style: TextStyle(
-                      fontSize: 20
+                      fontSize: 16
                   ),
                 ),
               ),
@@ -70,7 +70,7 @@ class _setorADMState extends State<setorADM> {
                 Text(
                   'Saída',
                   style: TextStyle(
-                      fontSize: 20
+                      fontSize: 16
                   ),
                 ),
               ),
@@ -87,7 +87,7 @@ class _setorADMState extends State<setorADM> {
                 Text(
                   'Relatorio',
                   style: TextStyle(
-                      fontSize: 20
+                      fontSize: 16
                   ),
                 ),
               ),
@@ -116,7 +116,7 @@ class _setorADMState extends State<setorADM> {
                 Text(
                   'Painel',
                   style: TextStyle(
-                      fontSize: 20
+                      fontSize: 16
                   ),
                 ),
               ),
@@ -141,7 +141,7 @@ class _setorADMState extends State<setorADM> {
                 Text(
                   'ADM : ' + widget.ADMName,
                   style: TextStyle(
-                      fontSize: 20
+                      fontSize: 16
                   ),
                 ),
               ),

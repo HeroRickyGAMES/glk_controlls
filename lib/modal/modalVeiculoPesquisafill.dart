@@ -448,7 +448,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                     border: OutlineInputBorder(),
                     hintText: 'Nome Completo do Motorista *',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -469,7 +469,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                     border: OutlineInputBorder(),
                     hintText: 'RG do Motorista (Sem digitos) * ',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -479,7 +479,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                 child: Text(
                   'Veiculo *',
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold
                   ),
                 ),
@@ -490,7 +490,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                       hint: Text(
                         'Selecione um tipo de Veiculo *',
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: 16
                         ),
                       ),
                       value: (value.isEmpty)? null : value,
@@ -506,7 +506,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                         Text(
                           opcao,
                           style: TextStyle(
-                              fontSize: 18
+                              fontSize: 16
                           ),
                         ),
                       ),
@@ -531,7 +531,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                     border: OutlineInputBorder(),
                     hintText: 'Placa do Veiculo * ',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -548,7 +548,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                     border: OutlineInputBorder(),
                     hintText: 'Transportadora * ',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -572,7 +572,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                     border: OutlineInputBorder(),
                     hintText: 'Telefone',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -589,7 +589,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                     border: OutlineInputBorder(),
                     hintText: 'Empresa de Origem *',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -599,7 +599,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                 child: Text(
                   'Empresa destino *',
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold
                   ),
                 ),
@@ -610,7 +610,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                       hint: Text(
                         'Selecione uma empresa',
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: 16
                         ),
                       ),
                       value: (value.isEmpty)? null : value,
@@ -626,7 +626,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                         Text(
                           opcao,
                           style: TextStyle(
-                              fontSize: 18
+                              fontSize: 16
                           ),
                         ),
                       ),
@@ -647,7 +647,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                             title: Text(
                               "Coleta",
                               style: TextStyle(
-                                  fontSize: 18
+                                  fontSize: 16
                               ),
                             ),
                             value: "coleta",
@@ -665,7 +665,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                             title: Text(
                               "Entrega",
                               style: TextStyle(
-                                  fontSize: 18
+                                  fontSize: 16
                               ),
                             ),
                             value: "entrega",
@@ -689,7 +689,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                     child: Text(
                       'Selecione um disponivel Galpão (Selecione o que bate com com o nome da empresa)*',
                       style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold
                       ),
                     ),
@@ -700,7 +700,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                           hint: Text(
                             'Selecione um Galpão',
                             style: TextStyle(
-                                fontSize: 18
+                                fontSize: 16
                             ),
                           ),
                           value: (value.isEmpty)? null : value,
@@ -717,7 +717,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                             Text(
                               opcao,
                               style: TextStyle(
-                                  fontSize: 18
+                                  fontSize: 16
                               ),
                             ),
                           ),
@@ -735,7 +735,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                     Text(
                       'Está Entrando com Lacre ou Sem Lacre?',
                       style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold
                       ),
                     ),
@@ -743,7 +743,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                       title: Text(
                         "Com Lacre",
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: 16
                         ),
                       ),
                       value: "lacre",
@@ -762,7 +762,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                       title: Text(
                         "Sem Lacre",
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: 16
                         ),
                       ),
                       value: "naolacrado",
@@ -792,7 +792,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                           border: OutlineInputBorder(),
                           hintText: 'Numero do lacre *',
                           hintStyle: TextStyle(
-                              fontSize: 20
+                              fontSize: 16
                           ),
                         ),
                       ),
@@ -807,7 +807,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                   Text(
                     'Adicionar novo Motorista',
                     style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.bold
                     ),
                   )
@@ -831,7 +831,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                     Text(
                       'Operador: ' + widget.nomeUser,
                       style: TextStyle(
-                          fontSize: 20
+                          fontSize: 16
                       ),
                     ),
                   ),

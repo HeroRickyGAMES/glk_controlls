@@ -113,7 +113,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                         border: OutlineInputBorder(),
                         hintText: 'Nome da Empresa *',
                         hintStyle: TextStyle(
-                            fontSize: 20
+                            fontSize: 16
                         ),
                       ),
                     ),
@@ -143,7 +143,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                             border: OutlineInputBorder(),
                             hintText: 'Galpões *',
                             hintStyle: TextStyle(
-                                fontSize: 20
+                                fontSize: 16
                             ),
                           ),
                           onFieldSubmitted: _addTag,
@@ -157,7 +157,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                           hint: Text(
                             'Quantidade de vagas *',
                             style: TextStyle(
-                                fontSize: 18
+                                fontSize: 16
                             ),
                           ),
                           value: (value.isEmpty)? null : value,
@@ -196,7 +196,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                         border: OutlineInputBorder(),
                         hintText: 'Responsável pela Empresa * ',
                         hintStyle: TextStyle(
-                            fontSize: 20
+                            fontSize: 18
                         ),
                       ),
                     ),
@@ -223,7 +223,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                         border: OutlineInputBorder(),
                         hintText: 'Telefone',
                         hintStyle: TextStyle(
-                            fontSize: 20
+                            fontSize: 16
                         ),
                       ),
                     ),
@@ -242,7 +242,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                               child: Text(
                                   'Cancelar',
                                 style: TextStyle(
-                                    fontSize: 20,
+                                    fontSize: 18,
                                     fontWeight: FontWeight.bold
                                 ),
                               ),
@@ -263,7 +263,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                       timeInSecForIosWeb: 1,
                                       backgroundColor: Colors.black,
                                       textColor: Colors.white,
-                                      fontSize: 20,
+                                      fontSize: 18,
                                     );
                                   }else{
                                     if(galpaoNum == ''){
@@ -273,7 +273,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                         timeInSecForIosWeb: 1,
                                         backgroundColor: Colors.black,
                                         textColor: Colors.white,
-                                        fontSize: 20,
+                                        fontSize: 18,
                                       );
                                     }else{
                                       if(tags.isEmpty){
@@ -283,7 +283,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                           timeInSecForIosWeb: 1,
                                           backgroundColor: Colors.black,
                                           textColor: Colors.white,
-                                          fontSize: 20,
+                                          fontSize: 18,
                                         );
                                       }else{
                                         if(respName == ''){
@@ -293,7 +293,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                             timeInSecForIosWeb: 1,
                                             backgroundColor: Colors.black,
                                             textColor: Colors.white,
-                                            fontSize: 20,
+                                            fontSize: 18,
                                           );
                                         }else{
                                           if(telNum == ''){
@@ -303,7 +303,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                               timeInSecForIosWeb: 1,
                                               backgroundColor: Colors.black,
                                               textColor: Colors.white,
-                                              fontSize: 20,
+                                              fontSize: 18,
                                             );
                                           }else{
                                             if(vagas == ''){
@@ -313,7 +313,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                 timeInSecForIosWeb: 1,
                                                 backgroundColor: Colors.black,
                                                 textColor: Colors.white,
-                                                fontSize: 20,
+                                                fontSize: 18,
                                               );
                                             }else{
                                               var result = await FirebaseFirestore.instance
@@ -333,7 +333,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                   timeInSecForIosWeb: 1,
                                                   backgroundColor: Colors.black,
                                                   textColor: Colors.white,
-                                                  fontSize: 20,
+                                                  fontSize: 18,
                                                 );
                                               }else{
                                                 if(galpoesDisponiveis < tags.length){
@@ -343,7 +343,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                     timeInSecForIosWeb: 1,
                                                     backgroundColor: Colors.black,
                                                     textColor: Colors.white,
-                                                    fontSize: 20,
+                                                    fontSize: 18,
                                                   );
                                                 }else{
                                                   print(tags);
@@ -365,7 +365,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                         timeInSecForIosWeb: 1,
                                                         backgroundColor: Colors.black,
                                                         textColor: Colors.white,
-                                                        fontSize: 20,
+                                                        fontSize: 18,
                                                       );
                                                     }else{
                                                       if(i == tags.length){
@@ -375,7 +375,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                           timeInSecForIosWeb: 1,
                                                           backgroundColor: Colors.black,
                                                           textColor: Colors.white,
-                                                          fontSize: 20,
+                                                          fontSize: 18,
                                                         );
                                                         var uuid = Uuid();
 
@@ -413,7 +413,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                               timeInSecForIosWeb: 1,
                                                               backgroundColor: Colors.black,
                                                               textColor: Colors.white,
-                                                              fontSize: 20,
+                                                              fontSize: 18,
                                                             );
                                                             tags.clear();
                                                             Navigator.pop(context);

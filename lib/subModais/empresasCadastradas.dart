@@ -43,7 +43,7 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                         child: Text(
                         'Empresas',
                           style: TextStyle(
-                              fontSize: 18
+                              fontSize: 16
                           ),
                        ),
                     ),
@@ -52,7 +52,7 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                       child: Text(
                         'Vagas',
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: 16
                         ),
                       ),
                     ),
@@ -97,13 +97,13 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                                       Text(
                                           documents['nome'],
                                         style: TextStyle(
-                                          fontSize: 18
+                                          fontSize: 16
                                         ),
                                       ),
                                       Text(
                                         documents['vagas'],
                                         style: TextStyle(
-                                            fontSize: 18
+                                            fontSize: 16
                                         ),
                                       ),
                                       ElevatedButton(onPressed: () async {
@@ -118,7 +118,7 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                                                   child: Text(
                                                       'Deseja Excluir?',
                                                     style: TextStyle(
-                                                        fontSize: 20
+                                                        fontSize: 18
                                                     ),
                                                   ),
                                                 ),
@@ -131,7 +131,7 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                                                         child: Text(
                                                             'Cancelar',
                                                           style: TextStyle(
-                                                              fontSize: 18
+                                                              fontSize: 16
                                                           ),
                                                         )
                                                     ),
@@ -182,7 +182,7 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                                                         child: Text(
                                                             'Prosseguir',
                                                           style: TextStyle(
-                                                              fontSize: 18
+                                                              fontSize: 16
                                                           ),
                                                         )
                                                     )
@@ -227,7 +227,7 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                       Text(
                         'ADM : ' + widget.ADMName,
                         style: TextStyle(
-                            fontSize: 20
+                            fontSize: 16
                         ),
                       ),
                     ),

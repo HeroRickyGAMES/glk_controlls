@@ -47,7 +47,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                     child: Text(
                         'Placa',
                       style: TextStyle(
-                          fontSize: 18
+                          fontSize: 16
                       ),
                     ),
                   ),
@@ -56,7 +56,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                     child: Text(
                         'Veiculo',
                       style: TextStyle(
-                          fontSize: 18
+                          fontSize: 16
                       ),
                     ),
                   ),
@@ -65,7 +65,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                     child: Text(
                         'Data',
                       style: TextStyle(
-                          fontSize: 18
+                          fontSize: 16
                       ),
                     ),
                   ),
@@ -74,7 +74,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                     child: Text(
                       '',
                       style: TextStyle(
-                          fontSize: 18
+                          fontSize: 16
                       ),
                     ),
                   ),
@@ -83,7 +83,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                     child: Text(
                       '',
                       style: TextStyle(
-                          fontSize: 18
+                          fontSize: 16
                       ),
                     ),
                   ),
@@ -122,13 +122,13 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                 Text(
                                     documents['placa'],
                                   style: TextStyle(
-                                      fontSize: 18
+                                      fontSize: 16
                                   ),
                                 ),
                                 Text(
                                   documents['tipoVeiculo'],
                                   style: TextStyle(
-                                      fontSize: 18
+                                      fontSize: 16
                                   ),
                                 ),
                                 Row(
@@ -136,7 +136,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                     Text(
                                       DateFormat('dd-MM-yyyy HH:mm:ss').format(documents['dataDoBloqueio'].toDate()).replaceAll('-', '/'),
                                       style: TextStyle(
-                                          fontSize: 18
+                                          fontSize: 16
                                       ),
                                     ),
                                     TextButton(
@@ -185,7 +185,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                                     }, child: Text(
                                                         'Voltar',
                                                       style: TextStyle(
-                                                          fontSize: 18
+                                                          fontSize: 16
                                                       ),
                                                     ),
                                                       style: ElevatedButton.styleFrom(
@@ -204,7 +204,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                                     }, child: Text(
                                                         'Imprimir',
                                                       style: TextStyle(
-                                                          fontSize: 18
+                                                          fontSize: 16
                                                       ),
                                                     ),
                                                       style: ElevatedButton.styleFrom(
@@ -303,7 +303,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                           border: OutlineInputBorder(),
                                           hintText: 'Placa do veiculo * ',
                                           hintStyle: TextStyle(
-                                              fontSize: 20
+                                              fontSize: 16
                                           ),
                                         ),
                                       ),
@@ -314,7 +314,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                             hint: Text(
                                               'Veiculo *',
                                               style: TextStyle(
-                                                  fontSize: 18
+                                                  fontSize: 16
                                               ),
                                             ),
                                             value: (value.isEmpty)? null : value,
@@ -332,7 +332,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                               Text(
                                                 opcao,
                                                 style: TextStyle(
-                                                    fontSize: 18
+                                                    fontSize: 16
                                                 ),
                                               ),
                                             ),
@@ -363,7 +363,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                           border: OutlineInputBorder(),
                                           hintText: 'Motivo do Bloqueio * ',
                                           hintStyle: TextStyle(
-                                              fontSize: 20
+                                              fontSize: 16
                                           ),
                                         ),
                                       ),
@@ -381,7 +381,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                       }, child: Text(
                                         'Cancelar',
                                         style: TextStyle(
-                                            fontSize: 18
+                                            fontSize: 16
                                         ),
                                       ),
                                         style: ElevatedButton.styleFrom(
@@ -452,7 +452,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                       }, child: Text(
                                         'Prosseguir',
                                         style: TextStyle(
-                                            fontSize: 18
+                                            fontSize: 16
                                         ),
                                       ),
                                         style: ElevatedButton.styleFrom(
@@ -469,7 +469,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                         child: Text(
                             'Bloquear',
                           style: TextStyle(
-                              fontSize: 18
+                              fontSize: 16
                           ),
                         ),
                       style: ElevatedButton.styleFrom(
@@ -491,7 +491,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                       child: Text(
                         'Cancelar',
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: 16
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
@@ -505,7 +505,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                       child: Text(
                         'Prosseguir',
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: 16
                         ),
                       ),
                       style: ElevatedButton.styleFrom(
@@ -534,7 +534,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                     Text(
                       'ADM : ' + widget.ADMName,
                       style: TextStyle(
-                          fontSize: 20
+                          fontSize: 16
                       ),
                     ),
                   ),

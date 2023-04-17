@@ -266,7 +266,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                       child: Text(
                           'Novo cadastro',
                         style: TextStyle(
-                            fontSize: 20
+                            fontSize: 16
                         ),
                       ),
                   ),
@@ -279,7 +279,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                     child: Text(
                       'Verificar Entrada',
                       style: TextStyle(
-                          fontSize: 20
+                          fontSize: 16
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
@@ -295,7 +295,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                     child: Text(
                       'Verificar Saída',
                       style: TextStyle(
-                          fontSize: 20
+                          fontSize: 16
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
@@ -311,7 +311,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                     child: Text(
                       'Relatorio',
                       style: TextStyle(
-                          fontSize: 20
+                          fontSize: 16
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
@@ -328,7 +328,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                     child: Text(
                       'Painel',
                       style: TextStyle(
-                          fontSize: 20
+                          fontSize: 16
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
@@ -346,7 +346,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                     child: Text(
                       'Liberação Manual',
                       style: TextStyle(
-                          fontSize: 20
+                          fontSize: 16
                       ),
                     ),
                     style: ElevatedButton.styleFrom(
@@ -408,7 +408,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                       Text(
                         'Operador: ' + widget.PorteiroNome,
                         style: TextStyle(
-                            fontSize: 20
+                            fontSize: 16
                         ),
                       ),
                     ),

@@ -57,7 +57,7 @@ class _operadorInternoState extends State<operadorInterno> {
                     border: OutlineInputBorder(),
                     hintText: 'Nome Completo *',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -76,7 +76,7 @@ class _operadorInternoState extends State<operadorInterno> {
                     border: OutlineInputBorder(),
                     hintText: 'RG *',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -95,7 +95,7 @@ class _operadorInternoState extends State<operadorInterno> {
                     border: OutlineInputBorder(),
                     hintText: 'Telefone *',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -114,7 +114,7 @@ class _operadorInternoState extends State<operadorInterno> {
                     border: OutlineInputBorder(),
                     hintText: 'Email *',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -134,7 +134,7 @@ class _operadorInternoState extends State<operadorInterno> {
                     border: OutlineInputBorder(),
                     hintText: 'Senha *',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -146,7 +146,7 @@ class _operadorInternoState extends State<operadorInterno> {
                     child: Text(
                         'Permissões',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 16,
                       ),
                     ),
                   ),
@@ -235,7 +235,7 @@ class _operadorInternoState extends State<operadorInterno> {
                         timeInSecForIosWeb: 1,
                         backgroundColor: Colors.black,
                         textColor: Colors.white,
-                        fontSize: 20,
+                        fontSize: 16,
                       );
                     }else{
                       if(RG == ''){
@@ -245,7 +245,7 @@ class _operadorInternoState extends State<operadorInterno> {
                           timeInSecForIosWeb: 1,
                           backgroundColor: Colors.black,
                           textColor: Colors.white,
-                          fontSize: 20,
+                          fontSize: 16,
                         );
                       }else{
                         if(telNum == ''){
@@ -255,7 +255,7 @@ class _operadorInternoState extends State<operadorInterno> {
                             timeInSecForIosWeb: 1,
                             backgroundColor: Colors.black,
                             textColor: Colors.white,
-                            fontSize: 20,
+                            fontSize: 16,
                           );
                         }else{
                           if(email == ''){
@@ -265,7 +265,7 @@ class _operadorInternoState extends State<operadorInterno> {
                               timeInSecForIosWeb: 1,
                               backgroundColor: Colors.black,
                               textColor: Colors.white,
-                              fontSize: 20,
+                              fontSize: 16,
                             );
                           }else{
                             if(pass == ''){
@@ -275,7 +275,7 @@ class _operadorInternoState extends State<operadorInterno> {
                                 timeInSecForIosWeb: 1,
                                 backgroundColor: Colors.black,
                                 textColor: Colors.white,
-                                fontSize: 20,
+                                fontSize: 16,
                               );
                             }else{
 
@@ -293,7 +293,7 @@ class _operadorInternoState extends State<operadorInterno> {
                                   timeInSecForIosWeb: 1,
                                   backgroundColor: Colors.black,
                                   textColor: Colors.white,
-                                  fontSize: 20,
+                                  fontSize: 16,
                                 );
                                 FirebaseFirestore.instance.collection('porteiro').doc(userCredential.user?.uid).set(
                                     {
@@ -333,7 +333,7 @@ class _operadorInternoState extends State<operadorInterno> {
                                     timeInSecForIosWeb: 1,
                                     backgroundColor: Colors.black,
                                     textColor: Colors.white,
-                                    fontSize: 20,
+                                    fontSize: 16,
                                   );
                                   Navigator.pop(context);
                                 });
@@ -346,7 +346,7 @@ class _operadorInternoState extends State<operadorInterno> {
                                   timeInSecForIosWeb: 1,
                                   backgroundColor: Colors.black,
                                   textColor: Colors.white,
-                                  fontSize: 20,
+                                  fontSize: 16,
                                 );
                               }
                               await app.delete();
@@ -361,7 +361,7 @@ class _operadorInternoState extends State<operadorInterno> {
                   child: Text(
                     'Cadastrar usuario',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold
                     ),
                   ),
@@ -388,7 +388,7 @@ class _operadorInternoState extends State<operadorInterno> {
                       Text(
                         'ADM : ' + widget.ADMName,
                         style: TextStyle(
-                            fontSize: 20
+                            fontSize: 16
                         ),
                       ),
                     ),

@@ -178,7 +178,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                                           border: OutlineInputBorder(),
                                           hintText: 'Motivo *',
                                           hintStyle: TextStyle(
-                                              fontSize: 20
+                                              fontSize: 16
                                           ),
                                         ),
                                       ),
@@ -459,7 +459,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                     border: OutlineInputBorder(),
                     hintText: 'Nome Completo do Motorista *',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -479,7 +479,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                     border: OutlineInputBorder(),
                     hintText: 'RG do Motorista (Sem digitos) * ',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -490,7 +490,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                       hint: Text(
                         'Selecione um tipo de Veiculo *',
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: 16
                         ),
                       ),
                       value: (value.isEmpty)? null : value,
@@ -531,7 +531,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                     border: OutlineInputBorder(),
                     hintText: 'Placa do Veiculo * ',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -548,7 +548,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                     border: OutlineInputBorder(),
                     hintText: 'Transportadora * ',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -572,7 +572,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                     border: OutlineInputBorder(),
                     hintText: 'Telefone',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -589,7 +589,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                     border: OutlineInputBorder(),
                     hintText: 'Empresa de Origem *',
                     hintStyle: TextStyle(
-                        fontSize: 20
+                        fontSize: 16
                     ),
                   ),
                 ),
@@ -599,7 +599,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                 child: Text(
                   'Empresa destino *',
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold
                   ),
                 ),
@@ -647,7 +647,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                             title: Text(
                               "Coleta",
                               style: TextStyle(
-                                  fontSize: 18
+                                  fontSize: 16
                               ),
                             ),
                             value: "coleta",
@@ -665,7 +665,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                             title: Text(
                               "Entrega",
                               style: TextStyle(
-                                  fontSize: 18
+                                  fontSize: 16
                               ),
                             ),
                             value: "entrega",
@@ -700,7 +700,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                           hint: Text(
                             'Selecione um Galpão',
                             style: TextStyle(
-                                fontSize: 18
+                                fontSize: 16
                             ),
                           ),
                           value: (value.isEmpty)? null : value,
@@ -717,7 +717,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                             Text(
                               opcao,
                               style: TextStyle(
-                                  fontSize: 18
+                                  fontSize: 16
                               ),
                             ),
                           ),
@@ -735,7 +735,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                     Text(
                       'Está Entrando com Lacre ou Sem Lacre?',
                       style: TextStyle(
-                          fontSize: 18,
+                          fontSize: 16,
                           fontWeight: FontWeight.bold
                       ),
                     ),
@@ -743,7 +743,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                       title: Text(
                         "Com Lacre",
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: 16
                         ),
                       ),
                       value: "lacre",
@@ -762,7 +762,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                       title: Text(
                         "Sem Lacre",
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: 16
                         ),
                       ),
                       value: "naolacrado",
@@ -792,7 +792,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                           border: OutlineInputBorder(),
                           hintText: 'Numero do lacre *',
                           hintStyle: TextStyle(
-                              fontSize: 20
+                              fontSize: 16
                           ),
                         ),
                       ),
@@ -831,7 +831,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                     Text(
                       'Operador: ' + widget.nomeUser,
                       style: TextStyle(
-                          fontSize: 20
+                          fontSize: 16
                       ),
                     ),
                   ),

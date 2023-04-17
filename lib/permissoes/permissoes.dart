@@ -60,7 +60,7 @@ class _permissoesState extends State<permissoes> {
                       Text(
                           'Nome do Operador: '+ documents['nome'],
                         style: TextStyle(
-                          fontSize: 18
+                          fontSize: 16
                         ),
                       ),
                       Column(

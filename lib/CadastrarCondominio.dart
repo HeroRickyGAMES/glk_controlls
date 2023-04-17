@@ -193,7 +193,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                   border: OutlineInputBorder(),
                   hintText: 'Empresa *',
                   hintStyle: TextStyle(
-                      fontSize: 20
+                      fontSize: 16
                   ),
                 ),
               ),
@@ -210,7 +210,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                   border: OutlineInputBorder(),
                   hintText: 'Endereço *',
                   hintStyle: TextStyle(
-                      fontSize: 20
+                      fontSize: 16
                   ),
                 ),
               ),
@@ -227,7 +227,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                   border: OutlineInputBorder(),
                   hintText: 'CEP *',
                   hintStyle: TextStyle(
-                      fontSize: 20
+                      fontSize: 16
                   ),
                 ),
               ),
@@ -244,7 +244,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                   border: OutlineInputBorder(),
                   hintText: 'Cidade *',
                   hintStyle: TextStyle(
-                      fontSize: 20
+                      fontSize: 16
                   ),
                 ),
               ),
@@ -255,7 +255,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                     hint: Text(
                       'Estado',
                       style: TextStyle(
-                          fontSize: 18
+                          fontSize: 16
                       ),
                     ),
                     value: (value.isEmpty)? null : value,
@@ -271,7 +271,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                       Text(
                         opcao,
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: 16
                         ),
                       ),
                     ),
@@ -291,7 +291,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                   border: OutlineInputBorder(),
                   hintText: 'Quantidade de Galpões *',
                   hintStyle: TextStyle(
-                      fontSize: 20
+                      fontSize: 16
                   ),
                 ),
               ),
@@ -308,7 +308,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                   border: OutlineInputBorder(),
                   hintText: 'Quantidade de Vagas *',
                   hintStyle: TextStyle(
-                      fontSize: 20
+                      fontSize: 16
                   ),
                 ),
               ),
@@ -327,7 +327,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                   border: OutlineInputBorder(),
                   hintText: 'Quantidade de TAGS *',
                   hintStyle: TextStyle(
-                      fontSize: 20
+                      fontSize: 16
                   ),
                 ),
               ),
@@ -378,7 +378,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                     child: Text(
                         'Logo',
                       style: TextStyle(
-                        fontSize: 19
+                        fontSize: 16
                       ),
                     ),
                   ),
@@ -403,7 +403,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                       child: Text(
                           'Cancelar',
                         style: TextStyle(
-                            fontSize: 19
+                            fontSize: 16
                         ),
                       ),
                     style: ElevatedButton.styleFrom(
@@ -583,7 +583,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                 Text(
                     'Prosseguir',
                   style: TextStyle(
-                      fontSize: 19
+                      fontSize: 16
                   ),
                 )
                 )

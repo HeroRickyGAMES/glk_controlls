@@ -70,7 +70,7 @@ class _loginState extends State<login> {
                           border: OutlineInputBorder(),
                           hintText: 'Email',
                           hintStyle: TextStyle(
-                              fontSize: 20
+                              fontSize: 16
                           ),
                         ),
                       ),
@@ -89,7 +89,7 @@ class _loginState extends State<login> {
                         border: OutlineInputBorder(),
                         hintText: 'Senha',
                         hintStyle: TextStyle(
-                            fontSize: 20
+                            fontSize: 16
                         ),
                       ),
                     ),
@@ -425,24 +425,17 @@ class _loginState extends State<login> {
                                 textColor: Colors.white,
                                 fontSize: 16.0,
                               );
-
-
                             });
 
                           }else{
-
-
-
                           }
                         }else{
-
                         }
-
                       },
                       child: Text(
                         'Login',
                         style: TextStyle(
-                            fontSize: 20
+                            fontSize: 16
                         ),
                       ),
                     ),
