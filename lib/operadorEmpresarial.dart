@@ -121,11 +121,16 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                         .get();
 
                     for (var res in resultEmpresa.docs) {
-
+                      //print('cheguei aqui');
                       for (int i = resultEmpresa.docs.length; i >= 1; i--) {
                         if(i == resultEmpresa.docs.length){
-
+                          print('cheguei aqui');
+                          print(res.data()['nome'] == widget.empresaName);
+                          print(res.data()['nome']);
+                          print(widget.empresaName);
                           if(res.data()['nome'] == widget.empresaName){
+
+                            print('cheguei aqui');
 
                             Galpoes.addAll(res.data()['galpaes']);
 
@@ -133,8 +138,10 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                             Navigator.pop(context);
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context){
-                                  return modalVeiculoAgendamento(PorteiroNomee, widget.empresaName,dropValue2, dropValue, Galpoes.keys.toList());
+                                  return modalVeiculoAgendamento(widget.name, widget.empresaName,dropValue2, dropValue, Galpoes.keys.toList());
                                 }));
+
+                            print('tentando abrir');
 
                           }
                         }

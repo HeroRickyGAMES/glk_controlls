@@ -17,18 +17,58 @@ class cadastroUsuarioModal extends StatefulWidget {
 }
 
 class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
+
+  String nomeComp = '';
+  String RG = '';
+  String telNum = '';
+  String email = '';
+  String pass = '';
+  String empresaSelecionada = '';
+  String empresaID = '';
+  String IDSe = '';
+  String NamesE = '';
+
+  casts() async {
+    List tst = [];
+    List Names = [];
+
+    final usersCollection = FirebaseFirestore.instance.collection('empresa');
+    final snapshot = await usersCollection.get();
+    final documents = snapshot.docs;
+
+    for (final doc in documents) {
+
+      print(documents.length);
+
+      tst.addAll(documents);
+
+      if(documents.length == tst.length){
+        final id = doc.id;
+        final name = doc.get('nome');
+        print('$id - $name');
+
+        Names.add(name);
+
+
+        IDSe = id;
+        NamesE = name;
+
+
+        print(Names);
+      }
+    }
+  }
+
+@override
+  void initState() {
+
+  casts();
+
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
-
-    String nomeComp = '';
-    String RG = '';
-    String telNum = '';
-    String email = '';
-    String pass = '';
-    String? empresaSelecionada;
-    String? IDSe;
-    String? NamesE;
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Cadastro de Operadores de Empresas'),
@@ -161,6 +201,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                         widget.dropValue.value = escolha.toString();
 
                         empresaSelecionada = escolha.toString();
+                        empresaID = escolha.toString();
 
                       },
                       items: widget.listaNome.map((opcao) => DropdownMenuItem(
@@ -246,22 +287,41 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                                   );
                                 }else{
 
-                                  var result = await FirebaseFirestore.instance
-                                      .collection("empresa")
-                                      .get();
-                                  result.docs.forEach((res) {
-                                    print(res.data()['nome']);
+                                  List tst = [];
+                                  List Names = [];
 
-                                    setState(() {
-                                      
-                                      IDSe = res.data()['id'];
-                                      NamesE = res.data()['nome'];
+                                  final usersCollection = FirebaseFirestore.instance.collection('empresa');
+                                  final snapshot = await usersCollection.get();
+                                  final documents = snapshot.docs;
+
+                                  for (final doc in documents) {
+
+                                    print(documents.length);
+
+                                    tst.addAll(documents);
+                                    final id = doc.id;
+                                    IDSe = id;
+                                    empresaSelecionada = empresaSelecionada.replaceAll(IDSe, '');
+                                    print(empresaSelecionada);
+
+                                    final name = doc.get('nome');
+                                    print('$id - $name');
+
+                                    Names.add(name);
 
 
-                                    });
 
-                                  });
+                                    NamesE = name;
 
+                                    empresaID = empresaID.replaceAll(NamesE, '');
+                                    empresaSelecionada = empresaSelecionada.replaceAll(IDSe, '');
+
+
+                                    print('ID Empresa: ' + empresaID);
+                                    print('Empresa Selecionada ' + empresaSelecionada);
+
+                                    print(Names);
+                                  }
                                   FirebaseApp app = await Firebase.initializeApp(
                                       name: 'Secondary', options: Firebase.app().options);
                                   try {
@@ -283,8 +343,8 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                                           'Telefone': telNum,
                                           'email': email,
                                           'tipoConta': 'operadorEmpresarial',
-                                          'empresa': empresaSelecionada?.replaceAll(IDSe as Pattern, ''),
-                                          'idEmpresa': empresaSelecionada?.replaceAll(NamesE as Pattern, ''),
+                                          'empresa': empresaSelecionada,
+                                          'idEmpresa': empresaID,
                                           'estaativo': true,
                                           'id': userCredential.user?.uid
                                         }
@@ -296,8 +356,8 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                                           'Telefone': telNum,
                                           'email': email,
                                           'tipoConta': 'operadorEmpresarial',
-                                          'empresa': empresaSelecionada?.replaceAll(IDSe as Pattern, ''),
-                                          'idEmpresa': empresaSelecionada?.replaceAll(NamesE as Pattern, ''),
+                                          'empresa': empresaSelecionada,
+                                          'idEmpresa': empresaID,
                                           'estaativo': true,
                                           'id': userCredential.user?.uid
                                         }
@@ -310,9 +370,9 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                                         textColor: Colors.white,
                                         fontSize: 20,
                                       );
+                                      widget.listaNome.clear();
                                       Navigator.pop(context);
                                     });
-
                                   }
                                   on FirebaseAuthException catch (e) {
                                     Fluttertoast.showToast(
@@ -325,7 +385,6 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                                     );
                                   }
                                   await app.delete();
-
                                 }
                               }
                             }

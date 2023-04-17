@@ -279,7 +279,32 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                     FirebaseFirestore.instance.collection('empresa').doc(idEmpresa).update({
                       'galpaes': galpoes
                     }).then((value){
+                      if(lacrebool == false){
+                        FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                          'DataSaida': DateTime.now(),
+                          'Status': 'Liberado'
+                        });
+                        Navigator.pop(context);
+                      }
 
+                      if(lacrebool == true){
+                        if(lacreSt == null){
+                          Fluttertoast.showToast(
+                            msg: 'Preencha o numero do lacre!',
+                            toastLength: Toast.LENGTH_SHORT,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.black,
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
+                        }else{
+                          FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                            'DataSaida': DateTime.now(),
+                            'Status': 'Liberado'
+                          });
+                          Navigator.pop(context);
+                        }
+                      }
                     });
                   }else{
                     if(lacrebool == false){
