@@ -58,6 +58,10 @@ class modalSaidaVeiculo extends StatefulWidget {
 }
 
 class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
+
+  bool recolheutag = false;
+  bool dadosConferido = false;
+
   @override
   Widget build(BuildContext context) {
 
@@ -567,54 +571,53 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
               ),
             ),
             Container(
+              child:
+              CheckboxListTile(
+                title: Text('Tag recolhida'),
+                value: recolheutag,
+                onChanged: (value) {
+                  setState(() {
+                    recolheutag = value!;
+                  });
+                },
+                activeColor: Colors.blue,
+                checkColor: Colors.white,
+                controlAffinity: ListTileControlAffinity.leading,
+              ),
+            ),
+            Container(
+              child:
+              CheckboxListTile(
+                title: Text('Dados conferidos'),
+                value: dadosConferido,
+                onChanged: (value) {
+                  setState(() {
+                    dadosConferido = value!;
+                  });
+                },
+                activeColor: Colors.blue,
+                checkColor: Colors.white,
+                controlAffinity: ListTileControlAffinity.leading,
+              ),
+            ),
+            Container(
               padding: EdgeInsets.all(16),
               child: ElevatedButton(
                 onPressed: () async {
-                  if(lacrebool == false){
 
-                    var result = await FirebaseFirestore.instance
-                        .collection("Condominio")
-                        .doc('condominio')
-                        .get();
-
-                    Map tags = (result.get('tags'));
-
-                    tags[widget.tagSelecionada] = 'naoUsado';
-
-                    print(tags[widget.tagSelecionada]);
-
-                    FirebaseFirestore.instance.collection('Condominio').doc('condominio').update(
-                        {
-                          'tags': tags
-                        });
-
-                    callToVerifyReles();
-
-                    FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                      'DataSaida': DateTime.now(),
-                      'Status': 'Saida',
-                      'saidaLiberadaPor': widget.porteiroName
-                    }).then((value){
-                      Navigator.pop(context);
-                    });
-                    final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar
-
-                    try {
-                      final result = await Process.run('ping', ['-c', '1', ip]);
-                      if (result.exitCode == 0) {
-                        print('Ping realizado com sucesso para o endereço $ip');
-                      } else {
-                        Navigator.pop(context);
-                        print('Falha no ping para o endereço $ip');
-                      }
-                    } catch (e) {
-                      print('Erro ao executar o comando de ping: $e');
-                    }
-                  }
-                  if(lacrebool == true){
-                    if(lacreSt == null){
+                  if(recolheutag == false){
+                    Fluttertoast.showToast(
+                      msg: 'Verifique se a tag já foi recolhida!',
+                      toastLength: Toast.LENGTH_SHORT,
+                      timeInSecForIosWeb: 1,
+                      backgroundColor: Colors.black,
+                      textColor: Colors.white,
+                      fontSize: 16.0,
+                    );
+                  }else{
+                    if(dadosConferido == false){
                       Fluttertoast.showToast(
-                        msg: 'Preencha o numero do lacre!',
+                        msg: 'Verifique todos os dados!!',
                         toastLength: Toast.LENGTH_SHORT,
                         timeInSecForIosWeb: 1,
                         backgroundColor: Colors.black,
@@ -622,42 +625,95 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                         fontSize: 16.0,
                       );
                     }else{
-                      var result = await FirebaseFirestore.instance
-                          .collection("Condominio")
-                          .doc('condominio')
-                          .get();
 
-                      Map tags = (result.get('tags'));
+                      if(lacrebool == false){
 
-                      tags[widget.tagSelecionada] = 'naoUsado';
+                        var result = await FirebaseFirestore.instance
+                            .collection("Condominio")
+                            .doc('condominio')
+                            .get();
 
-                      print(tags[widget.tagSelecionada]);
+                        Map tags = (result.get('tags'));
 
-                      FirebaseFirestore.instance.collection('Condominio').doc('condominio').update(
-                        {
-                         'tags': tags
-                        });
+                        tags[widget.tagSelecionada] = 'naoUsado';
 
-                      FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                        'DataSaida': DateTime.now(),
-                        'Status': 'Saida',
-                        'saidaLiberadaPor': widget.porteiroName
-                      }).then((value){
-                        Navigator.pop(context);
-                      });
+                        print(tags[widget.tagSelecionada]);
 
-                      final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar
+                        FirebaseFirestore.instance.collection('Condominio').doc('condominio').update(
+                            {
+                              'tags': tags
+                            });
 
-                      try {
-                        final result = await Process.run('ping', ['-c', '1', ip]);
-                        if (result.exitCode == 0) {
-                          print('Ping realizado com sucesso para o endereço $ip');
-                        } else {
+                        callToVerifyReles();
+
+                        FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                          'DataSaida': DateTime.now(),
+                          'Status': 'Saida',
+                          'saidaLiberadaPor': widget.porteiroName
+                        }).then((value){
                           Navigator.pop(context);
-                          print('Falha no ping para o endereço $ip');
+                        });
+                        final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar
+
+                        try {
+                          final result = await Process.run('ping', ['-c', '1', ip]);
+                          if (result.exitCode == 0) {
+                            print('Ping realizado com sucesso para o endereço $ip');
+                          } else {
+                            Navigator.pop(context);
+                            print('Falha no ping para o endereço $ip');
+                          }
+                        } catch (e) {
+                          print('Erro ao executar o comando de ping: $e');
                         }
-                      } catch (e) {
-                        print('Erro ao executar o comando de ping: $e');
+                      }
+                      if(lacrebool == true){
+                        if(lacreSt == null){
+                          Fluttertoast.showToast(
+                            msg: 'Preencha o numero do lacre!',
+                            toastLength: Toast.LENGTH_SHORT,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.black,
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
+                        }else{
+                          var result = await FirebaseFirestore.instance
+                              .collection("Condominio")
+                              .doc('condominio')
+                              .get();
+
+                          Map tags = (result.get('tags'));
+
+                          tags[widget.tagSelecionada] = 'naoUsado';
+
+                          print(tags[widget.tagSelecionada]);
+
+                          FirebaseFirestore.instance.collection('Condominio').doc('condominio').update(
+                              {
+                                'tags': tags
+                              });
+                          FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                            'DataSaida': DateTime.now(),
+                            'Status': 'Saida',
+                            'saidaLiberadaPor': widget.porteiroName
+                          }).then((value){
+                            Navigator.pop(context);
+                          });
+                          final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar
+
+                          try {
+                            final result = await Process.run('ping', ['-c', '1', ip]);
+                            if (result.exitCode == 0) {
+                              print('Ping realizado com sucesso para o endereço $ip');
+                            } else {
+                              Navigator.pop(context);
+                              print('Falha no ping para o endereço $ip');
+                            }
+                          } catch (e) {
+                            print('Erro ao executar o comando de ping: $e');
+                          }
+                        }
                       }
                     }
                   }

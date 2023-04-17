@@ -20,6 +20,8 @@ class login extends StatefulWidget {
   State<login> createState() => _loginState();
 }
 class _loginState extends State<login> {
+
+  bool visivel = true;
   final emailController = TextEditingController();
   final passController = TextEditingController();
   toCadastrese(){
@@ -82,7 +84,7 @@ class _loginState extends State<login> {
                     child: TextField(
                       controller: passController,
                       keyboardType: TextInputType.visiblePassword,
-                      obscureText: true,
+                      obscureText: visivel,
                       enableSuggestions: false,
                       autocorrect: false,
                       decoration: InputDecoration(
@@ -94,6 +96,20 @@ class _loginState extends State<login> {
                       ),
                     ),
                   ),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    IconButton(
+                      icon: Icon(Icons.remove_red_eye),
+                      onPressed: () {
+                         setState(() {
+                           visivel = !visivel;
+                         });
+                        print('Botão favorito pressionado!');
+                      },
+                    )
+                  ],
                 ),
               ],
             ),

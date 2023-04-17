@@ -336,24 +336,6 @@ class _mainPorteiroState extends State<mainPorteiro> {
                     ),
                   ),
                 ) : Text(''),
-                Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
-                  child: ElevatedButton(
-                    onPressed: (){
-                      openModalOffline();
-                    },
-                    child: Text(
-                      'Liberação Manual',
-                      style: TextStyle(
-                          fontSize: 16
-                      ),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                      primary: Colors.red[800]
-                    ),
-                  ),
-                )
               ],
             ),
             Column(

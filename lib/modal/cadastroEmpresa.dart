@@ -28,7 +28,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
     '01',
     '02',
     '03',
-    '04,',
+    '04',
     '05',
     '06',
     '07',
