@@ -56,6 +56,15 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                         ),
                       ),
                     ),
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      child: const Text(
+                        '',
+                        style: TextStyle(
+                            fontSize: 16
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
