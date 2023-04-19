@@ -19,7 +19,7 @@ class CadastroCondominio extends StatefulWidget {
   String galpaost = '';
   String vagas = '';
   String tags = '';
-  CadastroCondominio(this.dropValue, this.imageFile, this.imageFile2, this.empresa, this.endereco, this.cep, this.cidade, this.estadoSelecionado, this.galpaost, this.vagas, this.tags);
+  CadastroCondominio(this.dropValue, this.imageFile, this.imageFile2, this.empresa, this.endereco, this.cep, this.cidade, this.estadoSelecionado, this.galpaost, this.vagas, this.tags, {super.key});
 
   @override
   State<CadastroCondominio> createState() => _CadastroCondominioState();
@@ -109,7 +109,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text(''),
+              title: const Text(''),
               actions: [
                 TextButton(onPressed: (){
                   _uploadImage();
@@ -123,14 +123,14 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
-                      child: Text('Cancelar'),
+                      child: const Text('Cancelar'),
                     ),
                     TextButton(
                       onPressed: () {
 
                         Navigator.of(context).pop();
                       },
-                      child: Text('Prosseguir'),
+                      child: const Text('Prosseguir'),
                     ),
                   ],
                 ),
@@ -171,7 +171,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Configuração do Condominio'),
+        title: const Text('Configuração do Condominio'),
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -179,7 +179,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: TextFormField(
                 controller: empresaController,
                 onChanged: (valor){
@@ -188,7 +188,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                   });
                   //Mudou mandou para a String
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Empresa *',
                   hintStyle: TextStyle(
@@ -198,14 +198,14 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: TextFormField(
                 controller: enderecoController,
                 onChanged: (valor){
                   endereco = valor;
                   //Mudou mandou para a String
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Endereço *',
                   hintStyle: TextStyle(
@@ -215,14 +215,14 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: TextFormField(
                 controller: cepController,
                 onChanged: (valor){
                   cep = valor;
                   //Mudou mandou para a String
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'CEP *',
                   hintStyle: TextStyle(
@@ -232,14 +232,14 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: TextFormField(
                 controller: cidadeController,
                 onChanged: (valor){
                   cidade = valor;
                   //Mudou mandou para a String
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Cidade *',
                   hintStyle: TextStyle(
@@ -251,7 +251,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
             Center(
                 child: ValueListenableBuilder(valueListenable: widget.dropValue, builder: (context, String value, _){
                   return DropdownButton(
-                    hint: Text(
+                    hint: const Text(
                       'Estado',
                       style: TextStyle(
                           fontSize: 16
@@ -269,7 +269,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                       child:
                       Text(
                         opcao,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16
                         ),
                       ),
@@ -279,14 +279,14 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                 })
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: TextFormField(
                 controller: galpaoController,
                 onChanged: (valor){
                   galpaost = valor;
                   //Mudou mandou para a String
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Quantidade de Galpões *',
                   hintStyle: TextStyle(
@@ -296,14 +296,14 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: TextFormField(
                 controller: vagasController,
                 onChanged: (valor){
                   vagas = valor;
                   //Mudou mandou para a String
                 },
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Quantidade de Vagas *',
                   hintStyle: TextStyle(
@@ -313,7 +313,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: TextFormField(
                 onChanged: (valor){
                   tags = int.parse(valor);
@@ -322,7 +322,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                   //Mudou mandou para a String
                 },
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Quantidade de TAGS *',
                   hintStyle: TextStyle(
@@ -332,7 +332,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -343,7 +343,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text(''),
+                            title: const Text(''),
                             actions: [
                               TextButton(onPressed: (){
                                 _uploadImage();
@@ -358,14 +358,14 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
-                                    child: Text('Cancelar'),
+                                    child: const Text('Cancelar'),
                                   ),
                                   TextButton(
                                     onPressed: () {
 
                                       Navigator.of(context).pop();
                                     },
-                                    child: Text('Prosseguir'),
+                                    child: const Text('Prosseguir'),
                                   ),
                                 ],
                               ),
@@ -374,7 +374,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                         },
                       );
                     },
-                    child: Text(
+                    child: const Text(
                         'Logo',
                       style: TextStyle(
                         fontSize: 16
@@ -394,12 +394,12 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   child: ElevatedButton(
                       onPressed: (){
                         Navigator.pop(context);
                       },
-                      child: Text(
+                      child: const Text(
                           'Cancelar',
                         style: TextStyle(
                             fontSize: 16
@@ -519,7 +519,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                                         showDialog(
                                           context: context,
                                           builder: (BuildContext context) {
-                                            return AlertDialog(
+                                            return const AlertDialog(
                                               title: Text('Aguarde!'),
                                               actions: [
                                                 Center(
@@ -579,7 +579,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                       }
                     },
                     child:
-                Text(
+                const Text(
                     'Prosseguir',
                   style: TextStyle(
                       fontSize: 16

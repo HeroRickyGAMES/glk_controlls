@@ -47,7 +47,7 @@ class operadorEmpresarialAguardando extends StatefulWidget {
       this.urlImage3,
       this.urlImage4,
       this.Galpoes,
-      this.UIDEmpresa
+      this.UIDEmpresa, {super.key}
       );
   @override
   State<operadorEmpresarialAguardando> createState() => _operadorEmpresarialAguardandoState();
@@ -86,7 +86,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
       appBar: AppBar(
         backgroundColor: Colors.yellow,
         centerTitle: true,
-        title: Text(
+        title: const Text(
             'GLK Controls - Liberação de Veiculo',
           style: TextStyle(
               color: Colors.black
@@ -107,13 +107,13 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                 children: [
                   Text(
                     'Data: ${widget.horarioCriacao}' ,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
                   Text(
                     ' - Portaria - ' + widget.liberadopor,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
@@ -121,51 +121,51 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                 'Nome: ' + widget.nomeMotorista,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                 'Veiculo: ' + widget.Veiculo,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                 'Placa: ' + widget.PlacaVeiculo,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                 'Empresa de destino: ' + widget.Empresadestino,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                 'Empresa de origem: ' + widget.EmpresadeOrigin,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
@@ -173,8 +173,8 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
             Column(
               children: [
                 Container(
-                  padding: EdgeInsets.all(16),
-                  child: Text(
+                  padding: const EdgeInsets.all(16),
+                  child: const Text(
                     'Galpões da Empresa *',
                     style: TextStyle(
                         fontSize: 16,
@@ -185,7 +185,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                 Center(
                     child: ValueListenableBuilder(valueListenable: dropValue, builder: (context, String value, _){
                       return DropdownButton(
-                        hint: Text(
+                        hint: const Text(
                           'Selecione um galpão',
                           style: TextStyle(
                               fontSize: 16
@@ -205,7 +205,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                           child:
                           Text(
                             opcao,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 16
                             ),
                           ),
@@ -217,7 +217,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
               ],
             ),
             RadioListTile(
-              title: Text(
+              title: const Text(
                   "Com Lacre"
               ),
               value: "lacre",
@@ -233,7 +233,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
               },
             ),
             RadioListTile(
-              title: Text("Sem Lacre",),
+              title: const Text("Sem Lacre",),
               value: "naolacrado",
               groupValue: widget.lacreounao,
               onChanged: (value){
@@ -248,7 +248,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
             ),
             lacrebool ?
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: TextFormField(
                 controller: _textEditingController,
                 onChanged: (valor){
@@ -258,7 +258,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                 keyboardType: TextInputType.number,
                 //enableSuggestions: false,
                 //autocorrect: false,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Numero do lacre *',
                   hintStyle: TextStyle(
@@ -267,11 +267,11 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                 ),
               ),
             )
-                :Text(''),
+                :const Text(''),
             Container(
               child:
               CheckboxListTile(
-                title: Text('Autorizo Entrada'),
+                title: const Text('Autorizo Entrada'),
                 value: entradabool,
                 onChanged: (value) {
                   setState(() {
@@ -287,7 +287,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
             Container(
               child:
               CheckboxListTile(
-                title: Text('Rejeito a Entrada'),
+                title: const Text('Rejeito a Entrada'),
                 value: regeitado,
                 onChanged: (value) {
                   setState(() {
@@ -301,7 +301,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: ElevatedButton(
                 onPressed: () async {
 
@@ -399,7 +399,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                     }
                   }
                 },
-                child: Text(
+                child: const Text(
                   'Prosseguir',
                   style: TextStyle(
                       fontSize: 16

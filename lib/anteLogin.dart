@@ -14,23 +14,23 @@ class anteLogin extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('GLK Controls')
+        title: const Text('GLK Controls')
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             width: double.infinity,
             child: ElevatedButton(
               onPressed: (){
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context){
-                      return login();
+                      return const login();
                     }));
               },
-              child: Text(
+              child: const Text(
                   'Login',
                 style: TextStyle(
                   fontSize: 16,
@@ -43,7 +43,7 @@ class anteLogin extends StatelessWidget {
             ),
           ),
           Container(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             width: double.infinity,
             child: ElevatedButton(
               onPressed: (){
@@ -51,7 +51,7 @@ class anteLogin extends StatelessWidget {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: Text('Painel Administrativo'),
+                      title: const Text('Painel Administrativo'),
                       actions: [
                         TextFormField(
                           onChanged: (valor){
@@ -62,7 +62,7 @@ class anteLogin extends StatelessWidget {
                           enableSuggestions: false,
                           obscureText: false,
                           autocorrect: false,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             hintText: 'User',
                             hintStyle: TextStyle(
@@ -79,7 +79,7 @@ class anteLogin extends StatelessWidget {
                           enableSuggestions: false,
                           obscureText: true,
                           autocorrect: false,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             hintText: 'Senha',
                             hintStyle: TextStyle(
@@ -94,7 +94,7 @@ class anteLogin extends StatelessWidget {
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
-                              child: Text('Cancelar'),
+                              child: const Text('Cancelar'),
                             ),
                             TextButton(
                               onPressed: () {
@@ -133,7 +133,7 @@ class anteLogin extends StatelessWidget {
                                         Navigator.pop(context);
                                         Navigator.push(context,
                                             MaterialPageRoute(builder: (context){
-                                              return painelAdmin();
+                                              return const painelAdmin();
                                             }));
 
                                       }else{
@@ -162,7 +162,7 @@ class anteLogin extends StatelessWidget {
                                   }
                                 }
                               },
-                              child: Text('Prosseguir'),
+                              child: const Text('Prosseguir'),
                             ),
                           ],
                         ),
@@ -171,7 +171,7 @@ class anteLogin extends StatelessWidget {
                   },
                 );
               },
-              child: Text(
+              child: const Text(
                 'Painel',
                 style: TextStyle(
                     fontSize: 16,

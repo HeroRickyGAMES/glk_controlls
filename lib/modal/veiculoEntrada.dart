@@ -39,7 +39,7 @@ class veiculoEntrada extends StatefulWidget {
       this.DateEntrada,
       this.verificadoPor,
       this.DatadeAnalise,
-      this.interno
+      this.interno, {super.key}
       );
   @override
   State<veiculoEntrada> createState() => _veiculoEntradaState();
@@ -73,7 +73,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
       appBar: AppBar(
         backgroundColor: Colors.yellow,
         centerTitle: true,
-        title: Text(
+        title: const Text(
             'GLK Controls - Entrada',
           style: TextStyle(
             color: Colors.black
@@ -94,13 +94,13 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                 children: [
                   Text(
                     'Data: ${widget.horarioCriacao}' ,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
                   Text(
                     ' - Portaria - ' + widget.liberadopor,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
@@ -116,13 +116,13 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                 children: [
                   Text(
                     'Data: ${widget.DateEntrada}' ,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
                   Text(
                     ' - Analise na Empresa - ' + widget.empresaName,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
@@ -138,13 +138,13 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                 children: [
                   Text(
                     'Data: ${widget.DatadeAnalise}' ,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
                   Text(
                     ' - Entrada - ' + widget.verificadoPor,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
@@ -152,67 +152,67 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                   'Nome: ' + widget.nomeMotorista,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                   'Veiculo: ' + widget.Veiculo,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                   'Placa: ' + widget.PlacaVeiculo,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                   'Empresa de destino: ' + widget.Empresadestino,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                   'Empresa de origem: ' + widget.EmpresadeOrigin,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                   'Galpão: ' + widget.Galpao,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             RadioListTile(
-              title: Text(
+              title: const Text(
                   "Com Lacre"
               ),
               value: "lacre",
@@ -220,14 +220,14 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
               onChanged: null,
             ),
               RadioListTile(
-                title: Text("Sem Lacre",),
+                title: const Text("Sem Lacre",),
                 value: "naolacrado",
                 groupValue: widget.lacreounao,
                 onChanged: null,
               ),
               lacrebool ?
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: TextFormField(
                   controller: _textEditingController,
                   onChanged: (valor){
@@ -237,7 +237,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                   keyboardType: TextInputType.number,
                   //enableSuggestions: false,
                   //autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Numero do lacre *',
                     hintStyle: TextStyle(
@@ -246,9 +246,9 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                   ),
                 ),
               )
-                  :Text(''),
+                  :const Text(''),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: ElevatedButton(
                 onPressed: () async {
 
@@ -333,7 +333,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                     }
                   }
                 },
-                child: Text(
+                child: const Text(
                   'Prosseguir',
                   style: TextStyle(
                       fontSize: 16
@@ -349,7 +349,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                     Container(
                         width: 180,
                         height: 180,
-                        padding: EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(16),
                         child:
                         Image.asset(
                           'assets/icon.png',
@@ -357,11 +357,11 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                         )
                     ),
                     Container(
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child:
                       Text(
                         'Operador: ' + widget.empresaName,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16
                         ),
                       ),

@@ -48,7 +48,7 @@ class veiculoAguardando extends StatefulWidget {
       this.imageFile3,
       this.imageFile4,
       this.DataAnaliseEmpresa,
-      this.tagList
+      this.tagList, {super.key}
       );
   @override
   State<veiculoAguardando> createState() => _veiculoAguardandoState();
@@ -237,7 +237,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
               rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
             }else{
-              await Future.delayed(Duration(seconds: 5));
+              await Future.delayed(const Duration(seconds: 5));
               releFechamento02();
             }
 
@@ -248,7 +248,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
               rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
             }else{
-              await Future.delayed(Duration(seconds: 5));
+              await Future.delayed(const Duration(seconds: 5));
               releFechamento02();
             }
           }
@@ -260,7 +260,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
               rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
             }else{
-              await Future.delayed(Duration(seconds: 5));
+              await Future.delayed(const Duration(seconds: 5));
               releFarol03();
             }
           }
@@ -271,7 +271,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
               rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
             }else{
-              await Future.delayed(Duration(seconds: 5));
+              await Future.delayed(const Duration(seconds: 5));
               releFarol03();
             }
           }
@@ -284,7 +284,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
               rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
             }else{
-              await Future.delayed(Duration(seconds: 5));
+              await Future.delayed(const Duration(seconds: 5));
               releFarol04();
             }
           }
@@ -294,7 +294,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
               rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
             }else{
-              await Future.delayed(Duration(seconds: 5));
+              await Future.delayed(const Duration(seconds: 5));
               releFarol04();
             }
           }
@@ -307,7 +307,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
           rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
         }else{
-          await Future.delayed(Duration(seconds: 5));
+          await Future.delayed(const Duration(seconds: 5));
           releFarol02();
         }
 
@@ -317,7 +317,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
             rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releCancelaEntrada();
           }
 
@@ -328,7 +328,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
           if(result.get('funcao-rele1').contains('Pulso')){
             rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releCancelaEntrada();
           }
         }
@@ -341,7 +341,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
             rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFarol03();
           }
 
@@ -355,7 +355,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
             print(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFarol03();
           }
         }
@@ -367,7 +367,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
             rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFarol04();
           }
         }
@@ -377,7 +377,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
             rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFarol04();
           }
         }
@@ -394,7 +394,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
             rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releCancelaEntrada();
           }
 
@@ -405,7 +405,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
           if(result.get('funcao-rele1').contains('Pulso')){
             rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releCancelaEntrada();
           }
         }
@@ -416,7 +416,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
             rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFechamento02();
           }
 
@@ -427,7 +427,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
             rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFechamento02();
           }
         }
@@ -437,7 +437,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
             rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFarol04();
           }
         }
@@ -447,7 +447,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
             rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFarol04();
           }
         }
@@ -460,7 +460,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
           rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
         }else{
-          await Future.delayed(Duration(seconds: 5));
+          await Future.delayed(const Duration(seconds: 5));
           releFarol04();
         }
 
@@ -470,7 +470,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
             rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releCancelaEntrada();
           }
 
@@ -481,7 +481,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
           if(result.get('funcao-rele1').contains('Pulso')){
             rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releCancelaEntrada();
           }
         }
@@ -492,7 +492,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
             rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFechamento02();
           }
 
@@ -503,7 +503,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
             rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFechamento02();
           }
         }
@@ -514,7 +514,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
             rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFarol03();
           }
 
@@ -526,7 +526,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
             rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFarol03();
           }
         }
@@ -541,7 +541,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
       appBar: AppBar(
         backgroundColor: Colors.green[700],
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'GLK Controls - Liberação de Veiculos',
         ),
       ),
@@ -559,13 +559,13 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                 children: [
                   Text(
                     'Data: ${widget.horarioCriacao}' ,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
                   Text(
                     ' - Portaria - ' + widget.liberadopor,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
@@ -581,13 +581,13 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                 children: [
                   Text(
                     'Data: ${widget.DataAnaliseEmpresa}' ,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
                   Text(
                     ' - Empresa - ' + widget.Empresadestino,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
@@ -595,67 +595,67 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                 'Nome: ' + widget.nomeMotorista,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                 'Veiculo: ' + widget.Veiculo,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                 'Placa: ' + widget.PlacaVeiculo,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                 'Empresa de destino: ' + widget.Empresadestino,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                 'Empresa de origem: ' + widget.EmpresadeOrigin,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                 'Galpão: ' + widget.Galpao,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             RadioListTile(
-              title: Text(
+              title: const Text(
                   "Com Lacre"
               ),
               value: "lacre",
@@ -671,7 +671,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
               },
             ),
             RadioListTile(
-              title: Text("Sem Lacre",),
+              title: const Text("Sem Lacre",),
               value: "naolacrado",
               groupValue: widget.lacreounao,
               onChanged: (value){
@@ -685,7 +685,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
             ),
             lacrebool ?
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: TextFormField(
                 controller: _textEditingController,
                 onChanged: (valor){
@@ -695,7 +695,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                 keyboardType: TextInputType.number,
                 //enableSuggestions: false,
                 //autocorrect: false,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Numero do lacre *',
                   hintStyle: TextStyle(
@@ -704,10 +704,10 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                 ),
               ),
             )
-                :Text(''),
+                :const Text(''),
               Container(
-                padding: EdgeInsets.only(top: 16),
-                child: Text(
+                padding: const EdgeInsets.only(top: 16),
+                child: const Text(
                   'Adicione a foto no icone abaixo',
                   style: TextStyle(
                       fontSize: 16
@@ -722,7 +722,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    padding: EdgeInsets.all(4),
+                    padding: const EdgeInsets.all(4),
                     alignment: Alignment.center,
                     child:
                     ElevatedButton(
@@ -731,8 +731,8 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                       Column(
                         children: [
                           Container(
-                            padding: EdgeInsets.all(4),
-                            child: Text(
+                            padding: const EdgeInsets.all(4),
+                            child: const Text(
                               'Motorista *',
                               style: TextStyle(
                                 fontSize: 16,
@@ -753,7 +753,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(4),
+                    padding: const EdgeInsets.all(4),
                     alignment: Alignment.center,
                     child:
                     ElevatedButton(
@@ -762,8 +762,8 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                       Column(
                         children: [
                           Container(
-                            padding: EdgeInsets.all(4),
-                            child: Text(
+                            padding: const EdgeInsets.all(4),
+                            child: const Text(
                               'Placa 1*',
                               style: TextStyle(
                                   fontSize: 16,
@@ -794,7 +794,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    padding: EdgeInsets.all(4),
+                    padding: const EdgeInsets.all(4),
                     alignment: Alignment.center,
                     child:
                     ElevatedButton(
@@ -803,8 +803,8 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                       Column(
                         children: [
                           Container(
-                            padding: EdgeInsets.all(4),
-                            child: Text(
+                            padding: const EdgeInsets.all(4),
+                            child: const Text(
                               'Placa 2 *',
                               style: TextStyle(
                                   fontSize: 16,
@@ -825,7 +825,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(4),
+                    padding: const EdgeInsets.all(4),
                     alignment: Alignment.center,
                     child:
                     ElevatedButton(
@@ -834,8 +834,8 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                       Column(
                         children: [
                           Container(
-                            padding: EdgeInsets.all(4),
-                            child: Text(
+                            padding: const EdgeInsets.all(4),
+                            child: const Text(
                               'Placa 3*',
                               style: TextStyle(
                                   fontSize: 16,
@@ -861,7 +861,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
             Center(
                 child: ValueListenableBuilder(valueListenable: dropValue, builder: (context, String value, _){
                   return DropdownButton(
-                    hint: Text(
+                    hint: const Text(
                       'Selecione uma TAG.VC - ID *',
                       style: TextStyle(
                           fontSize: 16
@@ -879,7 +879,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                       child:
                       Text(
                         opcao,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16
                         ),
                       ),
@@ -889,7 +889,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                 })
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: ElevatedButton(
                 onPressed: () async {
                   if(lacrebool == false){
@@ -947,7 +947,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                               showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return AlertDialog(
+                                  return const AlertDialog(
                                     title: Text('Aguarde!'),
                                     actions: [
                                       Center(
@@ -1120,7 +1120,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                                 showDialog(
                                   context: context,
                                   builder: (BuildContext context) {
-                                    return AlertDialog(
+                                    return const AlertDialog(
                                       title: Text('Aguarde!'),
                                       actions: [
                                         Center(
@@ -1211,7 +1211,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                     }
                   }
                 },
-                child: Text(
+                child: const Text(
                   'Prosseguir',
                   style: TextStyle(
                       fontSize: 16
@@ -1227,7 +1227,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                     Container(
                         width: 180,
                         height: 180,
-                        padding: EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(16),
                         child:
                         Image.asset(
                           'assets/sanca.png',
@@ -1235,11 +1235,11 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                         )
                     ),
                     Container(
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child:
                       Text(
                         'Operador: ' + widget.empresaName,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16
                         ),
                       ),

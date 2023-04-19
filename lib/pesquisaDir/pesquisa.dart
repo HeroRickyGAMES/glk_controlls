@@ -40,14 +40,14 @@ class _pesquisaState extends State<pesquisa> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('GLK Controls - PESQUISAS'),
+        title: const Text('GLK Controls - PESQUISAS'),
         backgroundColor: Colors.red[700],
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Column(
                 children: [
@@ -60,7 +60,7 @@ class _pesquisaState extends State<pesquisa> {
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {
                         if (!snapshot.hasData) {
-                          return Center(
+                          return const Center(
                             child: CircularProgressIndicator(),
                           );
                         }
@@ -104,7 +104,7 @@ class _pesquisaState extends State<pesquisa> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
                                       color: Colors.grey[300],
-                                      padding: EdgeInsets.all(16),
+                                      padding: const EdgeInsets.all(16),
                                       child:
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -119,7 +119,7 @@ class _pesquisaState extends State<pesquisa> {
                                             ),
                                           ),
                                           Container(
-                                            padding: EdgeInsets.all(16),
+                                            padding: const EdgeInsets.all(16),
                                             child: Text(
                                               'Status: \n' +
                                                   documents['Status'],

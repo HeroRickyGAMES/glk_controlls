@@ -94,7 +94,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
           var dateTime= new DateTime.now();
 
-          var uuid = Uuid();
+          var uuid = const Uuid();
 
           String idd = "${DateTime.now().toString()}" + uuid.v4();
           FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
@@ -203,7 +203,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
           var dateTime= new DateTime.now();
 
-          var uuid = Uuid();
+          var uuid = const Uuid();
 
           String idd = "${DateTime.now().toString()}" + uuid.v4();
           FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
@@ -313,7 +313,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
           var dateTime= new DateTime.now();
 
-          var uuid = Uuid();
+          var uuid = const Uuid();
 
           String idd = "${DateTime.now().toString()}" + uuid.v4();
           FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
@@ -422,7 +422,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
           var dateTime= new DateTime.now();
 
-          var uuid = Uuid();
+          var uuid = const Uuid();
 
           String idd = "${DateTime.now().toString()}" + uuid.v4();
           FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
@@ -621,7 +621,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return AlertDialog(
+                          return const AlertDialog(
                             title: Text('Aguarde!'),
                             actions: [
                               Center(
@@ -741,11 +741,11 @@ class _modalPorteiroState extends State<modalPorteiro> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('GLK Controls - Cadastro: Motorista e Veiculo'),
+        title: const Text('GLK Controls - Cadastro: Motorista e Veiculo'),
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               Image.asset(
@@ -754,7 +754,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 height: 100,
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child: TextFormField(
                   controller: nameMotoristaAllcaps,
                   onChanged: (valor){
@@ -764,7 +764,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   keyboardType: TextInputType.name,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Nome Completo do Motorista *',
                     hintStyle: TextStyle(
@@ -774,7 +774,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child: TextFormField(
                   onChanged: (valor){
                     RGMotorista = valor;
@@ -784,7 +784,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   keyboardType: TextInputType.number,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'RG do Motorista (Sem digitos) * ',
                     hintStyle: TextStyle(
@@ -794,8 +794,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(16),
-                child: Text(
+                padding: const EdgeInsets.all(16),
+                child: const Text(
                   'Veiculo *',
                   style: TextStyle(
                       fontSize: 16,
@@ -806,7 +806,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
               Center(
                   child: ValueListenableBuilder(valueListenable: widget.dropValue2, builder: (context, String value, _){
                     return DropdownButton(
-                      hint: Text(
+                      hint: const Text(
                         'Selecione um veiculo *',
                         style: TextStyle(
                             fontSize: 16
@@ -824,7 +824,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         child:
                         Text(
                           opcao,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 16
                           ),
                         ),
@@ -834,7 +834,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   })
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child: TextFormField(
                   controller: placaveiculointerface,
                   onChanged: (valor){
@@ -846,7 +846,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     );
                     //Mudou mandou para a String
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Placa do Veiculo * ',
                     hintStyle: TextStyle(
@@ -856,7 +856,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child: TextFormField(
                   controller: telefoneinterface,
                   onChanged: (valor){
@@ -871,7 +871,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   keyboardType: TextInputType.number,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Telefone',
                     hintStyle: TextStyle(
@@ -881,14 +881,14 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child: TextFormField(
                   onChanged: (valor){
                     originEmpresa = valor;
                     telefoneinterface.text = telefone!;
                     //Mudou mandou para a String
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Empresa de Origem',
                     hintStyle: TextStyle(
@@ -899,7 +899,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
               ),
               Center(
                 child: CheckboxListTile(
-                  title: Text(
+                  title: const Text(
                       'Veiculo Interno',
                     style: TextStyle(
                         fontSize: 16,
@@ -912,8 +912,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text('Liberação de veiculo Interno;'),
-                          content: Text('Confirma essa liberação?'),
+                          title: const Text('Liberação de veiculo Interno;'),
+                          content: const Text('Confirma essa liberação?'),
                           actions: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -922,7 +922,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                     onPressed: (){
                                       Navigator.of(context).pop();
                                     },
-                                    child: Text('Cancelar'),
+                                    child: const Text('Cancelar'),
                                   style: ElevatedButton.styleFrom(
                                       primary: Colors.red
                                   ),
@@ -934,7 +934,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                       Navigator.of(context).pop();
                                     });
                                   },
-                                  child: Text('Prosseguir'),
+                                  child: const Text('Prosseguir'),
                                   style: ElevatedButton.styleFrom(
                                       primary: Colors.green
                                   ),
@@ -952,8 +952,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(16),
-                child: Text(
+                padding: const EdgeInsets.all(16),
+                child: const Text(
                   'Empresa destino *',
                   style: TextStyle(
                       fontSize: 16,
@@ -964,7 +964,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
               Center(
                   child: ValueListenableBuilder(valueListenable: widget.dropValue, builder: (context, String value, _){
                     return DropdownButton(
-                      hint: Text(
+                      hint: const Text(
                         'Selecione uma empresa',
                         style: TextStyle(
                             fontSize: 16
@@ -982,7 +982,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         child:
                         Text(
                           opcao,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 16
                           ),
                         ),
@@ -992,7 +992,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   })
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child:
                 Column(
                   children: [
@@ -1001,7 +1001,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                       children: [
                         Expanded(
                           child: RadioListTile(
-                            title: Text(
+                            title: const Text(
                                 "Coleta",
                               style: TextStyle(
                                 fontSize: 16
@@ -1019,7 +1019,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
                         Expanded(
                           child: RadioListTile(
-                            title: Text(
+                            title: const Text(
                                 "Entrega",
                               style: TextStyle(
                                   fontSize: 16
@@ -1040,11 +1040,11 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child:
                 Column(
                   children: [
-                    Text(
+                    const Text(
                       'Está Entrando com Lacre ou Sem Lacre?',
                       style: TextStyle(
                           fontSize: 16,
@@ -1052,7 +1052,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                       ),
                     ),
                     RadioListTile(
-                      title: Text(
+                      title: const Text(
                           "Com Lacre",
                         style: TextStyle(
                             fontSize: 16
@@ -1071,7 +1071,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                       },
                     ),
                     RadioListTile(
-                      title: Text(
+                      title: const Text(
                         "Sem Lacre",
                         style: TextStyle(
                             fontSize: 16
@@ -1091,7 +1091,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     ),
                     lacrebool ?
                     Container(
-                      padding: EdgeInsets.only(top: 16),
+                      padding: const EdgeInsets.only(top: 16),
                       child: TextFormField(
                         onChanged: (valor){
                           lacreSt = valor;
@@ -1100,7 +1100,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         //keyboardType: TextInputType.number,
                         //enableSuggestions: false,
                         //autocorrect: false,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: 'Numero do lacre *',
                           hintStyle: TextStyle(
@@ -1109,14 +1109,14 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         ),
                       ),
                     )
-                        :Text(''),
+                        :const Text(''),
                   ],
                 ),
               ),
               ElevatedButton(
               onPressed: uploadInfos,
               child:
-              Text(
+              const Text(
                   'Prosseguir',
                 style: TextStyle(
                     fontSize: 18,
@@ -1130,7 +1130,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   Container(
                       width: 180,
                       height: 180,
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child:
                       Image.asset(
                         'assets/sanca.png',
@@ -1138,11 +1138,11 @@ class _modalPorteiroState extends State<modalPorteiro> {
                       ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child:
                     Text(
                       'Operador: ' + widget.nomeUser,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 16
                       ),
                     ),
@@ -1197,7 +1197,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
                   }
                   return false;
-                }, child: Text(''),
+                }, child: const Text(''),
               ),
             ],
           ),

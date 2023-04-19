@@ -25,14 +25,14 @@ class _painelAdminState extends State<painelAdmin> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Configurações'),
+        title: const Text('Configurações'),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () async {
@@ -55,7 +55,7 @@ class _painelAdminState extends State<painelAdmin> {
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
-                          return AlertDialog(
+                          return const AlertDialog(
                             title: Text('Aguarde!'),
                             actions: [
                               Center(
@@ -115,7 +115,7 @@ class _painelAdminState extends State<painelAdmin> {
                     }
                   }
                 },
-                child: Text(
+                child: const Text(
                     'Configuração',
                   style: TextStyle(
                       fontSize: 18,
@@ -124,7 +124,7 @@ class _painelAdminState extends State<painelAdmin> {
               ),
             ),
           Container(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () async {
@@ -132,7 +132,7 @@ class _painelAdminState extends State<painelAdmin> {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
-                    return AlertDialog(
+                    return const AlertDialog(
                       title: Text('Aguarde!'),
                       actions: [
                         Center(
@@ -155,7 +155,7 @@ class _painelAdminState extends State<painelAdmin> {
                       return painelADM('ADM GLK', logoPath);
                     }));
               },
-              child: Text(
+              child: const Text(
                   'Painel',
                 style: TextStyle(
                   fontSize: 18,
@@ -168,7 +168,7 @@ class _painelAdminState extends State<painelAdmin> {
             ),
           ),
           Container(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             width: double.infinity,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
@@ -179,10 +179,10 @@ class _painelAdminState extends State<painelAdmin> {
                     Navigator.pop(context);
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context){
-                          return anteLogin();
+                          return const anteLogin();
                         }));
                   },
-                  child: Text(
+                  child: const Text(
                     'Sair',
                     style: TextStyle(
                         fontSize: 16,

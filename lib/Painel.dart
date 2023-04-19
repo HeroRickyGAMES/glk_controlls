@@ -29,7 +29,7 @@ class _painelADMState extends State<painelADM> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('SETOR ADIMISTRATIVO - Painel'),
+        title: const Text('SETOR ADIMISTRATIVO - Painel'),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -37,7 +37,7 @@ class _painelADMState extends State<painelADM> {
         children: [
           SingleChildScrollView(
             child: Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -45,14 +45,14 @@ class _painelADMState extends State<painelADM> {
                   Center(
                     child: Container(
                       width: double.infinity,
-                      padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                      padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                       child: ElevatedButton(
                         onPressed: (){
 
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return AlertDialog(
+                              return const AlertDialog(
                                 title: Text('Aguarde!'),
                                 actions: [
                                   Center(
@@ -74,7 +74,7 @@ class _painelADMState extends State<painelADM> {
 
                         },
                         child:
-                        Text(
+                        const Text(
                           'Cadastrar Empresa',
                           style: TextStyle(
                               fontSize: 16
@@ -86,14 +86,14 @@ class _painelADMState extends State<painelADM> {
                   Center(
                     child: Container(
                       width: double.infinity,
-                      padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                      padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                       child: ElevatedButton(
                         onPressed: () async {
 
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return AlertDialog(
+                              return const AlertDialog(
                                 title: Text('Aguarde!'),
                                 actions: [
                                   Center(
@@ -122,7 +122,7 @@ class _painelADMState extends State<painelADM> {
                           });
                         },
                         child:
-                        Text(
+                        const Text(
                           'Cadastrar Operador da Empresa',
                           style: TextStyle(
                               fontSize: 16
@@ -137,14 +137,14 @@ class _painelADMState extends State<painelADM> {
                   Center(
                     child: Container(
                       width: double.infinity,
-                      padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                      padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                       child: ElevatedButton(
                         onPressed: (){
 
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return AlertDialog(
+                              return const AlertDialog(
                                 title: Text('Aguarde!'),
                                 actions: [
                                   Center(
@@ -162,7 +162,7 @@ class _painelADMState extends State<painelADM> {
                               }));
                         },
                         child:
-                        Text(
+                        const Text(
                           'Cadastrar Operador Interno',
                           style: TextStyle(
                               fontSize: 16,
@@ -178,7 +178,7 @@ class _painelADMState extends State<painelADM> {
                   Center(
                     child: Container(
                       width: double.infinity,
-                      padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                      padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                       child: ElevatedButton(
                         onPressed: (){
                           Navigator.push(context,
@@ -187,7 +187,7 @@ class _painelADMState extends State<painelADM> {
                               }));
                         },
                         child:
-                        Text(
+                        const Text(
                           'Relatorios Gerais',
                           style: TextStyle(
                               fontSize: 16
@@ -202,13 +202,13 @@ class _painelADMState extends State<painelADM> {
                   Center(
                     child: Container(
                       width: double.infinity,
-                      padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                      padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                       child: ElevatedButton(
                         onPressed: (){
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return AlertDialog(
+                              return const AlertDialog(
                                 title: Text('Aguarde!'),
                                 actions: [
                                   Center(
@@ -228,7 +228,7 @@ class _painelADMState extends State<painelADM> {
 
                         },
                         child:
-                        Text(
+                        const Text(
                           'Empresas Cadastrados',
                           style: TextStyle(
                               fontSize: 16
@@ -243,7 +243,7 @@ class _painelADMState extends State<painelADM> {
                   Center(
                     child: Container(
                       width: double.infinity,
-                      padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                      padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                       child: ElevatedButton(
                         onPressed: (){
                           Navigator.push(context,
@@ -252,7 +252,7 @@ class _painelADMState extends State<painelADM> {
                               }));
                         },
                         child:
-                        Text(
+                        const Text(
                           'Usuarios Cadastrados',
                           style: TextStyle(
                               fontSize: 16
@@ -267,7 +267,7 @@ class _painelADMState extends State<painelADM> {
                   Center(
                     child: Container(
                       width: double.infinity,
-                      padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                      padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                       child: ElevatedButton(
                         onPressed: () async {
                           var result = await FirebaseFirestore.instance
@@ -288,7 +288,7 @@ class _painelADMState extends State<painelADM> {
                               }));
                         },
                         child:
-                        Text(
+                        const Text(
                           'Configurações de Relês',
                           style: TextStyle(
                               fontSize: 16
@@ -300,7 +300,7 @@ class _painelADMState extends State<painelADM> {
                   Center(
                     child: Container(
                       width: double.infinity,
-                      padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                      padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                       child: ElevatedButton(
                         onPressed: (){
                           Navigator.push(context,
@@ -309,7 +309,7 @@ class _painelADMState extends State<painelADM> {
                               }));
                         },
                         child:
-                        Text(
+                        const Text(
                           'Bloqueio de veiculos',
                           style: TextStyle(
                               fontSize: 16
@@ -324,7 +324,7 @@ class _painelADMState extends State<painelADM> {
                   Center(
                     child: Container(
                       width: double.infinity,
-                      padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                      padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                       child: ElevatedButton(
                         onPressed: (){
                           Navigator.push(context,
@@ -333,7 +333,7 @@ class _painelADMState extends State<painelADM> {
                               }));
                         },
                         child:
-                        Text(
+                        const Text(
                           'Bloqueio de visitantes',
                           style: TextStyle(
                               fontSize: 16
@@ -351,7 +351,7 @@ class _painelADMState extends State<painelADM> {
                       Container(
                           width: 180,
                           height: 180,
-                          padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                          padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                           child:
                           Image.network(
                             widget.LogoPath,
@@ -359,11 +359,11 @@ class _painelADMState extends State<painelADM> {
                           ),
                       ),
                       Container(
-                        padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                        padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                         child:
                         Text(
                           'ADM : ' + widget.ADMName,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 16
                           ),
                         ),

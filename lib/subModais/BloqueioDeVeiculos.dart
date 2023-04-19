@@ -21,17 +21,17 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Bloqueio de Placas'),
+        title: const Text('Bloqueio de Placas'),
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child: Image.asset(
                   'assets/icon.png',
                   width: 300,
@@ -42,8 +42,8 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
-                    padding: EdgeInsets.all(16),
-                    child: Text(
+                    padding: const EdgeInsets.all(16),
+                    child: const Text(
                         'Placa',
                       style: TextStyle(
                           fontSize: 16
@@ -51,8 +51,8 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(16),
-                    child: Text(
+                    padding: const EdgeInsets.all(16),
+                    child: const Text(
                         'Veiculo',
                       style: TextStyle(
                           fontSize: 16
@@ -60,8 +60,8 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(16),
-                    child: Text(
+                    padding: const EdgeInsets.all(16),
+                    child: const Text(
                         'Data',
                       style: TextStyle(
                           fontSize: 16
@@ -69,8 +69,8 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(16),
-                    child: Text(
+                    padding: const EdgeInsets.all(16),
+                    child: const Text(
                       '',
                       style: TextStyle(
                           fontSize: 16
@@ -78,8 +78,8 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(16),
-                    child: Text(
+                    padding: const EdgeInsets.all(16),
+                    child: const Text(
                       '',
                       style: TextStyle(
                           fontSize: 16
@@ -96,7 +96,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                     color: Colors.black,
                     width: 1.0,
                   ),
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                 ),
                 child: StreamBuilder(
                   stream: FirebaseFirestore.instance
@@ -105,7 +105,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (!snapshot.hasData) {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(),
                       );
                     }
@@ -120,13 +120,13 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                               children: [
                                 Text(
                                     documents['placa'],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16
                                   ),
                                 ),
                                 Text(
                                   documents['tipoVeiculo'],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16
                                   ),
                                 ),
@@ -134,7 +134,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                   children: [
                                     Text(
                                       DateFormat('dd-MM-yyyy HH:mm:ss').format(documents['dataDoBloqueio'].toDate()).replaceAll('-', '/'),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 16
                                       ),
                                     ),
@@ -148,14 +148,14 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                                 mainAxisAlignment: MainAxisAlignment.end,
                                                 crossAxisAlignment: CrossAxisAlignment.end,
                                                 children: [
-                                                  Icon(Icons.zoom_out_sharp),
+                                                  const Icon(Icons.zoom_out_sharp),
                                                 ],
                                               ),
                                               title: Column(
                                                 children: [
-                                                  Text('Bloqueio'),
+                                                  const Text('Bloqueio'),
                                                   Container(
-                                                    padding: EdgeInsets.all(16),
+                                                    padding: const EdgeInsets.all(16),
                                                     child: Column(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       mainAxisAlignment: MainAxisAlignment.start,
@@ -163,7 +163,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                                         Text('Veiculo:'  + documents['tipoVeiculo']),
                                                         Text('Data do Bloqueio:'  + DateFormat('dd-MM-yyyy HH:mm:ss').format(documents['dataDoBloqueio'].toDate()).replaceAll('-', '/'),),
                                                         Container(
-                                                            padding: EdgeInsets.all(16),
+                                                            padding: const EdgeInsets.all(16),
                                                             child: Text('Motivo: \n'  + documents['Motivo']
                                                             )
                                                         )
@@ -181,7 +181,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
 
                                                       Navigator.of(context).pop();
 
-                                                    }, child: Text(
+                                                    }, child: const Text(
                                                         'Voltar',
                                                       style: TextStyle(
                                                           fontSize: 16
@@ -200,7 +200,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                                             return generatePDF2(documents['placa'], documents['tipoVeiculo'], documents['Motivo'], DateFormat('dd-MM-yyyy HH:mm:ss').format(documents['dataDoBloqueio'].toDate()).replaceAll('-', '/'));
                                                           }));
 
-                                                    }, child: Text(
+                                                    }, child: const Text(
                                                         'Imprimir',
                                                       style: TextStyle(
                                                           fontSize: 16
@@ -218,7 +218,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                         );
                                       },
                                       child:
-                                      Icon(Icons.zoom_out_sharp),
+                                      const Icon(Icons.zoom_out_sharp),
                                     ),
                                     TextButton(
                                       onPressed: (){
@@ -234,7 +234,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                           );
                                         });
                                       },
-                                      child: Icon(Icons.delete),
+                                      child: const Icon(Icons.delete),
                                     ),
                                   ],
                                 ),
@@ -248,7 +248,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -275,14 +275,14 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                   mainAxisAlignment: MainAxisAlignment.end,
                                   crossAxisAlignment: CrossAxisAlignment.end,
                                   children: [
-                                    Icon(Icons.zoom_out_sharp),
+                                    const Icon(Icons.zoom_out_sharp),
                                   ],
                                 ),
                                 title: Column(
                                   children: [
-                                    Text('Novo Bloqueio'),
+                                    const Text('Novo Bloqueio'),
                                     Container(
-                                      padding: EdgeInsets.all(16),
+                                      padding: const EdgeInsets.all(16),
                                       child: TextFormField(
                                         onChanged: (valor){
 
@@ -298,7 +298,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                         controller: placaController,
                                         enableSuggestions: false,
                                         autocorrect: false,
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           border: OutlineInputBorder(),
                                           hintText: 'Placa do veiculo * ',
                                           hintStyle: TextStyle(
@@ -310,7 +310,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                     Center(
                                         child: ValueListenableBuilder(valueListenable: dropValue, builder: (context, String value, _){
                                           return DropdownButton(
-                                            hint: Text(
+                                            hint: const Text(
                                               'Veiculo *',
                                               style: TextStyle(
                                                   fontSize: 16
@@ -330,7 +330,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                               child:
                                               Text(
                                                 opcao,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontSize: 16
                                                 ),
                                               ),
@@ -340,13 +340,13 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                         })
                                     ),
                                     Container(
-                                      padding: EdgeInsets.all(16),
-                                      child: Text(
+                                      padding: const EdgeInsets.all(16),
+                                      child: const Text(
                                         'Motivo do Bloqueio:'
                                       )
                                     ),
                                     Container(
-                                      padding: EdgeInsets.all(16),
+                                      padding: const EdgeInsets.all(16),
                                       child: TextFormField(
                                         maxLines: null,
                                         onChanged: (valor){
@@ -358,7 +358,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                         keyboardType: TextInputType.multiline,
                                         enableSuggestions: false,
                                         autocorrect: false,
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           border: OutlineInputBorder(),
                                           hintText: 'Motivo do Bloqueio * ',
                                           hintStyle: TextStyle(
@@ -377,7 +377,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
 
                                         Navigator.of(context).pop();
 
-                                      }, child: Text(
+                                      }, child: const Text(
                                         'Cancelar',
                                         style: TextStyle(
                                             fontSize: 16
@@ -429,7 +429,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
 
                                               var dateTime= new DateTime.now();
 
-                                              var uuid = Uuid();
+                                              var uuid = const Uuid();
 
                                               String idd = "${DateTime.now().toString()}" + uuid.v4();
 
@@ -448,7 +448,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                           }
                                         }
 
-                                      }, child: Text(
+                                      }, child: const Text(
                                         'Prosseguir',
                                         style: TextStyle(
                                             fontSize: 16
@@ -465,7 +465,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                             },
                           );
                         },
-                        child: Text(
+                        child: const Text(
                             'Bloquear',
                           style: TextStyle(
                               fontSize: 16
@@ -479,7 +479,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -487,7 +487,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                       onPressed: (){
                         Navigator.pop(context);
                       },
-                      child: Text(
+                      child: const Text(
                         'Cancelar',
                         style: TextStyle(
                             fontSize: 16
@@ -501,7 +501,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                       onPressed: (){
                         Navigator.pop(context);
                       },
-                      child: Text(
+                      child: const Text(
                         'Prosseguir',
                         style: TextStyle(
                             fontSize: 16
@@ -520,7 +520,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                   Container(
                     width: 180,
                     height: 180,
-                    padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                    padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                     child:
                     Image.network(
                       widget.LogoPath,
@@ -528,11 +528,11 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                    padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                     child:
                     Text(
                       'ADM : ' + widget.ADMName,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 16
                       ),
                     ),

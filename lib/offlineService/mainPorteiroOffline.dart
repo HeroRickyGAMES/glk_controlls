@@ -24,9 +24,9 @@ class _mainPorteiroOffState extends State<mainPorteiroOff> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Liberação offline'),
+        title: const Text('Liberação offline'),
       ),
-      body: Center(
+      body: const Center(
         child: Text('Centro'),
       ),
     );

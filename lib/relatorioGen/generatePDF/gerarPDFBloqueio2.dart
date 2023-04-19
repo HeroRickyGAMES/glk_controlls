@@ -14,13 +14,13 @@ class generatePDF3 extends StatelessWidget {
   String Motivo;
   String Data;
 
-  generatePDF3(this.Placa, this.Motivo, this.tipoVeiculo, this.Data);
+  generatePDF3(this.Placa, this.Motivo, this.tipoVeiculo, this.Data, {super.key});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Text('Gerar PDF')),
+        appBar: AppBar(title: const Text('Gerar PDF')),
         body: PdfPreview(
           build: (format) => _generatePDF3(format, 'Gerar PDF', Placa, tipoVeiculo, Motivo, Data),
         ),
@@ -41,40 +41,40 @@ class generatePDF3 extends StatelessWidget {
                 mainAxisAlignment: pw.MainAxisAlignment.center,
                 children: [
                   pw.Container(
-                    padding: pw.EdgeInsets.all(15),
+                    padding: const pw.EdgeInsets.all(15),
                     child: pw.Text('Relatório',
                         style: pw.TextStyle(
                             fontSize: 16, fontWeight: pw.FontWeight.bold)
                     ),
                   ),
                   pw.Container(
-                    padding: pw.EdgeInsets.all(15),
+                    padding: const pw.EdgeInsets.all(15),
                     child: pw.Text("Nome: " + Placa,
-                        style: pw.TextStyle(fontSize: 16)),
+                        style: const pw.TextStyle(fontSize: 16)),
                   ),
                   pw.Container(
-                    padding: pw.EdgeInsets.all(15),
+                    padding: const pw.EdgeInsets.all(15),
                     child: pw.Text('RG: ' + Motivo,
-                        style: pw.TextStyle(fontSize: 16)),
+                        style: const pw.TextStyle(fontSize: 16)),
                   ),
                   pw.Container(
-                    padding: pw.EdgeInsets.all(15),
+                    padding: const pw.EdgeInsets.all(15),
                     child: pw.Text( 'Data do bloqueio: ' + Data,
-                        style: pw.TextStyle(fontSize: 16)),
+                        style: const pw.TextStyle(fontSize: 16)),
                   ),
                   pw.Container(
-                    padding: pw.EdgeInsets.all(15),
+                    padding: const pw.EdgeInsets.all(15),
                     child: pw.Text( 'Data geração do PDF: ${ DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/')}',
-                        style: pw.TextStyle(fontSize: 16)),
+                        style: const pw.TextStyle(fontSize: 16)),
                   ),
                   pw.Column(
                     crossAxisAlignment: pw.CrossAxisAlignment.center,
                     mainAxisAlignment: pw.MainAxisAlignment.center,
                     children: [
                       pw.Container(
-                        padding: pw.EdgeInsets.all(15),
+                        padding: const pw.EdgeInsets.all(15),
                         child: pw.Text('Motivo: ' + tipoVeiculo,
-                            style: pw.TextStyle(fontSize: 16)
+                            style: const pw.TextStyle(fontSize: 16)
                         ),
                       ),
                     ]

@@ -15,7 +15,7 @@ class _modalVeiculoEditState extends State<modalVeiculoEdit> {
     return  Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Editar essa autorização'),
+        title: const Text('Editar essa autorização'),
       ),
     );
   }

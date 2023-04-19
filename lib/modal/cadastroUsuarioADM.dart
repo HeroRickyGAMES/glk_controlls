@@ -10,7 +10,7 @@ class cadastroUsuarioModal extends StatefulWidget {
 
   String ADMName;
   String LogoPath;
-  cadastroUsuarioModal(this.dropValue, this.listaNome, this.ADMName, this.LogoPath);
+  cadastroUsuarioModal(this.dropValue, this.listaNome, this.ADMName, this.LogoPath, {super.key});
 
   @override
   State<cadastroUsuarioModal> createState() => _cadastroUsuarioModalState();
@@ -71,18 +71,18 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cadastro de Operadores de Empresas'),
+        title: const Text('Cadastro de Operadores de Empresas'),
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.only(top: 60),
+          padding: const EdgeInsets.only(top: 60),
           alignment: Alignment.center,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: TextFormField(
                   onChanged: (valor){
                     nomeComp = valor;
@@ -91,7 +91,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                   keyboardType: TextInputType.name,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Nome Completo *',
                     hintStyle: TextStyle(
@@ -101,7 +101,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: TextFormField(
                   onChanged: (valor){
                     RG = valor;
@@ -110,7 +110,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                   keyboardType: TextInputType.number,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'RG * ',
                     hintStyle: TextStyle(
@@ -120,7 +120,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: TextFormField(
                   onChanged: (valor){
                     telNum = valor;
@@ -129,7 +129,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                   keyboardType: TextInputType.number,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Telefone *',
                     hintStyle: TextStyle(
@@ -139,7 +139,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: TextFormField(
                   onChanged: (valor){
                     email = valor;
@@ -148,7 +148,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                   keyboardType: TextInputType.emailAddress,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Email *',
                     hintStyle: TextStyle(
@@ -158,7 +158,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: TextFormField(
                   onChanged: (valor){
                     pass = valor;
@@ -168,7 +168,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                   enableSuggestions: false,
                   autocorrect: false,
                   obscureText: true,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Senha * ',
                     hintStyle: TextStyle(
@@ -178,8 +178,8 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(16),
-                child: Text(
+                padding: const EdgeInsets.all(16),
+                child: const Text(
                   'Empresa do Operador *',
                   style: TextStyle(
                       fontSize: 16,
@@ -190,7 +190,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
               Center(
                   child: ValueListenableBuilder(valueListenable: widget.dropValue, builder: (context, String value, _){
                     return DropdownButton(
-                      hint: Text(
+                      hint: const Text(
                         'Selecione uma empresa',
                         style: TextStyle(
                             fontSize: 16
@@ -209,7 +209,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                         child:
                         Text(
                           opcao,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 18
                           ),
                         ),
@@ -219,7 +219,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                   })
               ),
               Container(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   child: ElevatedButton(
                     onPressed: () async {
 
@@ -289,7 +289,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                                   showDialog(
                                     context: context,
                                     builder: (BuildContext context) {
-                                      return AlertDialog(
+                                      return const AlertDialog(
                                         title: Text('Aguarde!'),
                                         actions: [
                                           Center(
@@ -407,7 +407,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
 
                       }
                     },
-                    child: Text(
+                    child: const Text(
                       'Confirmar cadastro',
                       style: TextStyle(
                           fontSize: 18,
@@ -416,14 +416,14 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                   )
               ),
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
                       width: 180,
                       height: 180,
-                      padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                      padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                       child:
                       Image.network(
                         widget.LogoPath,
@@ -431,11 +431,11 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                      padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                       child:
                       Text(
                         'ADM : ' + widget.ADMName,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 18
                         ),
                       ),

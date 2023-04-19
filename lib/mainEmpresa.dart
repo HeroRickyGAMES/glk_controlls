@@ -19,7 +19,7 @@ Map<String, String> mapNome = {};
 class mainEmpresa extends StatefulWidget {
   final String empresaName;
   final bool relatorio;
-  const mainEmpresa(this.empresaName, this.relatorio);
+  const mainEmpresa(this.empresaName, this.relatorio, {super.key});
 
   @override
   State<mainEmpresa> createState() => _mainEmpresaState();
@@ -93,7 +93,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
+          return const AlertDialog(
             title: Text('Aguarde!'),
             actions: [
               Center(
@@ -122,7 +122,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('GLK Controls - EMPRESAS'),
+        title: const Text('GLK Controls - EMPRESAS'),
         backgroundColor: Colors.red[700],
       ),
       body: SingleChildScrollView(
@@ -134,7 +134,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                 Container(
                     width: 180,
                     height: 180,
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child:
                     Image.asset(
                       'assets/icon.png',
@@ -144,7 +144,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
               ],
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: ElevatedButton(
                   onPressed: widget.relatorio ? toRelatorio: null,
                   child: Text(
@@ -157,7 +157,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               SingleChildScrollView(
                 child: Column(
@@ -182,7 +182,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                       autocorrect: false,
                       decoration: InputDecoration(
 
-                        border: OutlineInputBorder(
+                        border: const OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: Colors.green
                             )
@@ -193,7 +193,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child: ElevatedButton(
                         onPressed: (){
                           if(holderPlaca == ''){
@@ -285,7 +285,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
                           if (!snapshot.hasData) {
-                            return Center(
+                            return const Center(
                               child: CircularProgressIndicator(),
                             );
                           }
@@ -298,7 +298,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                                 color: Colors.black,
                                 width: 1.0,
                               ),
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                             ),
                             child: OrientationBuilder(
                               builder: (context, orientation) {
@@ -367,14 +367,14 @@ class _mainEmpresaState extends State<mainEmpresa> {
                                       return Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Container(
-                                          padding: EdgeInsets.all(16),
+                                          padding: const EdgeInsets.all(16),
                                           decoration: BoxDecoration(
                                             color: color,
                                             border: Border.all(
                                               color: Colors.black,
                                               width: 1.0,
                                             ),
-                                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                                           ),
                                           child:
                                           Column(
@@ -496,17 +496,17 @@ class _mainEmpresaState extends State<mainEmpresa> {
                                                         context: context,
                                                         builder: (BuildContext context) {
                                                           return AlertDialog(
-                                                            title: Text('Deseja autorizar entrada?'),
+                                                            title: const Text('Deseja autorizar entrada?'),
                                                             content: SingleChildScrollView(
                                                               child: ListBody(
                                                                 children: <Widget>[
-                                                                  Text('Deseja autorizar entrada desse veiculo?'),
+                                                                  const Text('Deseja autorizar entrada desse veiculo?'),
                                                                 ],
                                                               ),
                                                             ),
                                                             actions: <Widget>[
                                                               TextButton(
-                                                                child: Text('Rejeitar Entrada'),
+                                                                child: const Text('Rejeitar Entrada'),
                                                                 onPressed: () {
                                                                   Navigator.of(context).pop();
 
@@ -517,7 +517,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                                                                 },
                                                               ),
                                                               TextButton(
-                                                                child: Text('Permitir Entrada'),
+                                                                child: const Text('Permitir Entrada'),
                                                                 onPressed: () {
                                                                   Navigator.of(context).pop();
 
@@ -544,7 +544,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                                                   )
                                               ),
                                               Container(
-                                                padding: EdgeInsets.all(16),
+                                                padding: const EdgeInsets.all(16),
                                                 child: Text(
                                                   'Status: \n' +
                                                       documents['Status'],
@@ -560,7 +560,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                                         ),
                                       );
                                     }else{
-                                      return SizedBox(width: 0, height: 0);
+                                      return const SizedBox(width: 0, height: 0);
                                     }
                                   }
                                   ).toList().reversed.toList(),
@@ -580,7 +580,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                 Container(
                     width: 180,
                     height: 180,
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child:
                     Image.asset(
                       'assets/sanca.png',
@@ -588,7 +588,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                     )
                 ),
                 Container(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   child:
                   Text(
                     'Empresa: ' + widget.empresaName,

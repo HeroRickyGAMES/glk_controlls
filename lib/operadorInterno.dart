@@ -31,7 +31,7 @@ class _operadorInternoState extends State<operadorInterno> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
+        title: const Text(
             'Cadastro de Operadores Internos'
         ),
       ),
@@ -44,7 +44,7 @@ class _operadorInternoState extends State<operadorInterno> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: TextFormField(
                   onChanged: (valor){
                     nomeComp = valor;
@@ -53,7 +53,7 @@ class _operadorInternoState extends State<operadorInterno> {
                   keyboardType: TextInputType.name,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Nome Completo *',
                     hintStyle: TextStyle(
@@ -63,7 +63,7 @@ class _operadorInternoState extends State<operadorInterno> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: TextFormField(
                   onChanged: (valor){
                     RG = valor;
@@ -72,7 +72,7 @@ class _operadorInternoState extends State<operadorInterno> {
                   keyboardType: TextInputType.number,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'RG *',
                     hintStyle: TextStyle(
@@ -82,7 +82,7 @@ class _operadorInternoState extends State<operadorInterno> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: TextFormField(
                   onChanged: (valor){
                     telNum = valor;
@@ -91,7 +91,7 @@ class _operadorInternoState extends State<operadorInterno> {
                   keyboardType: TextInputType.number,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Telefone *',
                     hintStyle: TextStyle(
@@ -101,7 +101,7 @@ class _operadorInternoState extends State<operadorInterno> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: TextFormField(
                   onChanged: (valor){
                     email = valor;
@@ -110,7 +110,7 @@ class _operadorInternoState extends State<operadorInterno> {
                   keyboardType: TextInputType.emailAddress,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Email *',
                     hintStyle: TextStyle(
@@ -120,7 +120,7 @@ class _operadorInternoState extends State<operadorInterno> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: TextFormField(
                   onChanged: (valor){
                     pass = valor;
@@ -130,7 +130,7 @@ class _operadorInternoState extends State<operadorInterno> {
                   enableSuggestions: false,
                   autocorrect: false,
                   obscureText: true,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Senha *',
                     hintStyle: TextStyle(
@@ -142,8 +142,8 @@ class _operadorInternoState extends State<operadorInterno> {
               Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(16),
-                    child: Text(
+                    padding: const EdgeInsets.all(16),
+                    child: const Text(
                         'Permissões',
                       style: TextStyle(
                         fontSize: 16,
@@ -151,7 +151,7 @@ class _operadorInternoState extends State<operadorInterno> {
                     ),
                   ),
                   CheckboxListTile(
-                    title: Text('Cadastrar'),
+                    title: const Text('Cadastrar'),
                     value: cadastrarbool,
                     onChanged: (value) {
                       setState(() {
@@ -163,7 +163,7 @@ class _operadorInternoState extends State<operadorInterno> {
                     controlAffinity: ListTileControlAffinity.leading,
                   ),
                   CheckboxListTile(
-                    title: Text('Saida'),
+                    title: const Text('Saida'),
                     value: saidabool,
                     onChanged: (value) {
                       setState(() {
@@ -175,7 +175,7 @@ class _operadorInternoState extends State<operadorInterno> {
                     controlAffinity: ListTileControlAffinity.leading,
                   ),
                   CheckboxListTile(
-                    title: Text('Entrada'),
+                    title: const Text('Entrada'),
                     value: entradabool,
                     onChanged: (value) {
                       setState(() {
@@ -187,7 +187,7 @@ class _operadorInternoState extends State<operadorInterno> {
                     controlAffinity: ListTileControlAffinity.leading,
                   ),
                   CheckboxListTile(
-                    title: Text('Relatórios'),
+                    title: const Text('Relatórios'),
                     value: relatoriosbool,
                     onChanged: (value) {
                       setState(() {
@@ -199,7 +199,7 @@ class _operadorInternoState extends State<operadorInterno> {
                     controlAffinity: ListTileControlAffinity.leading,
                   ),
                   CheckboxListTile(
-                    title: Text('Painel'),
+                    title: const Text('Painel'),
                     value: painelbool,
                     onChanged: (value) {
                       setState(() {
@@ -211,7 +211,7 @@ class _operadorInternoState extends State<operadorInterno> {
                     controlAffinity: ListTileControlAffinity.leading,
                   ),
                   CheckboxListTile(
-                    title: Text('Liberação Manual'),
+                    title: const Text('Liberação Manual'),
                     value: liberacao,
                     onChanged: (value) {
                       setState(() {
@@ -358,7 +358,7 @@ class _operadorInternoState extends State<operadorInterno> {
                     }
 
                   },
-                  child: Text(
+                  child: const Text(
                     'Cadastrar usuario',
                     style: TextStyle(
                       fontSize: 16,
@@ -368,14 +368,14 @@ class _operadorInternoState extends State<operadorInterno> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
                       width: 180,
                       height: 180,
-                      padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                      padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                       child:
                       Image.network(
                         widget.LogoPath,
@@ -383,11 +383,11 @@ class _operadorInternoState extends State<operadorInterno> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                      padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                       child:
                       Text(
                         'ADM : ' + widget.ADMName,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16
                         ),
                       ),

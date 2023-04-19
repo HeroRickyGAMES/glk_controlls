@@ -14,7 +14,7 @@ class modalVeiculoAgendamento extends StatefulWidget {
   final dropValue2;
   final dropValue;
   List Galpoes;
-  modalVeiculoAgendamento(this.nomeUser, this.NomeEmpresa, this.dropValue2, this.dropValue, this.Galpoes);
+  modalVeiculoAgendamento(this.nomeUser, this.NomeEmpresa, this.dropValue2, this.dropValue, this.Galpoes, {super.key});
 
   @override
   State<modalVeiculoAgendamento> createState() => _modalVeiculoAgendamentoState();
@@ -69,7 +69,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
 
         var dateTime= new DateTime.now();
 
-        var uuid = Uuid();
+        var uuid = const Uuid();
 
         String idd = "${DateTime.now().toString()}" + uuid.v4();
         FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
@@ -146,7 +146,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
 
         var dateTime= new DateTime.now();
 
-        var uuid = Uuid();
+        var uuid = const Uuid();
 
         String idd = "${DateTime.now().toString()}" + uuid.v4();
         FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
@@ -419,11 +419,11 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('GLK Controls - Cadastro: Motorista e Veiculo'),
+        title: const Text('GLK Controls - Cadastro: Motorista e Veiculo'),
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               Image.asset(
@@ -432,7 +432,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                 height: 100,
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child: TextFormField(
                   controller: nameMotoristaAllcaps,
                   onChanged: (valor){
@@ -442,7 +442,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                   keyboardType: TextInputType.name,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Nome Completo do Motorista *',
                     hintStyle: TextStyle(
@@ -452,7 +452,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child: TextFormField(
                   onChanged: (valor){
                     RGMotorista = valor;
@@ -462,7 +462,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                   keyboardType: TextInputType.number,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'RG do Motorista (Sem digitos) * ',
                     hintStyle: TextStyle(
@@ -472,8 +472,8 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(16),
-                child: Text(
+                padding: const EdgeInsets.all(16),
+                child: const Text(
                   'Veiculo *',
                   style: TextStyle(
                       fontSize: 16,
@@ -484,7 +484,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
               Center(
                   child: ValueListenableBuilder(valueListenable: widget.dropValue2, builder: (context, String value, _){
                     return DropdownButton(
-                      hint: Text(
+                      hint: const Text(
                         'Selecione um veiculo *',
                         style: TextStyle(
                             fontSize: 16
@@ -502,7 +502,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                         child:
                         Text(
                           opcao,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 16
                           ),
                         ),
@@ -512,8 +512,8 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                   })
               ),
               Container(
-                padding: EdgeInsets.all(16),
-                child: Text(
+                padding: const EdgeInsets.all(16),
+                child: const Text(
                   'Galpão *',
                   style: TextStyle(
                       fontSize: 16,
@@ -524,7 +524,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
               Center(
                   child: ValueListenableBuilder(valueListenable: widget.dropValue, builder: (context, String value, _){
                     return DropdownButton(
-                      hint: Text(
+                      hint: const Text(
                         'Selecione um Galpão *',
                         style: TextStyle(
                             fontSize: 16
@@ -542,7 +542,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                         child:
                         Text(
                           opcao,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 16
                           ),
                         ),
@@ -552,7 +552,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                   })
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child: TextFormField(
                   controller: placaveiculointerface,
                   onChanged: (valor){
@@ -564,7 +564,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                     );
                     //Mudou mandou para a String
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Placa do Veiculo * ',
                     hintStyle: TextStyle(
@@ -574,7 +574,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child: TextFormField(
                   controller: telefoneinterface,
                   onChanged: (valor){
@@ -589,7 +589,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                   keyboardType: TextInputType.number,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Telefone',
                     hintStyle: TextStyle(
@@ -599,14 +599,14 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child: TextFormField(
                   onChanged: (valor){
                     originEmpresa = valor;
                     telefoneinterface.text = telefone!;
                     //Mudou mandou para a String
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Empresa de Origem',
                     hintStyle: TextStyle(
@@ -616,8 +616,8 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(16),
-                child: Text(
+                padding: const EdgeInsets.all(16),
+                child: const Text(
                   'Empresa destino *',
                   style: TextStyle(
                       fontSize: 16,
@@ -626,17 +626,17 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Text(
                   widget.NomeEmpresa,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold
                   ),
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child:
                 Column(
                   children: [
@@ -645,7 +645,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                       children: [
                         Expanded(
                           child: RadioListTile(
-                            title: Text(
+                            title: const Text(
                                 "Coleta",
                               style: TextStyle(
                                 fontSize: 16
@@ -663,7 +663,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
 
                         Expanded(
                           child: RadioListTile(
-                            title: Text(
+                            title: const Text(
                                 "Entrega",
                               style: TextStyle(
                                   fontSize: 16
@@ -686,8 +686,8 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
               Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(16),
-                    child: Text(
+                    padding: const EdgeInsets.all(16),
+                    child: const Text(
                       'Selecione um Galpão galpão (Selecione o que bate com com o nome da empresa)*',
                       style: TextStyle(
                           fontSize: 16,
@@ -699,7 +699,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
               ),
               Text(
                   'Data de agendamento selecionada ${dataAgendataST}',
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
@@ -723,7 +723,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
 
                         }, locale: LocaleType.pt);
                   },
-                  child: Text(
+                  child: const Text(
                     'Selecione a data',
                     style: TextStyle(
                         color: Colors.blue,
@@ -731,11 +731,11 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                     ),
                   )),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child:
                 Column(
                   children: [
-                    Text(
+                    const Text(
                       'Está Entrando com Lacre ou Sem Lacre?',
                       style: TextStyle(
                           fontSize: 16,
@@ -743,7 +743,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                       ),
                     ),
                     RadioListTile(
-                      title: Text(
+                      title: const Text(
                           "Com Lacre",
                         style: TextStyle(
                             fontSize: 16
@@ -762,7 +762,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                       },
                     ),
                     RadioListTile(
-                      title: Text(
+                      title: const Text(
                         "Sem Lacre",
                         style: TextStyle(
                             fontSize: 16
@@ -782,7 +782,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                     ),
                     lacrebool ?
                     Container(
-                      padding: EdgeInsets.only(top: 16),
+                      padding: const EdgeInsets.only(top: 16),
                       child: TextFormField(
                         onChanged: (valor){
                           lacreSt = valor;
@@ -791,7 +791,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                         //keyboardType: TextInputType.number,
                         //enableSuggestions: false,
                         //autocorrect: false,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: 'Numero do lacre *',
                           hintStyle: TextStyle(
@@ -800,14 +800,14 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                         ),
                       ),
                     )
-                        :Text(''),
+                        :const Text(''),
                   ],
                 ),
               ),
               ElevatedButton(
               onPressed: uploadInfos,
               child:
-              Text(
+              const Text(
                   'Prosseguir',
                 style: TextStyle(
                     fontSize: 16,
@@ -821,7 +821,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                   Container(
                       width: 180,
                       height: 180,
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child:
                       Image.asset(
                         'assets/sanca.png',
@@ -829,11 +829,11 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                       ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child:
                     Text(
                       'Operador: ' + widget.nomeUser,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 16
                       ),
                     ),
@@ -846,7 +846,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
 
                   // retorna false para impedir que a navegação volte à tela anterior
                   return false;
-                }, child: Text(''),
+                }, child: const Text(''),
               ),
             ],
           ),

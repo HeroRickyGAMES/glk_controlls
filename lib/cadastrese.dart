@@ -35,13 +35,13 @@ class _registroState extends State<registro> {
         //backgroundColor: Colors.red[900],
         title: Container(
           child:
-          Text(
+          const Text(
               'GLK Controls - Cadastro'
           ),
         ),
       ),
       body: Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         alignment: Alignment.center,
         child:
         Center(
@@ -49,7 +49,7 @@ class _registroState extends State<registro> {
           Column(
             children: [
               RadioListTile(
-                title: Text(
+                title: const Text(
                     "Sou um Operador",
                   style: TextStyle(
                       fontSize: 20
@@ -67,7 +67,7 @@ class _registroState extends State<registro> {
               ),
 
               RadioListTile(
-                title: Text(
+                title: const Text(
                     "Sou uma Empresa",
                   style: TextStyle(
                       fontSize: 20
@@ -84,29 +84,29 @@ class _registroState extends State<registro> {
                 },
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child: TextFormField(
                   onChanged: (valor){
                     nome = valor;
                     //Mudou mandou para a String
                   },
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     hintText: NomeOuRazao,
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                         fontSize: 20
                     ),
                   ),
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child: TextFormField(
                   onChanged: (valor){
                     Email = valor;
                     //Mudou mandou para a String
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Seu Email',
                     hintStyle: TextStyle(
@@ -116,7 +116,7 @@ class _registroState extends State<registro> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child: TextFormField(
                   onChanged: (valor){
                     RGcnpj = valor;
@@ -126,16 +126,16 @@ class _registroState extends State<registro> {
                   enableSuggestions: false,
                   autocorrect: false,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     hintText: cnpjourg,
-                    hintStyle: TextStyle(
+                    hintStyle: const TextStyle(
                         fontSize: 20
                     ),
                   ),
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child: TextFormField(
                   onChanged: (valor){
                     Senha = valor;
@@ -144,7 +144,7 @@ class _registroState extends State<registro> {
                   obscureText: true,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Sua Senha',
                     hintStyle: TextStyle(
@@ -154,7 +154,7 @@ class _registroState extends State<registro> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child: ElevatedButton(
                     onPressed: (){
 
@@ -198,14 +198,14 @@ class _registroState extends State<registro> {
                                         print('cadastrado');
 
                                         AlertDialog alert = AlertDialog(
-                                          title: Text("Sua conta ainda não está ativa!"),
-                                          content: Text("A sua conta foi criada com sucesso! Porém ainda não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
+                                          title: const Text("Sua conta ainda não está ativa!"),
+                                          content: const Text("A sua conta foi criada com sucesso! Porém ainda não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
                                           actions: [
                                             TextButton(
                                                 onPressed: (){
                                                   SystemNavigator.pop();
                                                 },
-                                                child: Text('Ok')
+                                                child: const Text('Ok')
                                             ),
                                           ],
                                         );
@@ -249,14 +249,14 @@ class _registroState extends State<registro> {
                                       print('O está ativo está funcionando!');
 
                                       AlertDialog alert = AlertDialog(
-                                        title: Text("Sua conta ainda não está ativa!"),
-                                        content: Text("A sua conta foi criada com sucesso! Porém ainda não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
+                                        title: const Text("Sua conta ainda não está ativa!"),
+                                        content: const Text("A sua conta foi criada com sucesso! Porém ainda não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
                                         actions: [
                                           TextButton(
                                               onPressed: (){
                                                 SystemNavigator.pop();
                                               },
-                                              child: Text('Ok')
+                                              child: const Text('Ok')
                                           ),
                                         ],
                                       );
@@ -288,7 +288,7 @@ class _registroState extends State<registro> {
 
                     },
                     child:
-                    Text(
+                    const Text(
                         'Cadastrar',
                       style: TextStyle(
                           fontSize: 20

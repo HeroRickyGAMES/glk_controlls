@@ -19,7 +19,7 @@ class _permissoesState extends State<permissoes> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Permissões dos Operadores Internos'),
+        title: const Text('Permissões dos Operadores Internos'),
       ),
       body: StreamBuilder(
         stream: FirebaseFirestore.instance
@@ -28,7 +28,7 @@ class _permissoesState extends State<permissoes> {
         builder: (BuildContext context,
             AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
@@ -44,13 +44,13 @@ class _permissoesState extends State<permissoes> {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
                     border: Border.all(
                       color: Colors.blue,
                       width: 1.0,
                     ),
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                   ),
                   child:
                   Column(
@@ -59,14 +59,14 @@ class _permissoesState extends State<permissoes> {
                     children: [
                       Text(
                           'Nome do Operador: '+ documents['nome'],
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 16
                         ),
                       ),
                       Column(
                         children: [
                           CheckboxListTile(
-                            title: Text('Cadastrar'),
+                            title: const Text('Cadastrar'),
                             value: documents['cadastrar'],
                             onChanged: (value) {
                               setState(() {
@@ -82,7 +82,7 @@ class _permissoesState extends State<permissoes> {
                             controlAffinity: ListTileControlAffinity.leading,
                           ),
                           CheckboxListTile(
-                            title: Text('Saida'),
+                            title: const Text('Saida'),
                             value: saidabl,
                             onChanged: (value) {
                               setState(() {
@@ -97,7 +97,7 @@ class _permissoesState extends State<permissoes> {
                             controlAffinity: ListTileControlAffinity.leading,
                           ),
                           CheckboxListTile(
-                            title: Text('Entrada'),
+                            title: const Text('Entrada'),
                             value: documents['entrada'],
                             onChanged: (value) {
                               setState(() {
@@ -112,7 +112,7 @@ class _permissoesState extends State<permissoes> {
                             controlAffinity: ListTileControlAffinity.leading,
                           ),
                           CheckboxListTile(
-                            title: Text('Relatórios'),
+                            title: const Text('Relatórios'),
                             value: documents['relatorio'],
                             onChanged: (value) {
                               setState(() {
@@ -127,7 +127,7 @@ class _permissoesState extends State<permissoes> {
                             controlAffinity: ListTileControlAffinity.leading,
                           ),
                           CheckboxListTile(
-                            title: Text('Painel'),
+                            title: const Text('Painel'),
                             value: documents['painel'],
                             onChanged: (value) {
                               setState(() {

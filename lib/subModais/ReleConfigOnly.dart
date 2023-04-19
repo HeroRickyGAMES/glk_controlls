@@ -36,6 +36,7 @@ class ReleConfigOnly extends StatefulWidget {
       this.EntradaOuSaida,
       this.ipRele,
       this.DocRele,
+      {super.key}
       );
 
   @override
@@ -88,10 +89,10 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Configuração do Relê'),
+        title: const Text('Configuração do Relê'),
       ),
       body: Container(
-        padding: EdgeInsets.all(16),
+        padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -102,15 +103,15 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                   color: Colors.black,
                   width: 1.0,
                 ),
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
               ),
               child: Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child: Text(
                       widget.EntradaOuSaida,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.bold
                       ),
@@ -120,7 +121,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
-                        child: Text(
+                        child: const Text(
                           "IP:",
                           style: TextStyle(
                               fontSize: 16,
@@ -129,7 +130,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                         ),
                       ),
                       Container(
-                        padding: EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(16),
                         child: TextFormField(
                           controller: releIpController,
                           onChanged: (valor){
@@ -139,7 +140,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                           keyboardType: TextInputType.number,
                           enableSuggestions: false,
                           autocorrect: false,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             hintText: 'IP *',
                             hintStyle: TextStyle(
@@ -154,8 +155,8 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
-                        padding: EdgeInsets.all(16),
-                        child: Text(
+                        padding: const EdgeInsets.all(16),
+                        child: const Text(
                           "Rele 01:",
                           style: TextStyle(
                               fontSize: 16,
@@ -165,7 +166,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                       Center(
                           child: ValueListenableBuilder(valueListenable: widget.dropValue2, builder: (context, String value, _){
                             return DropdownButton(
-                              hint: Text(
+                              hint: const Text(
                                 'Local *',
                                 style: TextStyle(
                                     fontSize: 16
@@ -183,7 +184,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                 child:
                                 Text(
                                   opcao,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16
                                   ),
                                 ),
@@ -194,14 +195,14 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                       ),
                       Text(
                           "Função: " + rele1fuc1,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16
                         ),
                       ),
                       Center(
                           child: ValueListenableBuilder(valueListenable: widget.dropValue, builder: (context, String value, _){
                             return DropdownButton(
-                              hint: Text(
+                              hint: const Text(
                                 'Selecione a função *',
                                 style: TextStyle(
                                     fontSize: 16
@@ -219,7 +220,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                 child:
                                 Text(
                                   opcao,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16
                                   ),
                                 ),
@@ -234,8 +235,8 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
-                        padding: EdgeInsets.all(16),
-                        child: Text(
+                        padding: const EdgeInsets.all(16),
+                        child: const Text(
                           "Rele 02:",
                           style: TextStyle(
                             fontSize: 16,
@@ -245,7 +246,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                       Center(
                           child: ValueListenableBuilder(valueListenable: widget.dropValue3, builder: (context, String value, _){
                             return DropdownButton(
-                              hint: Text(
+                              hint: const Text(
                                 'Local *',
                                 style: TextStyle(
                                     fontSize: 16
@@ -263,7 +264,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                 child:
                                 Text(
                                   opcao,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16
                                   ),
                                 ),
@@ -274,14 +275,14 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                       ),
                       Text(
                         "Função: " + rele2fuc1,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16
                         ),
                       ),
                       Center(
                           child: ValueListenableBuilder(valueListenable: widget.dropValue4, builder: (context, String value, _){
                             return DropdownButton(
-                              hint: Text(
+                              hint: const Text(
                                 'Selecione a função *',
                                 style: TextStyle(
                                     fontSize: 16
@@ -299,7 +300,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                 child:
                                 Text(
                                   opcao,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16
                                   ),
                                 ),
@@ -314,8 +315,8 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
-                        padding: EdgeInsets.all(16),
-                        child: Text(
+                        padding: const EdgeInsets.all(16),
+                        child: const Text(
                           "Rele 03:",
                           style: TextStyle(
                             fontSize: 16,
@@ -325,7 +326,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                       Center(
                           child: ValueListenableBuilder(valueListenable: widget.dropValue5, builder: (context, String value, _){
                             return DropdownButton(
-                              hint: Text(
+                              hint: const Text(
                                 'Local *',
                                 style: TextStyle(
                                     fontSize: 16
@@ -343,7 +344,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                 child:
                                 Text(
                                   opcao,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16
                                   ),
                                 ),
@@ -354,14 +355,14 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                       ),
                       Text(
                         "Função: " + rele4fuc2,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16
                         ),
                       ),
                       Center(
                           child: ValueListenableBuilder(valueListenable: widget.dropValue6, builder: (context, String value, _){
                             return DropdownButton(
-                              hint: Text(
+                              hint: const Text(
                                 'Selecione a função *',
                                 style: TextStyle(
                                     fontSize: 16
@@ -379,7 +380,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                 child:
                                 Text(
                                   opcao,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16
                                   ),
                                 ),
@@ -394,8 +395,8 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
-                        padding: EdgeInsets.all(16),
-                        child: Text(
+                        padding: const EdgeInsets.all(16),
+                        child: const Text(
                           "Rele 04:",
                           style: TextStyle(
                             fontSize: 16,
@@ -405,7 +406,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                       Center(
                           child: ValueListenableBuilder(valueListenable: widget.dropValue8, builder: (context, String value, _){
                             return DropdownButton(
-                              hint: Text(
+                              hint: const Text(
                                 'Local *',
                                 style: TextStyle(
                                     fontSize: 16
@@ -423,7 +424,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                 child:
                                 Text(
                                   opcao,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16
                                   ),
                                 ),
@@ -434,14 +435,14 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                       ),
                       Text(
                         "Função: " + rele3fuc2,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16
                         ),
                       ),
                       Center(
                           child: ValueListenableBuilder(valueListenable: widget.dropValue7, builder: (context, String value, _){
                             return DropdownButton(
-                              hint: Text(
+                              hint: const Text(
                                 'Selecione a função *',
                                 style: TextStyle(
                                     fontSize: 16
@@ -459,7 +460,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                 child:
                                 Text(
                                   opcao,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16
                                   ),
                                 ),
@@ -474,7 +475,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -482,7 +483,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                       onPressed: (){
                         Navigator.pop(context);
                       },
-                      child: Text(
+                      child: const Text(
                           'Cancelar',
                         style: TextStyle(
                             fontSize: 16
@@ -622,7 +623,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                         }
                       }
                     },
-                    child: Text(
+                    child: const Text(
                       'Prosseguir',
                       style: TextStyle(
                           fontSize: 16

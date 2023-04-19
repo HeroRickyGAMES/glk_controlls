@@ -49,7 +49,7 @@ class _listaSaidaState extends State<listaSaida> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text(
+        title: const Text(
             'GLK Controls - SAIDA',
           style: TextStyle(
               color: Colors.black
@@ -66,7 +66,7 @@ class _listaSaidaState extends State<listaSaida> {
                 Container(
                     width: 180,
                     height: 180,
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child:
                     Image.asset(
                       'assets/icon.png',
@@ -76,7 +76,7 @@ class _listaSaidaState extends State<listaSaida> {
               ],
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Column(
                 children: [
@@ -100,7 +100,7 @@ class _listaSaidaState extends State<listaSaida> {
                     autocorrect: false,
                     decoration: InputDecoration(
 
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                           borderSide: BorderSide(
                               color: Colors.yellow
                           )
@@ -111,7 +111,7 @@ class _listaSaidaState extends State<listaSaida> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child: ElevatedButton(
                       onPressed: (){
 
@@ -186,7 +186,7 @@ class _listaSaidaState extends State<listaSaida> {
                           });
                         }
                       },
-                      child: Text(
+                      child: const Text(
                           'Pesquisar'
                       ),
                     ),
@@ -200,7 +200,7 @@ class _listaSaidaState extends State<listaSaida> {
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {
                         if (!snapshot.hasData) {
-                          return Center(
+                          return const Center(
                             child: CircularProgressIndicator(),
                           );
                         }
@@ -212,7 +212,7 @@ class _listaSaidaState extends State<listaSaida> {
                               color: Colors.black,
                               width: 1.0,
                             ),
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                           ),
                           child: GridView.count(
                             padding: const EdgeInsets.all(5),
@@ -249,14 +249,14 @@ class _listaSaidaState extends State<listaSaida> {
                               return Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Container(
-                                  padding: EdgeInsets.all(16),
+                                  padding: const EdgeInsets.all(16),
                                   decoration: BoxDecoration(
                                     color: Colors.grey[300],
                                     border: Border.all(
                                       color: Colors.black,
                                       width: 1.0,
                                     ),
-                                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                                   ),
                                   child:
                                   Column(
@@ -306,7 +306,7 @@ class _listaSaidaState extends State<listaSaida> {
                                           )
                                       ),
                                       Container(
-                                        padding: EdgeInsets.all(16),
+                                        padding: const EdgeInsets.all(16),
                                         child: Text(
                                           'Status: \n' +
                                               documents['Status'],
@@ -335,7 +335,7 @@ class _listaSaidaState extends State<listaSaida> {
                 Container(
                     width: 180,
                     height: 180,
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child:
                     Image.asset(
                       'assets/sanca.png',
@@ -343,7 +343,7 @@ class _listaSaidaState extends State<listaSaida> {
                     )
                 ),
                 Container(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   child:
                   Text(
                     'Operador: ' + widget.porteiroName,

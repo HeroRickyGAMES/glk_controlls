@@ -7,7 +7,7 @@ class releModalConfig extends StatefulWidget {
   String urlPadrao2;
   String ADMName;
   String LogoPath;
-  releModalConfig(this.urlPadrao, this.urlPadrao2, this.ADMName, this.LogoPath);
+  releModalConfig(this.urlPadrao, this.urlPadrao2, this.ADMName, this.LogoPath, {super.key});
 
   @override
   State<releModalConfig> createState() => _releModalConfigState();
@@ -23,7 +23,7 @@ class _releModalConfigState extends State<releModalConfig> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Configurações de Relê'),
+        title: const Text('Configurações de Relê'),
       ),
       body:
       Column(
@@ -31,7 +31,7 @@ class _releModalConfigState extends State<releModalConfig> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
-            padding: EdgeInsets.only(top: 16),
+            padding: const EdgeInsets.only(top: 16),
             child: Image.asset(
               'assets/icon.png',
               width: 300,
@@ -42,8 +42,8 @@ class _releModalConfigState extends State<releModalConfig> {
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Container(
-                padding: EdgeInsets.all(16),
-                  child: Text(
+                padding: const EdgeInsets.all(16),
+                  child: const Text(
                       'Entrada',
                     style: TextStyle(
                       fontSize: 18
@@ -51,8 +51,8 @@ class _releModalConfigState extends State<releModalConfig> {
                   )
               ),
               Container(
-                  padding: EdgeInsets.all(16),
-                  child: Text(
+                  padding: const EdgeInsets.all(16),
+                  child: const Text(
                     'Saida',
                     style: TextStyle(
                         fontSize: 18
@@ -70,10 +70,10 @@ class _releModalConfigState extends State<releModalConfig> {
                     color: Colors.black,
                     width: 1.0,
                   ),
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                 ),
                 child: Container(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   child: Column(
                     children: [
                       TextButton(
@@ -107,7 +107,7 @@ class _releModalConfigState extends State<releModalConfig> {
                                 return ReleConfigOnly(dropValue, dropValue2, funcao1, dropValue3, dropValue4, dropValue5, dropValue6, dropValue7, dropValue8, funcao2, funcao3, funcao4, EntradaouSaida, ipRele, DocRele);
                               }));
                         },
-                        child: Text(
+                        child: const Text(
                             'Entrada 01',
                           style: TextStyle(
                               fontSize: 18
@@ -116,7 +116,7 @@ class _releModalConfigState extends State<releModalConfig> {
                       ),
                       Row(
                         children: [
-                          Text(
+                          const Text(
                               'IP: ',
                             style: TextStyle(
                                 fontSize: 18,
@@ -125,7 +125,7 @@ class _releModalConfigState extends State<releModalConfig> {
                           ),
                           Text(
                             widget.urlPadrao,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 18,
                             ),
                           ),
@@ -141,10 +141,10 @@ class _releModalConfigState extends State<releModalConfig> {
                     color: Colors.black,
                     width: 1.0,
                   ),
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                 ),
                 child: Container(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   child: Column(
                     children: [
                       TextButton(
@@ -177,7 +177,7 @@ class _releModalConfigState extends State<releModalConfig> {
                                 return ReleConfigOnly(dropValue, dropValue2, funcao1, dropValue3, dropValue4, dropValue5, dropValue6, dropValue7, dropValue8, funcao2, funcao3, funcao4, EntradaouSaida, ipRele, DocRele);
                               }));
                         },
-                        child: Text(
+                        child: const Text(
                           'Saida 01',
                           style: TextStyle(
                               fontSize: 18
@@ -186,7 +186,7 @@ class _releModalConfigState extends State<releModalConfig> {
                       ),
                       Row(
                         children: [
-                          Text(
+                          const Text(
                             'IP: ',
                             style: TextStyle(
                                 fontSize: 18,
@@ -195,7 +195,7 @@ class _releModalConfigState extends State<releModalConfig> {
                           ),
                           Text(
                             widget.urlPadrao2,
-                            style: TextStyle(
+                            style: const TextStyle(
                               fontSize: 18,
                             ),
                           ),
@@ -208,14 +208,14 @@ class _releModalConfigState extends State<releModalConfig> {
             ],
           ),
           Container(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Container(
                   width: 180,
                   height: 180,
-                  padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                  padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                   child:
                   Image.network(
                     widget.LogoPath,
@@ -223,11 +223,11 @@ class _releModalConfigState extends State<releModalConfig> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                  padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                   child:
                   Text(
                     'ADM : ' + widget.ADMName,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 20
                     ),
                   ),

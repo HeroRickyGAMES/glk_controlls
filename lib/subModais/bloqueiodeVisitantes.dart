@@ -10,7 +10,7 @@ class bloqueioDeVisitantes extends StatefulWidget {
   String ADMName;
   String LogoPath;
   @override
-  bloqueioDeVisitantes(this.ADMName, this.LogoPath);
+  bloqueioDeVisitantes(this.ADMName, this.LogoPath, {super.key});
 
 
   _bloqueioDeVisitantesState createState() => _bloqueioDeVisitantesState();
@@ -22,17 +22,17 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Bloqueio de Visitantes'),
+        title: const Text('Bloqueio de Visitantes'),
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child: Image.asset(
                   'assets/icon.png',
                   width: 300,
@@ -43,8 +43,8 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
-                    padding: EdgeInsets.all(16),
-                    child: Text(
+                    padding: const EdgeInsets.all(16),
+                    child: const Text(
                       'Nome',
                       style: TextStyle(
                           fontSize: 16
@@ -52,8 +52,8 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(16),
-                    child: Text(
+                    padding: const EdgeInsets.all(16),
+                    child: const Text(
                       'RG',
                       style: TextStyle(
                           fontSize: 16
@@ -61,8 +61,8 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(16),
-                    child: Text(
+                    padding: const EdgeInsets.all(16),
+                    child: const Text(
                       'Data',
                       style: TextStyle(
                           fontSize: 16
@@ -70,8 +70,8 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(16),
-                    child: Text(
+                    padding: const EdgeInsets.all(16),
+                    child: const Text(
                       '',
                       style: TextStyle(
                           fontSize: 16
@@ -79,8 +79,8 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(16),
-                    child: Text(
+                    padding: const EdgeInsets.all(16),
+                    child: const Text(
                       '',
                       style: TextStyle(
                           fontSize: 16
@@ -97,7 +97,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                     color: Colors.black,
                     width: 1.0,
                   ),
-                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                 ),
                 child: StreamBuilder(
                   stream: FirebaseFirestore.instance
@@ -106,7 +106,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (!snapshot.hasData) {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(),
                       );
                     }
@@ -121,13 +121,13 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                               children: [
                                 Text(
                                   documents['nome'],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16
                                   ),
                                 ),
                                 Text(
                                   documents['rg'],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                       fontSize: 16
                                   ),
                                 ),
@@ -135,7 +135,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                   children: [
                                     Text(
                                       DateFormat('dd-MM-yyyy HH:mm:ss').format(documents['dataDoBloqueio'].toDate()).replaceAll('-', '/'),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           fontSize: 16
                                       ),
                                     ),
@@ -149,14 +149,14 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                                 mainAxisAlignment: MainAxisAlignment.end,
                                                 crossAxisAlignment: CrossAxisAlignment.end,
                                                 children: [
-                                                  Icon(Icons.zoom_out_sharp),
+                                                  const Icon(Icons.zoom_out_sharp),
                                                 ],
                                               ),
                                               title: Column(
                                                 children: [
-                                                  Text('Bloqueio'),
+                                                  const Text('Bloqueio'),
                                                   Container(
-                                                    padding: EdgeInsets.all(16),
+                                                    padding: const EdgeInsets.all(16),
                                                     child: Column(
                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                       mainAxisAlignment: MainAxisAlignment.start,
@@ -164,7 +164,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                                         Text('Nome:'  + documents['nome']),
                                                         Text('Data do Bloqueio:'  + DateFormat('dd-MM-yyyy HH:mm:ss').format(documents['dataDoBloqueio'].toDate()).replaceAll('-', '/'),),
                                                         Container(
-                                                            padding: EdgeInsets.all(16),
+                                                            padding: const EdgeInsets.all(16),
                                                             child: Text('Motivo: \n'  + documents['Motivo']
                                                             )
                                                         )
@@ -181,7 +181,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
 
                                                       Navigator.of(context).pop();
 
-                                                    }, child: Text(
+                                                    }, child: const Text(
                                                       'Voltar',
                                                       style: TextStyle(
                                                           fontSize: 16
@@ -200,7 +200,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                                             return generatePDF3(documents['nome'], documents['rg'], documents['Motivo'], DateFormat('dd-MM-yyyy HH:mm:ss').format(documents['dataDoBloqueio'].toDate()).replaceAll('-', '/'));
                                                           }));
 
-                                                    }, child: Text(
+                                                    }, child: const Text(
                                                       'Imprimir',
                                                       style: TextStyle(
                                                           fontSize: 16
@@ -218,7 +218,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                         );
                                       },
                                       child:
-                                      Icon(Icons.zoom_out_sharp),
+                                      const Icon(Icons.zoom_out_sharp),
                                     ),
                                     TextButton(
                                       onPressed: (){
@@ -234,7 +234,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                           );
                                         });
                                       },
-                                      child: Icon(Icons.delete),
+                                      child: const Icon(Icons.delete),
                                     ),
                                   ],
                                 ),
@@ -248,7 +248,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
@@ -269,14 +269,14 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Icon(Icons.zoom_out_sharp),
+                                  const Icon(Icons.zoom_out_sharp),
                                 ],
                               ),
                               title: Column(
                                 children: [
-                                  Text('Novo Bloqueio'),
+                                  const Text('Novo Bloqueio'),
                                   Container(
-                                    padding: EdgeInsets.all(16),
+                                    padding: const EdgeInsets.all(16),
                                     child: TextFormField(
                                       controller: NameController,
                                       onChanged: (valor){
@@ -287,7 +287,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                       keyboardType: TextInputType.text,
                                       enableSuggestions: false,
                                       autocorrect: false,
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                         hintText: 'Nome do Motorista * ',
                                         hintStyle: TextStyle(
@@ -297,7 +297,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                     ),
                                   ),
                                   Container(
-                                    padding: EdgeInsets.all(16),
+                                    padding: const EdgeInsets.all(16),
                                     child: TextFormField(
                                       onChanged: (valor){
 
@@ -308,7 +308,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                       keyboardType: TextInputType.number,
                                       enableSuggestions: false,
                                       autocorrect: false,
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                         hintText: 'RG do Motorista (Só numeros)* ',
                                         hintStyle: TextStyle(
@@ -318,13 +318,13 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                     ),
                                   ),
                                   Container(
-                                      padding: EdgeInsets.all(16),
-                                      child: Text(
+                                      padding: const EdgeInsets.all(16),
+                                      child: const Text(
                                           'Motivo do Bloqueio:'
                                       )
                                   ),
                                   Container(
-                                    padding: EdgeInsets.all(16),
+                                    padding: const EdgeInsets.all(16),
                                     child: TextFormField(
                                       maxLines: null,
                                       onChanged: (valor){
@@ -336,7 +336,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                       keyboardType: TextInputType.multiline,
                                       enableSuggestions: false,
                                       autocorrect: false,
-                                      decoration: InputDecoration(
+                                      decoration: const InputDecoration(
                                         border: OutlineInputBorder(),
                                         hintText: 'Motivo do Bloqueio * ',
                                         hintStyle: TextStyle(
@@ -355,7 +355,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
 
                                       Navigator.of(context).pop();
 
-                                    }, child: Text(
+                                    }, child: const Text(
                                       'Cancelar',
                                       style: TextStyle(
                                           fontSize: 16
@@ -407,7 +407,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
 
                                             var dateTime= new DateTime.now();
 
-                                            var uuid = Uuid();
+                                            var uuid = const Uuid();
 
                                             String idd = "${DateTime.now().toString()}" + uuid.v4();
 
@@ -426,7 +426,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                         }
                                       }
 
-                                    }, child: Text(
+                                    }, child: const Text(
                                       'Prosseguir',
                                       style: TextStyle(
                                           fontSize: 16
@@ -443,7 +443,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                           },
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         'Bloquear',
                         style: TextStyle(
                             fontSize: 16
@@ -457,7 +457,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
@@ -465,7 +465,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                       onPressed: (){
                         Navigator.pop(context);
                       },
-                      child: Text(
+                      child: const Text(
                         'Cancelar',
                         style: TextStyle(
                             fontSize: 16
@@ -479,7 +479,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                       onPressed: (){
                         Navigator.pop(context);
                       },
-                      child: Text(
+                      child: const Text(
                         'Prosseguir',
                         style: TextStyle(
                             fontSize: 16
@@ -498,7 +498,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                   Container(
                     width: 180,
                     height: 180,
-                    padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                    padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                     child:
                     Image.network(
                       widget.LogoPath,
@@ -506,11 +506,11 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                    padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                     child:
                     Text(
                       'ADM : ' + widget.ADMName,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 16
                       ),
                     ),

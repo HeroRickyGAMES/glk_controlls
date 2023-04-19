@@ -27,13 +27,13 @@ class generatePDF extends StatelessWidget {
   String dataSaidaex = '';
   bool lacrebool = false;
   String id = '';
-  generatePDF(this.entradapor, this.dataEntrada, this.nomeMotorista, this.Veiculo, this.Placa, this.EmpresaDestino, this.telefone, this.EmpresaOrigin, this.Galpao, this.SaidaLiberadapor, this.lacrado,this.dataLiberacao, this.lacrebool, id , this.dataEntradaex , this.dataAnaliseex , this.dataEntradaEmpresaex , this.dataSaidaex );
+  generatePDF(this.entradapor, this.dataEntrada, this.nomeMotorista, this.Veiculo, this.Placa, this.EmpresaDestino, this.telefone, this.EmpresaOrigin, this.Galpao, this.SaidaLiberadapor, this.lacrado,this.dataLiberacao, this.lacrebool, id , this.dataEntradaex , this.dataAnaliseex , this.dataEntradaEmpresaex , this.dataSaidaex, {super.key} );
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(title: Text('Gerar PDF')),
+        appBar: AppBar(title: const Text('Gerar PDF')),
         body: PdfPreview(
           build: (format) => _generatePdf(format, 'Gerar PDF', entradapor, dataEntrada, nomeMotorista, Veiculo, Placa, EmpresaDestino, telefone, EmpresaOrigin, Galpao, SaidaLiberadapor, lacrado, dataLiberacao, lacrebool, id, dataEntradaex , dataAnaliseex , dataEntradaEmpresaex , dataSaidaex),
         ),
@@ -63,88 +63,88 @@ class generatePDF extends StatelessWidget {
                 mainAxisAlignment: pw.MainAxisAlignment.center,
                 children: [
                   pw.Container(
-                    padding: pw.EdgeInsets.all(15),
+                    padding: const pw.EdgeInsets.all(15),
                     child: pw.Text('Relatório: ' + EmpresaOrigin,
                         style: pw.TextStyle(
                             fontSize: 16, fontWeight: pw.FontWeight.bold)
                     ),
                   ),
                   pw.Container(
-                    padding: pw.EdgeInsets.all(15),
+                    padding: const pw.EdgeInsets.all(15),
                     child: pw.Text(dataEntradaex,
-                        style: pw.TextStyle(fontSize: 16)),
+                        style: const pw.TextStyle(fontSize: 16)),
                   ),
                   pw.Container(
-                    padding: pw.EdgeInsets.all(15),
+                    padding: const pw.EdgeInsets.all(15),
                     child: pw.Text(dataAnaliseex,
-                        style: pw.TextStyle(fontSize: 16)),
+                        style: const pw.TextStyle(fontSize: 16)),
                   ),
                   pw.Column(
                     crossAxisAlignment: pw.CrossAxisAlignment.center,
                     mainAxisAlignment: pw.MainAxisAlignment.center,
                     children: [
                       pw.Container(
-                        padding: pw.EdgeInsets.all(15),
+                        padding: const pw.EdgeInsets.all(15),
                         child: pw.Text(dataEntradaEmpresaex,
-                            style: pw.TextStyle(fontSize: 16)
+                            style: const pw.TextStyle(fontSize: 16)
                         ),
                       ),
                     ]
                   ),
                   pw.Container(
-                    padding: pw.EdgeInsets.all(15),
+                    padding: const pw.EdgeInsets.all(15),
                     child: pw.Text(dataSaidaex,
-                        style: pw.TextStyle(fontSize: 16)),
+                        style: const pw.TextStyle(fontSize: 16)),
                   ),
                   pw.Container(
-                    padding: pw.EdgeInsets.all(15),
+                    padding: const pw.EdgeInsets.all(15),
                     child: pw.Text('Nome do motorista: ' + nomeMotorista,
-                        style: pw.TextStyle(fontSize: 16)),
+                        style: const pw.TextStyle(fontSize: 16)),
                   ),
 
                   pw.Container(
-                    padding: pw.EdgeInsets.all(15),
+                    padding: const pw.EdgeInsets.all(15),
                     child: pw.Text('Veiculo: ' + Veiculo,
-                        style: pw.TextStyle(fontSize: 16)),
+                        style: const pw.TextStyle(fontSize: 16)),
                   ),
 
                   pw.Container(
-                    padding: pw.EdgeInsets.all(15),
+                    padding: const pw.EdgeInsets.all(15),
                     child: pw.Text('Placa: ' + Placa,
-                        style: pw.TextStyle(fontSize: 16)),
+                        style: const pw.TextStyle(fontSize: 16)),
                   ),
                   pw.Container(
-                    padding: pw.EdgeInsets.all(15),
+                    padding: const pw.EdgeInsets.all(15),
                     child: pw.Text('Empresa de destino: ' + EmpresaDestino,
-                        style: pw.TextStyle(fontSize: 16)),
+                        style: const pw.TextStyle(fontSize: 16)),
                   ),
 
                   pw.Container(
-                    padding: pw.EdgeInsets.all(15),
+                    padding: const pw.EdgeInsets.all(15),
                     child: pw.Text('Empresa de Origem: ' + EmpresaOrigin,
-                        style: pw.TextStyle(fontSize: 16)),
+                        style: const pw.TextStyle(fontSize: 16)),
                   ),
 
                   pw.Container(
-                    padding: pw.EdgeInsets.all(15),
+                    padding: const pw.EdgeInsets.all(15),
                     child: pw.Text('Telefone: ' + telefone,
-                        style: pw.TextStyle(fontSize: 16)),
+                        style: const pw.TextStyle(fontSize: 16)),
                   ),
 
                   pw.Container(
-                    padding: pw.EdgeInsets.all(15),
+                    padding: const pw.EdgeInsets.all(15),
                     child: pw.Text('Galpão: ' + Galpao,
-                        style: pw.TextStyle(fontSize: 16)),
+                        style: const pw.TextStyle(fontSize: 16)),
                   ),
                   pw.Container(
-                    padding: pw.EdgeInsets.all(15),
+                    padding: const pw.EdgeInsets.all(15),
                     child: pw.Text('Lacrado? ' + lacreString,
-                        style: pw.TextStyle(fontSize: 16)),
+                        style: const pw.TextStyle(fontSize: 16)),
                   ),
                   pw.Container(
-                    padding: pw.EdgeInsets.all(15),
+                    padding: const pw.EdgeInsets.all(15),
                     child: pw.Text('Numero do lacre: ' + lacrado,
-                        style: pw.TextStyle(fontSize: 16)),
+                        style: const pw.TextStyle(fontSize: 16)),
                   ),
                 ]
             ),

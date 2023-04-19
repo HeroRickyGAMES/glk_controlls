@@ -48,7 +48,7 @@ class modalSaidaVeiculo extends StatefulWidget {
       this.EmpresaDoc,
       this.porteiroName,
       this.DataSaida,
-      this.tagSelecionada
+      this.tagSelecionada, {super.key}
       );
   @override
   State<modalSaidaVeiculo> createState() => _modalSaidaVeiculoState();
@@ -108,7 +108,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
             rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFechamento02();
           }
 
@@ -119,7 +119,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
             rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFechamento02();
           }
         }
@@ -131,7 +131,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
             rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFarol03();
           }
         }
@@ -142,7 +142,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
             rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFarol03();
           }
         }
@@ -155,7 +155,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
             rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFarol04();
           }
         }
@@ -165,7 +165,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
             rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFarol04();
           }
         }
@@ -178,7 +178,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
           rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
         }else{
-          await Future.delayed(Duration(seconds: 5));
+          await Future.delayed(const Duration(seconds: 5));
           releFarol02();
         }
 
@@ -188,7 +188,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
             rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releCancelaEntrada();
           }
 
@@ -199,7 +199,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
           if(result.get('funcao-rele1').contains('Pulso')){
             rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releCancelaEntrada();
           }
         }
@@ -212,7 +212,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
             rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFarol03();
           }
 
@@ -226,7 +226,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
             print(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFarol03();
           }
         }
@@ -238,7 +238,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
             rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFarol04();
           }
         }
@@ -248,7 +248,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
             rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFarol04();
           }
         }
@@ -265,7 +265,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
             rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releCancelaEntrada();
           }
 
@@ -276,7 +276,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
           if(result.get('funcao-rele1').contains('Pulso')){
             rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releCancelaEntrada();
           }
         }
@@ -287,7 +287,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
             rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFechamento02();
           }
 
@@ -298,7 +298,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
             rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFechamento02();
           }
         }
@@ -308,7 +308,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
             rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFarol04();
           }
         }
@@ -318,7 +318,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
             rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFarol04();
           }
         }
@@ -331,7 +331,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
           rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
         }else{
-          await Future.delayed(Duration(seconds: 5));
+          await Future.delayed(const Duration(seconds: 5));
           releFarol04();
         }
 
@@ -341,7 +341,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
             rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releCancelaEntrada();
           }
 
@@ -352,7 +352,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
           if(result.get('funcao-rele1').contains('Pulso')){
             rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releCancelaEntrada();
           }
         }
@@ -363,7 +363,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
             rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFechamento02();
           }
 
@@ -374,7 +374,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
             rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFechamento02();
           }
         }
@@ -385,7 +385,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
             rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFarol03();
           }
 
@@ -397,7 +397,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
             rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
-            await Future.delayed(Duration(seconds: 5));
+            await Future.delayed(const Duration(seconds: 5));
             releFarol03();
           }
         }
@@ -409,7 +409,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
       appBar: AppBar(
         backgroundColor: Colors.green[700],
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'GLK Controls - Veiculo Saida',
         ),
       ),
@@ -419,10 +419,10 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               alignment: Alignment.center,
               child:
-              Text(
+              const Text(
                 'Liberação: ' + 'Motorista e Veiculo',
                 style: TextStyle(
                     fontSize: 16
@@ -438,13 +438,13 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                 children: [
                   Text(
                     'Data: ${widget.horarioCriacao}' ,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
                   Text(
                     ' - Portaria - ' + widget.liberadopor,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
@@ -460,13 +460,13 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                 children: [
                   Text(
                     'Data: ${widget.DatadeAnalise}' ,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
                   Text(
                     ' - Analise da Empresa - ' + widget.Empresadestino,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
@@ -482,13 +482,13 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                 children: [
                   Text(
                     'Data: ${widget.DateEntrada}' ,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
                   Text(
                     ' - Portaria - ' + widget.verificadoPor,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
@@ -504,13 +504,13 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                 children: [
                   Text(
                     'Data: ${widget.DataSaida}' ,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
                   Text(
                     ' - Solicitação de saída - ' + widget.Empresadestino,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
@@ -518,51 +518,51 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                 'Nome: ' + widget.nomeMotorista,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                 'Veiculo: ' + widget.Veiculo,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                 'Placa: ' + widget.PlacaVeiculo,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                 'Empresa de destino: ' + widget.Empresadestino,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 18
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                 'Empresa de origem: ' + widget.EmpresadeOrigin,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 18
                 ),
               ),
@@ -570,7 +570,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
             Container(
               child:
               CheckboxListTile(
-                title: Text('Tag recolhida'),
+                title: const Text('Tag recolhida'),
                 value: recolheutag,
                 onChanged: (value) {
                   setState(() {
@@ -585,7 +585,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
             Container(
               child:
               CheckboxListTile(
-                title: Text('Dados conferidos'),
+                title: const Text('Dados conferidos'),
                 value: dadosConferido,
                 onChanged: (value) {
                   setState(() {
@@ -598,7 +598,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: ElevatedButton(
                 onPressed: () async {
 
@@ -715,7 +715,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                     }
                   }
                 },
-                child: Text(
+                child: const Text(
                   'Prosseguir',
                   style: TextStyle(
                       fontSize: 18
@@ -731,7 +731,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                     Container(
                         width: 180,
                         height: 180,
-                        padding: EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(16),
                         child:
                         Image.asset(
                           'assets/sanca.png',
@@ -739,11 +739,11 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                         )
                     ),
                     Container(
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child:
                       Text(
                         'Operador: ' + widget.porteiroName,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16
                         ),
                       ),

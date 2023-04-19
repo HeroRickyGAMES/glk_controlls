@@ -13,7 +13,7 @@ class pesquisaCadastro extends StatefulWidget {
 
   String operadorName;
 
-  pesquisaCadastro(this.operadorName);
+  pesquisaCadastro(this.operadorName, {super.key});
 
   @override
   State<pesquisaCadastro> createState() => _pesquisaCadastroState();
@@ -139,7 +139,7 @@ class _pesquisaCadastroState extends State<pesquisaCadastro> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Novo cadastro / Pesquisa'),
+        title: const Text('Novo cadastro / Pesquisa'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -148,7 +148,7 @@ class _pesquisaCadastroState extends State<pesquisaCadastro> {
           Column(
             children: [
               Container(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: ElevatedButton(
                     onPressed: novoCadastromt,
                     child: Text(
@@ -160,7 +160,7 @@ class _pesquisaCadastroState extends State<pesquisaCadastro> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: TextFormField(
                   onChanged: (valor){
                     Pesquisa = valor.toUpperCase();
@@ -170,7 +170,7 @@ class _pesquisaCadastroState extends State<pesquisaCadastro> {
                   enableSuggestions: false,
                   obscureText: false,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Pesquisa (Nome apenas letras) / (RG apenas digitos) * ',
                     hintStyle: TextStyle(
@@ -193,7 +193,7 @@ class _pesquisaCadastroState extends State<pesquisaCadastro> {
                   Container(
                       width: 180,
                       height: 180,
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child:
                       Image.asset(
                         'assets/sanca.png',
@@ -201,7 +201,7 @@ class _pesquisaCadastroState extends State<pesquisaCadastro> {
                       )
                   ),
                   Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child:
                     Text(
                       'Operador: ' + widget.operadorName,

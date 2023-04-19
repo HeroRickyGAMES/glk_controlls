@@ -37,17 +37,17 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Usuarios Cadastrados'),
+        title: const Text('Usuarios Cadastrados'),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: CheckboxListTile(
                 title: Text(
                   OperadorTipe,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 18
                   ),
                 ),
@@ -74,8 +74,8 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
               Container(
-                padding: EdgeInsets.all(16),
-                child: Text(
+                padding: const EdgeInsets.all(16),
+                child: const Text(
                     "Nome",
                   style: TextStyle(
                       fontSize: 16
@@ -83,8 +83,8 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                 ),
               ),
                 Container(
-                  padding: EdgeInsets.all(16),
-                  child: Text(
+                  padding: const EdgeInsets.all(16),
+                  child: const Text(
                     "Empresa",
                     style: TextStyle(
                         fontSize: 16
@@ -92,8 +92,8 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.all(16),
-                  child: Text(
+                  padding: const EdgeInsets.all(16),
+                  child: const Text(
                     "Status",
                     style: TextStyle(
                         fontSize: 16
@@ -101,8 +101,8 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                   ),
                 ),
                 Container(
-                  padding: EdgeInsets.all(16),
-                  child: Text(
+                  padding: const EdgeInsets.all(16),
+                  child: const Text(
                     "",
                     style: TextStyle(
                         fontSize: 16
@@ -120,7 +120,7 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }
@@ -134,33 +134,33 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                               color: Colors.black,
                               width: 1.0,
                             ),
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                           ),
-                          padding: EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(16),
                           width: double.infinity,
                           child:
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(documents['nome'],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 16
                                 ),
                               ),
-                              Text('SLG Sanca',
+                              const Text('SLG Sanca',
                                 style: TextStyle(
                                     fontSize: 16
                                 ),
                               ),
                               Row(
                                 children: [
-                                  Text('Interno',
+                                  const Text('Interno',
                                     style: TextStyle(
                                         fontSize: 16
                                     ),
                                   ),
                                   Container(
-                                    padding: EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(10.0),
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -174,7 +174,7 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                   return AlertDialog(
                                                     title: Text(documents['nome']),
                                                     actions: [
-                                                      Center(
+                                                      const Center(
                                                         child: Text(
                                                           'Deseja Excluir?',
                                                           style: TextStyle(
@@ -188,7 +188,7 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                           TextButton(onPressed: (){
                                                             Navigator.of(context).pop();
                                                           },
-                                                              child: Text(
+                                                              child: const Text(
                                                                 'Cancelar',
                                                                 style: TextStyle(
                                                                     fontSize: 18
@@ -203,7 +203,7 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                               Navigator.of(context).pop();
                                                             });
                                                           },
-                                                              child: Text(
+                                                              child: const Text(
                                                                 'Prosseguir',
                                                                 style: TextStyle(
                                                                     fontSize: 18
@@ -220,7 +220,7 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                             },
                                             child: Row(
                                               children: [
-                                                Icon(Icons.delete),
+                                                const Icon(Icons.delete),
                                               ],
                                             )
                                         )
@@ -247,7 +247,7 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                 builder: (BuildContext context,
                     AsyncSnapshot<QuerySnapshot> snapshot) {
                   if (!snapshot.hasData) {
-                    return Center(
+                    return const Center(
                       child: CircularProgressIndicator(),
                     );
                   }
@@ -261,33 +261,33 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                               color: Colors.black,
                               width: 1.0,
                             ),
-                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                           ),
-                          padding: EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(16),
                           width: double.infinity,
                           child:
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(documentos['nome'],
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 16
                                 ),
                               ),
                               Text(documentos['empresa'],
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 16
                                 ),
                               ),
                               Row(
                                 children: [
-                                  Text('Empresa',
+                                  const Text('Empresa',
                                     style: TextStyle(
                                         fontSize: 16
                                     ),
                                   ),
                                   Container(
-                                    padding: EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(10.0),
                                     child: Row(
                                       crossAxisAlignment: CrossAxisAlignment.center,
                                       mainAxisAlignment: MainAxisAlignment.center,
@@ -300,7 +300,7 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                   return AlertDialog(
                                                     title: Text(documentos['nome']),
                                                     actions: [
-                                                      Center(
+                                                      const Center(
                                                         child: Text(
                                                           'Deseja Excluir?',
                                                           style: TextStyle(
@@ -314,7 +314,7 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                           TextButton(onPressed: (){
                                                             Navigator.of(context).pop();
                                                           },
-                                                              child: Text(
+                                                              child: const Text(
                                                                 'Cancelar',
                                                                 style: TextStyle(
                                                                     fontSize: 18
@@ -329,7 +329,7 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                               Navigator.of(context).pop();
                                                             });
                                                           },
-                                                              child: Text(
+                                                              child: const Text(
                                                                 'prosseguir',
                                                                 style: TextStyle(
                                                                     fontSize: 18
@@ -345,7 +345,7 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
 
                                             },
                                             child: Row(
-                                              children: [
+                                              children: const [
                                                 Icon(Icons.delete),
                                               ],
                                             )
@@ -365,14 +365,14 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
                     width: 180,
                     height: 180,
-                    padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                    padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                     child:
                     Image.network(
                       widget.LogoPath,
@@ -380,11 +380,11 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                    padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                     child:
                     Text(
                       'ADM : ' + widget.ADMName,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 16
                       ),
                     ),

@@ -124,7 +124,7 @@ class _relatorioState extends State<relatorio> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Relatorios'),
+        title: const Text('Relatorios'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -133,7 +133,7 @@ class _relatorioState extends State<relatorio> {
           Column(
             children: [
                 Container(
-                  padding: EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(20),
                   child: TextFormField(
                     onChanged: (valor){
                       Pesquisa = valor.toUpperCase();
@@ -143,7 +143,7 @@ class _relatorioState extends State<relatorio> {
                     enableSuggestions: false,
                     obscureText: false,
                     autocorrect: false,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Pesquisa',
                       hintStyle: TextStyle(
@@ -166,7 +166,7 @@ class _relatorioState extends State<relatorio> {
                   Container(
                       width: 180,
                       height: 180,
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child:
                       Image.network(
                         widget.LogoPath,
@@ -174,7 +174,7 @@ class _relatorioState extends State<relatorio> {
                       ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child:
                     Text(
                       'Operador: ' + widget.operadorName,

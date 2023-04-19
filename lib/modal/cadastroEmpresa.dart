@@ -85,20 +85,20 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Cadastro de Empresas'),
+        title: const Text('Cadastro de Empresas'),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.only(top: 60),
+              padding: const EdgeInsets.only(top: 60),
               alignment: Alignment.center,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child: TextFormField(
                       onChanged: (valor){
                         empresaName = valor;
@@ -107,7 +107,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                       keyboardType: TextInputType.name,
                       enableSuggestions: false,
                       autocorrect: false,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'Nome da Empresa *',
                         hintStyle: TextStyle(
@@ -117,7 +117,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -137,7 +137,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                           enableSuggestions: false,
                           autocorrect: false,
                           obscureText: false,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             border: OutlineInputBorder(),
                             hintText: 'Galpões *',
                             hintStyle: TextStyle(
@@ -152,7 +152,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                   Center(
                       child: ValueListenableBuilder(valueListenable: widget.dropValue, builder: (context, String value, _){
                         return DropdownButton(
-                          hint: Text(
+                          hint: const Text(
                             'Quantidade de vagas *',
                             style: TextStyle(
                                 fontSize: 16
@@ -170,7 +170,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                             child:
                             Text(
                               opcao,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 18
                               ),
                             ),
@@ -180,7 +180,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                       })
                   ),
                   Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child: TextFormField(
                       controller: respNameController,
                       onChanged: (valor){
@@ -190,7 +190,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                       keyboardType: TextInputType.name,
                       enableSuggestions: false,
                       autocorrect: false,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'Responsável pela Empresa * ',
                         hintStyle: TextStyle(
@@ -200,7 +200,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child: TextFormField(
                       controller: telNumController,
                       onChanged: (valor){
@@ -217,7 +217,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                       keyboardType: TextInputType.number,
                       enableSuggestions: false,
                       autocorrect: false,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'Telefone',
                         hintStyle: TextStyle(
@@ -227,17 +227,17 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child: Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Container(
-                          padding: EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(16),
                           child: ElevatedButton(onPressed: (){
                             tags.clear();
                           },
-                              child: Text(
+                              child: const Text(
                                   'Cancelar',
                                 style: TextStyle(
                                     fontSize: 18,
@@ -250,7 +250,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                           ),
                         ),
                         Container(
-                          padding: EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(16),
                           child: ElevatedButton(
                             onPressed: () async {
 
@@ -375,7 +375,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                           textColor: Colors.white,
                                                           fontSize: 18,
                                                         );
-                                                        var uuid = Uuid();
+                                                        var uuid = const Uuid();
 
                                                         String idd = "${DateTime.now().toString()}" + uuid.v4();
 
@@ -429,7 +429,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                     }
                                   }
                             },
-                              child: Text(
+                              child: const Text(
                                   'Prosseguir',
                               style: TextStyle(
                                 fontSize: 20,
@@ -447,7 +447,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                   Container(
                     child: Text(
                       'Galpões Usados: ${GpUsados}',
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold
                       ),
@@ -456,7 +456,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                   Container(
                     child: Text(
                         'Numero de Galpões Disponiveis: ${GpDisp}',
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold
                       ),
@@ -466,14 +466,14 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
                     width: 180,
                     height: 180,
-                    padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                    padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                     child:
                     Image.network(
                       widget.LogoPath,
@@ -481,11 +481,11 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                    padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                     child:
                     Text(
                       'ADM : ' + widget.ADMName,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 20
                       ),
                     ),

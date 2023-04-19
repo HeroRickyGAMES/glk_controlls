@@ -31,7 +31,7 @@ class mainPorteiro extends StatefulWidget {
   bool painel;
 
   final String PorteiroNome;
-  mainPorteiro(this.PorteiroNome, this.cadastro, this.entrada, this.saida, this.relatorio, this.painel, this.LogoPath);
+  mainPorteiro(this.PorteiroNome, this.cadastro, this.entrada, this.saida, this.relatorio, this.painel, this.LogoPath, {super.key});
 
   @override
   State<mainPorteiro> createState() => _mainPorteiroState();
@@ -89,7 +89,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
+          return const AlertDialog(
             title: Text('Aguarde!'),
             actions: [
               Center(
@@ -158,7 +158,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
     openModalOffline() async {
       Navigator.push(context,
           MaterialPageRoute(builder: (context){
-            return mainPorteiroOff();
+            return const mainPorteiroOff();
           }));
     }
 
@@ -181,7 +181,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
+          return const AlertDialog(
             title: Text('Aguarde!'),
             actions: [
               Center(
@@ -229,7 +229,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
         //backgroundColor: Colors.red[900],
         title: Container(
           child:
-          Text(
+          const Text(
               'GLK Controls - OPERADORES'
           ),
         ),
@@ -245,7 +245,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                 Container(
                     width: 180,
                     height: 180,
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child:
                     Image.asset(
                       'assets/icon.png',
@@ -258,10 +258,10 @@ class _mainPorteiroState extends State<mainPorteiro> {
               children: [
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                  padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                   child: ElevatedButton(
                     onPressed: widget.cadastro? openModal: null,
-                      child: Text(
+                      child: const Text(
                           'Novo cadastro',
                         style: TextStyle(
                             fontSize: 16
@@ -271,10 +271,10 @@ class _mainPorteiroState extends State<mainPorteiro> {
                 ),
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                  padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                   child: ElevatedButton(
                     onPressed: widget.entrada? entradaMT : null,
-                    child: Text(
+                    child: const Text(
                       'Verificar Entrada',
                       style: TextStyle(
                           fontSize: 16
@@ -287,10 +287,10 @@ class _mainPorteiroState extends State<mainPorteiro> {
                 ),
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                  padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                   child: ElevatedButton(
                     onPressed: widget.saida ? saidaMT : null,
-                    child: Text(
+                    child: const Text(
                       'Verificar Saída',
                       style: TextStyle(
                           fontSize: 16
@@ -303,10 +303,10 @@ class _mainPorteiroState extends State<mainPorteiro> {
                 ),
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                  padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                   child: ElevatedButton(
                     onPressed: widget.relatorio ? relatorioMT : null,
-                    child: Text(
+                    child: const Text(
                       'Relatorio',
                       style: TextStyle(
                           fontSize: 16
@@ -320,10 +320,10 @@ class _mainPorteiroState extends State<mainPorteiro> {
                 widget.painel ?
                 Container(
                   width: double.infinity,
-                  padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                  padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                   child: ElevatedButton(
                     onPressed: painelMT,
-                    child: Text(
+                    child: const Text(
                       'Painel',
                       style: TextStyle(
                           fontSize: 16
@@ -333,7 +333,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                       //primary: Colors.yellow[800]
                     ),
                   ),
-                ) : Text(''),
+                ) : const Text(''),
               ],
             ),
             Column(
@@ -343,20 +343,20 @@ class _mainPorteiroState extends State<mainPorteiro> {
                 Column(
                   children: [
                     Container(
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child: ElevatedButton(
                         onPressed: () async {
                           await FirebaseAuth.instance.signOut().then((value){
                             Navigator.pop(context);
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context){
-                                  return anteLogin();
+                                  return const anteLogin();
                                 }));
                             print('Usuário desconectado');
                           });
 
                         },
-                        child: Text(
+                        child: const Text(
                           'Logoff',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
@@ -375,7 +375,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                     Container(
                         width: 180,
                         height: 180,
-                        padding: EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(16),
                         child:
                         Image.network(
                           widget.LogoPath,
@@ -383,11 +383,11 @@ class _mainPorteiroState extends State<mainPorteiro> {
                         ),
                     ),
                     Container(
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child:
                       Text(
                         'Operador: ' + widget.PorteiroNome,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16
                         ),
                       ),

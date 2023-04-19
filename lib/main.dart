@@ -38,7 +38,7 @@ void main() {
        Navigator.pop(context);
        Navigator.push(context,
            MaterialPageRoute(builder: (context){
-             return anteLogin();
+             return const anteLogin();
            }));
 
      } else {
@@ -155,14 +155,14 @@ void main() {
                            print('O está ativo está funcionando!');
 
                            AlertDialog alert = AlertDialog(
-                             title: Text("Sua conta ainda não está ativa!"),
-                             content: Text("A sua conta não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
+                             title: const Text("Sua conta ainda não está ativa!"),
+                             content: const Text("A sua conta não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
                              actions: [
                                TextButton(
                                    onPressed: (){
                                      SystemNavigator.pop();
                                    },
-                                   child: Text('Ok')
+                                   child: const Text('Ok')
                                ),
                              ],
                            );
@@ -288,14 +288,14 @@ void main() {
                            print('O está ativo está funcionando!');
 
                            AlertDialog alert = AlertDialog(
-                             title: Text("Sua conta ainda não está ativa!"),
-                             content: Text("A sua conta não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
+                             title: const Text("Sua conta ainda não está ativa!"),
+                             content: const Text("A sua conta não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
                              actions: [
                                TextButton(
                                    onPressed: (){
                                      SystemNavigator.pop();
                                    },
-                                   child: Text('Ok')
+                                   child: const Text('Ok')
                                ),
                              ],
                            );
@@ -368,14 +368,14 @@ void main() {
                            print('O está ativo está funcionando!');
 
                            AlertDialog alert = AlertDialog(
-                             title: Text("Sua conta ainda não está ativa!"),
-                             content: Text("A sua conta não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
+                             title: const Text("Sua conta ainda não está ativa!"),
+                             content: const Text("A sua conta não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
                              actions: [
                                TextButton(
                                    onPressed: (){
                                      SystemNavigator.pop();
                                    },
-                                   child: Text('Ok')
+                                   child: const Text('Ok')
                                ),
                              ],
                            );
@@ -421,7 +421,7 @@ class _loginScreenState extends State<loginScreen> {
   @override
   Widget build(BuildContext context) {
     
-    Timer(Duration(seconds: 8), () {
+    Timer(const Duration(seconds: 8), () {
       checkislog(context);
     });
     return Scaffold(

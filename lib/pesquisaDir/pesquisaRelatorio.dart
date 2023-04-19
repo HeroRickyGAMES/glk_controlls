@@ -10,7 +10,7 @@ import 'package:intl/intl.dart';
 class pesquisaRelatorio extends StatefulWidget {
   String pesquisaRelatoriost;
   String oqPesquisar;
-  pesquisaRelatorio(this.pesquisaRelatoriost, this.oqPesquisar);
+  pesquisaRelatorio(this.pesquisaRelatoriost, this.oqPesquisar, {super.key});
 
   @override
   State<pesquisaRelatorio> createState() => _pesquisaRelatorioState();
@@ -39,18 +39,18 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
     }
 
     DateTime dataAtual = DateTime.now();
-    DateTime dataDe30DiasAtras = dataAtual.subtract(Duration(days: 30));
+    DateTime dataDe30DiasAtras = dataAtual.subtract(const Duration(days: 30));
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('GLK Controls - Pesquisa Relatório'),
+        title: const Text('GLK Controls - Pesquisa Relatório'),
         backgroundColor: Colors.red[700],
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Column(
                 children: [
@@ -65,7 +65,7 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {
                         if (!snapshot.hasData) {
-                          return Center(
+                          return const Center(
                             child: CircularProgressIndicator(),
                           );
                         }
@@ -109,7 +109,7 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
                                     padding: const EdgeInsets.all(8.0),
                                     child: Container(
                                       color: Colors.grey[300],
-                                      padding: EdgeInsets.all(16),
+                                      padding: const EdgeInsets.all(16),
                                       child:
                                       Column(
                                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -140,7 +140,7 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
                                             ),
                                           ),
                                           Container(
-                                            padding: EdgeInsets.all(16),
+                                            padding: const EdgeInsets.all(16),
                                             child: Text(
                                               'Status: \n' +
                                                   documents['Status'],

@@ -6,7 +6,7 @@ class empresaCadastrada extends StatefulWidget {
   String LogoPath;
 
   @override
-  empresaCadastrada(this.ADMName, this.LogoPath);
+  empresaCadastrada(this.ADMName, this.LogoPath, {super.key});
   _empresaCadastradaState createState() => _empresaCadastradaState();
 }
 
@@ -16,11 +16,11 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Empresas cadastradas'),
+        title: const Text('Empresas cadastradas'),
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               Container(
@@ -39,8 +39,8 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Container(
-                      padding: EdgeInsets.all(16),
-                        child: Text(
+                      padding: const EdgeInsets.all(16),
+                        child: const Text(
                         'Empresas',
                           style: TextStyle(
                               fontSize: 16
@@ -48,8 +48,8 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                        ),
                     ),
                     Container(
-                      padding: EdgeInsets.all(16),
-                      child: Text(
+                      padding: const EdgeInsets.all(16),
+                      child: const Text(
                         'Vagas',
                         style: TextStyle(
                             fontSize: 16
@@ -69,7 +69,7 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
                     if (!snapshot.hasData) {
-                      return Center(
+                      return const Center(
                         child: CircularProgressIndicator(),
                       );
                     }
@@ -83,12 +83,12 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                                 color: Colors.black,
                                 width: 1.0,
                               ),
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)
+                              borderRadius: const BorderRadius.all(Radius.circular(5.0)
                               ),
                             ),
                             width: double.infinity,
                             child: Container(
-                              padding: EdgeInsets.all(16),
+                              padding: const EdgeInsets.all(16),
                               child: Column(
                                 children: [
                                   Row(
@@ -96,13 +96,13 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                                     children: [
                                       Text(
                                           documents['nome'],
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 16
                                         ),
                                       ),
                                       Text(
                                         documents['vagas'],
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             fontSize: 16
                                         ),
                                       ),
@@ -114,7 +114,7 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                                             return AlertDialog(
                                               title: Text(documents['nome']),
                                               actions: [
-                                                Center(
+                                                const Center(
                                                   child: Text(
                                                       'Deseja Excluir?',
                                                     style: TextStyle(
@@ -128,7 +128,7 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                                                     TextButton(onPressed: (){
                                                       Navigator.of(context).pop();
                                                     },
-                                                        child: Text(
+                                                        child: const Text(
                                                             'Cancelar',
                                                           style: TextStyle(
                                                               fontSize: 16
@@ -179,7 +179,7 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                                                         }
                                                       }
                                                     },
-                                                        child: Text(
+                                                        child: const Text(
                                                             'Prosseguir',
                                                           style: TextStyle(
                                                               fontSize: 16
@@ -193,7 +193,7 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                                           },
                                         );
 
-                                      }, child: Icon(Icons.delete),)
+                                      }, child: const Icon(Icons.delete),)
                                     ],
                                   ),
                                 ],
@@ -207,14 +207,14 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Container(
                       width: 180,
                       height: 180,
-                      padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                      padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                       child:
                       Image.network(
                         widget.LogoPath,
@@ -222,11 +222,11 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                      padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                       child:
                       Text(
                         'ADM : ' + widget.ADMName,
-                        style: TextStyle(
+                        style: const TextStyle(
                             fontSize: 16
                         ),
                       ),

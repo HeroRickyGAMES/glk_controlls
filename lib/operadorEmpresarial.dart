@@ -20,7 +20,7 @@ import 'package:glk_controls/listas/liberacoesOperadorEmpresarial.dart';
 class operadorEmpresarial extends StatefulWidget {
   final String name;
   final String empresaName;
-  operadorEmpresarial(this.name, this.empresaName);
+  const operadorEmpresarial(this.name, this.empresaName);
 
   @override
   State<operadorEmpresarial> createState() => _operadorEmpresarialState();
@@ -67,7 +67,7 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return AlertDialog(
+        return const AlertDialog(
           title: Text('Aguarde!'),
           actions: [
             Center(
@@ -190,7 +190,7 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
       showDialog(
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
+          return const AlertDialog(
             title: Text('Aguarde!'),
             actions: [
               Center(
@@ -218,7 +218,7 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('GLK Controls - OPERADORES DE EMPRESAS'),
+        title: const Text('GLK Controls - OPERADORES DE EMPRESAS'),
         backgroundColor: Colors.red[700],
       ),
       body: Column(
@@ -231,7 +231,7 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
               Container(
                   width: 180,
                   height: 180,
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   child:
                   Image.asset(
                     'assets/icon.png',
@@ -244,7 +244,7 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
             children: [
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                 child: ElevatedButton(onPressed: (){
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context){
@@ -265,7 +265,7 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
               ),
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                 child: ElevatedButton(
                   onPressed: openModal,
                   child: Text(
@@ -283,7 +283,7 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
               ),
               Container(
                 width: double.infinity,
-                padding: EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                 child: ElevatedButton(onPressed: toRelatorio,
                   child: Text(
                     'Relatórios',
@@ -303,14 +303,14 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
               Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child: ElevatedButton(
                         onPressed: () async {
                           await FirebaseAuth.instance.signOut().then((value){
                             Navigator.pop(context);
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context){
-                                  return anteLogin();
+                                  return const anteLogin();
                                 }));
                             print('Usuário desconectado');
                           });
@@ -336,7 +336,7 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                   Container(
                       width: 180,
                       height: 180,
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child:
                       Image.asset(
                         'assets/sanca.png',
@@ -344,7 +344,7 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                       )
                   ),
                   Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child:
                     Text(
                       'Operador: ' + widget.name,

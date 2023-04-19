@@ -25,7 +25,7 @@ class _loginState extends State<login> {
 
     Navigator.push(context,
         MaterialPageRoute(builder: (context){
-          return registro();
+          return const registro();
         }));
 
   }
@@ -34,7 +34,7 @@ class _loginState extends State<login> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text(
+          title: const Text(
               'GLK Controls - Login'
           ),
         ),
@@ -48,7 +48,7 @@ class _loginState extends State<login> {
                 Container(
                     width: 180,
                     height: 180,
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child:
                     Image.asset(
                       'assets/icon.png',
@@ -62,10 +62,10 @@ class _loginState extends State<login> {
                 Center(
                     child:
                     Container(
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child: TextField(
                         controller: emailController,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: 'Email',
                           hintStyle: TextStyle(
@@ -77,14 +77,14 @@ class _loginState extends State<login> {
                 ),
                 Center(
                   child: Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child: TextField(
                       controller: passController,
                       keyboardType: TextInputType.visiblePassword,
                       obscureText: visivel,
                       enableSuggestions: false,
                       autocorrect: false,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'Senha',
                         hintStyle: TextStyle(
@@ -98,7 +98,7 @@ class _loginState extends State<login> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     IconButton(
-                      icon: Icon(Icons.remove_red_eye),
+                      icon: const Icon(Icons.remove_red_eye),
                       onPressed: () {
                          setState(() {
                            visivel = !visivel;
@@ -112,7 +112,7 @@ class _loginState extends State<login> {
             ),
             Center(
               child: Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child:
                     ElevatedButton(
                       onPressed: (){
@@ -150,7 +150,7 @@ class _loginState extends State<login> {
                                         if(key == 'nome'){
                                           String ADMName = value;
 
-                                          print('O ADM é ' + ADMName);
+                                          print('O ADM é $ADMName');
 
                                           var db = FirebaseFirestore.instance;
                                           var UID = FirebaseAuth.instance.currentUser?.uid;
@@ -190,7 +190,7 @@ class _loginState extends State<login> {
                                         if(key == 'nome'){
                                           String PorteiroNome = value;
 
-                                          print('Porteiro name é' + PorteiroNome);
+                                          print('Porteiro name é$PorteiroNome');
 
                                           var UID = FirebaseAuth.instance.currentUser?.uid;
                                           var result = await FirebaseFirestore.instance
@@ -314,14 +314,14 @@ class _loginState extends State<login> {
                                                   print('O está ativo está funcionando!');
 
                                                   AlertDialog alert = AlertDialog(
-                                                    title: Text("Sua conta ainda não está ativa!"),
-                                                    content: Text("A sua conta não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
+                                                    title: const Text("Sua conta ainda não está ativa!"),
+                                                    content: const Text("A sua conta não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
                                                     actions: [
                                                       TextButton(
                                                           onPressed: (){
                                                             SystemNavigator.pop();
                                                           },
-                                                          child: Text('Ok')
+                                                          child: const Text('Ok')
                                                       ),
                                                     ],
                                                   );
@@ -395,14 +395,14 @@ class _loginState extends State<login> {
                                                   print('O está ativo está funcionando!');
 
                                                   AlertDialog alert = AlertDialog(
-                                                    title: Text("Sua conta ainda não está ativa!"),
-                                                    content: Text("A sua conta não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
+                                                    title: const Text("Sua conta ainda não está ativa!"),
+                                                    content: const Text("A sua conta não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
                                                     actions: [
                                                       TextButton(
                                                           onPressed: (){
                                                             SystemNavigator.pop();
                                                           },
-                                                          child: Text('Ok')
+                                                          child: const Text('Ok')
                                                       ),
                                                     ],
                                                   );
@@ -445,7 +445,7 @@ class _loginState extends State<login> {
                         }else{
                         }
                       },
-                      child: Text(
+                      child: const Text(
                         'Login',
                         style: TextStyle(
                             fontSize: 16
@@ -460,7 +460,7 @@ class _loginState extends State<login> {
                 Container(
                     width: 180,
                     height: 180,
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child:
                     Image.asset(
                       'assets/sanca.png',

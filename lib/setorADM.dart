@@ -18,7 +18,7 @@ class _setorADMState extends State<setorADM> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('SETOR ADIMISTRATIVO'),
+        title: const Text('SETOR ADIMISTRATIVO'),
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -26,13 +26,13 @@ class _setorADMState extends State<setorADM> {
         children: [
           Center(
             child: Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: ElevatedButton(
                 onPressed: (){
 
                 },
                 child:
-                Text(
+                const Text(
                   'Cadastrar',
                   style: TextStyle(
                       fontSize: 16
@@ -43,13 +43,13 @@ class _setorADMState extends State<setorADM> {
           ),
           Center(
             child: Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: ElevatedButton(
                 onPressed: (){
 
                 },
                 child:
-                Text(
+                const Text(
                   'Entrada',
                   style: TextStyle(
                       fontSize: 16
@@ -60,13 +60,13 @@ class _setorADMState extends State<setorADM> {
           ),
           Center(
             child: Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: ElevatedButton(
                 onPressed: (){
 
                 },
                 child:
-                Text(
+                const Text(
                   'Saída',
                   style: TextStyle(
                       fontSize: 16
@@ -77,13 +77,13 @@ class _setorADMState extends State<setorADM> {
           ),
           Center(
             child: Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: ElevatedButton(
                 onPressed: (){
 
                 },
                 child:
-                Text(
+                const Text(
                   'Relatorio',
                   style: TextStyle(
                       fontSize: 16
@@ -94,7 +94,7 @@ class _setorADMState extends State<setorADM> {
           ),
           Center(
             child: Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: ElevatedButton(
                 onPressed: () async {
 
@@ -112,7 +112,7 @@ class _setorADMState extends State<setorADM> {
 
                 },
                 child:
-                Text(
+                const Text(
                   'Painel',
                   style: TextStyle(
                       fontSize: 16
@@ -127,7 +127,7 @@ class _setorADMState extends State<setorADM> {
               Container(
                   width: 180,
                   height: 180,
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   child:
                   Image.asset(
                     'assets/icon.png',
@@ -135,11 +135,11 @@ class _setorADMState extends State<setorADM> {
                   )
               ),
               Container(
-                padding: EdgeInsets.all(16),
+                padding: const EdgeInsets.all(16),
                 child:
                 Text(
                   'ADM : ' + widget.ADMName,
-                  style: TextStyle(
+                  style: const TextStyle(
                       fontSize: 16
                   ),
                 ),

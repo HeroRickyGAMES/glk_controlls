@@ -15,7 +15,7 @@ class liberacaoOff extends StatefulWidget {
   final dropValue2;
   List galpaes;
   final dropValue3;
-  liberacaoOff(this.EmpresasOpc, this.dropValue, this.nomeUser, this.idEmpresa, this.dropValue2, this.galpaes, this.dropValue3);
+  liberacaoOff(this.EmpresasOpc, this.dropValue, this.nomeUser, this.idEmpresa, this.dropValue2, this.galpaes, this.dropValue3, {super.key});
 
   @override
   State<liberacaoOff> createState() => _liberacaoOffState();
@@ -156,10 +156,10 @@ class _liberacaoOffState extends State<liberacaoOff> {
                               context: context,
                               builder: (BuildContext context) {
                                 return AlertDialog(
-                                  title: Text('Motivo da liberação manual'),
+                                  title: const Text('Motivo da liberação manual'),
                                   actions: [
                                     Container(
-                                      padding: EdgeInsets.only(top: 16),
+                                      padding: const EdgeInsets.only(top: 16),
                                       child: TextFormField(
                                         onChanged: (valor){
                                           motivo = valor.toUpperCase();
@@ -168,7 +168,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                                         keyboardType: TextInputType.multiline,
                                         enableSuggestions: true,
                                         autocorrect: true,
-                                        decoration: InputDecoration(
+                                        decoration: const InputDecoration(
                                           border: OutlineInputBorder(),
                                           hintText: 'Motivo *',
                                           hintStyle: TextStyle(
@@ -184,7 +184,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                                           onPressed: () {
                                             Navigator.of(context).pop();
                                           },
-                                          child: Text('Cancelar'),
+                                          child: const Text('Cancelar'),
                                         ),
                                         TextButton(
                                           onPressed: () {
@@ -216,7 +216,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
 
                                                 var dateTime= new DateTime.now();
 
-                                                var uuid = Uuid();
+                                                var uuid = const Uuid();
 
                                                 String idd = "${DateTime.now().toString()}" + uuid.v4();
                                                 FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
@@ -270,7 +270,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                                                   Navigator.pop(context);
                                                   Navigator.push(context,
                                                       MaterialPageRoute(builder: (context){
-                                                        return loginScreen();
+                                                        return const loginScreen();
                                                       }));
                                                 });
                                               }
@@ -280,7 +280,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
 
                                                 var dateTime= new DateTime.now();
 
-                                                var uuid = Uuid();
+                                                var uuid = const Uuid();
 
                                                 String idd = "${DateTime.now().toString()}" + uuid.v4();
                                                 FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
@@ -332,7 +332,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                                                   Navigator.pop(context);
                                                   Navigator.push(context,
                                                       MaterialPageRoute(builder: (context){
-                                                        return loginScreen();
+                                                        return const loginScreen();
                                                       }));
                                                 });
                                               }
@@ -340,7 +340,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                                             }
 
                                           },
-                                          child: Text('Prosseguir'),
+                                          child: const Text('Prosseguir'),
                                         ),
                                       ],
                                     ),
@@ -419,18 +419,18 @@ class _liberacaoOffState extends State<liberacaoOff> {
               );
             },
                 child:
-                Icon(
+                const Icon(
                   Icons.arrow_back,
                   color: Colors.white,
                 )
             ),
-            Text('GLK Controls - Cadastro: Motorista e Veiculo Manual'),
+            const Text('GLK Controls - Cadastro: Motorista e Veiculo Manual'),
           ],
         ),
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.all(16),
+          padding: const EdgeInsets.all(16),
           child: Column(
             children: [
               Image.asset(
@@ -439,7 +439,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                 height: 100,
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child: TextFormField(
                   controller: nameMotoristaAllcaps,
                   onChanged: (valor){
@@ -449,7 +449,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                   keyboardType: TextInputType.name,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Nome Completo do Motorista *',
                     hintStyle: TextStyle(
@@ -459,7 +459,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child: TextFormField(
                   onChanged: (valor){
                     RGMotorista = valor;
@@ -469,7 +469,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                   keyboardType: TextInputType.number,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'RG do Motorista (Sem digitos) * ',
                     hintStyle: TextStyle(
@@ -481,7 +481,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
               Center(
                   child: ValueListenableBuilder(valueListenable: widget.dropValue3, builder: (context, String value, _){
                     return DropdownButton(
-                      hint: Text(
+                      hint: const Text(
                         'Selecione um tipo de Veiculo *',
                         style: TextStyle(
                             fontSize: 16
@@ -499,7 +499,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                         child:
                         Text(
                           opcao,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 18
                           ),
                         ),
@@ -509,7 +509,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                   })
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child: TextFormField(
                   controller: placaveiculointerface,
                   onChanged: (valor){
@@ -521,7 +521,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                     );
                     //Mudou mandou para a String
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Placa do Veiculo * ',
                     hintStyle: TextStyle(
@@ -531,14 +531,14 @@ class _liberacaoOffState extends State<liberacaoOff> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child: TextFormField(
                   onChanged: (valor){
                     placaveiculointerface.text = VeiculoPlaca!;
                     transportadora = valor;
                     //Mudou mandou para a String
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Transportadora * ',
                     hintStyle: TextStyle(
@@ -548,7 +548,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child: TextFormField(
                   controller: telefoneinterface,
                   onChanged: (valor){
@@ -562,7 +562,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                   keyboardType: TextInputType.number,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Telefone',
                     hintStyle: TextStyle(
@@ -572,14 +572,14 @@ class _liberacaoOffState extends State<liberacaoOff> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child: TextFormField(
                   onChanged: (valor){
                     originEmpresa = valor;
                     telefoneinterface.text = telefone!;
                     //Mudou mandou para a String
                   },
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Empresa de Origem *',
                     hintStyle: TextStyle(
@@ -589,8 +589,8 @@ class _liberacaoOffState extends State<liberacaoOff> {
                 ),
               ),
               Container(
-                padding: EdgeInsets.all(16),
-                child: Text(
+                padding: const EdgeInsets.all(16),
+                child: const Text(
                   'Empresa destino *',
                   style: TextStyle(
                       fontSize: 16,
@@ -601,7 +601,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
               Center(
                   child: ValueListenableBuilder(valueListenable: widget.dropValue, builder: (context, String value, _){
                     return DropdownButton(
-                      hint: Text(
+                      hint: const Text(
                         'Selecione uma empresa',
                         style: TextStyle(
                             fontSize: 18
@@ -619,7 +619,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                         child:
                         Text(
                           opcao,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 18
                           ),
                         ),
@@ -629,7 +629,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                   })
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child:
                 Column(
                   children: [
@@ -638,7 +638,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                       children: [
                         Expanded(
                           child: RadioListTile(
-                            title: Text(
+                            title: const Text(
                               "Coleta",
                               style: TextStyle(
                                   fontSize: 16
@@ -656,7 +656,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
 
                         Expanded(
                           child: RadioListTile(
-                            title: Text(
+                            title: const Text(
                               "Entrega",
                               style: TextStyle(
                                   fontSize: 16
@@ -679,8 +679,8 @@ class _liberacaoOffState extends State<liberacaoOff> {
               Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.all(16),
-                    child: Text(
+                    padding: const EdgeInsets.all(16),
+                    child: const Text(
                       'Selecione um disponivel Galpão (Selecione o que bate com com o nome da empresa)*',
                       style: TextStyle(
                           fontSize: 18,
@@ -691,7 +691,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                   Center(
                       child: ValueListenableBuilder(valueListenable: widget.dropValue2, builder: (context, String value, _){
                         return DropdownButton(
-                          hint: Text(
+                          hint: const Text(
                             'Selecione um Galpão',
                             style: TextStyle(
                                 fontSize: 16
@@ -710,7 +710,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                             child:
                             Text(
                               opcao,
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 16
                               ),
                             ),
@@ -722,11 +722,11 @@ class _liberacaoOffState extends State<liberacaoOff> {
                 ],
               ),
               Container(
-                padding: EdgeInsets.only(top: 16),
+                padding: const EdgeInsets.only(top: 16),
                 child:
                 Column(
                   children: [
-                    Text(
+                    const Text(
                       'Está Entrando com Lacre ou Sem Lacre?',
                       style: TextStyle(
                           fontSize: 16,
@@ -734,7 +734,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                       ),
                     ),
                     RadioListTile(
-                      title: Text(
+                      title: const Text(
                         "Com Lacre",
                         style: TextStyle(
                             fontSize: 16
@@ -753,7 +753,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                       },
                     ),
                     RadioListTile(
-                      title: Text(
+                      title: const Text(
                         "Sem Lacre",
                         style: TextStyle(
                             fontSize: 16
@@ -773,7 +773,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                     ),
                     lacrebool ?
                     Container(
-                      padding: EdgeInsets.only(top: 16),
+                      padding: const EdgeInsets.only(top: 16),
                       child: TextFormField(
                         onChanged: (valor){
                           lacreSt = valor;
@@ -782,7 +782,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                         //keyboardType: TextInputType.number,
                         //enableSuggestions: false,
                         //autocorrect: false,
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: 'Numero do lacre *',
                           hintStyle: TextStyle(
@@ -791,14 +791,14 @@ class _liberacaoOffState extends State<liberacaoOff> {
                         ),
                       ),
                     )
-                        :Text(''),
+                        :const Text(''),
                   ],
                 ),
               ),
               ElevatedButton(
                   onPressed: uploadInfos,
                   child:
-                  Text(
+                  const Text(
                     'Prosseguir',
                     style: TextStyle(
                         fontSize: 18,
@@ -812,7 +812,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                   Container(
                     width: 180,
                     height: 180,
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child:
                     Image.asset(
                       'assets/sanca.png',
@@ -820,11 +820,11 @@ class _liberacaoOffState extends State<liberacaoOff> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child:
                     Text(
                       'Operador: ' + widget.nomeUser,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 16
                       ),
                     ),
@@ -863,7 +863,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                       }));
                   // retorna false para impedir que a navegação volte à tela anterior
                   return false;
-                }, child: Text(''),
+                }, child: const Text(''),
               ),
             ],
           ),

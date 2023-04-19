@@ -40,7 +40,7 @@ class _listaUsuariosState extends State<listaUsuarios> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Lista com os Motoristas'),
+        title: const Text('Lista com os Motoristas'),
       ),
       body: PesquisaNome != '' ? StreamBuilder(
         stream: FirebaseFirestore.instance
@@ -50,7 +50,7 @@ class _listaUsuariosState extends State<listaUsuarios> {
         builder: (BuildContext context,
             AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
@@ -64,7 +64,7 @@ class _listaUsuariosState extends State<listaUsuarios> {
                       color: Colors.grey,
                       width: 3.0,
                     ),
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                   ),
                   child: Column(
                     children: [
@@ -73,7 +73,7 @@ class _listaUsuariosState extends State<listaUsuarios> {
                         height: 50,
                         child: Center(
                             child: Text( 'Nome do Motorista: '+ documents['nomeMotorista'],
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 16
                               ),
                             )
@@ -84,7 +84,7 @@ class _listaUsuariosState extends State<listaUsuarios> {
                         height: 50,
                         child: Center(
                             child: Text( 'RG do motorista: '+ documents['RGDoMotorista'],
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 16
                               ),
                             )
@@ -162,7 +162,7 @@ class _listaUsuariosState extends State<listaUsuarios> {
                         }
                         print(listaNome);
 
-                      }, child: Text(
+                      }, child: const Text(
                           'Selecionar esse motorista',
                         style: TextStyle(
                             fontSize: 18
@@ -184,7 +184,7 @@ class _listaUsuariosState extends State<listaUsuarios> {
         builder: (BuildContext context,
             AsyncSnapshot<QuerySnapshot> snapshot) {
           if (!snapshot.hasData) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator(),
             );
           }
@@ -198,7 +198,7 @@ class _listaUsuariosState extends State<listaUsuarios> {
                       color: Colors.grey,
                       width: 3.0,
                     ),
-                    borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                    borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                   ),
                   child: Column(
                     children: [
@@ -207,7 +207,7 @@ class _listaUsuariosState extends State<listaUsuarios> {
                         height: 50,
                         child: Center(
                             child: Text( 'Nome do Motorista: '+ documents['nomeMotorista'],
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 18
                               ),
                             )
@@ -218,7 +218,7 @@ class _listaUsuariosState extends State<listaUsuarios> {
                         height: 50,
                         child: Center(
                             child: Text( 'RG do motorista: '+ documents['RGDoMotorista'],
-                              style: TextStyle(
+                              style: const TextStyle(
                                   fontSize: 18
                               ),
                             )
@@ -296,7 +296,7 @@ class _listaUsuariosState extends State<listaUsuarios> {
                         }
                         print(listaNome);
 
-                      }, child: Text(
+                      }, child: const Text(
                         'Selecionar esse motorista',
                         style: TextStyle(
                             fontSize: 18
@@ -310,7 +310,7 @@ class _listaUsuariosState extends State<listaUsuarios> {
             }).toList(),
           );
         },
-      ): Text(''),
+      ): const Text(''),
     );
   }
 }

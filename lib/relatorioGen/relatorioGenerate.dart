@@ -61,6 +61,7 @@ class relatorioGenerate extends StatefulWidget {
       this.DateEntrada,
       this.EmpresaDoc,
       this.DataSaidaPortaria,
+      {super.key}
       );
   @override
   State<relatorioGenerate> createState() => _relatorioGenerateState();
@@ -94,7 +95,7 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
       appBar: AppBar(
         backgroundColor: Colors.green[700],
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'GLK Controls - Relatório',
         ),
       ),
@@ -104,10 +105,10 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               alignment: Alignment.center,
               child:
-              Text(
+              const Text(
                 'Liberação: ' + 'Motorista e Veiculo',
                 style: TextStyle(
                     fontSize: 16
@@ -123,13 +124,13 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
                 children: [
                   Text(
                     'Data: ${widget.horarioCriacao}' ,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
                   Text(
                     ' - Portaria - ' + widget.liberadopor,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
@@ -145,13 +146,13 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
                 children: [
                   Text(
                     'Data: ${widget.DatadeAnalise}' ,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
                   Text(
                     ' - Analise na Empresa - ' + widget.EmpresaDoc,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
@@ -167,13 +168,13 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
                 children: [
                   Text(
                     'Data: ${widget.DateEntrada}' ,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
                   Text(
                     ' - Entrada - ' + widget.verificadoPor,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
@@ -189,13 +190,13 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
                 children: [
                   Text(
                     'Data: ${widget.DataSaidaPortaria}' ,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
                   Text(
                     ' - Saida - ' + widget.saidaLiberadaPor,
-                    style: TextStyle(
+                    style: const TextStyle(
                         fontSize: 16
                     ),
                   ),
@@ -203,87 +204,87 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                 'Nome: ' + widget.nomeMotorista,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                 'RG: ' + widget.RG,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                 'Veiculo: ' + widget.Veiculo,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                 'Placa: ' + widget.PlacaVeiculo,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                 'Empresa de destino: ' + widget.Empresadestino,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                 'Telefone: ' + widget.telefone,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                 'Empresa de origem: ' + widget.EmpresadeOrigin,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               Text(
                 'Galpão: ' + widget.Galpao,
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 16
                 ),
               ),
             ),
             RadioListTile(
-              title: Text(
+              title: const Text(
                   "Com Lacre"
               ),
               value: "lacre",
@@ -291,14 +292,14 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               onChanged: null,
             ),
             RadioListTile(
-              title: Text("Sem Lacre",),
+              title: const Text("Sem Lacre",),
               value: "naolacrado",
               groupValue: widget.lacreounao,
               onChanged: null,
             ),
             lacrebool ?
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: TextFormField(
                 controller: _textEditingController,
                 onChanged: (valor){
@@ -308,7 +309,7 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
                 keyboardType: TextInputType.number,
                 //enableSuggestions: false,
                 //autocorrect: false,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Numero do lacre *',
                   hintStyle: TextStyle(
@@ -317,7 +318,7 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
                 ),
               ),
             )
-                :Text(''),
+                :const Text(''),
             Container(
               height: 300,
               width: 700,
@@ -326,7 +327,7 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                      padding: EdgeInsets.all(4),
+                      padding: const EdgeInsets.all(4),
                       alignment: Alignment.center,
                       child:
                       Image.network(
@@ -334,7 +335,7 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
                       )
                   ),
                   Container(
-                    padding: EdgeInsets.all(4),
+                    padding: const EdgeInsets.all(4),
                     alignment: Alignment.center,
                     child:
                     Image.network(
@@ -352,7 +353,7 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Container(
-                    padding: EdgeInsets.all(4),
+                    padding: const EdgeInsets.all(4),
                     alignment: Alignment.center,
                     child:
                     Image.network(
@@ -360,7 +361,7 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
                     ),
                   ),
                   Container(
-                    padding: EdgeInsets.all(4),
+                    padding: const EdgeInsets.all(4),
                     alignment: Alignment.center,
                     child:
                     Image.network(
@@ -371,7 +372,7 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: ElevatedButton(
                 onPressed: () {
 
@@ -386,7 +387,7 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
                       }));
 
                 },
-                child: Text(
+                child: const Text(
                   'Gerar/Imprimir',
                   style: TextStyle(
                       fontSize: 18
@@ -402,7 +403,7 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
                     Container(
                         width: 180,
                         height: 180,
-                        padding: EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(16),
                         child:
                         Image.asset(
                           'assets/sanca.png',

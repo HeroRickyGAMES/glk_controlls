@@ -11,8 +11,6 @@ import 'package:glk_controls/pesquisaDir/pesquisa.dart';
 import 'package:intl/intl.dart';
 import 'package:glk_controls/modal/operadorEmpresarialAguardandoModal.dart';
 
-
-
 //Programado por HeroRickyGames
 
 Map map = Map();
@@ -22,7 +20,7 @@ Map<String, String> mapNome = {};
 class liberacoesOperadorEmpresarial extends StatefulWidget {
   final String name;
   final String empresaName;
-  liberacoesOperadorEmpresarial(this.name, this.empresaName);
+  const liberacoesOperadorEmpresarial(this.name, this.empresaName, {super.key});
 
   @override
   State<liberacoesOperadorEmpresarial> createState() => _liberacoesOperadorEmpresarialState();
@@ -96,7 +94,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('GLK Controls - LIBERAÇÕES'),
+        title: const Text('GLK Controls - LIBERAÇÕES'),
         backgroundColor: Colors.red[700],
       ),
       body: SingleChildScrollView(
@@ -108,7 +106,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                 Container(
                     width: 180,
                     height: 180,
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child:
                     Image.asset(
                       'assets/icon.png',
@@ -119,7 +117,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
             ),
 
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child:
               SingleChildScrollView(
                 child: Column(
@@ -144,7 +142,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                       autocorrect: false,
                       decoration: InputDecoration(
 
-                        border: OutlineInputBorder(
+                        border: const OutlineInputBorder(
                             borderSide: BorderSide(
                                 color: Colors.green
                             )
@@ -155,7 +153,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                       ),
                     ),
                     Container(
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child: ElevatedButton(
                         onPressed: (){
                           if(holderPlaca == ''){
@@ -247,7 +245,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
                           if (!snapshot.hasData) {
-                            return Center(
+                            return const Center(
                               child: CircularProgressIndicator(),
                             );
                           }
@@ -260,7 +258,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                 color: Colors.black,
                                 width: 1.0,
                               ),
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                             ),
                             child: OrientationBuilder(
                               builder: (context, orientation) {
@@ -333,14 +331,14 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                       return Padding(
                                         padding: const EdgeInsets.all(8.0),
                                         child: Container(
-                                          padding: EdgeInsets.all(16),
+                                          padding: const EdgeInsets.all(16),
                                           decoration: BoxDecoration(
                                             color: color,
                                             border: Border.all(
                                               color: Colors.black,
                                               width: 1.0,
                                             ),
-                                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                                            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                                           ),
                                           child:
                                           Column(
@@ -527,7 +525,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                                   )
                                               ),
                                               Container(
-                                                padding: EdgeInsets.all(16),
+                                                padding: const EdgeInsets.all(16),
                                                 child: Text(
                                                   'Status: \n' +
                                                       documents['Status'],
@@ -543,7 +541,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                         ),
                                       );
                                     }else{
-                                      return SizedBox(width: 0, height: 0);
+                                      return const SizedBox(width: 0, height: 0);
                                     }
                                   }
                                   ).toList().reversed.toList(),
@@ -563,7 +561,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                 Container(
                     width: 180,
                     height: 180,
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     child:
                     Image.asset(
                       'assets/sanca.png',
@@ -571,7 +569,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                     )
                 ),
                 Container(
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   child:
                   Text(
                     'Operador: ' + widget.name,
