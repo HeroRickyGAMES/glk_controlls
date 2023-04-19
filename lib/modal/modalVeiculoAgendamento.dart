@@ -559,8 +559,8 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
 
                     String valorpuro = valor.toUpperCase();
                     VeiculoPlaca = valorpuro.replaceAllMapped(
-                      RegExp(r'^([a-zA-Z]{3})([0-9]{4})$'),
-                          (Match m) => '${m[1]}-${m[2]}',
+                      RegExp(r'^([a-zA-Z]{3})([0-9a-zA-Z]{4})$'),
+                          (Match m) => '${m[1]} ${m[2]}',
                     );
                     //Mudou mandou para a String
                   },
@@ -584,6 +584,18 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                       RegExp(r'^([0-9]{2})([0-9]{5})([0-9]{4})$'),
                           (Match m) => '${m[1]} ${m[2]}-${m[3]} ',
                     );
+
+                    if(VeiculoPlaca!.length != 8){
+                      Fluttertoast.showToast(
+                        msg: 'A placa está escrita errada, faltam caracteres!',
+                        toastLength: Toast.LENGTH_SHORT,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.black,
+                        textColor: Colors.white,
+                        fontSize: 16.0,
+                      );
+                    }
+
                     //Mudou mandou para a String
                   },
                   keyboardType: TextInputType.number,

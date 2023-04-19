@@ -151,472 +151,519 @@ class _listEntradaState extends State<listEntrada> {
             Container(
               padding: const EdgeInsets.all(16),
               child:
-              Column(
-                children: [
-                  Text(
-                      'Pesquisar Placa:',
-                    style: TextStyle(
-                      fontSize: tamanhotexto
-                    ),
-                  ),
-                  TextFormField(
-                    onChanged: (valor){
-
-                      String value = valor.replaceAll(' ', '').toUpperCase();;
-
-                      holderPlaca = value.replaceAllMapped(
-                        RegExp(r'^([a-zA-Z]{3})([0-9]{4})$'),
-                            (Match m) => '${m[1]}-${m[2]}',
-                      );
-                    },
-                    enableSuggestions: false,
-                    autocorrect: false,
-                    decoration: InputDecoration(
-
-                      border: const OutlineInputBorder(
-                          borderSide: BorderSide(
-                              color: Colors.green
-                          )
+              Container(
+                padding: const EdgeInsets.all(16),
+                child:
+                SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Text(
+                        'Pesquisar Placa:',
+                        style: TextStyle(
+                            fontSize: tamanhotexto
+                        ),
                       ),
-                      hintStyle: TextStyle(
-                          fontSize: tamanhotexto
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    child: ElevatedButton(
-                      onPressed: (){
+                      TextFormField(
+                        onChanged: (valor){
 
-                        if(holderPlaca == ''){
+                          String value = valor.replaceAll(' ', '').toUpperCase();
 
-                          Fluttertoast.showToast(
-                            msg: 'Preencha a pesquisa!',
-                            toastLength: Toast.LENGTH_SHORT,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.black,
-                            textColor: Colors.white,
-                            fontSize: tamanhotextomin,
+                          holderPlaca = value.replaceAllMapped(
+                            RegExp(r'^([a-zA-Z]{3})([0-9]{4})$'),
+                                (Match m) => '${m[1]}-${m[2]}',
                           );
+                        },
+                        enableSuggestions: false,
+                        autocorrect: false,
+                        decoration: InputDecoration(
 
-                        }else{
+                          border: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.green
+                              )
+                          ),
+                          hintStyle: TextStyle(
+                              fontSize: tamanhotexto
+                          ),
+                        ),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        child: ElevatedButton(
+                          onPressed: (){
+                            if(holderPlaca == ''){
+
+                              Fluttertoast.showToast(
+                                msg: 'Preencha a pesquisa!',
+                                toastLength: Toast.LENGTH_SHORT,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.black,
+                                textColor: Colors.white,
+                                fontSize: tamanhotextomin,
+                              );
+
+                            }else{
 
 
-                          FirebaseFirestore.instance
-                              .collection('Autorizacoes')
-                              .get()
-                              .then((QuerySnapshot querySnapshot) {
-                            querySnapshot.docs.forEach((doc) {
+                              FirebaseFirestore.instance
+                                  .collection('Autorizacoes')
+                                  .get()
+                                  .then((QuerySnapshot querySnapshot) {
+                                querySnapshot.docs.forEach((doc) {
 
-                              if(doc["nomeMotorista"] == holderPlaca ){
+                                  if(doc["nomeMotorista"] == holderPlaca ){
 
-                                String oqPesquisar = 'nomeMotorista';
-                                Navigator.push(context,
-                                    MaterialPageRoute(builder: (context){
-                                      return pesquisa(holderPlaca, oqPesquisar);
-                                    }));
-
-                              }else{
-
-                                if(doc["PlacaVeiculo"] == holderPlaca ){
-
-                                  String oqPesquisar = 'PlacaVeiculo';
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context){
-                                        return pesquisa(holderPlaca, oqPesquisar);
-                                      }));
-                                }else{
-                                  if(doc["Empresa"] == holderPlaca){
-                                    String oqPesquisar = 'Empresa';
+                                    String oqPesquisar = 'nomeMotorista';
                                     Navigator.push(context,
                                         MaterialPageRoute(builder: (context){
                                           return pesquisa(holderPlaca, oqPesquisar);
                                         }));
+
                                   }else{
-                                    if(doc["Galpão"] == holderPlaca){
-                                      String oqPesquisar = 'Galpão';
+
+                                    if(doc["PlacaVeiculo"] == holderPlaca ){
+
+                                      String oqPesquisar = 'PlacaVeiculo';
                                       Navigator.push(context,
                                           MaterialPageRoute(builder: (context){
                                             return pesquisa(holderPlaca, oqPesquisar);
                                           }));
                                     }else{
+                                      if(doc["Empresa"] == holderPlaca){
+                                        String oqPesquisar = 'Empresa';
+                                        Navigator.push(context,
+                                            MaterialPageRoute(builder: (context){
+                                              return pesquisa(holderPlaca, oqPesquisar);
+                                            }));
+                                      }else{
+                                        if(doc["Galpão"] == holderPlaca){
+                                          String oqPesquisar = 'Galpão';
+                                          Navigator.push(context,
+                                              MaterialPageRoute(builder: (context){
+                                                return pesquisa(holderPlaca, oqPesquisar);
+                                              }));
+                                        }else{
 
-                                      Fluttertoast.showToast(
-                                        msg: 'Infelizmente não achei nada do que você pesquisou, por favor, tente novamente!',
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: Colors.black,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0,
-                                      );
+                                          Fluttertoast.showToast(
+                                            msg: 'Infelizmente não achei nada do que você pesquisou, por favor, tente novamente!',
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.black,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0,
+                                          );
+                                        }
+                                      }
                                     }
                                   }
-                                }
-                              }
 
-                            });
-                          });
-                        }
-                      },
-                      child: const Text(
-                          'Pesquisar'
-                      ),
-                    ),
-                  ),
-                  StreamBuilder(
-                      stream: FirebaseFirestore
-                          .instance
-                          .collection('Autorizacoes')
-                          .where('Status', isNotEqualTo: 'Saida')
-                          .orderBy("Status", descending: true)
-                          .snapshots(),
-                      builder: (BuildContext context,
-                          AsyncSnapshot<QuerySnapshot> snapshot) {
-                        if (!snapshot.hasData) {
-                          return const Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        }
-                        return Container(
-                          height: 700,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.black,
-                              width: 1.0,
-                            ),
-                            borderRadius: const BorderRadius.all(Radius.circular(5.0)
+                                });
+                              });
+                            }
+                          },
+                          child: Text(
+                            'Pesquisar',
+                            style: TextStyle(
+                                fontSize: tamanhotexto,
+                                fontWeight: FontWeight.bold
                             ),
                           ),
-                          child: GridView.count(
-                            padding: const EdgeInsets.all(10),
-                            crossAxisSpacing: 30,
-                            mainAxisSpacing: 30,
-                            crossAxisCount: 2,
-                            childAspectRatio: aspect,
-                            children:
-                            snapshot.data!.docs.map((documents) {
-                              String lacre = '${documents['LacreouNao']}';
-                              String ColetaOuEntrega = '${documents['ColetaOuEntrega']}';
-                              bool lacrebool = false;
-                              bool coletaBool = false;
-                              String lacrado = '';
-                              String ColetaOuEntregast = '';
-                              idDocumento = documents.id;
-
-                                  if(lacre == 'lacre'){
-                                    lacrebool = true;
-                                    lacrado = 'Lacrado';
-                                  }
-                                  if(lacre == 'naolacrado'){
-                                    lacrebool = false;
-                                    lacrado = 'Não Lacrado';
-                                  }
-                                  if(ColetaOuEntrega == 'coleta'){
-                                    coletaBool = true;
-                                    ColetaOuEntregast = 'Coleta';
-                                  }
-                                  if(ColetaOuEntrega == 'entrega'){
-                                    coletaBool = false;
-                                    ColetaOuEntregast = 'Entrega';
-                                  }
-                                  return Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Container(
-                                      padding: const EdgeInsets.all(16),
-                                      decoration: BoxDecoration(
-                                        color: Colors.grey[300],
-                                        border: Border.all(
-                                          color: Colors.black,
-                                          width: 1.0,
-                                        ),
-                                        borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                                      ),
-                                      child:
-                                      Column(
-                                        children: [
-                                          ElevatedButton(
-                                              onPressed: () async {
-                                                if(documents['Status'] == 'Em Verificação'){
-                                                  if(lacre == 'lacre'){
-
-                                                    String formattedDate2;
-
-                                                    if(documents['interno'] == true){
-                                                      formattedDate2 = '';
-                                                    }else{
-                                                      Timestamp DataEmpresaAnalise = documents['DataEntradaEmpresa'];
-                                                      formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEmpresaAnalise.toDate()).replaceAll('-', '/');
-                                                    }
-
-                                                    String liberadopor = documents['QuemAutorizou'];
-                                                    Timestamp horarioCriacao = documents['Horario Criado'];
-                                                    String nomeMotorista = documents['nomeMotorista'];
-                                                    String Veiculo = documents['Veiculo'];
-                                                    String PlacaVeiculo = documents['PlacaVeiculo'];
-                                                    String Empresadestino = documents['Empresa'];
-                                                    String EmpresadeOrigin = documents['EmpresadeOrigin'];
-                                                    String Galpao = documents['Galpão'];
-                                                    String lacradoStr = documents['lacrenum'];
-                                                    String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
-
-                                                    final ByteData imageData = await rootBundle.load('assets/insertFoto.png');
-
-                                                    final Uint8List uint8List = imageData.buffer.asUint8List();
-
-                                                    final compressedImage = await FlutterImageCompress.compressWithList(
-                                                      uint8List,
-                                                      quality: 85, // ajuste a qualidade da imagem conforme necessário
-                                                    );
-
-                                                    final tempDir = await getTemporaryDirectory();
-                                                    final file = File('${tempDir.path}/imagem.jpg');
-                                                    await file.writeAsBytes(compressedImage);
-
-                                                    final file2 = File('${tempDir.path}/imagem.jpg');
-                                                    await file2.writeAsBytes(compressedImage);
-
-                                                    final file3 = File('${tempDir.path}/imagem.jpg');
-                                                    await file3.writeAsBytes(compressedImage);
-
-                                                    final file4 = File('${tempDir.path}/imagem.jpg');
-                                                    await file4.writeAsBytes(compressedImage);
-
-                                                    print(' arquivo temporario é : ${file} ');
-
-                                                    var result = await FirebaseFirestore.instance
-                                                        .collection("Condominio")
-                                                        .doc('condominio')
-                                                        .get();
-
-                                                    Map tags = (result.get('tags'));
-                                                    List tagsDisponiveis = [];
-
-                                                    print(tags.values.contains('Usado'));
-
-                                                    tags.removeWhere((key, value) => value == 'Usado');
-                                                    tagsDisponiveis.addAll(tags.keys);
-
-                                                    print(tagsDisponiveis);
-                                                    print(tags.keys);
-
-                                                    Navigator.push(context,
-                                                        MaterialPageRoute(builder: (context){
-                                                          return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, file, file2, file3, file, formattedDate2, tagsDisponiveis);
-                                                        }));
-
-                                                  }
-                                                  else{
-                                                    if(lacre == 'naolacrado'){
-
-                                                      String liberadopor = documents['QuemAutorizou'];
-                                                      Timestamp horarioCriacao = documents['Horario Criado'];
-                                                      String nomeMotorista = documents['nomeMotorista'];
-                                                      String Veiculo = documents['Veiculo'];
-                                                      String PlacaVeiculo = documents['PlacaVeiculo'];
-                                                      String Empresadestino = documents['Empresa'];
-                                                      String EmpresadeOrigin = documents['EmpresadeOrigin'];
-                                                      String Galpao = documents['Galpão'];
-                                                      String verificadoPor = documents['verificadoPor'];
-                                                      String formattedDate2 = '';
-
-                                                      if(documents['DataEntradaEmpresa'] == ''){
-                                                        formattedDate2 = documents['DataEntradaEmpresa'];
-
-                                                        String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
-
-
-                                                        final ByteData imageData = await rootBundle.load('assets/error-image.png');
-
-                                                        final Uint8List uint8List = imageData.buffer.asUint8List();
-
-                                                        final compressedImage = await FlutterImageCompress.compressWithList(
-                                                          uint8List,
-                                                          quality: 85, // ajuste a qualidade da imagem conforme necessário
-                                                        );
-
-                                                        final tempDir = await getTemporaryDirectory();
-                                                        final file = File('${tempDir.path}/imagem.jpg');
-                                                        await file.writeAsBytes(compressedImage);
-
-                                                        final file2 = File('${tempDir.path}/imagem.jpg');
-                                                        await file2.writeAsBytes(compressedImage);
-
-                                                        final file3 = File('${tempDir.path}/imagem.jpg');
-                                                        await file3.writeAsBytes(compressedImage);
-
-                                                        final file4 = File('${tempDir.path}/imagem.jpg');
-                                                        await file4.writeAsBytes(compressedImage);
-
-                                                        print(' arquivo temporario é : ${file} ');
-                                                        print(formattedDate);
-
-
-                                                        var result = await FirebaseFirestore.instance
-                                                            .collection("Condominio")
-                                                            .doc('condominio')
-                                                            .get();
-
-                                                        Map tags = (result.get('tags'));
-                                                        List tagsDisponiveis = [];
-
-                                                        print(tags.values.contains('Usado'));
-
-                                                        tags.removeWhere((key, value) => value == 'Usado');
-                                                        tagsDisponiveis.addAll(tags.keys);
-
-                                                        print(tagsDisponiveis);
-                                                        print(tags.keys);
-
-                                                        Navigator.push(context,
-                                                            MaterialPageRoute(builder: (context){
-                                                              return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2, tagsDisponiveis);
-                                                            }));
-
-                                                      }else{
-                                                        Timestamp DataEmpresaAnalise = documents['DataEntradaEmpresa'];
-                                                        formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEmpresaAnalise.toDate()).replaceAll('-', '/');
-
-                                                        String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
-
-
-                                                        final ByteData imageData = await rootBundle.load('assets/error-image.png');
-
-                                                        final Uint8List uint8List = imageData.buffer.asUint8List();
-
-                                                        final compressedImage = await FlutterImageCompress.compressWithList(
-                                                          uint8List,
-                                                          quality: 85, // ajuste a qualidade da imagem conforme necessário
-                                                        );
-
-                                                        final tempDir = await getTemporaryDirectory();
-                                                        final file = File('${tempDir.path}/imagem.jpg');
-                                                        await file.writeAsBytes(compressedImage);
-
-                                                        final file2 = File('${tempDir.path}/imagem.jpg');
-                                                        await file2.writeAsBytes(compressedImage);
-
-                                                        final file3 = File('${tempDir.path}/imagem.jpg');
-                                                        await file3.writeAsBytes(compressedImage);
-
-                                                        final file4 = File('${tempDir.path}/imagem.jpg');
-                                                        await file4.writeAsBytes(compressedImage);
-
-                                                        print(' arquivo temporario é : ${file} ');
-                                                        print(formattedDate);
-
-                                                        var result = await FirebaseFirestore.instance
-                                                            .collection("Condominio")
-                                                            .doc('condominio')
-                                                            .get();
-
-                                                        Map tags = (result.get('tags'));
-                                                        List tagsDisponiveis = [];
-
-                                                        print(tags.values.contains('Usado'));
-
-                                                        tags.removeWhere((key, value) => value == 'Usado');
-                                                        tagsDisponiveis.addAll(tags.keys);
-
-                                                        print(tagsDisponiveis);
-                                                        print(tags.keys);
-
-                                                        Navigator.push(context,
-                                                            MaterialPageRoute(builder: (context){
-                                                              return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2, tagsDisponiveis);
-                                                            }));
-                                                      }
-                                                    }
-                                                  }
-                                                }
-                                                if(documents['Status'] == 'Entrada'){
-                                                  final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar
-
-                                                  try {
-                                                    final result = await Process.run('ping', ['-c', '1', ip]);
-                                                    if (result.exitCode == 0) {
-                                                      print('Ping realizado com sucesso para o endereço $ip');
-                                                    } else {
-
-                                                      FirebaseFirestore.instance.collection('Autorizacoes').doc(documents['idDoc']).update({
-                                                        'DataSaida': DateTime.now(),
-                                                        'DataEntradaEmpresa': DateTime.now(),
-                                                        'Status': 'Liberado'
-                                                      });
-                                                      Fluttertoast.showToast(
-                                                        msg: 'A solicitação foi movida para a Saida.',
-                                                        toastLength: Toast.LENGTH_SHORT,
-                                                        timeInSecForIosWeb: 1,
-                                                        backgroundColor: Colors.black,
-                                                        textColor: Colors.white,
-                                                        fontSize: 16.0,
-                                                      );
-
-                                                      print('Falha no ping para o endereço $ip');
-                                                    }
-                                                  } catch (e) {
-                                                    print('Erro ao executar o comando de ping: $e');
-                                                  }
-                                                }
-                                              },
-                                              child: Text(
-                                                documents['PlacaVeiculo'],
-                                                style: TextStyle(
-                                                    fontSize: tamanhotextobtns,
-                                                    fontWeight: FontWeight.bold
-                                                ),
-                                              )
-                                          ),
-                                          Container(
-                                            padding: const EdgeInsets.all(16),
-                                            child: Text(
-                                                'Status: \n' +
-                                                documents['Status'],
-                                              style: TextStyle(
-                                                fontSize: tamanhotexto,
-                                                  fontWeight: FontWeight.bold
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  );
-                                }).toList().reversed.toList(),
-                          ),
-                        );
-                      }
-                  ),
-
-                ],
-              ),
-            ),
-            Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                        width: 180,
-                        height: 180,
-                        padding: const EdgeInsets.all(16),
-                        child:
-                        Image.asset(
-                          'assets/sanca.png',
-                          fit: BoxFit.contain,
-                        )
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(16),
-                      child:
-                      Text(
-                        'Operador: ' + widget.porteiroName,
-                        style: TextStyle(
-                            fontSize: tamanhotexto
                         ),
                       ),
+                      StreamBuilder(
+                          stream: FirebaseFirestore
+                              .instance
+                              .collection('Autorizacoes')
+                              .where('Status', isEqualTo: 'Em Verificação')
+                              //.orderBy("Status", descending: true)
+                              .snapshots(),
+                          builder: (BuildContext context,
+                              AsyncSnapshot<QuerySnapshot> snapshot) {
+                            if (!snapshot.hasData) {
+                              return const Center(
+                                child: CircularProgressIndicator(),
+                              );
+                            }
+                            return Container(
+                              height: 700,
+                              width: double.infinity,
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 1.0,
+                                ),
+                                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                              ),
+                              child: OrientationBuilder(
+                                builder: (context, orientation) {
+                                  return GridView.count(
+                                    crossAxisCount: orientation == Orientation.portrait ? 2 : 4,
+                                    mainAxisSpacing: 10,
+                                    crossAxisSpacing: 10,
+                                    childAspectRatio: orientation == Orientation.portrait ? 1.0 : 0.7,
+                                    children:
+                                    snapshot.data!.docs.map((documents) {
+
+                                        String lacre = '${documents['LacreouNao']}';
+                                        String ColetaOuEntrega = '${documents['ColetaOuEntrega']}';
+                                        bool lacrebool = false;
+                                        bool coletaBool = false;
+                                        String lacrado = '';
+                                        String ColetaOuEntregast = '';
+                                        idDocumento = documents.id;
+
+                                        if(lacre == 'lacre'){
+                                          lacrebool = true;
+                                          lacrado = 'Lacrado';
+                                        }
+                                        if(lacre == 'naolacrado'){
+                                          lacrebool = false;
+                                          lacrado = 'Não Lacrado';
+                                        }
+                                        if(ColetaOuEntrega == 'coleta'){
+                                          coletaBool = true;
+                                          ColetaOuEntregast = 'Coleta';
+                                        }
+                                        if(ColetaOuEntrega == 'entrega'){
+                                          coletaBool = false;
+                                          ColetaOuEntregast = 'Entrega';
+                                        }
+
+                                        Color color = Colors.white as Color;
+                                        Color textColor = Colors.white as Color;
+
+                                        if(documents['Status'] == 'Aguardando'){
+                                          color = Colors.red[400] as Color;
+                                          textColor = Colors.white as Color;
+                                        }
+                                        if(documents['Status'] == 'Em Verificação'){
+                                          color = Colors.grey as Color;
+                                          textColor = Colors.white as Color;
+                                        }
+
+                                        if(documents['Status'] == 'Rejeitado'){
+                                          color = Colors.red[400] as Color;
+                                          textColor = Colors.white as Color;
+                                        }
+
+                                        if(documents['Status'] == 'Entrada'){
+                                          color = Colors.yellow[400] as Color;
+                                          textColor = Colors.black as Color;
+                                        }
+
+                                        if(documents['Status'] == 'Liberado'){
+                                          color = Colors.yellow[400] as Color;
+                                          textColor = Colors.black as Color;
+                                        }
+
+                                        if(documents['Status'] == 'Saida'){
+                                          color = Colors.green[400] as Color;
+                                          textColor = Colors.white as Color;
+                                        }
+
+                                        return Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            padding: const EdgeInsets.all(16),
+                                            decoration: BoxDecoration(
+                                              color: color,
+                                              border: Border.all(
+                                                color: Colors.black,
+                                                width: 1.0,
+                                              ),
+                                              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                                            ),
+                                            child:
+                                            Column(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                ElevatedButton(
+                                                    onPressed: () async {
+
+                                                      if(documents['Status'] == 'Em Verificação'){
+                                                        if(lacre == 'lacre'){
+
+                                                          String formattedDate2;
+
+                                                          if(documents['interno'] == true){
+                                                            formattedDate2 = '';
+                                                          }else{
+                                                            Timestamp DataEmpresaAnalise = documents['DataEntradaEmpresa'];
+                                                            formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEmpresaAnalise.toDate()).replaceAll('-', '/');
+                                                          }
+
+                                                          String liberadopor = documents['QuemAutorizou'];
+                                                          Timestamp horarioCriacao = documents['Horario Criado'];
+                                                          String nomeMotorista = documents['nomeMotorista'];
+                                                          String Veiculo = documents['Veiculo'];
+                                                          String PlacaVeiculo = documents['PlacaVeiculo'];
+                                                          String Empresadestino = documents['Empresa'];
+                                                          String EmpresadeOrigin = documents['EmpresadeOrigin'];
+                                                          String Galpao = documents['Galpão'];
+                                                          String lacradoStr = documents['lacrenum'];
+                                                          String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
+
+                                                          final ByteData imageData = await rootBundle.load('assets/insertFoto.png');
+
+                                                          final Uint8List uint8List = imageData.buffer.asUint8List();
+
+                                                          final compressedImage = await FlutterImageCompress.compressWithList(
+                                                            uint8List,
+                                                            quality: 85, // ajuste a qualidade da imagem conforme necessário
+                                                          );
+
+                                                          final tempDir = await getTemporaryDirectory();
+                                                          final file = File('${tempDir.path}/imagem.jpg');
+                                                          await file.writeAsBytes(compressedImage);
+
+                                                          final file2 = File('${tempDir.path}/imagem.jpg');
+                                                          await file2.writeAsBytes(compressedImage);
+
+                                                          final file3 = File('${tempDir.path}/imagem.jpg');
+                                                          await file3.writeAsBytes(compressedImage);
+
+                                                          final file4 = File('${tempDir.path}/imagem.jpg');
+                                                          await file4.writeAsBytes(compressedImage);
+
+                                                          print(' arquivo temporario é : ${file} ');
+
+                                                          var result = await FirebaseFirestore.instance
+                                                              .collection("Condominio")
+                                                              .doc('condominio')
+                                                              .get();
+
+                                                          Map tags = (result.get('tags'));
+                                                          List tagsDisponiveis = [];
+
+                                                          print(tags.values.contains('Usado'));
+
+                                                          tags.removeWhere((key, value) => value == 'Usado');
+                                                          tagsDisponiveis.addAll(tags.keys);
+
+                                                          print(tagsDisponiveis);
+                                                          print(tags.keys);
+
+                                                          Navigator.push(context,
+                                                              MaterialPageRoute(builder: (context){
+                                                                return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, file, file2, file3, file, formattedDate2, tagsDisponiveis);
+                                                              }));
+
+                                                        }
+                                                        else{
+                                                          if(lacre == 'naolacrado'){
+
+                                                            String liberadopor = documents['QuemAutorizou'];
+                                                            Timestamp horarioCriacao = documents['Horario Criado'];
+                                                            String nomeMotorista = documents['nomeMotorista'];
+                                                            String Veiculo = documents['Veiculo'];
+                                                            String PlacaVeiculo = documents['PlacaVeiculo'];
+                                                            String Empresadestino = documents['Empresa'];
+                                                            String EmpresadeOrigin = documents['EmpresadeOrigin'];
+                                                            String Galpao = documents['Galpão'];
+                                                            String verificadoPor = documents['verificadoPor'];
+                                                            String formattedDate2 = '';
+
+                                                            if(documents['DataEntradaEmpresa'] == ''){
+                                                              formattedDate2 = documents['DataEntradaEmpresa'];
+
+                                                              String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
+
+
+                                                              final ByteData imageData = await rootBundle.load('assets/error-image.png');
+
+                                                              final Uint8List uint8List = imageData.buffer.asUint8List();
+
+                                                              final compressedImage = await FlutterImageCompress.compressWithList(
+                                                                uint8List,
+                                                                quality: 85, // ajuste a qualidade da imagem conforme necessário
+                                                              );
+
+                                                              final tempDir = await getTemporaryDirectory();
+                                                              final file = File('${tempDir.path}/imagem.jpg');
+                                                              await file.writeAsBytes(compressedImage);
+
+                                                              final file2 = File('${tempDir.path}/imagem.jpg');
+                                                              await file2.writeAsBytes(compressedImage);
+
+                                                              final file3 = File('${tempDir.path}/imagem.jpg');
+                                                              await file3.writeAsBytes(compressedImage);
+
+                                                              final file4 = File('${tempDir.path}/imagem.jpg');
+                                                              await file4.writeAsBytes(compressedImage);
+
+                                                              print(' arquivo temporario é : ${file} ');
+                                                              print(formattedDate);
+
+
+                                                              var result = await FirebaseFirestore.instance
+                                                                  .collection("Condominio")
+                                                                  .doc('condominio')
+                                                                  .get();
+
+                                                              Map tags = (result.get('tags'));
+                                                              List tagsDisponiveis = [];
+
+                                                              print(tags.values.contains('Usado'));
+
+                                                              tags.removeWhere((key, value) => value == 'Usado');
+                                                              tagsDisponiveis.addAll(tags.keys);
+
+                                                              print(tagsDisponiveis);
+                                                              print(tags.keys);
+
+                                                              Navigator.push(context,
+                                                                  MaterialPageRoute(builder: (context){
+                                                                    return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2, tagsDisponiveis);
+                                                                  }));
+
+                                                            }else{
+                                                              Timestamp DataEmpresaAnalise = documents['DataEntradaEmpresa'];
+                                                              formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEmpresaAnalise.toDate()).replaceAll('-', '/');
+
+                                                              String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
+
+
+                                                              final ByteData imageData = await rootBundle.load('assets/error-image.png');
+
+                                                              final Uint8List uint8List = imageData.buffer.asUint8List();
+
+                                                              final compressedImage = await FlutterImageCompress.compressWithList(
+                                                                uint8List,
+                                                                quality: 85, // ajuste a qualidade da imagem conforme necessário
+                                                              );
+
+                                                              final tempDir = await getTemporaryDirectory();
+                                                              final file = File('${tempDir.path}/imagem.jpg');
+                                                              await file.writeAsBytes(compressedImage);
+
+                                                              final file2 = File('${tempDir.path}/imagem.jpg');
+                                                              await file2.writeAsBytes(compressedImage);
+
+                                                              final file3 = File('${tempDir.path}/imagem.jpg');
+                                                              await file3.writeAsBytes(compressedImage);
+
+                                                              final file4 = File('${tempDir.path}/imagem.jpg');
+                                                              await file4.writeAsBytes(compressedImage);
+
+                                                              print(' arquivo temporario é : ${file} ');
+                                                              print(formattedDate);
+
+                                                              var result = await FirebaseFirestore.instance
+                                                                  .collection("Condominio")
+                                                                  .doc('condominio')
+                                                                  .get();
+
+                                                              Map tags = (result.get('tags'));
+                                                              List tagsDisponiveis = [];
+
+                                                              print(tags.values.contains('Usado'));
+
+                                                              tags.removeWhere((key, value) => value == 'Usado');
+                                                              tagsDisponiveis.addAll(tags.keys);
+
+                                                              print(tagsDisponiveis);
+                                                              print(tags.keys);
+
+                                                              Navigator.push(context,
+                                                                  MaterialPageRoute(builder: (context){
+                                                                    return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2, tagsDisponiveis);
+                                                                  }));
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                      if(documents['Status'] == 'Entrada'){
+                                                        final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar
+
+                                                        try {
+                                                          final result = await Process.run('ping', ['-c', '1', ip]);
+                                                          if (result.exitCode == 0) {
+                                                            print('Ping realizado com sucesso para o endereço $ip');
+                                                          } else {
+
+                                                            FirebaseFirestore.instance.collection('Autorizacoes').doc(documents['idDoc']).update({
+                                                              'DataSaida': DateTime.now(),
+                                                              'DataEntradaEmpresa': DateTime.now(),
+                                                              'Status': 'Liberado'
+                                                            });
+                                                            Fluttertoast.showToast(
+                                                              msg: 'A solicitação foi movida para a Saida.',
+                                                              toastLength: Toast.LENGTH_SHORT,
+                                                              timeInSecForIosWeb: 1,
+                                                              backgroundColor: Colors.black,
+                                                              textColor: Colors.white,
+                                                              fontSize: 16.0,
+                                                            );
+
+                                                            print('Falha no ping para o endereço $ip');
+                                                          }
+                                                        } catch (e) {
+                                                          print('Erro ao executar o comando de ping: $e');
+                                                        }
+                                                      }
+
+                                                    },
+                                                    child: Text(
+                                                      documents['PlacaVeiculo'],
+                                                      style: TextStyle(
+                                                          fontSize: tamanhotextobtns,
+                                                          fontWeight: FontWeight.bold
+                                                      ),
+                                                    )
+                                                ),
+                                                Container(
+                                                  padding: const EdgeInsets.all(16),
+                                                  child: Text(
+                                                    'Status: \n' +
+                                                        documents['Status'],
+                                                    style: TextStyle(
+                                                        fontSize: tamanhotexto,
+                                                        fontWeight: FontWeight.bold,
+                                                        color: textColor
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                    }
+                                    ).toList().reversed.toList(),
+                                  );
+                                },
+                              ),
+                            );
+                          }
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Container(
+                    width: 180,
+                    height: 180,
+                    padding: const EdgeInsets.all(16),
+                    child:
+                    Image.asset(
+                      'assets/sanca.png',
+                      fit: BoxFit.contain,
+                    )
+                ),
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  child:
+                  Text(
+                    'Operador: ' + widget.porteiroName,
+                    style: TextStyle(
+                        fontSize: tamanhotexto
                     ),
-                  ],
+                  ),
                 ),
               ],
             ),
