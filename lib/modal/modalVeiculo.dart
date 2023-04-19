@@ -615,112 +615,124 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         fontSize: 16.0,
                       );
                     }else{
-                      //Ele vai verificar se o usuario está bloqueado ou não.
-                      print("chegou aqui");
+                      if(VeiculoPlaca!.length != 8){
+                        Fluttertoast.showToast(
+                          msg: 'A placa está escrita errada, faltam caracteres!',
+                          toastLength: Toast.LENGTH_SHORT,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.black,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
+                      }else{
 
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return const AlertDialog(
-                            title: Text('Aguarde!'),
-                            actions: [
-                              Center(
-                                child: CircularProgressIndicator(),
-                              )
-                            ],
-                          );
-                        },
-                      );
+                        //Ele vai verificar se o usuario está bloqueado ou não.
+                        print("chegou aqui");
 
-                      var result = await FirebaseFirestore.instance
-                          .collection("VeiculosBloqueados")
-                          .get();
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return const AlertDialog(
+                              title: Text('Aguarde!'),
+                              actions: [
+                                Center(
+                                  child: CircularProgressIndicator(),
+                                )
+                              ],
+                            );
+                          },
+                        );
 
-                      for (var res in result.docs) {
+                        var result = await FirebaseFirestore.instance
+                            .collection("VeiculosBloqueados")
+                            .get();
 
-                        for (int i = result.docs.length; i >= 1; i--) {
+                        for (var res in result.docs) {
 
-                          if(i == result.docs.length){
+                          for (int i = result.docs.length; i >= 1; i--) {
 
-                            print(res.data()['placa']);
+                            if(i == result.docs.length){
 
-                            if(res.data()['placa'] == VeiculoPlaca){
+                              print(res.data()['placa']);
 
-                              Fluttertoast.showToast(
-                                msg: 'Este veiculo está bloqueado!',
-                                toastLength: Toast.LENGTH_SHORT,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.black,
-                                textColor: Colors.white,
-                                fontSize: 16.0,
-                              );
-                              //Fez uma vez agora ele vai verificar se o motorista também está bloqueado!
-                              print("chegou aqui");
+                              if(res.data()['placa'] == VeiculoPlaca){
+
+                                Fluttertoast.showToast(
+                                  msg: 'Este veiculo está bloqueado!',
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.black,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0,
+                                );
+                                //Fez uma vez agora ele vai verificar se o motorista também está bloqueado!
+                                print("chegou aqui");
 
 
-                              var result = await FirebaseFirestore.instance
-                                  .collection("VisitantesBloqueados")
-                                  .get();
+                                var result = await FirebaseFirestore.instance
+                                    .collection("VisitantesBloqueados")
+                                    .get();
 
-                              for (var res in result.docs) {
+                                for (var res in result.docs) {
 
-                                for (int i = result.docs.length; i >= 1; i--) {
+                                  for (int i = result.docs.length; i >= 1; i--) {
 
-                                  if(i == result.docs.length){
+                                    if(i == result.docs.length){
 
-                                    print(res.data()['rg']);
+                                      print(res.data()['rg']);
 
-                                    if(res.data()['rg'] == RGMotorista){
-                                      Navigator.of(context).pop();
-                                      Fluttertoast.showToast(
-                                        msg: 'Este visitante está bloqueado!',
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: Colors.black,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0,
-                                      );
+                                      if(res.data()['rg'] == RGMotorista){
+                                        Navigator.of(context).pop();
+                                        Fluttertoast.showToast(
+                                          msg: 'Este visitante está bloqueado!',
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.black,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0,
+                                        );
+                                      }
                                     }
                                   }
                                 }
-                              }
 
-                            }else{
-                              //Fez uma vez agora ele vai verificar se o motorista também está bloqueado!
-                              print("chegou aqui");
+                              }else{
+                                //Fez uma vez agora ele vai verificar se o motorista também está bloqueado!
+                                print("chegou aqui");
 
-                              var result = await FirebaseFirestore.instance
-                                  .collection("VisitantesBloqueados")
-                                  .get();
+                                var result = await FirebaseFirestore.instance
+                                    .collection("VisitantesBloqueados")
+                                    .get();
 
-                              for (var res in result.docs) {
+                                for (var res in result.docs) {
 
-                                for (int i = result.docs.length; i >= 1; i--) {
+                                  for (int i = result.docs.length; i >= 1; i--) {
 
-                                  if(i == result.docs.length){
+                                    if(i == result.docs.length){
 
-                                    print(res.data()['rg']);
+                                      print(res.data()['rg']);
 
-                                    if(res.data()['rg'] == RGMotorista){
+                                      if(res.data()['rg'] == RGMotorista){
 
-                                      Fluttertoast.showToast(
-                                        msg: 'Este visitante está bloqueado!',
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: Colors.black,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0,
-                                      );
-                                      Navigator.of(context).pop();
+                                        Fluttertoast.showToast(
+                                          msg: 'Este visitante está bloqueado!',
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.black,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0,
+                                        );
+                                        Navigator.of(context).pop();
 
-                                    }else{
+                                      }else{
 
-                                      if(veiculoInterno == true){
-                                        Status = 'Em Verificação';
+                                        if(veiculoInterno == true){
+                                          Status = 'Em Verificação';
+                                        }
+
+                                        MandarMT();
+
                                       }
-
-                                      MandarMT();
-
                                     }
                                   }
                                 }
@@ -841,8 +853,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
                     String valorpuro = valor.toUpperCase();
                     VeiculoPlaca = valorpuro.replaceAllMapped(
-                      RegExp(r'^([a-zA-Z]{3})([0-9]{4})$'),
-                          (Match m) => '${m[1]}-${m[2]}',
+                      RegExp(r'^([a-zA-Z]{3})([0-9a-zA-Z]{4})$'),
+                          (Match m) => '${m[1]} ${m[2]}',
                     );
                     //Mudou mandou para a String
                   },
@@ -862,10 +874,22 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   onChanged: (valor){
                     placaveiculointerface.text = VeiculoPlaca!;
                     String valorpuro = valor.toUpperCase();
+
                     telefone = valorpuro.replaceAllMapped(
-                      RegExp(r'^([0-9]{2})([0-9]{5})([0-9]{4})$'),
-                          (Match m) => '${m[1]} ${m[2]}-${m[3]} ',
+                        RegExp(r'^([0-9]{2})([0-9]{5})([0-9]{4})$'),
+                            (Match m) => '${m[1]} ${m[2]}-${m[3]} '
                     );
+                    if(VeiculoPlaca!.length != 8){
+                      Fluttertoast.showToast(
+                        msg: 'A placa está escrita errada, faltam caracteres!',
+                        toastLength: Toast.LENGTH_SHORT,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.black,
+                        textColor: Colors.white,
+                        fontSize: 16.0,
+                      );
+                    }
+
                     //Mudou mandou para a String
                   },
                   keyboardType: TextInputType.number,
@@ -886,6 +910,18 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   onChanged: (valor){
                     originEmpresa = valor;
                     telefoneinterface.text = telefone!;
+
+                    if(telefone!.length != 11){
+                      Fluttertoast.showToast(
+                        msg: 'O telefone faltam numeros, faltam caracteres!',
+                        toastLength: Toast.LENGTH_SHORT,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.black,
+                        textColor: Colors.white,
+                        fontSize: 16.0,
+                      );
+                    }
+
                     //Mudou mandou para a String
                   },
                   decoration: const InputDecoration(
