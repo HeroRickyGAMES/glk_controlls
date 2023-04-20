@@ -93,7 +93,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                   autocorrect: false,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Nome Completo *',
+                    hintText: 'Nome completo *',
                     hintStyle: TextStyle(
                         fontSize: 18
                     ),
@@ -112,7 +112,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                   autocorrect: false,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'RG * ',
+                    hintText: 'RG (Sem o dígito) * ',
                     hintStyle: TextStyle(
                         fontSize: 18
                     ),
@@ -131,7 +131,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                   autocorrect: false,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Telefone *',
+                    hintText: 'Telefone',
                     hintStyle: TextStyle(
                         fontSize: 18
                     ),
@@ -244,21 +244,20 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                             fontSize: 18,
                           );
                         }else{
-                          if(telNum == ''){
 
+                          if(email == ''){
                             Fluttertoast.showToast(
-                              msg: 'Preencha o telefone!',
+                              msg: 'Preencha o email!',
                               toastLength: Toast.LENGTH_SHORT,
                               timeInSecForIosWeb: 1,
                               backgroundColor: Colors.black,
                               textColor: Colors.white,
                               fontSize: 18,
                             );
-
                           }else{
-                            if(email == ''){
+                            if(empresaSelecionada == ''){
                               Fluttertoast.showToast(
-                                msg: 'Preencha o email!',
+                                msg: 'Selecione a empresa que o Operador irá trabalhar!',
                                 toastLength: Toast.LENGTH_SHORT,
                                 timeInSecForIosWeb: 1,
                                 backgroundColor: Colors.black,
@@ -266,9 +265,9 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                                 fontSize: 18,
                               );
                             }else{
-                              if(empresaSelecionada == ''){
+                              if(pass == ''){
                                 Fluttertoast.showToast(
-                                  msg: 'Selecione a empresa que o Operador irá trabalhar!',
+                                  msg: 'Preencha a senha!',
                                   toastLength: Toast.LENGTH_SHORT,
                                   timeInSecForIosWeb: 1,
                                   backgroundColor: Colors.black,
@@ -276,130 +275,119 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                                   fontSize: 18,
                                 );
                               }else{
-                                if(pass == ''){
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return const AlertDialog(
+                                      title: Text('Aguarde!'),
+                                      actions: [
+                                        Center(
+                                          child: CircularProgressIndicator(),
+                                        )
+                                      ],
+                                    );
+                                  },
+                                );
+
+                                List tst = [];
+                                List Names = [];
+
+                                final usersCollection = FirebaseFirestore.instance.collection('empresa');
+                                final snapshot = await usersCollection.get();
+                                final documents = snapshot.docs;
+
+                                for (final doc in documents) {
+
+                                  print(documents.length);
+
+                                  tst.addAll(documents);
+                                  final id = doc.id;
+                                  IDSe = id;
+                                  empresaSelecionada = empresaSelecionada.replaceAll(IDSe, '');
+                                  print(empresaSelecionada);
+
+                                  final name = doc.get('nome');
+                                  print('$id - $name');
+
+                                  Names.add(name);
+
+
+
+                                  NamesE = name;
+
+                                  empresaID = empresaID.replaceAll(NamesE, '');
+                                  empresaSelecionada = empresaSelecionada.replaceAll(IDSe, '');
+
+
+                                  print('ID Empresa: ' + empresaID);
+                                  print('Empresa Selecionada ' + empresaSelecionada);
+
+                                  print(Names);
+                                }
+                                FirebaseApp app = await Firebase.initializeApp(
+                                    name: 'Secondary', options: Firebase.app().options);
+                                try {
+                                  UserCredential userCredential = await FirebaseAuth.instanceFor(app: app)
+                                      .createUserWithEmailAndPassword(email: email, password: pass);
+
                                   Fluttertoast.showToast(
-                                    msg: 'Preencha a senha!',
+                                    msg: 'Cadastrando Operador Empresarial...',
                                     toastLength: Toast.LENGTH_SHORT,
                                     timeInSecForIosWeb: 1,
                                     backgroundColor: Colors.black,
                                     textColor: Colors.white,
                                     fontSize: 18,
                                   );
-                                }else{
-                                  showDialog(
-                                    context: context,
-                                    builder: (BuildContext context) {
-                                      return const AlertDialog(
-                                        title: Text('Aguarde!'),
-                                        actions: [
-                                          Center(
-                                            child: CircularProgressIndicator(),
-                                          )
-                                        ],
-                                      );
-                                    },
+                                  FirebaseFirestore.instance.collection('operadorEmpresarial').doc(userCredential.user?.uid).set(
+                                      {
+                                        'nome': nomeComp,
+                                        'RG': RG,
+                                        'Telefone': telNum,
+                                        'email': email,
+                                        'tipoConta': 'operadorEmpresarial',
+                                        'empresa': empresaSelecionada,
+                                        'idEmpresa': empresaID,
+                                        'estaativo': true,
+                                        'id': userCredential.user?.uid
+                                      }
                                   );
-
-                                  List tst = [];
-                                  List Names = [];
-
-                                  final usersCollection = FirebaseFirestore.instance.collection('empresa');
-                                  final snapshot = await usersCollection.get();
-                                  final documents = snapshot.docs;
-
-                                  for (final doc in documents) {
-
-                                    print(documents.length);
-
-                                    tst.addAll(documents);
-                                    final id = doc.id;
-                                    IDSe = id;
-                                    empresaSelecionada = empresaSelecionada.replaceAll(IDSe, '');
-                                    print(empresaSelecionada);
-
-                                    final name = doc.get('nome');
-                                    print('$id - $name');
-
-                                    Names.add(name);
-
-
-
-                                    NamesE = name;
-
-                                    empresaID = empresaID.replaceAll(NamesE, '');
-                                    empresaSelecionada = empresaSelecionada.replaceAll(IDSe, '');
-
-
-                                    print('ID Empresa: ' + empresaID);
-                                    print('Empresa Selecionada ' + empresaSelecionada);
-
-                                    print(Names);
-                                  }
-                                  FirebaseApp app = await Firebase.initializeApp(
-                                      name: 'Secondary', options: Firebase.app().options);
-                                  try {
-                                    UserCredential userCredential = await FirebaseAuth.instanceFor(app: app)
-                                        .createUserWithEmailAndPassword(email: email, password: pass);
-
+                                  FirebaseFirestore.instance.collection('Users').doc(userCredential.user?.uid).set(
+                                      {
+                                        'nome': nomeComp,
+                                        'RG': RG,
+                                        'Telefone': telNum,
+                                        'email': email,
+                                        'tipoConta': 'operadorEmpresarial',
+                                        'empresa': empresaSelecionada,
+                                        'idEmpresa': empresaID,
+                                        'estaativo': true,
+                                        'id': userCredential.user?.uid
+                                      }
+                                  ).then((value) {
                                     Fluttertoast.showToast(
-                                      msg: 'Cadastrando Operador Empresarial...',
+                                      msg: 'Operador Empresarial cadastrado com sucesso!',
                                       toastLength: Toast.LENGTH_SHORT,
                                       timeInSecForIosWeb: 1,
                                       backgroundColor: Colors.black,
                                       textColor: Colors.white,
                                       fontSize: 18,
                                     );
-                                    FirebaseFirestore.instance.collection('operadorEmpresarial').doc(userCredential.user?.uid).set(
-                                        {
-                                          'nome': nomeComp,
-                                          'RG': RG,
-                                          'Telefone': telNum,
-                                          'email': email,
-                                          'tipoConta': 'operadorEmpresarial',
-                                          'empresa': empresaSelecionada,
-                                          'idEmpresa': empresaID,
-                                          'estaativo': true,
-                                          'id': userCredential.user?.uid
-                                        }
-                                    );
-                                    FirebaseFirestore.instance.collection('Users').doc(userCredential.user?.uid).set(
-                                        {
-                                          'nome': nomeComp,
-                                          'RG': RG,
-                                          'Telefone': telNum,
-                                          'email': email,
-                                          'tipoConta': 'operadorEmpresarial',
-                                          'empresa': empresaSelecionada,
-                                          'idEmpresa': empresaID,
-                                          'estaativo': true,
-                                          'id': userCredential.user?.uid
-                                        }
-                                    ).then((value) {
-                                      Fluttertoast.showToast(
-                                        msg: 'Operador Empresarial cadastrado com sucesso!',
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: Colors.black,
-                                        textColor: Colors.white,
-                                        fontSize: 18,
-                                      );
-                                      widget.listaNome.clear();
-                                      Navigator.of(context).pop();
-                                      Navigator.pop(context);
-                                    });
-                                  }
-                                  on FirebaseAuthException catch (e) {
-                                    Fluttertoast.showToast(
-                                      msg: e.message.toString(),
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      timeInSecForIosWeb: 1,
-                                      backgroundColor: Colors.black,
-                                      textColor: Colors.white,
-                                      fontSize: 18,
-                                    );
-                                  }
-                                  await app.delete();
+                                    widget.listaNome.clear();
+                                    Navigator.of(context).pop();
+                                    Navigator.pop(context);
+                                  });
                                 }
+                                on FirebaseAuthException catch (e) {
+                                  Fluttertoast.showToast(
+                                    msg: e.message.toString(),
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.black,
+                                    textColor: Colors.white,
+                                    fontSize: 18,
+                                  );
+                                }
+                                await app.delete();
                               }
                             }
                           }

@@ -93,7 +93,7 @@ class _operadorInternoState extends State<operadorInterno> {
                   autocorrect: false,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Telefone *',
+                    hintText: 'Telefone',
                     hintStyle: TextStyle(
                         fontSize: 16
                     ),
@@ -248,9 +248,10 @@ class _operadorInternoState extends State<operadorInterno> {
                           fontSize: 16,
                         );
                       }else{
-                        if(telNum == ''){
+
+                        if(email == ''){
                           Fluttertoast.showToast(
-                            msg: 'Preencha o número de telefone!',
+                            msg: 'Preencha o Email!',
                             toastLength: Toast.LENGTH_SHORT,
                             timeInSecForIosWeb: 1,
                             backgroundColor: Colors.black,
@@ -258,9 +259,9 @@ class _operadorInternoState extends State<operadorInterno> {
                             fontSize: 16,
                           );
                         }else{
-                          if(email == ''){
+                          if(pass == ''){
                             Fluttertoast.showToast(
-                              msg: 'Preencha o Email!',
+                              msg: 'Preencha a senha!',
                               toastLength: Toast.LENGTH_SHORT,
                               timeInSecForIosWeb: 1,
                               backgroundColor: Colors.black,
@@ -268,90 +269,79 @@ class _operadorInternoState extends State<operadorInterno> {
                               fontSize: 16,
                             );
                           }else{
-                            if(pass == ''){
+
+                            //todo
+
+                            FirebaseApp app = await Firebase.initializeApp(
+                                name: 'Secondary', options: Firebase.app().options);
+                            try {
+                              UserCredential userCredential = await FirebaseAuth.instanceFor(app: app)
+                                  .createUserWithEmailAndPassword(email: email, password: pass);
+
                               Fluttertoast.showToast(
-                                msg: 'Preencha a senha!',
+                                msg: 'Cadastrando operador interno...',
                                 toastLength: Toast.LENGTH_SHORT,
                                 timeInSecForIosWeb: 1,
                                 backgroundColor: Colors.black,
                                 textColor: Colors.white,
                                 fontSize: 16,
                               );
-                            }else{
-
-                              //todo
-
-                              FirebaseApp app = await Firebase.initializeApp(
-                                  name: 'Secondary', options: Firebase.app().options);
-                              try {
-                                UserCredential userCredential = await FirebaseAuth.instanceFor(app: app)
-                                    .createUserWithEmailAndPassword(email: email, password: pass);
-
+                              FirebaseFirestore.instance.collection('porteiro').doc(userCredential.user?.uid).set(
+                                  {
+                                    'nome': nomeComp,
+                                    'RG': RG,
+                                    'Telefone': telNum,
+                                    'email': email,
+                                    'painel': painelbool,
+                                    'relatorio': relatoriosbool,
+                                    'entrada': entradabool,
+                                    'cadastrar': cadastrarbool,
+                                    'saida': saidabool,
+                                    'tipoConta': 'porteiro',
+                                    'estaativo': true,
+                                    'id': userCredential.user?.uid,
+                                  }
+                              );
+                              FirebaseFirestore.instance.collection('Users').doc(userCredential.user?.uid).set(
+                                  {
+                                    'nome': nomeComp,
+                                    'RG': RG,
+                                    'Telefone': telNum,
+                                    'email': email,
+                                    'painel': painelbool,
+                                    'relatorio': relatoriosbool,
+                                    'entrada': entradabool,
+                                    'cadastrar': cadastrarbool,
+                                    'saida': saidabool,
+                                    'tipoConta': 'porteiro',
+                                    'estaativo': true,
+                                    'id': userCredential.user?.uid
+                                  }
+                              ).then((value) {
                                 Fluttertoast.showToast(
-                                  msg: 'Cadastrando operador interno...',
+                                  msg: 'operador interno cadastrada com sucesso!',
                                   toastLength: Toast.LENGTH_SHORT,
                                   timeInSecForIosWeb: 1,
                                   backgroundColor: Colors.black,
                                   textColor: Colors.white,
                                   fontSize: 16,
                                 );
-                                FirebaseFirestore.instance.collection('porteiro').doc(userCredential.user?.uid).set(
-                                    {
-                                      'nome': nomeComp,
-                                      'RG': RG,
-                                      'Telefone': telNum,
-                                      'email': email,
-                                      'painel': painelbool,
-                                      'relatorio': relatoriosbool,
-                                      'entrada': entradabool,
-                                      'cadastrar': cadastrarbool,
-                                      'saida': saidabool,
-                                      'tipoConta': 'porteiro',
-                                      'estaativo': true,
-                                      'id': userCredential.user?.uid,
-                                    }
-                                );
-                                FirebaseFirestore.instance.collection('Users').doc(userCredential.user?.uid).set(
-                                    {
-                                      'nome': nomeComp,
-                                      'RG': RG,
-                                      'Telefone': telNum,
-                                      'email': email,
-                                      'painel': painelbool,
-                                      'relatorio': relatoriosbool,
-                                      'entrada': entradabool,
-                                      'cadastrar': cadastrarbool,
-                                      'saida': saidabool,
-                                      'tipoConta': 'porteiro',
-                                      'estaativo': true,
-                                      'id': userCredential.user?.uid
-                                    }
-                                ).then((value) {
-                                  Fluttertoast.showToast(
-                                    msg: 'operador interno cadastrada com sucesso!',
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    timeInSecForIosWeb: 1,
-                                    backgroundColor: Colors.black,
-                                    textColor: Colors.white,
-                                    fontSize: 16,
-                                  );
-                                  Navigator.pop(context);
-                                });
-
-                              }
-                              on FirebaseAuthException catch (e) {
-                                Fluttertoast.showToast(
-                                  msg: e.message.toString(),
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  timeInSecForIosWeb: 1,
-                                  backgroundColor: Colors.black,
-                                  textColor: Colors.white,
-                                  fontSize: 16,
-                                );
-                              }
-                              await app.delete();
+                                Navigator.pop(context);
+                              });
 
                             }
+                            on FirebaseAuthException catch (e) {
+                              Fluttertoast.showToast(
+                                msg: e.message.toString(),
+                                toastLength: Toast.LENGTH_SHORT,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.black,
+                                textColor: Colors.white,
+                                fontSize: 16,
+                              );
+                            }
+                            await app.delete();
+
                           }
                         }
                       }

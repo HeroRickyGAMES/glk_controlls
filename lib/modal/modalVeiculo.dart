@@ -753,7 +753,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('GLK Controls - Cadastro: Motorista e Veiculo'),
+        title: const Text('Cadastro Motorista'),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -778,7 +778,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   autocorrect: false,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Nome Completo do Motorista *',
+                    hintText: 'Nome completo do motorista *',
                     hintStyle: TextStyle(
                         fontSize: 16
                     ),
@@ -798,7 +798,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   autocorrect: false,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'RG do Motorista (Sem digitos) * ',
+                    hintText: 'RG do motorista * ',
                     hintStyle: TextStyle(
                         fontSize: 16
                     ),
