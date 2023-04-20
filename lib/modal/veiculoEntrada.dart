@@ -280,7 +280,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                       if(lacrebool == false){
                         FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                           'DataSaida': DateTime.now(),
-                          'Status': 'Liberado'
+                          'Status': 'Liberado Saida'
                         });
                         Navigator.pop(context);
                       }
@@ -298,7 +298,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                         }else{
                           FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                             'DataSaida': DateTime.now(),
-                            'Status': 'Liberado'
+                            'Status': 'Liberado Saida'
                           });
                           Navigator.pop(context);
                         }
@@ -308,7 +308,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                     if(lacrebool == false){
                       FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                         'DataSaida': DateTime.now(),
-                        'Status': 'Liberado'
+                        'Status': 'Liberado Saida'
                       });
                       Navigator.pop(context);
                     }
@@ -326,7 +326,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                       }else{
                         FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                           'DataSaida': DateTime.now(),
-                          'Status': 'Liberado'
+                          'Status': 'Liberado Saida'
                         });
                         Navigator.pop(context);
                       }

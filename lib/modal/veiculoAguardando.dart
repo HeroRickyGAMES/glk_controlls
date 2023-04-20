@@ -977,7 +977,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                                     'uriImage2': imageUrl2,
                                     'uriImage3': imageUrl3,
                                     'uriImage4': imageUrl4,
-                                    'Status': 'Entrada',
+                                    'Status': 'Estacionário',
                                     'tag': tagSelecionada
                                   }).then((value) async {
                                     Fluttertoast.showToast(
@@ -1017,7 +1017,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                                     'LacreouNao': 'naolacrado',
                                     'DataDeAnalise': DateTime.now(),
                                     'tag': tagSelecionada,
-                                    'Status': 'Entrada',
+                                    'Status': 'Estacionário',
                                   });
 
                                   var result = await FirebaseFirestore.instance
@@ -1149,7 +1149,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                                       'uriImage2': imageUrl2,
                                       'uriImage3': imageUrl3,
                                       'uriImage4': imageUrl4,
-                                      'Status': 'Entrada',
+                                      'Status': 'Estacionário',
                                       'DataDeAnalise': DateTime.now(),
                                       'tag': tagSelecionada,
                                     }).then((value) {
@@ -1188,7 +1188,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                                     FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                                       'verificadoPor': widget.empresaName,
                                       'LacreouNao': 'lacre',
-                                      'Status': 'Entrada',
+                                      'Status': 'Estacionário',
                                       'tag': tagSelecionada,
                                       'DataDeAnalise': DateTime.now(),
 

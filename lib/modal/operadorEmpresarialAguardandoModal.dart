@@ -335,7 +335,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                           FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                             'DataEntradaEmpresa': DateTime.now(),
                             'Galpão': galpaoSelecionado,
-                            'Status': 'Em Verificação'
+                            'Status': 'Liberado Entrada'
                           }).then((value){
                             FirebaseFirestore.instance.collection('empresa').doc(widget.UIDEmpresa).update(
                                 {
@@ -372,7 +372,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                             FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                               'DataEntradaEmpresa': DateTime.now(),
                               'Galpão': galpaoSelecionado,
-                              'Status': 'Em Verificação'
+                              'Status': 'Liberado Entrada'
                             }).then((value){
 
                               FirebaseFirestore.instance.collection('empresa').doc(widget.UIDEmpresa).update(

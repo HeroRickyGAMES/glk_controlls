@@ -299,11 +299,11 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                       Color color = Colors.white as Color;
                                       Color textColor = Colors.white as Color;
 
-                                      if(documents['Status'] == 'Aguardando'){
+                                      if(documents['Status'] == 'Aguardando Liberação'){
                                         color = Colors.red[400] as Color;
                                         textColor = Colors.white as Color;
                                       }
-                                      if(documents['Status'] == 'Em Verificação'){
+                                      if(documents['Status'] == 'Liberado Entrada'){
                                         color = Colors.grey as Color;
                                         textColor = Colors.white as Color;
                                       }
@@ -313,12 +313,12 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                         textColor = Colors.white as Color;
                                       }
 
-                                      if(documents['Status'] == 'Entrada'){
+                                      if(documents['Status'] == 'Estacionário'){
                                         color = Colors.yellow[400] as Color;
                                         textColor = Colors.black as Color;
                                       }
 
-                                      if(documents['Status'] == 'Liberado'){
+                                      if(documents['Status'] == 'Liberado Saida'){
                                         color = Colors.yellow[400] as Color;
                                         textColor = Colors.black as Color;
                                       }
@@ -355,7 +355,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                                         .doc(UID)
                                                         .get();
 
-                                                    if(documents['Status'] == 'Entrada' ){
+                                                    if(documents['Status'] == 'Estacionário' ){
 
                                                       String lacre = documents['LacreouNao'];
 
@@ -416,7 +416,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                                       }
                                                     }
 
-                                                    if(documents['Status'] == 'Aguardando'){
+                                                    if(documents['Status'] == 'Aguardando Liberação'){
                                                       if(lacre == 'lacre'){
 
 

@@ -198,7 +198,7 @@ class _listaSaidaState extends State<listaSaida> {
                         stream: FirebaseFirestore
                             .instance
                             .collection('Autorizacoes')
-                            .where('Status', isEqualTo: 'Saida')
+                            .where('Status', isEqualTo: 'Liberado Saida')
                         //.orderBy("Status", descending: true)
                             .snapshots(),
                         builder: (BuildContext context,
@@ -257,11 +257,11 @@ class _listaSaidaState extends State<listaSaida> {
                                     Color color = Colors.white as Color;
                                     Color textColor = Colors.white as Color;
 
-                                    if(documents['Status'] == 'Aguardando'){
+                                    if(documents['Status'] == 'Aguardando Liberação'){
                                       color = Colors.red[400] as Color;
                                       textColor = Colors.white as Color;
                                     }
-                                    if(documents['Status'] == 'Em Verificação'){
+                                    if(documents['Status'] == 'Liberado Entrada'){
                                       color = Colors.grey as Color;
                                       textColor = Colors.white as Color;
                                     }
@@ -271,12 +271,12 @@ class _listaSaidaState extends State<listaSaida> {
                                       textColor = Colors.white as Color;
                                     }
 
-                                    if(documents['Status'] == 'Entrada'){
+                                    if(documents['Status'] == 'Estacionário'){
                                       color = Colors.yellow[400] as Color;
                                       textColor = Colors.black as Color;
                                     }
 
-                                    if(documents['Status'] == 'Liberado'){
+                                    if(documents['Status'] == 'Liberado Saida'){
                                       color = Colors.yellow[400] as Color;
                                       textColor = Colors.black as Color;
                                     }

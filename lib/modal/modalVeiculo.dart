@@ -55,10 +55,10 @@ class _modalPorteiroState extends State<modalPorteiro> {
       final result = await Process.run('ping', ['-c', '1', ip]);
       if (result.exitCode == 0) {
         print('Ping realizado com sucesso para o endereço $ip');
-        Status = 'Aguardando';
+        Status = 'Aguardando Liberação';
       } else {
         print('Falha no ping para o endereço $ip');
-        Status = 'Em Verificação';
+        Status = 'Estacionário';
       }
     } catch (e) {
       print('Erro ao executar o comando de ping: $e');
@@ -727,7 +727,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                       }else{
 
                                         if(veiculoInterno == true){
-                                          Status = 'Em Verificação';
+                                          Status = 'Estacionário';
                                         }
 
                                         MandarMT();
@@ -911,16 +911,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     originEmpresa = valor;
                     telefoneinterface.text = telefone!;
 
-                    if(telefone!.length != 11){
-                      Fluttertoast.showToast(
-                        msg: 'O telefone faltam numeros, faltam caracteres!',
-                        toastLength: Toast.LENGTH_SHORT,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.black,
-                        textColor: Colors.white,
-                        fontSize: 16.0,
-                      );
-                    }
 
                     //Mudou mandou para a String
                   },

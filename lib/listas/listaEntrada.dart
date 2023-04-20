@@ -274,7 +274,7 @@ class _listEntradaState extends State<listEntrada> {
                           stream: FirebaseFirestore
                               .instance
                               .collection('Autorizacoes')
-                              .where('Status', isEqualTo: 'Em Verificação')
+                              .where('Status', isEqualTo: 'Liberado Entrada')
                               //.orderBy("Status", descending: true)
                               .snapshots(),
                           builder: (BuildContext context,
@@ -333,11 +333,11 @@ class _listEntradaState extends State<listEntrada> {
                                         Color color = Colors.white as Color;
                                         Color textColor = Colors.white as Color;
 
-                                        if(documents['Status'] == 'Aguardando'){
+                                        if(documents['Status'] == 'Aguardando Liberação'){
                                           color = Colors.red[400] as Color;
                                           textColor = Colors.white as Color;
                                         }
-                                        if(documents['Status'] == 'Em Verificação'){
+                                        if(documents['Status'] == 'Liberado Entrada'){
                                           color = Colors.grey as Color;
                                           textColor = Colors.white as Color;
                                         }
@@ -347,12 +347,12 @@ class _listEntradaState extends State<listEntrada> {
                                           textColor = Colors.white as Color;
                                         }
 
-                                        if(documents['Status'] == 'Entrada'){
+                                        if(documents['Status'] == 'Estacionário'){
                                           color = Colors.yellow[400] as Color;
                                           textColor = Colors.black as Color;
                                         }
 
-                                        if(documents['Status'] == 'Liberado'){
+                                        if(documents['Status'] == 'Liberado Saida'){
                                           color = Colors.yellow[400] as Color;
                                           textColor = Colors.black as Color;
                                         }
@@ -382,7 +382,7 @@ class _listEntradaState extends State<listEntrada> {
                                                 ElevatedButton(
                                                     onPressed: () async {
 
-                                                      if(documents['Status'] == 'Em Verificação'){
+                                                      if(documents['Status'] == 'Liberado Entrada'){
                                                         if(lacre == 'lacre'){
 
                                                           String formattedDate2;
