@@ -401,7 +401,7 @@ class _listEntradaState extends State<listEntrada> {
                                                           String PlacaVeiculo = documents['PlacaVeiculo'];
                                                           String Empresadestino = documents['Empresa'];
                                                           String EmpresadeOrigin = documents['EmpresadeOrigin'];
-                                                          String Galpao = documents['Galpão'];
+                                                          String Galpao = documents['galpaoPrimario'];
                                                           String lacradoStr = documents['lacrenum'];
                                                           String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
 
@@ -461,7 +461,7 @@ class _listEntradaState extends State<listEntrada> {
                                                             String PlacaVeiculo = documents['PlacaVeiculo'];
                                                             String Empresadestino = documents['Empresa'];
                                                             String EmpresadeOrigin = documents['EmpresadeOrigin'];
-                                                            String Galpao = documents['Galpão'];
+                                                            String Galpao = documents['galpaoPrimario'];
                                                             String verificadoPor = documents['verificadoPor'];
                                                             String formattedDate2 = '';
 

@@ -23,7 +23,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
   String? coletaouentrega;
   String? lacreounao;
   String? empresaSelecionada;
-
+  String galpaoPrimario = '';
   //fields
   String? nomeMotorista;
   String? RGMotorista;
@@ -206,7 +206,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
           var dateTime= new DateTime.now();
 
           var uuid = const Uuid();
-
           String idd = "${DateTime.now().toString()}" + uuid.v4();
           FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
             'nomeMotorista': nomeMotorista,
@@ -239,6 +238,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
             'Galpão': '',
             'motivo': motivo,
             'tag': '',
+            'galpaoPrimario': galpaoPrimario,
             'interno': veiculoInterno
           }).then((value) {
             Fluttertoast.showToast(
@@ -283,6 +283,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   FirebaseFirestore.instance.collection('Motoristas').doc().set({
                     'nomeMotorista': nomeMotorista,
                     'RGDoMotorista': RGMotorista,
+                    'galpaoPrimario': galpaoPrimario,
                   });
 
                   var resulte = await FirebaseFirestore.instance
@@ -307,7 +308,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
             print('Feito com sucesso!');
           });
         }
-
       }else{
         if(lacreounao == 'lacre'){
 
@@ -351,6 +351,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
             'Galpão': '',
             'motivo': motivo,
             'tag': '',
+            'galpaoPrimario': galpaoPrimario,
             'interno': veiculoInterno
           }).then((value) {
 
@@ -460,6 +461,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
             'Galpão': '',
             'tag': '',
             'motivo': motivo,
+            'galpaoPrimario': galpaoPrimario,
             'interno': veiculoInterno
           }).then((value) {
             Fluttertoast.showToast(
@@ -735,7 +737,24 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                           Status = 'Estacionário';
                                         }
 
-                                        MandarMT();
+                                        final usersCollection = FirebaseFirestore.instance.collection('empresa');
+                                        final snapshot = await usersCollection.get();
+                                        final documents = snapshot.docs;
+                                        for (final doc in documents) {
+                                          final id = doc.id;
+                                          final name = doc.get('nome');
+                                          print('$id - $name');
+
+                                          if(doc.get('nome') == empresaSelecionada){
+                                            galpaoPrimario = doc.get('galpaoPrimario');
+                                            print(galpaoPrimario);
+
+                                            MandarMT();
+
+                                          }
+
+
+                                        }
 
                                       }
                                     }
