@@ -29,6 +29,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
   String? RGMotorista;
   String? Veiculo;
   String? telefone = '';
+  String motivo = '';
   String DataEntradaEmpresa = '';
   String? VeiculoPlaca;
   String? originEmpresa;
@@ -128,6 +129,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
             'liberouSaida': '',
             'Galpão': '',
             'tag': '',
+            'motivo': motivo,
             'interno': veiculoInterno
           }).then((value) {
 
@@ -235,6 +237,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
             'DateSaidaPortaria': '',
             'liberouSaida': '',
             'Galpão': '',
+            'motivo': motivo,
             'tag': '',
             'interno': veiculoInterno
           }).then((value) {
@@ -346,6 +349,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
             'DateSaidaPortaria': '',
             'liberouSaida': '',
             'Galpão': '',
+            'motivo': motivo,
             'tag': '',
             'interno': veiculoInterno
           }).then((value) {
@@ -455,6 +459,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
             'liberouSaida': '',
             'Galpão': '',
             'tag': '',
+            'motivo': motivo,
             'interno': veiculoInterno
           }).then((value) {
             Fluttertoast.showToast(
@@ -910,13 +915,27 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   onChanged: (valor){
                     originEmpresa = valor;
                     telefoneinterface.text = telefone!;
-
-
                     //Mudou mandou para a String
                   },
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Empresa de Origem',
+                    hintStyle: TextStyle(
+                        fontSize: 16
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.only(top: 16),
+                child: TextFormField(
+                  onChanged: (valor){
+                    motivo = valor;
+                    //Mudou mandou para a String
+                  },
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Motivo',
                     hintStyle: TextStyle(
                         fontSize: 16
                     ),

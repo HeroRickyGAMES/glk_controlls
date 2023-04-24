@@ -24,6 +24,7 @@ class operadorEmpresarialAguardando extends StatefulWidget {
   String urlImage2 = '';
   String urlImage3 = '';
   String urlImage4 = '';
+  String motivo = '';
   Map Galpoes;
   String UIDEmpresa;
 
@@ -47,7 +48,9 @@ class operadorEmpresarialAguardando extends StatefulWidget {
       this.urlImage3,
       this.urlImage4,
       this.Galpoes,
-      this.UIDEmpresa, {super.key}
+      this.UIDEmpresa,
+      this.motivo,
+      {super.key}
       );
   @override
   State<operadorEmpresarialAguardando> createState() => _operadorEmpresarialAguardandoState();
@@ -165,6 +168,16 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
               child:
               Text(
                 'Empresa de origem: ' + widget.EmpresadeOrigin,
+                style: const TextStyle(
+                    fontSize: 16
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child:
+              Text(
+                'Motivo: ' + widget.motivo,
                 style: const TextStyle(
                     fontSize: 16
                 ),

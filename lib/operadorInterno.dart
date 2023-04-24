@@ -25,6 +25,7 @@ class _operadorInternoState extends State<operadorInterno> {
   bool entradabool = false;
   bool cadastrarbool = false;
   bool saidabool = false;
+  bool visivel = true;
 
   @override
   Widget build(BuildContext context) {
@@ -129,7 +130,7 @@ class _operadorInternoState extends State<operadorInterno> {
                   keyboardType: TextInputType.visiblePassword,
                   enableSuggestions: false,
                   autocorrect: false,
-                  obscureText: true,
+                  obscureText: visivel,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Senha *',
@@ -138,6 +139,20 @@ class _operadorInternoState extends State<operadorInterno> {
                     ),
                   ),
                 ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.remove_red_eye),
+                    onPressed: () {
+                      setState(() {
+                        visivel = !visivel;
+                      });
+                      print('Botão favorito pressionado!');
+                    },
+                  )
+                ],
               ),
               Column(
                 children: [
@@ -346,7 +361,6 @@ class _operadorInternoState extends State<operadorInterno> {
                         }
                       }
                     }
-
                   },
                   child: const Text(
                     'Cadastrar usuario',

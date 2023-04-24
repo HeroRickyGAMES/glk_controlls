@@ -48,6 +48,8 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
     'Moto',
   ];
 
+  String motivo = '';
+
   @override
   Widget build(BuildContext context) {
 
@@ -103,6 +105,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
           'Galpão': galpao,
           'Lacre': lacreSt,
           'tag': '',
+          'motivo': motivo,
           'interno': false
         }).then((value) async {
 
@@ -180,6 +183,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
           'liberouSaida': '',
           'Galpão': galpao,
           'tag': '',
+          'motivo': motivo,
           'interno': false
         }).then((value) async {
           Fluttertoast.showToast(
@@ -646,6 +650,22 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                   style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold
+                  ),
+                ),
+              ),
+              Container(
+                padding: const EdgeInsets.only(top: 16),
+                child: TextFormField(
+                  onChanged: (valor){
+                    motivo = valor;
+                    //Mudou mandou para a String
+                  },
+                  decoration: const InputDecoration(
+                    border: OutlineInputBorder(),
+                    hintText: 'Motivo',
+                    hintStyle: TextStyle(
+                        fontSize: 16
+                    ),
                   ),
                 ),
               ),

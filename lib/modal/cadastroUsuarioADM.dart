@@ -27,6 +27,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
   String empresaID = '';
   String IDSe = '';
   String NamesE = '';
+  bool visivel = true;
 
   casts() async {
     List tst = [];
@@ -167,7 +168,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                   keyboardType: TextInputType.visiblePassword,
                   enableSuggestions: false,
                   autocorrect: false,
-                  obscureText: true,
+                  obscureText: visivel,
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Senha * ',
@@ -176,6 +177,20 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                     ),
                   ),
                 ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.remove_red_eye),
+                    onPressed: () {
+                      setState(() {
+                        visivel = !visivel;
+                      });
+                      print('Botão favorito pressionado!');
+                    },
+                  )
+                ],
               ),
               Container(
                 padding: const EdgeInsets.all(16),
@@ -392,7 +407,6 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                             }
                           }
                         }
-
                       }
                     },
                     child: const Text(

@@ -449,6 +449,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                                                   String urlImage2 = documents['uriImage2'];
                                                                   String urlImage3 = documents['uriImage3'];
                                                                   String urlImage4 = documents['uriImage4'];
+                                                                  String motivo = documents['motivo'];
 
                                                                   String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
 
@@ -456,7 +457,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
 
                                                                   Navigator.push(context,
                                                                       MaterialPageRoute(builder: (context){
-                                                                        return operadorEmpresarialAguardando(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, verificadoPor, DataDeAnalise, urlImage1, urlImage2, urlImage3, urlImage4, Galpoes, IDEmpresa);
+                                                                        return operadorEmpresarialAguardando(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, verificadoPor, DataDeAnalise, urlImage1, urlImage2, urlImage3, urlImage4, Galpoes, IDEmpresa, motivo);
                                                                       }));
 
                                                                 }
@@ -497,6 +498,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                                                   String urlImage2 = documents['uriImage2'];
                                                                   String urlImage3 = documents['uriImage3'];
                                                                   String urlImage4 = documents['uriImage4'];
+                                                                  String motivo = documents['motivo'];
 
                                                                   String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
 
@@ -504,7 +506,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
 
                                                                   Navigator.push(context,
                                                                       MaterialPageRoute(builder: (context){
-                                                                        return operadorEmpresarialAguardando(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, verificadoPor, DataDeAnalise, urlImage1, urlImage2, urlImage3, urlImage4, Galpoes, IDEmpresa);
+                                                                        return operadorEmpresarialAguardando(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, verificadoPor, DataDeAnalise, urlImage1, urlImage2, urlImage3, urlImage4, Galpoes, IDEmpresa, motivo);
                                                                       }));
                                                                 }
                                                               }
