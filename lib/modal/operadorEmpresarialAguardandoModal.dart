@@ -177,7 +177,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                'Motivo: ' + widget.motivo,
+                'Observação: ' + widget.motivo,
                 style: const TextStyle(
                     fontSize: 16
                 ),

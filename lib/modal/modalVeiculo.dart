@@ -935,7 +935,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   },
                   decoration: const InputDecoration(
                     border: OutlineInputBorder(),
-                    hintText: 'Motivo',
+                    hintText: 'Observação',
                     hintStyle: TextStyle(
                         fontSize: 16
                     ),
