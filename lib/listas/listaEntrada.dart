@@ -17,7 +17,8 @@ import 'package:path_provider/path_provider.dart';
 
 class listEntrada extends StatefulWidget {
   String porteiroName;
-  listEntrada(this.porteiroName, {Key? key}) : super(key: key);
+  String Entrada;
+  listEntrada(this.porteiroName, this.Entrada, {Key? key}) : super(key: key);
 
   @override
   State<listEntrada> createState() => _listEntradaState();
@@ -447,7 +448,7 @@ class _listEntradaState extends State<listEntrada> {
 
                                                           Navigator.push(context,
                                                               MaterialPageRoute(builder: (context){
-                                                                return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, file, file2, file3, file, formattedDate2, tagsDisponiveis);
+                                                                return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, file, file2, file3, file, formattedDate2, tagsDisponiveis, widget.Entrada);
                                                               }));
 
                                                         }
@@ -515,7 +516,7 @@ class _listEntradaState extends State<listEntrada> {
 
                                                               Navigator.push(context,
                                                                   MaterialPageRoute(builder: (context){
-                                                                    return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2, tagsDisponiveis);
+                                                                    return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2, tagsDisponiveis, widget.Entrada);
                                                                   }));
 
                                                             }else{
@@ -568,7 +569,7 @@ class _listEntradaState extends State<listEntrada> {
 
                                                               Navigator.push(context,
                                                                   MaterialPageRoute(builder: (context){
-                                                                    return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2, tagsDisponiveis);
+                                                                    return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2, tagsDisponiveis, widget.Entrada);
                                                                   }));
                                                             }
                                                           }

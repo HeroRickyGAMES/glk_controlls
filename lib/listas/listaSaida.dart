@@ -13,7 +13,8 @@ import 'package:intl/intl.dart';
 
 class listaSaida extends StatefulWidget {
   String porteiroName;
-  listaSaida(this.porteiroName, {Key? key}) : super(key: key);
+  String Saida;
+  listaSaida(this.porteiroName, this.Saida, {Key? key}) : super(key: key);
 
   @override
   State<listaSaida> createState() => _listaSaidaState();
@@ -336,7 +337,7 @@ class _listaSaidaState extends State<listaSaida> {
 
                                                   Navigator.push(context,
                                                       MaterialPageRoute(builder: (context){
-                                                        return modalSaidaVeiculo(lacreounao, empresaName, liberadopor, horarioCriacao, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, empresaName, Galpao, lacradoStr, idDocumento, DatadeAnalise, verificadoPor, DateEntrada, empresaName, widget.porteiroName, DataSaida, tagSelecionada );
+                                                        return modalSaidaVeiculo(lacreounao, empresaName, liberadopor, horarioCriacao, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, empresaName, Galpao, lacradoStr, idDocumento, DatadeAnalise, verificadoPor, DateEntrada, empresaName, widget.porteiroName, DataSaida, tagSelecionada, widget.Saida);
                                                       }));
 
                                                 },

@@ -5,6 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/Painel.dart';
+import 'package:glk_controls/btnsVerificarEntrada.dart';
+import 'package:glk_controls/btnsVerificarSaida.dart';
 import 'package:glk_controls/listas/listaEntrada.dart';
 import 'package:glk_controls/offlineService/mainPorteiroOffline.dart';
 import 'package:glk_controls/relatorio.dart';
@@ -165,14 +167,14 @@ class _mainPorteiroState extends State<mainPorteiro> {
     entradaMT(){
       Navigator.push(context,
           MaterialPageRoute(builder: (context){
-            return listEntrada(widget.PorteiroNome);
+            return btnsVerificarEntrada(widget.PorteiroNome);
           }));
     }
 
     saidaMT(){
       Navigator.push(context,
           MaterialPageRoute(builder: (context){
-            return listaSaida(widget.PorteiroNome);
+            return btnsVerificarSaida(widget.PorteiroNome);
           }));
     }
 

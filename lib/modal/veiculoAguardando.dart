@@ -29,6 +29,7 @@ class veiculoAguardando extends StatefulWidget {
   File? imageFile4;
   List tagList;
   String DataAnaliseEmpresa;
+  String Entrada;
 
   veiculoAguardando(
       this.lacreounao,
@@ -48,7 +49,9 @@ class veiculoAguardando extends StatefulWidget {
       this.imageFile3,
       this.imageFile4,
       this.DataAnaliseEmpresa,
-      this.tagList, {super.key}
+      this.tagList,
+      this.Entrada,
+      {super.key}
       );
   @override
   State<veiculoAguardando> createState() => _veiculoAguardandoState();
@@ -212,7 +215,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
     callToVerifyReles() async {
       var result = await FirebaseFirestore.instance
           .collection("Reles")
-          .doc('Rele01')
+          .doc(widget.Entrada)
           .get();
 
       print('aqui');

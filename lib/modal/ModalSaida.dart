@@ -28,6 +28,7 @@ class modalSaidaVeiculo extends StatefulWidget {
   String porteiroName = '';
   String DataSaida = '';
   String tagSelecionada = '';
+  String Saida = '';
 
   modalSaidaVeiculo(
       this.lacreounao,
@@ -48,7 +49,9 @@ class modalSaidaVeiculo extends StatefulWidget {
       this.EmpresaDoc,
       this.porteiroName,
       this.DataSaida,
-      this.tagSelecionada, {super.key}
+      this.tagSelecionada,
+      this.Saida,
+      {super.key}
       );
   @override
   State<modalSaidaVeiculo> createState() => _modalSaidaVeiculoState();
