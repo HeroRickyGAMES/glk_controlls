@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:glk_controls/modal/cadastroEmpresa.dart';
 import 'package:glk_controls/modal/cadastroUsuarioADM.dart';
@@ -9,6 +12,9 @@ import 'package:glk_controls/subModais/bloqueiodeVisitantes.dart';
 import 'package:glk_controls/subModais/empresasCadastradas.dart';
 import 'package:glk_controls/modal/ReleModalConfig.dart';
 import 'package:glk_controls/listas/UsuariosCadastrados.dart';
+import 'package:http/http.dart' as http;
+
+import 'firebase_options.dart';
 //Programado por HeroRickyGames
 
 class painelADM extends StatefulWidget {
@@ -335,6 +341,49 @@ class _painelADMState extends State<painelADM> {
                         child:
                         const Text(
                           'Bloqueio de visitantes',
+                          style: TextStyle(
+                              fontSize: 16
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.red
+                        ),
+                      ),
+                    ),
+                  ),
+                  Center(
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                      child: ElevatedButton(
+                        onPressed: () async {
+
+                        },
+                        child:
+                        const Text(
+                          'Guardar dados do servidor',
+                          style: TextStyle(
+                              fontSize: 16
+                          ),
+                        ),
+                        style: ElevatedButton.styleFrom(
+                            primary: Colors.red
+                        ),
+                      ),
+                    ),
+                  ),
+                  Center(
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                      child: ElevatedButton(
+                        onPressed: () async {
+
+
+                        },
+                        child:
+                        const Text(
+                          'Gravar Dados no servidor offline',
                           style: TextStyle(
                               fontSize: 16
                           ),

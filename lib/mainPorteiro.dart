@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/Painel.dart';
@@ -13,6 +14,8 @@ import 'package:glk_controls/relatorio.dart';
 import 'package:glk_controls/modal/modalVeiculo.dart';
 import 'package:glk_controls/listas/listaSaida.dart';
 import 'package:glk_controls/anteLogin.dart';
+
+import 'firebase_options.dart';
 
 //Programado por HeroRickyGames
 
@@ -348,11 +351,19 @@ class _mainPorteiroState extends State<mainPorteiro> {
                       padding: const EdgeInsets.all(16),
                       child: ElevatedButton(
                         onPressed: () async {
-                          await FirebaseAuth.instance.signOut().then((value){
+                          await FirebaseAuth.instance.signOut().then((value) async {
+
+                            var resulte = await FirebaseFirestore.instance
+                                .collection("Condominio")
+                                .doc('condominio')
+                                .get();
+
+                            String logoPath = resulte.get('imageURL');
+
                             Navigator.pop(context);
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context){
-                                  return const anteLogin();
+                                  return anteLogin(logoPath);
                                 }));
                             print('Usuário desconectado');
                           });
@@ -368,7 +379,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                             primary: Colors.red
                         ),
                       ),
-                    )
+                    ),
                   ],
                 ),
                 Row(

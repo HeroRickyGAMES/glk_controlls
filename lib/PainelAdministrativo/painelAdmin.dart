@@ -175,11 +175,19 @@ class _painelAdminState extends State<painelAdmin> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 ElevatedButton(
-                  onPressed: (){
+                  onPressed: () async {
+
+                    var resulte = await FirebaseFirestore.instance
+                        .collection("Condominio")
+                        .doc('condominio')
+                        .get();
+
+                    String logoPath = resulte.get('imageURL');
+
                     Navigator.pop(context);
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context){
-                          return const anteLogin();
+                          return anteLogin(logoPath);
                         }));
                   },
                   child: const Text(

@@ -306,11 +306,19 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                     padding: const EdgeInsets.all(16),
                     child: ElevatedButton(
                         onPressed: () async {
-                          await FirebaseAuth.instance.signOut().then((value){
+                          await FirebaseAuth.instance.signOut().then((value) async {
+
+                            var resulte = await FirebaseFirestore.instance
+                                .collection("Condominio")
+                                .doc('condominio')
+                                .get();
+
+                            String logoPath = resulte.get('imageURL');
+
                             Navigator.pop(context);
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context){
-                                  return const anteLogin();
+                                  return anteLogin(logoPath);
                                 }));
                             print('Usuário desconectado');
                           });

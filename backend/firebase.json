@@ -1,0 +1,23 @@
+{
+  "emulators": {
+    "auth": {
+      "port": 9099,
+      "dataDir": "firebaseDbs/auth-data"
+    },
+    "firestore": {
+      "port": 8080,
+      "dataDir": "firebaseDbs/firestore-data"
+    },
+    "storage": {
+      "port": 9199,
+      "dataDir": "firebaseDbs/storage-data"
+    },
+    "ui": {
+      "enabled": true
+    },
+    "singleProjectMode": true
+  },
+  "storage": {
+    "rules": "storage.rules"
+  }
+}

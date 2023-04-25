@@ -3,9 +3,15 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:glk_controls/login.dart';
 import 'package:glk_controls/PainelAdministrativo/painelAdmin.dart';
-class anteLogin extends StatelessWidget {
-  const anteLogin({Key? key}) : super(key: key);
+class anteLogin extends StatefulWidget {
+  String logoCondominio;
+  anteLogin(this.logoCondominio, {Key? key}) : super(key: key);
 
+  @override
+  State<anteLogin> createState() => _anteLoginState();
+}
+
+class _anteLoginState extends State<anteLogin> {
   @override
   Widget build(BuildContext context) {
     String User = '';
@@ -20,6 +26,15 @@ class anteLogin extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Container(
+            padding: const EdgeInsets.all(16),
+            width: double.infinity,
+            child: Image.asset(
+                'assets/icon.png',
+              width: 200,
+              height: 200,
+            ),
+          ),
           Container(
             padding: const EdgeInsets.all(16),
             width: double.infinity,
@@ -181,6 +196,15 @@ class anteLogin extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                   primary: Colors.grey
               ),
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.all(16),
+            width: double.infinity,
+            child: Image.network(
+              widget.logoCondominio,
+              width: 200,
+              height: 200,
             ),
           ),
         ],
