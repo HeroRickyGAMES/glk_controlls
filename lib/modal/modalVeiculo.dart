@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:uuid/uuid.dart';
 import 'package:glk_controls/mainPorteiro.dart';
+import 'package:intl/intl.dart';
+
 //Programado Por HeroRickyGames
 
 class modalPorteiro extends StatefulWidget {
@@ -93,7 +95,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
           //registre todos os valores no db
           var UID = FirebaseAuth.instance.currentUser?.uid;
 
-          var dateTime= new DateTime.now();
+          var dateTime= DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
 
           var uuid = const Uuid();
 
@@ -124,7 +126,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
             'Horario Criado': dateTime,
             'verificadoPor': '',
             'DataDeAnalise': '',
-            'DataEntradaEmpresa': DateTime.now(),
+            'DataEntradaEmpresa': dateTime,
             'DateSaidaPortaria': '',
             'liberouSaida': '',
             'Galpão': '',
@@ -203,7 +205,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
           //registre todos os valores no db
           var UID = FirebaseAuth.instance.currentUser?.uid;
 
-          var dateTime= new DateTime.now();
+          var dateTime= DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
 
           var uuid = const Uuid();
           String idd = "${DateTime.now().toString()}" + uuid.v4();
@@ -232,7 +234,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
             'lacrenum': '',
             'verificadoPor': '',
             'DataDeAnalise': '',
-            'DataEntradaEmpresa': DateTime.now(),
+            'DataEntradaEmpresa': dateTime,
             'DateSaidaPortaria': '',
             'liberouSaida': '',
             'Galpão': '',
@@ -314,7 +316,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
           //registre todos os valores no db
           var UID = FirebaseAuth.instance.currentUser?.uid;
 
-          var dateTime= new DateTime.now();
+          var dateTime= DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
 
           var uuid = const Uuid();
 
@@ -425,7 +427,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
           //registre todos os valores no db
           var UID = FirebaseAuth.instance.currentUser?.uid;
 
-          var dateTime= new DateTime.now();
+          var dateTime= DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
 
           var uuid = const Uuid();
 

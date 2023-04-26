@@ -391,12 +391,12 @@ class _listEntradaState extends State<listEntrada> {
                                                           if(documents['interno'] == true){
                                                             formattedDate2 = '';
                                                           }else{
-                                                            Timestamp DataEmpresaAnalise = documents['DataEntradaEmpresa'];
-                                                            formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEmpresaAnalise.toDate()).replaceAll('-', '/');
+                                                            String DataEmpresaAnalise = documents['DataEntradaEmpresa'];
+                                                            formattedDate2 = DataEmpresaAnalise;
                                                           }
 
                                                           String liberadopor = documents['QuemAutorizou'];
-                                                          Timestamp horarioCriacao = documents['Horario Criado'];
+                                                          String horarioCriacao = documents['Horario Criado'];
                                                           String nomeMotorista = documents['nomeMotorista'];
                                                           String Veiculo = documents['Veiculo'];
                                                           String PlacaVeiculo = documents['PlacaVeiculo'];
@@ -404,7 +404,7 @@ class _listEntradaState extends State<listEntrada> {
                                                           String EmpresadeOrigin = documents['EmpresadeOrigin'];
                                                           String Galpao = documents['galpaoPrimario'];
                                                           String lacradoStr = documents['lacrenum'];
-                                                          String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
+                                                          String formattedDate = horarioCriacao;
 
                                                           final ByteData imageData = await rootBundle.load('assets/insertFoto.png');
 
@@ -456,7 +456,7 @@ class _listEntradaState extends State<listEntrada> {
                                                           if(lacre == 'naolacrado'){
 
                                                             String liberadopor = documents['QuemAutorizou'];
-                                                            Timestamp horarioCriacao = documents['Horario Criado'];
+                                                            String horarioCriacao = documents['Horario Criado'];
                                                             String nomeMotorista = documents['nomeMotorista'];
                                                             String Veiculo = documents['Veiculo'];
                                                             String PlacaVeiculo = documents['PlacaVeiculo'];
@@ -469,7 +469,7 @@ class _listEntradaState extends State<listEntrada> {
                                                             if(documents['DataEntradaEmpresa'] == ''){
                                                               formattedDate2 = documents['DataEntradaEmpresa'];
 
-                                                              String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
+                                                              String formattedDate = horarioCriacao;
 
 
                                                               final ByteData imageData = await rootBundle.load('assets/error-image.png');
@@ -520,10 +520,10 @@ class _listEntradaState extends State<listEntrada> {
                                                                   }));
 
                                                             }else{
-                                                              Timestamp DataEmpresaAnalise = documents['DataEntradaEmpresa'];
-                                                              formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEmpresaAnalise.toDate()).replaceAll('-', '/');
+                                                              String DataEmpresaAnalise = documents['DataEntradaEmpresa'];
+                                                              formattedDate2 = DataEmpresaAnalise;
 
-                                                              String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
+                                                              String formattedDate = horarioCriacao;
 
 
                                                               final ByteData imageData = await rootBundle.load('assets/error-image.png');
@@ -585,8 +585,8 @@ class _listEntradaState extends State<listEntrada> {
                                                           } else {
 
                                                             FirebaseFirestore.instance.collection('Autorizacoes').doc(documents['idDoc']).update({
-                                                              'DataSaida': DateTime.now(),
-                                                              'DataEntradaEmpresa': DateTime.now(),
+                                                              'DataSaida': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
+                                                              'DataEntradaEmpresa': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                                                               'Status': 'Liberado'
                                                             });
                                                             Fluttertoast.showToast(

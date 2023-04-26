@@ -69,7 +69,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
         //registre todos os valores no db
         var UID = FirebaseAuth.instance.currentUser?.uid;
 
-        var dateTime= new DateTime.now();
+        var dateTime= DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
 
         var uuid = const Uuid();
 
@@ -97,9 +97,9 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
           'verificadoPor': 'Estacionário',
           'Empresa': widget.NomeEmpresa,
           'DataDeAnalise': '',
-          'DataEntradaEmpresa': dataAgendada,
-          'DataEntrada': dataAgendada,
-          'DataAnaliseEmpresa': dataAgendada,
+          'DataEntradaEmpresa': DateFormat('dd-MM-yyyy HH:mm:ss').format(dataAgendada).replaceAll('-', '/'),
+          'DataEntrada': DateFormat('dd-MM-yyyy HH:mm:ss').format(dataAgendada).replaceAll('-', '/'),
+          'DataAnaliseEmpresa': DateFormat('dd-MM-yyyy HH:mm:ss').format(dataAgendada).replaceAll('-', '/'),
           'DateSaidaPortaria': '',
           'liberouSaida': '',
           'Galpão': galpao,
@@ -148,7 +148,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
         //registre todos os valores no db
         var UID = FirebaseAuth.instance.currentUser?.uid;
 
-        var dateTime= new DateTime.now();
+        var dateTime= DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
 
         var uuid = const Uuid();
 
@@ -176,9 +176,9 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
           'verificadoPor': 'Estacionário',
           'Empresa': widget.NomeEmpresa,
           'DataDeAnalise': '',
-          'DataEntradaEmpresa': dataAgendada,
-          'DataEntrada': dataAgendada,
-          'DataAnaliseEmpresa': dataAgendada,
+          'DataEntradaEmpresa': DateFormat('dd-MM-yyyy HH:mm:ss').format(dataAgendada).replaceAll('-', '/'),
+          'DataEntrada': DateFormat('dd-MM-yyyy HH:mm:ss').format(dataAgendada).replaceAll('-', '/'),
+          'DataAnaliseEmpresa': DateFormat('dd-MM-yyyy HH:mm:ss').format(dataAgendada).replaceAll('-', '/'),
           'DateSaidaPortaria': '',
           'liberouSaida': '',
           'Galpão': galpao,

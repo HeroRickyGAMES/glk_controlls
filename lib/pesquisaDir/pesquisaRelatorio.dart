@@ -59,8 +59,6 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
                           .instance
                           .collection('Autorizacoes')
                           .where(widget.oqPesquisar, isEqualTo: widget.pesquisaRelatoriost)
-                          .where('Horario Criado', isGreaterThanOrEqualTo: dataDe30DiasAtras)
-                          .where('Horario Criado', isLessThan: dataAtual)
                           .snapshots(),
                       builder: (BuildContext context,
                           AsyncSnapshot<QuerySnapshot> snapshot) {

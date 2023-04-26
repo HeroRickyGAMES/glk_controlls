@@ -379,6 +379,9 @@ class _painelADMState extends State<painelADM> {
                       child: ElevatedButton(
                         onPressed: () async {
 
+                          FirebaseFirestore.instance.collection('Teste').add({
+                            'abc':'cd'
+                          });
 
                         },
                         child:

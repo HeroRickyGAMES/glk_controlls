@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:glk_controls/callToAPI.dart';
+import 'package:intl/intl.dart';
 
 //Programado por HeroRickyGames
 
@@ -954,7 +955,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                             FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                               'verificadoPor': widget.empresaName,
                               'LacreouNao': 'naolacrado',
-                              'DataDeAnalise': DateTime.now(),
+                              'DataDeAnalise': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                               'uriImage': imageUrl,
                               'uriImage2': imageUrl2,
                               'uriImage3': imageUrl3,
@@ -997,7 +998,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                             FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                               'verificadoPor': widget.empresaName,
                               'LacreouNao': 'naolacrado',
-                              'DataDeAnalise': DateTime.now(),
+                              'DataDeAnalise': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                               'tag': tagSelecionada,
                               'Status': 'Estacionário',
                             });
@@ -1117,7 +1118,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                                   'uriImage3': imageUrl3,
                                   'uriImage4': imageUrl4,
                                   'Status': 'Estacionário',
-                                  'DataDeAnalise': DateTime.now(),
+                                  'DataDeAnalise': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                                   'tag': tagSelecionada,
                                 }).then((value) {
 
@@ -1157,7 +1158,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                                   'LacreouNao': 'lacre',
                                   'Status': 'Estacionário',
                                   'tag': tagSelecionada,
-                                  'DataDeAnalise': DateTime.now(),
+                                  'DataDeAnalise': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
 
                                 });
                                 //Fazer as regras do Rele

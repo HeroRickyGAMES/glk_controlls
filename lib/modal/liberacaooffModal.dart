@@ -5,6 +5,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:uuid/uuid.dart';
 import 'package:glk_controls/mainPorteiro.dart';
 import 'package:glk_controls/main.dart';
+import 'package:intl/intl.dart';
+
 //Programado Por HeroRickyGames
 
 class liberacaoOff extends StatefulWidget {
@@ -214,7 +216,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                                                 //registre todos os valores no db
                                                 var UID = FirebaseAuth.instance.currentUser?.uid;
 
-                                                var dateTime= new DateTime.now();
+                                                var dateTime= DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
 
                                                 var uuid = const Uuid();
 
@@ -278,7 +280,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                                                 //registre todos os valores no db
                                                 var UID = FirebaseAuth.instance.currentUser?.uid;
 
-                                                var dateTime= new DateTime.now();
+                                                var dateTime= DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
 
                                                 var uuid = const Uuid();
 

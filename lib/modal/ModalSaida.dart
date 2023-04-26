@@ -2,8 +2,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
-import '../callToAPI.dart';
+import 'package:intl/intl.dart';
+import 'package:glk_controls/callToAPI.dart';
 
 //Programado por HeroRickyGames
 
@@ -647,7 +647,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                         callToVerifyReles();
 
                         FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                          'DataSaida': DateTime.now(),
+                          'DataSaida': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                           'Status': 'Saida',
                           'saidaLiberadaPor': widget.porteiroName
                         }).then((value){
@@ -694,7 +694,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                                 'tags': tags
                               });
                           FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                            'DataSaida': DateTime.now(),
+                            'DataSaida': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                             'Status': 'Saida',
                             'saidaLiberadaPor': widget.porteiroName
                           }).then((value){

@@ -313,7 +313,7 @@ class _listaSaidaState extends State<listaSaida> {
                                                   String lacreounao = documents['LacreouNao'];
                                                   String empresaName = documents['EmpresadeOrigin'];
                                                   String liberadopor = documents['QuemAutorizou'];
-                                                  Timestamp horarioCriacaost = documents['Horario Criado'];
+                                                  String horarioCriacaost = documents['Horario Criado'];
                                                   String nomeMotorista = documents['nomeMotorista'];
                                                   String Veiculo = documents['Veiculo'];
                                                   String PlacaVeiculo = documents['PlacaVeiculo'];
@@ -324,16 +324,16 @@ class _listaSaidaState extends State<listaSaida> {
 
 
                                                   String idDocumento = documents.id;
-                                                  Timestamp DatadeAnalisest = documents['DataDeAnalise'];
-                                                  Timestamp DateEntradast = documents['DataEntradaEmpresa'];
-                                                  Timestamp DataSaidast = documents['DataSaida'];
+                                                  String DatadeAnalisest = documents['DataDeAnalise'];
+                                                  String DateEntradast = documents['DataEntradaEmpresa'];
+                                                  String DataSaidast = documents['DataSaida'];
 
                                                   String verificadoPor = documents['verificadoPor'];
 
-                                                  String horarioCriacao = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacaost.toDate()).replaceAll('-', '/');
-                                                  String DatadeAnalise = DateFormat('dd-MM-yyyy HH:mm:ss').format(DatadeAnalisest.toDate()).replaceAll('-', '/');
-                                                  String DateEntrada = DateFormat('dd-MM-yyyy HH:mm:ss').format(DateEntradast.toDate()).replaceAll('-', '/');
-                                                  String DataSaida = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataSaidast.toDate()).replaceAll('-', '/');
+                                                  String horarioCriacao = horarioCriacaost;
+                                                  String DatadeAnalise = DatadeAnalisest;
+                                                  String DateEntrada = DateEntradast;
+                                                  String DataSaida = DataSaidast;
 
                                                   Navigator.push(context,
                                                       MaterialPageRoute(builder: (context){

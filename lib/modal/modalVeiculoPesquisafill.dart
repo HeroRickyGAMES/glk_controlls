@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:uuid/uuid.dart';
 import 'package:glk_controls/pesquisaDir/pesquisaNovoCadastro.dart';
+import 'package:intl/intl.dart';
 
 //Programado Por HeroRickyGames
 
@@ -168,7 +169,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                             //registre todos os valores no db
                             var UID = FirebaseAuth.instance.currentUser?.uid;
 
-                            var dateTime= new DateTime.now();
+                            var dateTime= DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
 
                             var uuid = const Uuid();
 
@@ -258,7 +259,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                             //registre todos os valores no db
                             var UID = FirebaseAuth.instance.currentUser?.uid;
 
-                            var dateTime= new DateTime.now();
+                            var dateTime= DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
 
                             var uuid = const Uuid();
 

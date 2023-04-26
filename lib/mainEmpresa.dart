@@ -511,7 +511,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                                                                   Navigator.of(context).pop();
 
                                                                   FirebaseFirestore.instance.collection('Autorizacoes').doc(documents.id).update({
-                                                                    'DatadeRejeicao': DateTime.now(),
+                                                                    'DatadeRejeicao': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                                                                     'Status': 'Rejeitado'
                                                                   });
                                                                 },
@@ -522,7 +522,7 @@ class _mainEmpresaState extends State<mainEmpresa> {
                                                                   Navigator.of(context).pop();
 
                                                                   FirebaseFirestore.instance.collection('Autorizacoes').doc(documents.id).update({
-                                                                    'DataEntrada': DateTime.now(),
+                                                                    'DataEntrada': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                                                                     'Status': 'Entrada'
                                                                   });
                                                                 },

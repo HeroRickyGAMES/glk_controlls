@@ -8,7 +8,6 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/modal/veiculoEntrada.dart';
 import 'package:glk_controls/pesquisaDir/pesquisa.dart';
-import 'package:intl/intl.dart';
 import 'package:glk_controls/modal/operadorEmpresarialAguardandoModal.dart';
 
 //Programado por HeroRickyGames
@@ -361,7 +360,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
 
                                                       if(lacre == 'lacre'){
                                                         String liberadopor = documents['QuemAutorizou'];
-                                                        Timestamp horarioCriacao = documents['Horario Criado'];
+                                                        String horarioCriacao = documents['Horario Criado'];
                                                         String nomeMotorista = documents['nomeMotorista'];
                                                         String Veiculo = documents['Veiculo'];
                                                         String PlacaVeiculo = documents['PlacaVeiculo'];
@@ -370,14 +369,14 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                                         String Galpao = documents['Galpão'];
                                                         String lacradoStr = documents['lacrenum'];
                                                         bool interno = documents['interno'];
-                                                        Timestamp DataEntrada = documents['DataEntradaEmpresa'];
+                                                        String DataEntrada = documents['DataEntradaEmpresa'];
                                                         String verificadoPor = documents['verificadoPor'];
 
-                                                        Timestamp DatadeAnalise = documents['DataDeAnalise'];
+                                                        String DatadeAnalise = documents['DataDeAnalise'];
 
-                                                        String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
-                                                        String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
-                                                        String formattedDate3 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DatadeAnalise.toDate()).replaceAll('-', '/');
+                                                        String formattedDate = horarioCriacao;
+                                                        String formattedDate2 = DataEntrada;
+                                                        String formattedDate3 = DatadeAnalise;
 
                                                         Navigator.push(context,
                                                             MaterialPageRoute(builder: (context){
@@ -389,7 +388,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                                         if(lacre == 'naolacrado'){
 
                                                           String liberadopor = documents['QuemAutorizou'];
-                                                          Timestamp horarioCriacao = documents['Horario Criado'];
+                                                          String horarioCriacao = documents['Horario Criado'];
                                                           String nomeMotorista = documents['nomeMotorista'];
                                                           String Veiculo = documents['Veiculo'];
                                                           String PlacaVeiculo = documents['PlacaVeiculo'];
@@ -399,14 +398,14 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                                           String Galpao = documents['Galpão'];
                                                           String lacradoStr = documents['lacrenum'];
 
-                                                          Timestamp DataEntrada = documents['DataEntradaEmpresa'];
+                                                          String DataEntrada = documents['DataEntradaEmpresa'];
                                                           String verificadoPor = documents['verificadoPor'];
 
-                                                          Timestamp DatadeAnalise = documents['DataDeAnalise'];
+                                                          String DatadeAnalise = documents['DataDeAnalise'];
 
-                                                          String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
-                                                          String formattedDate2 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DataEntrada.toDate()).replaceAll('-', '/');
-                                                          String formattedDate3 = DateFormat('dd-MM-yyyy HH:mm:ss').format(DatadeAnalise.toDate()).replaceAll('-', '/');
+                                                          String formattedDate = horarioCriacao;
+                                                          String formattedDate2 = DataEntrada;
+                                                          String formattedDate3 = DatadeAnalise;
 
                                                           Navigator.push(context,
                                                               MaterialPageRoute(builder: (context){
@@ -436,7 +435,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
 
                                                                   print(Galpoes.keys);
                                                                   String liberadopor = documents['QuemAutorizou'];
-                                                                  Timestamp horarioCriacao = documents['Horario Criado'];
+                                                                  String horarioCriacao = documents['Horario Criado'];
                                                                   String nomeMotorista = documents['nomeMotorista'];
                                                                   String Veiculo = documents['Veiculo'];
                                                                   String PlacaVeiculo = documents['PlacaVeiculo'];
@@ -451,7 +450,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                                                   String urlImage4 = documents['uriImage4'];
                                                                   String motivo = documents['motivo'];
 
-                                                                  String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
+                                                                  String formattedDate = horarioCriacao;
 
                                                                   String IDEmpresa = userValues.get('idEmpresa');
 
@@ -485,7 +484,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                                                   print(Galpoes.keys);
 
                                                                   String liberadopor = documents['QuemAutorizou'];
-                                                                  Timestamp horarioCriacao = documents['Horario Criado'];
+                                                                  String horarioCriacao = documents['Horario Criado'];
                                                                   String nomeMotorista = documents['nomeMotorista'];
                                                                   String Veiculo = documents['Veiculo'];
                                                                   String PlacaVeiculo = documents['PlacaVeiculo'];
@@ -500,7 +499,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                                                   String urlImage4 = documents['uriImage4'];
                                                                   String motivo = documents['motivo'];
 
-                                                                  String formattedDate = DateFormat('dd-MM-yyyy HH:mm:ss').format(horarioCriacao.toDate()).replaceAll('-', '/');
+                                                                  String formattedDate = horarioCriacao;
 
                                                                   String IDEmpresa = userValues.get('idEmpresa');
 

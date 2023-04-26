@@ -133,7 +133,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                 Row(
                                   children: [
                                     Text(
-                                      DateFormat('dd-MM-yyyy HH:mm:ss').format(documents['dataDoBloqueio'].toDate()).replaceAll('-', '/'),
+                                      documents['dataDoBloqueio'].replaceAll('-', '/'),
                                       style: const TextStyle(
                                           fontSize: 16
                                       ),
@@ -427,7 +427,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
 
                                               //todo bloqueio db
 
-                                              var dateTime= new DateTime.now();
+                                              DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
 
                                               var uuid = const Uuid();
 
@@ -439,7 +439,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                                  'Motivo': bloqueioMotivo,
                                                  'tipoVeiculo' : Veiculost,
                                                   'id': idd,
-                                                  'dataDoBloqueio': DateTime.now()
+                                                  'dataDoBloqueio': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                                                 }
                                               );
 

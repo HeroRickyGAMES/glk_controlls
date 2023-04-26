@@ -134,7 +134,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                 Row(
                                   children: [
                                     Text(
-                                      DateFormat('dd-MM-yyyy HH:mm:ss').format(documents['dataDoBloqueio'].toDate()).replaceAll('-', '/'),
+                                      documents['dataDoBloqueio'].replaceAll('-', '/'),
                                       style: const TextStyle(
                                           fontSize: 16
                                       ),
@@ -405,7 +405,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
 
                                             //todo bloqueio db
 
-                                            var dateTime= new DateTime.now();
+                                            var dateTime= DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
 
                                             var uuid = const Uuid();
 
@@ -417,7 +417,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                                   'Motivo': bloqueioMotivo,
                                                   'rg' : RG,
                                                   'id': idd,
-                                                  'dataDoBloqueio': DateTime.now()
+                                                  'dataDoBloqueio': dateTime
                                                 }
                                             );
 

@@ -427,7 +427,7 @@ checkislogOFFLine(context) async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  FirebaseFirestore.instance.settings = Settings(
+  FirebaseFirestore.instance.settings = const Settings(
     host: 'localhost:8080',
     sslEnabled: false,
     persistenceEnabled: false,
