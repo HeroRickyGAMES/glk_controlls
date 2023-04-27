@@ -24,7 +24,7 @@ class modalPorteiro extends StatefulWidget {
 }
 class _modalPorteiroState extends State<modalPorteiro> {
   String? coletaouentrega;
-  String? lacreounao;
+  String? lacreounao = '';
   String? empresaSelecionada;
   String galpaoPrimario = '';
   //fields
@@ -514,8 +514,83 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
                                         if(doc.get('nome') == empresaSelecionada){
                                           galpaoPrimario = doc.get('galpaoPrimario');
-                                          print(galpaoPrimario);
-                                          MandarMT();
+                                          Map galpaesEmpresa = doc.get('galpaes');
+
+                                          String idEmpresa = doc.get('id');
+
+                                          final veiculoEmpresaCollection = FirebaseFirestore.instance.collection('veiculosDeEmpresa');
+                                          final snapshot2 = await veiculoEmpresaCollection.get();
+                                          final documents2 = snapshot2.docs;
+                                          for (final doc2 in documents2) {
+
+                                            if(doc2.get('Placa') == VeiculoPlaca){
+                                              if(doc2.get('idEmpresa') == idEmpresa){
+                                                print(galpaesEmpresa.values.first);
+
+                                                if(galpaesEmpresa.values.first == 0){
+                                                  Fluttertoast.showToast(
+                                                    msg: 'Não há mais vagas disponiveis!',
+                                                    toastLength: Toast.LENGTH_SHORT,
+                                                    timeInSecForIosWeb: 1,
+                                                    backgroundColor: Colors.black,
+                                                    textColor: Colors.white,
+                                                    fontSize: 16.0,
+                                                  );
+                                                }else{
+                                                  ConnectivityUtils.instance
+                                                    ..serverToPing =
+                                                        "https://gist.githubusercontent.com/Vanethos/dccc4b4605fc5c5aa4b9153dacc7391c/raw/355ccc0e06d0f84fdbdc83f5b8106065539d9781/gistfile1.txt"
+                                                    ..verifyResponseCallback =
+                                                        (response) => response.contains("This is a test!");
+
+                                                  //todo subtract
+                                                  galpaesEmpresa[galpaesEmpresa.keys.first] = galpaesEmpresa[galpaesEmpresa.keys.first] - 1;
+
+                                                  print(galpaesEmpresa);
+
+                                                  FirebaseFirestore.instance.collection('empresa').doc(idEmpresa).update({
+                                                    'galpaes': galpaesEmpresa
+                                                  });
+
+                                                  if(await ConnectivityUtils.instance.isPhoneConnected()){
+                                                    veiculoInterno == true;
+                                                    Status = 'Estacionário';
+                                                    print(galpaoPrimario);
+                                                    MandarMT();
+
+                                                    print('Conectado!');
+
+                                                  }else{
+                                                    veiculoInterno == true;
+                                                    Status = 'Liberado Saida';
+                                                    print(galpaoPrimario);
+                                                    MandarMT();
+                                                    print('Desconectado!');
+                                                  }
+
+                                                }
+                                              }
+                                            }else{
+                                              ConnectivityUtils.instance
+                                                ..serverToPing =
+                                                    "https://gist.githubusercontent.com/Vanethos/dccc4b4605fc5c5aa4b9153dacc7391c/raw/355ccc0e06d0f84fdbdc83f5b8106065539d9781/gistfile1.txt"
+                                                ..verifyResponseCallback =
+                                                    (response) => response.contains("This is a test!");
+
+                                              if(await ConnectivityUtils.instance.isPhoneConnected()){
+                                                MandarMT();
+
+                                                print('Conectado!');
+
+                                              }else{
+                                                Status = 'Liberado Saida';
+                                                MandarMT();
+                                                print('Desconectado!');
+                                              }
+
+                                              MandarMT();
+                                            }
+                                          }
                                         }
                                       }
                                     }

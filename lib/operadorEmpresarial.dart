@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:glk_controls/anteLogin.dart';
+import 'package:glk_controls/modal/modalCadastroVeiculoInterno.dart';
 import 'package:glk_controls/modal/modalVeiculoAgendamento.dart';
 import 'package:glk_controls/relatorio.dart';
 import 'package:glk_controls/listas/liberacoesOperadorEmpresarial.dart';
@@ -213,8 +214,21 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
           }));
 
     }
-    cadastrarVeiculoInterno(){
+    cadastrarVeiculoInterno() async {
 
+      var UID = FirebaseAuth.instance.currentUser?.uid;
+
+      var result = await FirebaseFirestore.instance
+          .collection("operadorEmpresarial")
+          .doc(UID)
+          .get();
+
+      String idEmpresa = result.get('idEmpresa');
+
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context){
+            return cadastroVeiculoInterno(idEmpresa);
+          }));
     }
     return Scaffold(
       appBar: AppBar(
