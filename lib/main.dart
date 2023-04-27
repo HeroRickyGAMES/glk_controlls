@@ -1,6 +1,8 @@
 import 'dart:async';
+import 'package:connectivity_widget/connectivity_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:glk_controls/mainActivityPrepare.dart';
+
 //Programado por HeroRickyGames
 
 void main() {
@@ -16,13 +18,31 @@ void main() {
   );
 }
 
-calltoprepare(context){
-  String calloff = 'NaoAtivo';
-  Navigator.pop(context);
-  Navigator.push(context,
-      MaterialPageRoute(builder: (context){
-        return mainActivityPrepare(calloff);
-      }));
+calltoprepare(context) async {
+  ConnectivityUtils.instance
+    ..serverToPing =
+        "https://gist.githubusercontent.com/Vanethos/dccc4b4605fc5c5aa4b9153dacc7391c/raw/355ccc0e06d0f84fdbdc83f5b8106065539d9781/gistfile1.txt"
+    ..verifyResponseCallback =
+        (response) => response.contains("This is a test!");
+
+  if(await ConnectivityUtils.instance.isPhoneConnected()){
+    print('Conectado!');
+    String calloff = 'NaoAtivo';
+    Navigator.pop(context);
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context){
+          return mainActivityPrepare(calloff);
+        }));
+
+  }else{
+    String calloff = 'Ativo';
+    Navigator.pop(context);
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context){
+          return mainActivityPrepare(calloff);
+        }));
+    print('Desconectado!');
+  }
 }
 class loginScreen extends StatefulWidget {
 

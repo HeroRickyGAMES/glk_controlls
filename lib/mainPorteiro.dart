@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_widget/connectivity_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -45,34 +46,45 @@ class mainPorteiro extends StatefulWidget {
 class _mainPorteiroState extends State<mainPorteiro> {
 
   Future<void> testPing() async {
-    final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar
 
-    try {
-      final result = await Process.run('ping', ['-c', '1', ip]);
-      if (result.exitCode == 0) {
-        print('Ping realizado com sucesso para o endereço $ip');
-      } else {
-        Fluttertoast.showToast(
-          msg: 'Você está offline, então algumas ações no app irão demorar mais do que o normal,',
-          toastLength: Toast.LENGTH_LONG,
-          timeInSecForIosWeb: 10,
-          backgroundColor: Colors.black,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
-        Fluttertoast.showToast(
-          msg: 'Mas não se preocupe, assim que sua conexão for restaurada tudo voltará ao normal!',
-          toastLength: Toast.LENGTH_LONG,
-          timeInSecForIosWeb: 10,
-          backgroundColor: Colors.black,
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
+    ConnectivityUtils.instance
+      ..serverToPing =
+          "https://gist.githubusercontent.com/Vanethos/dccc4b4605fc5c5aa4b9153dacc7391c/raw/355ccc0e06d0f84fdbdc83f5b8106065539d9781/gistfile1.txt"
+      ..verifyResponseCallback =
+          (response) => response.contains("This is a test!");
 
-        print('Falha no ping para o endereço $ip');
-      }
-    } catch (e) {
-      print('Erro ao executar o comando de ping: $e');
+    if(await ConnectivityUtils.instance.isPhoneConnected()){
+
+
+      print('Conectado!');
+
+    }else{
+      Fluttertoast.showToast(
+        msg: 'Conectei ao servidor offline do app!',
+        toastLength: Toast.LENGTH_LONG,
+        timeInSecForIosWeb: 10,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      Fluttertoast.showToast(
+        msg: 'Você está offline, então algumas ações no app irão demorar mais do que o normal,',
+        toastLength: Toast.LENGTH_LONG,
+        timeInSecForIosWeb: 10,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+      Fluttertoast.showToast(
+        msg: 'Mas assim que a rede for reestabelecida, reinicie o app para usar o servidor online do app!',
+        toastLength: Toast.LENGTH_LONG,
+        timeInSecForIosWeb: 10,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
+
+      print('Desconectado!');
     }
   }
 

@@ -27,21 +27,6 @@ checkislog(context) async {
 
   var dbInstance = FirebaseFirestore.instance;
 
-  final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar
-
-  try {
-    final result = await Process.run('ping', ['-c', '1', ip]);
-    if (result.exitCode == 0) {
-
-      print('Ping realizado com sucesso para o endereço $ip');
-    } else {
-
-      print('Falha no ping para o endereço $ip');
-    }
-  } catch (e) {
-    print('Erro ao executar o comando de ping: $e');
-  }
-
   await FirebaseAuth.instance
       .idTokenChanges()
       .listen((User? user) async {
@@ -434,22 +419,6 @@ checkislogOFFLine(context) async {
   );
 
   var dbInstance = FirebaseFirestore.instance;
-
-  final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar
-
-  try {
-    final result = await Process.run('ping', ['-c', '1', ip]);
-    if (result.exitCode == 0) {
-
-      print('Ping realizado com sucesso para o endereço $ip');
-    } else {
-
-      print('Falha no ping para o endereço $ip');
-    }
-  } catch (e) {
-    print('Erro ao executar o comando de ping: $e');
-  }
-
   await FirebaseAuth.instance
       .idTokenChanges()
       .listen((User? user) async {

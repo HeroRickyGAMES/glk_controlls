@@ -27,7 +27,6 @@ class liberacoesOperadorEmpresarial extends StatefulWidget {
 
 class _PlateFormatter extends TextInputFormatter {
   static const int _firstGroupLength = 3;
-  static const int _secondGroupLength = 4;
   static const String _separator = ' ';
 
   @override

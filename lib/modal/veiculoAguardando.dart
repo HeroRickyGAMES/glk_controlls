@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:connectivity_widget/connectivity_widget.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -933,75 +934,52 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
                         final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar
 
-                        try {
-                          final result = await Process.run('ping', ['-c', '1', ip]);
-                          if (result.exitCode == 0) {
 
-                            final imageUrl = await _uploadImageToFirebase(imageFile!, widget.idDocumento);
-                            final imageUrl2 = await _uploadImageToFirebase2(imageFile2!, widget.idDocumento);
-                            String imageUrl3 = '';
-                            String imageUrl4 = '';
+                        ConnectivityUtils.instance
+                          ..serverToPing =
+                              "https://gist.githubusercontent.com/Vanethos/dccc4b4605fc5c5aa4b9153dacc7391c/raw/355ccc0e06d0f84fdbdc83f5b8106065539d9781/gistfile1.txt"
+                          ..verifyResponseCallback =
+                              (response) => response.contains("This is a test!");
+
+                        if(await ConnectivityUtils.instance.isPhoneConnected()){
 
 
-                            if(imageFile3 != ''){
-                              imageUrl3 = await _uploadImageToFirebase3(imageFile3!, widget.idDocumento);
 
-                            }
 
-                            if(imageFile4 != ''){
-                              imageUrl4 = await _uploadImageToFirebase4(imageFile4!, widget.idDocumento);
-                            }
+                          final imageUrl = await _uploadImageToFirebase(imageFile!, widget.idDocumento);
+                          final imageUrl2 = await _uploadImageToFirebase2(imageFile2!, widget.idDocumento);
+                          String imageUrl3 = '';
+                          String imageUrl4 = '';
 
-                            FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                              'verificadoPor': widget.empresaName,
-                              'LacreouNao': 'naolacrado',
-                              'DataDeAnalise': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
-                              'uriImage': imageUrl,
-                              'uriImage2': imageUrl2,
-                              'uriImage3': imageUrl3,
-                              'uriImage4': imageUrl4,
-                              'Status': 'Estacionário',
-                              'tag': tagSelecionada
-                            }).then((value) async {
-                              Fluttertoast.showToast(
-                                msg: 'Dados atualizados!',
-                                toastLength: Toast.LENGTH_SHORT,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.black,
-                                textColor: Colors.white,
-                                fontSize: 16.0,
-                              );
 
-                              var result = await FirebaseFirestore.instance
-                                  .collection("Condominio")
-                                  .doc('condominio')
-                                  .get();
+                          if(imageFile3 != ''){
+                            imageUrl3 = await _uploadImageToFirebase3(imageFile3!, widget.idDocumento);
 
-                              Map tags = (result.get('tags'));
+                          }
 
-                              tags[tagSelecionada] = 'Usado';
+                          if(imageFile4 != ''){
+                            imageUrl4 = await _uploadImageToFirebase4(imageFile4!, widget.idDocumento);
+                          }
 
-                              print(tags[tagSelecionada]);
-
-                              FirebaseFirestore.instance.collection('Condominio').doc('condominio').update({
-                                'tags': tags
-                              });
-
-                              //Fazer as regras do Rele
-                              callToVerifyReles();
-                              Navigator.of(context).pop();
-                              Navigator.pop(context);
-                            });
-                            print('Ping realizado com sucesso para o endereço $ip');
-                          } else {
-
-                            FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                              'verificadoPor': widget.empresaName,
-                              'LacreouNao': 'naolacrado',
-                              'DataDeAnalise': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
-                              'tag': tagSelecionada,
-                              'Status': 'Estacionário',
-                            });
+                          FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                            'verificadoPor': widget.empresaName,
+                            'LacreouNao': 'naolacrado',
+                            'DataDeAnalise': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
+                            'uriImage': imageUrl,
+                            'uriImage2': imageUrl2,
+                            'uriImage3': imageUrl3,
+                            'uriImage4': imageUrl4,
+                            'Status': 'Estacionário',
+                            'tag': tagSelecionada
+                          }).then((value) async {
+                            Fluttertoast.showToast(
+                              msg: 'Dados atualizados!',
+                              toastLength: Toast.LENGTH_SHORT,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.black,
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
 
                             var result = await FirebaseFirestore.instance
                                 .collection("Condominio")
@@ -1022,11 +1000,41 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                             callToVerifyReles();
                             Navigator.of(context).pop();
                             Navigator.pop(context);
+                          });
 
-                            print('Falha no ping para o endereço $ip');
-                          }
-                        } catch (e) {
-                          print('Erro ao executar o comando de ping: $e');
+                          print('Conectado!');
+
+                        }else{
+
+                          FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                            'verificadoPor': widget.empresaName,
+                            'LacreouNao': 'naolacrado',
+                            'DataDeAnalise': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
+                            'tag': tagSelecionada,
+                            'Status': 'Estacionário',
+                          });
+
+                          var result = await FirebaseFirestore.instance
+                              .collection("Condominio")
+                              .doc('condominio')
+                              .get();
+
+                          Map tags = (result.get('tags'));
+
+                          tags[tagSelecionada] = 'Usado';
+
+                          print(tags[tagSelecionada]);
+
+                          FirebaseFirestore.instance.collection('Condominio').doc('condominio').update({
+                            'tags': tags
+                          });
+
+                          //Fazer as regras do Rele
+                          callToVerifyReles();
+                          Navigator.of(context).pop();
+                          Navigator.pop(context);
+
+                          print('Desconectado!');
                         }
                       }
                     }
