@@ -200,8 +200,6 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
           );
         },
       );
-
-
       var result = await FirebaseFirestore.instance
           .collection("Condominio")
           .doc('condominio')
@@ -213,6 +211,9 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
           MaterialPageRoute(builder: (context){
             return relatorio(widget.name, logoPath);
           }));
+
+    }
+    cadastrarVeiculoInterno(){
 
     }
     return Scaffold(
@@ -287,6 +288,20 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                 child: ElevatedButton(onPressed: toRelatorio,
                   child: Text(
                     'Relatórios',
+                    style: TextStyle(
+                      fontSize: tamanhotexto,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                child: ElevatedButton(
+                  onPressed: cadastrarVeiculoInterno,
+                  child: Text(
+                    'Cadastrar veiculo interno',
                     style: TextStyle(
                       fontSize: tamanhotexto,
                       fontWeight: FontWeight.bold,

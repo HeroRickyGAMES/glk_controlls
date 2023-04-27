@@ -398,7 +398,7 @@ class _listEntradaState extends State<listEntrada> {
 
                                                         if(documents['PlacaVeiculo'].contains('(AG)')){
 
-                                                          if(int.parse(documents['DataEntradaEmpresa'].replaceAll('/', '').replaceAll(' ', '').replaceAll(':', '')) >= int.parse(DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/').replaceAll('/', '').replaceAll(' ', '').replaceAll(':', ''))){
+                                                          if(int.parse(DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/').replaceAll('/', '').replaceAll(' ', '').replaceAll(':', '')) >= int.parse(documents['DataEntradaEmpresa'].replaceAll('/', '').replaceAll(' ', '').replaceAll(':', ''))){
 
 
                                                             formattedDate2 = documents['DataEntradaEmpresa'];
