@@ -43,7 +43,6 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                         child: const Text(
                         'Empresas',
                           style: TextStyle(
-                              fontSize: 16
                           ),
                        ),
                     ),
@@ -52,7 +51,6 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                       child: const Text(
                         'Vagas',
                         style: TextStyle(
-                            fontSize: 16
                         ),
                       ),
                     ),

@@ -230,58 +230,6 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                 ),
               ],
             ),
-            RadioListTile(
-              title: const Text(
-                  "Com Lacre"
-              ),
-              value: "lacre",
-              groupValue: widget.lacreounao,
-              onChanged: (value){
-                setState(() {
-                  widget.lacreounao = value.toString();
-
-                  if(value == 'lacre'){
-                    lacrebool = true;
-                  }
-                });
-              },
-            ),
-            RadioListTile(
-              title: const Text("Sem Lacre",),
-              value: "naolacrado",
-              groupValue: widget.lacreounao,
-              onChanged: (value){
-                setState(() {
-                  widget.lacreounao = value.toString();
-
-                  if(value == 'naolacrado'){
-                    lacrebool = false;
-                  }
-                });
-              },
-            ),
-            lacrebool ?
-            Container(
-              padding: const EdgeInsets.all(16),
-              child: TextFormField(
-                controller: _textEditingController,
-                onChanged: (valor){
-                  lacreSt = valor;
-                  //Mudou mandou para a String
-                },
-                keyboardType: TextInputType.number,
-                //enableSuggestions: false,
-                //autocorrect: false,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  hintText: 'Numero do lacre *',
-                  hintStyle: TextStyle(
-                      fontSize: 16
-                  ),
-                ),
-              ),
-            )
-                :const Text(''),
             Container(
               child:
               CheckboxListTile(

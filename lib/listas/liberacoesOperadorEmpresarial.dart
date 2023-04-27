@@ -415,99 +415,48 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                                     }
 
                                                     if(documents['Status'] == 'Aguardando Liberação'){
-                                                      if(lacre == 'lacre'){
 
 
-                                                          var result = await FirebaseFirestore.instance
-                                                              .collection("empresa")
-                                                              .get();
+                                                      var result = await FirebaseFirestore.instance
+                                                          .collection("empresa")
+                                                          .get();
 
-                                                          for (var res in result.docs) {
-                                                            for (int i = result.docs.length; i >= 1; i--) {
-                                                              if(i == result.docs.length){
+                                                      for (var res in result.docs) {
+                                                        for (int i = result.docs.length; i >= 1; i--) {
+                                                          if(i == result.docs.length){
 
-                                                                if(res.data()['nome'] == widget.empresaName){
+                                                            if(res.data()['nome'] == widget.empresaName){
 
-                                                                  Galpoes.addAll(res.data()['galpaes']);
+                                                              Galpoes.addAll(res.data()['galpaes']);
 
-                                                                  Galpoes.keys.toList();
+                                                              Galpoes.keys.toList();
 
-                                                                  print(Galpoes.keys);
-                                                                  String liberadopor = documents['QuemAutorizou'];
-                                                                  String horarioCriacao = documents['Horario Criado'];
-                                                                  String nomeMotorista = documents['nomeMotorista'];
-                                                                  String Veiculo = documents['Veiculo'];
-                                                                  String PlacaVeiculo = documents['PlacaVeiculo'];
-                                                                  String Empresadestino = documents['Empresa'];
-                                                                  String EmpresadeOrigin = documents['EmpresadeOrigin'];
-                                                                  String Galpao = documents['Galpão'];
-                                                                  String verificadoPor = documents['verificadoPor'];
-                                                                  String DataDeAnalise = documents['DataDeAnalise'];
-                                                                  String urlImage1 = documents['uriImage'];
-                                                                  String urlImage2 = documents['uriImage2'];
-                                                                  String urlImage3 = documents['uriImage3'];
-                                                                  String urlImage4 = documents['uriImage4'];
-                                                                  String motivo = documents['motivo'];
+                                                              print(Galpoes.keys);
 
-                                                                  String formattedDate = horarioCriacao;
+                                                              String liberadopor = documents['QuemAutorizou'];
+                                                              String horarioCriacao = documents['Horario Criado'];
+                                                              String nomeMotorista = documents['nomeMotorista'];
+                                                              String Veiculo = documents['Veiculo'];
+                                                              String PlacaVeiculo = documents['PlacaVeiculo'];
+                                                              String Empresadestino = documents['Empresa'];
+                                                              String EmpresadeOrigin = documents['EmpresadeOrigin'];
+                                                              String Galpao = documents['Galpão'];
+                                                              String verificadoPor = documents['verificadoPor'];
+                                                              String DataDeAnalise = documents['DataDeAnalise'];
+                                                              String urlImage1 = documents['uriImage'];
+                                                              String urlImage2 = documents['uriImage2'];
+                                                              String urlImage3 = documents['uriImage3'];
+                                                              String urlImage4 = documents['uriImage4'];
+                                                              String motivo = documents['motivo'];
 
-                                                                  String IDEmpresa = userValues.get('idEmpresa');
+                                                              String formattedDate = horarioCriacao;
 
-                                                                  Navigator.push(context,
-                                                                      MaterialPageRoute(builder: (context){
-                                                                        return operadorEmpresarialAguardando(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, verificadoPor, DataDeAnalise, urlImage1, urlImage2, urlImage3, urlImage4, Galpoes, IDEmpresa, motivo);
-                                                                      }));
+                                                              String IDEmpresa = userValues.get('idEmpresa');
 
-                                                                }
-                                                              }
-                                                            }
-                                                          }
-                                                      }
-                                                      else{
-                                                        if(lacre == 'naolacrado'){
-
-                                                          var result = await FirebaseFirestore.instance
-                                                              .collection("empresa")
-                                                              .get();
-
-                                                          for (var res in result.docs) {
-                                                            for (int i = result.docs.length; i >= 1; i--) {
-                                                              if(i == result.docs.length){
-
-                                                                if(res.data()['nome'] == widget.empresaName){
-
-                                                                  Galpoes.addAll(res.data()['galpaes']);
-
-                                                                  Galpoes.keys.toList();
-
-                                                                  print(Galpoes.keys);
-
-                                                                  String liberadopor = documents['QuemAutorizou'];
-                                                                  String horarioCriacao = documents['Horario Criado'];
-                                                                  String nomeMotorista = documents['nomeMotorista'];
-                                                                  String Veiculo = documents['Veiculo'];
-                                                                  String PlacaVeiculo = documents['PlacaVeiculo'];
-                                                                  String Empresadestino = documents['Empresa'];
-                                                                  String EmpresadeOrigin = documents['EmpresadeOrigin'];
-                                                                  String Galpao = documents['Galpão'];
-                                                                  String verificadoPor = documents['verificadoPor'];
-                                                                  String DataDeAnalise = documents['DataDeAnalise'];
-                                                                  String urlImage1 = documents['uriImage'];
-                                                                  String urlImage2 = documents['uriImage2'];
-                                                                  String urlImage3 = documents['uriImage3'];
-                                                                  String urlImage4 = documents['uriImage4'];
-                                                                  String motivo = documents['motivo'];
-
-                                                                  String formattedDate = horarioCriacao;
-
-                                                                  String IDEmpresa = userValues.get('idEmpresa');
-
-                                                                  Navigator.push(context,
-                                                                      MaterialPageRoute(builder: (context){
-                                                                        return operadorEmpresarialAguardando(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, verificadoPor, DataDeAnalise, urlImage1, urlImage2, urlImage3, urlImage4, Galpoes, IDEmpresa, motivo);
-                                                                      }));
-                                                                }
-                                                              }
+                                                              Navigator.push(context,
+                                                                  MaterialPageRoute(builder: (context){
+                                                                    return operadorEmpresarialAguardando(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, verificadoPor, DataDeAnalise, urlImage1, urlImage2, urlImage3, urlImage4, Galpoes, IDEmpresa, motivo);
+                                                                  }));
                                                             }
                                                           }
                                                         }

@@ -21,7 +21,6 @@ class modalVeiculoAgendamento extends StatefulWidget {
 }
 class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
   String? coletaouentrega;
-  String? lacreounao;
   String? empresaSelecionada;
   String? galpao;
 
@@ -32,8 +31,6 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
   String? telefone = '';
   String? VeiculoPlaca;
   String? originEmpresa;
-  String? lacreSt;
-  bool lacrebool = false;
   TextEditingController nameMotoristaAllcaps = TextEditingController();
   TextEditingController placaveiculointerface = TextEditingController();
   TextEditingController telefoneinterface = TextEditingController();
@@ -63,163 +60,82 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
         fontSize: 16.0,
       );
 
-      print(lacreounao);
-      if(lacreounao == 'lacre'){
 
-        //registre todos os valores no db
+
+      //registre todos os valores no db
+      var UID = FirebaseAuth.instance.currentUser?.uid;
+
+      var dateTime= DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
+
+      var uuid = const Uuid();
+
+      String idd = "${DateTime.now().toString()}" + uuid.v4();
+      FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
+        'nomeMotorista': nomeMotorista,
+        'RGDoMotorista': RGMotorista,
+        'Veiculo': Veiculo,
+        'idDoc': idd,
+        'DataSaida': '',
+        'PlacaVeiculo': VeiculoPlaca! + "(AG)",
+        'Telefone': telefone,
+        'EmpresadeOrigin': originEmpresa,
+        'ColetaOuEntrega': coletaouentrega,
+        'LacreouNao': '',
+        'QuemAutorizou': widget.nomeUser,
+        'Status': 'Em Verificação',
+        'Horario Criado': dateTime,
+        'saidaLiberadaPor': '',
+        'uriImage': '',
+        'uriImage2': '',
+        'uriImage3': '',
+        'uriImage4': '',
+        'lacrenum': '',
+        'verificadoPor': 'Estacionário',
+        'Empresa': widget.NomeEmpresa,
+        'DataDeAnalise': '',
+        'DataEntradaEmpresa': DateFormat('dd-MM-yyyy HH:mm:ss').format(dataAgendada).replaceAll('-', '/'),
+        'DataEntrada': DateFormat('dd-MM-yyyy HH:mm:ss').format(dataAgendada).replaceAll('-', '/'),
+        'DataAnaliseEmpresa': DateFormat('dd-MM-yyyy HH:mm:ss').format(dataAgendada).replaceAll('-', '/'),
+        'DateSaidaPortaria': '',
+        'liberouSaida': '',
+        'Galpão': galpao,
+        'tag': '',
+        'motivo': motivo,
+        'interno': false
+      }).then((value) async {
+        Fluttertoast.showToast(
+          msg: 'Enviado com sucesso!',
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+
         var UID = FirebaseAuth.instance.currentUser?.uid;
+        var result = await FirebaseFirestore.instance
+            .collection("operadorEmpresarial")
+            .doc(UID)
+            .get();
 
-        var dateTime= DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
+        String idEmpresa = (result.get('idEmpresa'));
 
-        var uuid = const Uuid();
+        var resultEmpresa = await FirebaseFirestore.instance
+            .collection("empresa")
+            .doc(idEmpresa)
+            .get();
 
-        String idd = "${DateTime.now().toString()}" + uuid.v4();
-        FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
-          'nomeMotorista': nomeMotorista,
-          'RGDoMotorista': RGMotorista,
-          'Veiculo': Veiculo,
-          'idDoc': idd,
-          'DataSaida': '',
-          'PlacaVeiculo': VeiculoPlaca! + "(AG)",
-          'Telefone': telefone,
-          'EmpresadeOrigin': originEmpresa,
-          'ColetaOuEntrega': coletaouentrega,
-          'LacreouNao': lacreounao,
-          'QuemAutorizou': widget.nomeUser,
-          'Status': 'Em Verificação',
-          'Horario Criado': dateTime,
-          'saidaLiberadaPor': '',
-          'uriImage': '',
-          'uriImage2': '',
-          'uriImage3': '',
-          'uriImage4': '',
-          'lacrenum': '',
-          'verificadoPor': 'Estacionário',
-          'Empresa': widget.NomeEmpresa,
-          'DataDeAnalise': '',
-          'DataEntradaEmpresa': DateFormat('dd-MM-yyyy HH:mm:ss').format(dataAgendada).replaceAll('-', '/'),
-          'DataEntrada': DateFormat('dd-MM-yyyy HH:mm:ss').format(dataAgendada).replaceAll('-', '/'),
-          'DataAnaliseEmpresa': DateFormat('dd-MM-yyyy HH:mm:ss').format(dataAgendada).replaceAll('-', '/'),
-          'DateSaidaPortaria': '',
-          'liberouSaida': '',
-          'Galpão': galpao,
-          'Lacre': lacreSt,
-          'tag': '',
-          'motivo': motivo,
-          'interno': false
-        }).then((value) async {
-
-          Fluttertoast.showToast(
-            msg: 'Enviado com sucesso!',
-            toastLength: Toast.LENGTH_SHORT,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.black,
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
-
-          var UID = FirebaseAuth.instance.currentUser?.uid;
-          var result = await FirebaseFirestore.instance
-              .collection("operadorEmpresarial")
-              .doc(UID)
-              .get();
-
-          String idEmpresa = (result.get('idEmpresa'));
-
-          var resultEmpresa = await FirebaseFirestore.instance
-              .collection("empresa")
-              .doc(idEmpresa)
-              .get();
-
-          Map galpoes = (resultEmpresa.get('galpaes'));
+        Map galpoes = (resultEmpresa.get('galpaes'));
 
 
-          galpoes[galpao] = galpoes[galpao] - 1;
+        galpoes[galpao] = galpoes[galpao] - 1;
 
-          FirebaseFirestore.instance.collection('empresa').doc(idEmpresa).update({
-            'galpaes': galpoes
-          }).then((value){
-            Navigator.pop(context);
-          });
+        FirebaseFirestore.instance.collection('empresa').doc(idEmpresa).update({
+          'galpaes': galpoes
+        }).then((value){
+          Navigator.pop(context);
         });
-      }
-      if(lacreounao == 'naolacrado'){
-
-        //registre todos os valores no db
-        var UID = FirebaseAuth.instance.currentUser?.uid;
-
-        var dateTime= DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
-
-        var uuid = const Uuid();
-
-        String idd = "${DateTime.now().toString()}" + uuid.v4();
-        FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
-          'nomeMotorista': nomeMotorista,
-          'RGDoMotorista': RGMotorista,
-          'Veiculo': Veiculo,
-          'idDoc': idd,
-          'DataSaida': '',
-          'PlacaVeiculo': VeiculoPlaca! + "(AG)",
-          'Telefone': telefone,
-          'EmpresadeOrigin': originEmpresa,
-          'ColetaOuEntrega': coletaouentrega,
-          'LacreouNao': lacreounao,
-          'QuemAutorizou': widget.nomeUser,
-          'Status': 'Em Verificação',
-          'Horario Criado': dateTime,
-          'saidaLiberadaPor': '',
-          'uriImage': '',
-          'uriImage2': '',
-          'uriImage3': '',
-          'uriImage4': '',
-          'lacrenum': '',
-          'verificadoPor': 'Estacionário',
-          'Empresa': widget.NomeEmpresa,
-          'DataDeAnalise': '',
-          'DataEntradaEmpresa': DateFormat('dd-MM-yyyy HH:mm:ss').format(dataAgendada).replaceAll('-', '/'),
-          'DataEntrada': DateFormat('dd-MM-yyyy HH:mm:ss').format(dataAgendada).replaceAll('-', '/'),
-          'DataAnaliseEmpresa': DateFormat('dd-MM-yyyy HH:mm:ss').format(dataAgendada).replaceAll('-', '/'),
-          'DateSaidaPortaria': '',
-          'liberouSaida': '',
-          'Galpão': galpao,
-          'tag': '',
-          'motivo': motivo,
-          'interno': false
-        }).then((value) async {
-          Fluttertoast.showToast(
-            msg: 'Enviado com sucesso!',
-            toastLength: Toast.LENGTH_SHORT,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.black,
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
-
-          var UID = FirebaseAuth.instance.currentUser?.uid;
-          var result = await FirebaseFirestore.instance
-              .collection("operadorEmpresarial")
-              .doc(UID)
-              .get();
-
-          String idEmpresa = (result.get('idEmpresa'));
-
-          var resultEmpresa = await FirebaseFirestore.instance
-              .collection("empresa")
-              .doc(idEmpresa)
-              .get();
-
-          Map galpoes = (resultEmpresa.get('galpaes'));
-
-
-          galpoes[galpao] = galpoes[galpao] - 1;
-
-          FirebaseFirestore.instance.collection('empresa').doc(idEmpresa).update({
-            'galpaes': galpoes
-          }).then((value){
-            Navigator.pop(context);
-          });
-        });
-      }
+      });
     }
 
     uploadInfos() async {
@@ -285,106 +201,107 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                       fontSize: 16.0,
                     );
                   }else{
-                    if(lacreounao == null){
-                      Fluttertoast.showToast(
-                        msg: 'Selecione se é com lacre ou sem!',
-                        toastLength: Toast.LENGTH_SHORT,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.black,
-                        textColor: Colors.white,
-                        fontSize: 16.0,
-                      );
-                    }else{
-                      //Ele vai verificar se o usuario está bloqueado ou não.
-                      print("chegou aqui");
+
+                    //Ele vai verificar se o usuario está bloqueado ou não.
+                    print("chegou aqui");
 
 
-                      var result = await FirebaseFirestore.instance
-                          .collection("VeiculosBloqueados")
-                          .get();
+                    var result = await FirebaseFirestore.instance
+                        .collection("VeiculosBloqueados")
+                        .get();
 
-                      for (var res in result.docs) {
+                    for (var res in result.docs) {
 
-                        for (int i = result.docs.length; i >= 1; i--) {
+                      for (int i = result.docs.length; i >= 1; i--) {
 
-                          if(i == result.docs.length){
+                        if(i == result.docs.length){
 
-                            print(res.data()['placa']);
+                          print(res.data()['placa']);
 
-                            if(res.data()['placa'] == VeiculoPlaca){
+                          if(res.data()['placa'] == VeiculoPlaca){
 
-                              Fluttertoast.showToast(
-                                msg: 'Este veiculo está bloqueado!',
-                                toastLength: Toast.LENGTH_SHORT,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.black,
-                                textColor: Colors.white,
-                                fontSize: 16.0,
-                              );
-                              //Fez uma vez agora ele vai verificar se o motorista também está bloqueado!
-                              print("chegou aqui");
+                            Fluttertoast.showToast(
+                              msg: 'Este veiculo está bloqueado!',
+                              toastLength: Toast.LENGTH_SHORT,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.black,
+                              textColor: Colors.white,
+                              fontSize: 16.0,
+                            );
+                            //Fez uma vez agora ele vai verificar se o motorista também está bloqueado!
+                            print("chegou aqui");
 
 
-                              var result = await FirebaseFirestore.instance
-                                  .collection("VisitantesBloqueados")
-                                  .get();
+                            var result = await FirebaseFirestore.instance
+                                .collection("VisitantesBloqueados")
+                                .get();
 
-                              for (var res in result.docs) {
+                            for (var res in result.docs) {
 
-                                for (int i = result.docs.length; i >= 1; i--) {
+                              for (int i = result.docs.length; i >= 1; i--) {
 
-                                  if(i == result.docs.length){
+                                if(i == result.docs.length){
 
-                                    print(res.data()['rg']);
+                                  print(res.data()['rg']);
 
-                                    if(res.data()['rg'] == RGMotorista){
+                                  if(res.data()['rg'] == RGMotorista){
 
-                                      Fluttertoast.showToast(
-                                        msg: 'Este visitante está bloqueado!',
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: Colors.black,
-                                        textColor: Colors.white,
-                                        fontSize: 16.0,
-                                      );
-                                    }
+                                    Fluttertoast.showToast(
+                                      msg: 'Este visitante está bloqueado!',
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.black,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0,
+                                    );
                                   }
                                 }
                               }
+                            }
 
-                            }else{
-                              //Fez uma vez agora ele vai verificar se o motorista também está bloqueado!
-                              print("chegou aqui");
+                          }else{
+                            //Fez uma vez agora ele vai verificar se o motorista também está bloqueado!
+                            print("chegou aqui");
 
 
-                              var result = await FirebaseFirestore.instance
-                                  .collection("VisitantesBloqueados")
-                                  .get();
+                            var result = await FirebaseFirestore.instance
+                                .collection("VisitantesBloqueados")
+                                .get();
 
-                              for (var res in result.docs) {
+                            for (var res in result.docs) {
 
-                                for (int i = result.docs.length; i >= 1; i--) {
+                              for (int i = result.docs.length; i >= 1; i--) {
 
-                                  if(i == result.docs.length){
+                                if(i == result.docs.length){
 
-                                    print(res.data()['rg']);
+                                  print(res.data()['rg']);
 
-                                    if(res.data()['rg'] == RGMotorista){
+                                  if(res.data()['rg'] == RGMotorista){
 
+                                    Fluttertoast.showToast(
+                                      msg: 'Este visitante está bloqueado!',
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.black,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0,
+                                    );
+
+                                  }else{
+
+                                    if(galpao == ''){
                                       Fluttertoast.showToast(
-                                        msg: 'Este visitante está bloqueado!',
+                                        msg: 'Selecione um galpão!',
                                         toastLength: Toast.LENGTH_SHORT,
                                         timeInSecForIosWeb: 1,
                                         backgroundColor: Colors.black,
                                         textColor: Colors.white,
                                         fontSize: 16.0,
                                       );
-
                                     }else{
-
-                                      if(galpao == ''){
+                                      if(dataAgendataST == ''){
                                         Fluttertoast.showToast(
-                                          msg: 'Selecione um galpão!',
+                                          msg: 'Selecione uma data para agendamento!',
                                           toastLength: Toast.LENGTH_SHORT,
                                           timeInSecForIosWeb: 1,
                                           backgroundColor: Colors.black,
@@ -392,18 +309,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                                           fontSize: 16.0,
                                         );
                                       }else{
-                                        if(dataAgendataST == ''){
-                                          Fluttertoast.showToast(
-                                            msg: 'Selecione uma data para agendamento!',
-                                            toastLength: Toast.LENGTH_SHORT,
-                                            timeInSecForIosWeb: 1,
-                                            backgroundColor: Colors.black,
-                                            textColor: Colors.white,
-                                            fontSize: 16.0,
-                                          );
-                                        }else{
-                                          MandarMT();
-                                        }
+                                        MandarMT();
                                       }
                                     }
                                   }
@@ -776,65 +682,6 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                           fontWeight: FontWeight.bold
                       ),
                     ),
-                    RadioListTile(
-                      title: const Text(
-                          "Com Lacre",
-                        style: TextStyle(
-                            fontSize: 16
-                        ),
-                      ),
-                      value: "lacre",
-                      groupValue: lacreounao,
-                      onChanged: (value){
-                        setState(() {
-                          lacreounao = value.toString();
-
-                          if(value == 'lacre'){
-                            lacrebool = true;
-                          }
-                        });
-                      },
-                    ),
-                    RadioListTile(
-                      title: const Text(
-                        "Sem Lacre",
-                        style: TextStyle(
-                            fontSize: 16
-                        ),
-                      ),
-                      value: "naolacrado",
-                      groupValue: lacreounao,
-                      onChanged: (value){
-                        setState(() {
-                          lacreounao = value.toString();
-
-                          if(value == 'naolacrado'){
-                            lacrebool = false;
-                          }
-                        });
-                      },
-                    ),
-                    lacrebool ?
-                    Container(
-                      padding: const EdgeInsets.only(top: 16),
-                      child: TextFormField(
-                        onChanged: (valor){
-                          lacreSt = valor;
-                          //Mudou mandou para a String
-                        },
-                        //keyboardType: TextInputType.number,
-                        //enableSuggestions: false,
-                        //autocorrect: false,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                          hintText: 'Numero do lacre *',
-                          hintStyle: TextStyle(
-                              fontSize: 16
-                          ),
-                        ),
-                      ),
-                    )
-                        :const Text(''),
                   ],
                 ),
               ),

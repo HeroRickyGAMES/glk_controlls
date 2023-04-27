@@ -78,7 +78,6 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                 child: const Text(
                     "Nome",
                   style: TextStyle(
-                      fontSize: 16
                   ),
                 ),
               ),
@@ -87,7 +86,6 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                   child: const Text(
                     "Empresa",
                     style: TextStyle(
-                        fontSize: 16
                     ),
                   ),
                 ),
@@ -276,14 +274,12 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                               ),
                               Text(documentos['empresa'],
                                 style: const TextStyle(
-                                    fontSize: 16
                                 ),
                               ),
                               Row(
                                 children: [
                                   const Text('Empresa',
                                     style: TextStyle(
-                                        fontSize: 16
                                     ),
                                   ),
                                   Container(

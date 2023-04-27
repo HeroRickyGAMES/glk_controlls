@@ -963,6 +963,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
                           FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                             'verificadoPor': widget.empresaName,
+                            'lacrenum': lacreSt,
                             'LacreouNao': 'naolacrado',
                             'DataDeAnalise': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                             'uriImage': imageUrl,
