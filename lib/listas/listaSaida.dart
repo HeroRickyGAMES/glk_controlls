@@ -307,39 +307,71 @@ class _listaSaidaState extends State<listaSaida> {
                                             ElevatedButton(
                                                 onPressed: () async {
 
-                                                  Map Galpoes = {};
+                                                  if(documents['PlacaVeiculo'].contains('(AG)')){
+
+                                                    if(int.parse(documents['DataSaida'].replaceAll('/', '').replaceAll(' ', '').replaceAll(':', '')) >= int.parse(DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/').replaceAll('/', '').replaceAll(' ', '').replaceAll(':', ''))){
+                                                      String lacreounao = documents['LacreouNao'];
+                                                      String empresaName = documents['EmpresadeOrigin'];
+                                                      String liberadopor = documents['QuemAutorizou'];
+                                                      String horarioCriacaost = documents['Horario Criado'];
+                                                      String nomeMotorista = documents['nomeMotorista'];
+                                                      String Veiculo = documents['Veiculo'];
+                                                      String PlacaVeiculo = documents['PlacaVeiculo'];
+                                                      String Empresadestino = documents['Empresa'];
+                                                      String Galpao = documents['Galpão'];
+                                                      String lacradoStr = documents['lacrenum'];
+                                                      String tagSelecionada = documents['tag'];
 
 
-                                                  String lacreounao = documents['LacreouNao'];
-                                                  String empresaName = documents['EmpresadeOrigin'];
-                                                  String liberadopor = documents['QuemAutorizou'];
-                                                  String horarioCriacaost = documents['Horario Criado'];
-                                                  String nomeMotorista = documents['nomeMotorista'];
-                                                  String Veiculo = documents['Veiculo'];
-                                                  String PlacaVeiculo = documents['PlacaVeiculo'];
-                                                  String Empresadestino = documents['Empresa'];
-                                                  String Galpao = documents['Galpão'];
-                                                  String lacradoStr = documents['lacrenum'];
-                                                  String tagSelecionada = documents['tag'];
+                                                      String idDocumento = documents.id;
+                                                      String DatadeAnalisest = documents['DataDeAnalise'];
+                                                      String DateEntradast = documents['DataEntradaEmpresa'];
+                                                      String DataSaidast = documents['DataSaida'];
+
+                                                      String verificadoPor = documents['verificadoPor'];
+
+                                                      String horarioCriacao = horarioCriacaost;
+                                                      String DatadeAnalise = DatadeAnalisest;
+                                                      String DateEntrada = DateEntradast;
+                                                      String DataSaida = DataSaidast;
+
+                                                      Navigator.push(context,
+                                                          MaterialPageRoute(builder: (context){
+                                                            return modalSaidaVeiculo(lacreounao, empresaName, liberadopor, horarioCriacao, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, empresaName, Galpao, lacradoStr, idDocumento, DatadeAnalise, verificadoPor, DateEntrada, empresaName, widget.porteiroName, DataSaida, tagSelecionada, widget.Saida);
+                                                          }));
+                                                    }
+                                                  }else{
+
+                                                    String lacreounao = documents['LacreouNao'];
+                                                    String empresaName = documents['EmpresadeOrigin'];
+                                                    String liberadopor = documents['QuemAutorizou'];
+                                                    String horarioCriacaost = documents['Horario Criado'];
+                                                    String nomeMotorista = documents['nomeMotorista'];
+                                                    String Veiculo = documents['Veiculo'];
+                                                    String PlacaVeiculo = documents['PlacaVeiculo'];
+                                                    String Empresadestino = documents['Empresa'];
+                                                    String Galpao = documents['Galpão'];
+                                                    String lacradoStr = documents['lacrenum'];
+                                                    String tagSelecionada = documents['tag'];
 
 
-                                                  String idDocumento = documents.id;
-                                                  String DatadeAnalisest = documents['DataDeAnalise'];
-                                                  String DateEntradast = documents['DataEntradaEmpresa'];
-                                                  String DataSaidast = documents['DataSaida'];
+                                                    String idDocumento = documents.id;
+                                                    String DatadeAnalisest = documents['DataDeAnalise'];
+                                                    String DateEntradast = documents['DataEntradaEmpresa'];
+                                                    String DataSaidast = documents['DataSaida'];
 
-                                                  String verificadoPor = documents['verificadoPor'];
+                                                    String verificadoPor = documents['verificadoPor'];
 
-                                                  String horarioCriacao = horarioCriacaost;
-                                                  String DatadeAnalise = DatadeAnalisest;
-                                                  String DateEntrada = DateEntradast;
-                                                  String DataSaida = DataSaidast;
+                                                    String horarioCriacao = horarioCriacaost;
+                                                    String DatadeAnalise = DatadeAnalisest;
+                                                    String DateEntrada = DateEntradast;
+                                                    String DataSaida = DataSaidast;
 
-                                                  Navigator.push(context,
-                                                      MaterialPageRoute(builder: (context){
-                                                        return modalSaidaVeiculo(lacreounao, empresaName, liberadopor, horarioCriacao, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, empresaName, Galpao, lacradoStr, idDocumento, DatadeAnalise, verificadoPor, DateEntrada, empresaName, widget.porteiroName, DataSaida, tagSelecionada, widget.Saida);
-                                                      }));
-
+                                                    Navigator.push(context,
+                                                        MaterialPageRoute(builder: (context){
+                                                          return modalSaidaVeiculo(lacreounao, empresaName, liberadopor, horarioCriacao, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, empresaName, Galpao, lacradoStr, idDocumento, DatadeAnalise, verificadoPor, DateEntrada, empresaName, widget.porteiroName, DataSaida, tagSelecionada, widget.Saida);
+                                                        }));
+                                                  }
                                                 },
                                                 child: Text(
                                                   documents['PlacaVeiculo'],

@@ -160,35 +160,25 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                       ],
                     ),
                   ),
-                  Center(
-                      child: ValueListenableBuilder(valueListenable: widget.dropValue, builder: (context, String value, _){
-                        return DropdownButton(
-                          hint: const Text(
-                            'Quantidade de vagas *',
-                            style: TextStyle(
-                                fontSize: 16
-                            ),
-                          ),
-                          value: (value.isEmpty)? null : value,
-                          onChanged: (escolha) async {
-                            widget.dropValue.value = escolha.toString();
-
-                            vagas = escolha.toString();
-
-                          },
-                          items: vagasList.map((opcao) => DropdownMenuItem(
-                            value: opcao,
-                            child:
-                            Text(
-                              opcao,
-                              style: const TextStyle(
-                                  fontSize: 18
-                              ),
-                            ),
-                          ),
-                          ).toList(),
-                        );
-                      })
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    child: TextFormField(
+                      controller: respNameController,
+                      onChanged: (valor){
+                        vagas = valor.toUpperCase();
+                        //Mudou mandou para a String
+                      },
+                      keyboardType: TextInputType.number,
+                      enableSuggestions: false,
+                      autocorrect: false,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        hintText: 'Quantidade de vagas para cada galpão *',
+                        hintStyle: TextStyle(
+                            fontSize: 18
+                        ),
+                      ),
+                    ),
                   ),
                   Container(
                     padding: const EdgeInsets.all(16),

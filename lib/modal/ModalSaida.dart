@@ -702,18 +702,19 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                           }).then((value){
                             Navigator.pop(context);
                           });
-                          final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar
 
-                          try {
-                            final result = await Process.run('ping', ['-c', '1', ip]);
-                            if (result.exitCode == 0) {
-                              print('Ping realizado com sucesso para o endereço $ip');
-                            } else {
-                              Navigator.pop(context);
-                              print('Falha no ping para o endereço $ip');
-                            }
-                          } catch (e) {
-                            print('Erro ao executar o comando de ping: $e');
+                          ConnectivityUtils.instance
+                            ..serverToPing =
+                                "https://gist.githubusercontent.com/Vanethos/dccc4b4605fc5c5aa4b9153dacc7391c/raw/355ccc0e06d0f84fdbdc83f5b8106065539d9781/gistfile1.txt"
+                            ..verifyResponseCallback =
+                                (response) => response.contains("This is a test!");
+
+                          if(await ConnectivityUtils.instance.isPhoneConnected()){
+                            print('Conectado!');
+
+                          }else{
+                            Navigator.pop(context);
+                            print('Desconectado!');
                           }
                         }
                       }

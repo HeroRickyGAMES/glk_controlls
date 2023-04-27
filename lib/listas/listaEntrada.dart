@@ -396,60 +396,67 @@ class _listEntradaState extends State<listEntrada> {
                                                         String verificadoPor = documents['verificadoPor'];
                                                         String formattedDate2 = '';
 
-                                                        if(documents['DataEntradaEmpresa'] == ''){
-                                                          formattedDate2 = documents['DataEntradaEmpresa'];
+                                                        if(documents['PlacaVeiculo'].contains('(AG)')){
 
-                                                          String formattedDate = horarioCriacao;
-
-
-                                                          final ByteData imageData = await rootBundle.load('assets/error-image.png');
-
-                                                          final Uint8List uint8List = imageData.buffer.asUint8List();
-
-                                                          final compressedImage = await FlutterImageCompress.compressWithList(
-                                                            uint8List,
-                                                            quality: 85, // ajuste a qualidade da imagem conforme necessário
-                                                          );
-
-                                                          final tempDir = await getTemporaryDirectory();
-                                                          final file = File('${tempDir.path}/imagem.jpg');
-                                                          await file.writeAsBytes(compressedImage);
-
-                                                          final file2 = File('${tempDir.path}/imagem.jpg');
-                                                          await file2.writeAsBytes(compressedImage);
-
-                                                          final file3 = File('${tempDir.path}/imagem.jpg');
-                                                          await file3.writeAsBytes(compressedImage);
-
-                                                          final file4 = File('${tempDir.path}/imagem.jpg');
-                                                          await file4.writeAsBytes(compressedImage);
-
-                                                          print(' arquivo temporario é : ${file} ');
-                                                          print(formattedDate);
+                                                          if(int.parse(documents['DataEntradaEmpresa'].replaceAll('/', '').replaceAll(' ', '').replaceAll(':', '')) >= int.parse(DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/').replaceAll('/', '').replaceAll(' ', '').replaceAll(':', ''))){
 
 
-                                                          var result = await FirebaseFirestore.instance
-                                                              .collection("Condominio")
-                                                              .doc('condominio')
-                                                              .get();
+                                                            formattedDate2 = documents['DataEntradaEmpresa'];
 
-                                                          Map tags = (result.get('tags'));
-                                                          List tagsDisponiveis = [];
+                                                            String formattedDate = horarioCriacao;
 
-                                                          print(tags.values.contains('Usado'));
 
-                                                          tags.removeWhere((key, value) => value == 'Usado');
-                                                          tagsDisponiveis.addAll(tags.keys);
+                                                            final ByteData imageData = await rootBundle.load('assets/error-image.png');
 
-                                                          print(tagsDisponiveis);
-                                                          print(tags.keys);
+                                                            final Uint8List uint8List = imageData.buffer.asUint8List();
 
-                                                          Navigator.push(context,
-                                                              MaterialPageRoute(builder: (context){
-                                                                return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2, tagsDisponiveis, widget.Entrada);
-                                                              }));
+                                                            final compressedImage = await FlutterImageCompress.compressWithList(
+                                                              uint8List,
+                                                              quality: 85, // ajuste a qualidade da imagem conforme necessário
+                                                            );
+
+                                                            final tempDir = await getTemporaryDirectory();
+                                                            final file = File('${tempDir.path}/imagem.jpg');
+                                                            await file.writeAsBytes(compressedImage);
+
+                                                            final file2 = File('${tempDir.path}/imagem.jpg');
+                                                            await file2.writeAsBytes(compressedImage);
+
+                                                            final file3 = File('${tempDir.path}/imagem.jpg');
+                                                            await file3.writeAsBytes(compressedImage);
+
+                                                            final file4 = File('${tempDir.path}/imagem.jpg');
+                                                            await file4.writeAsBytes(compressedImage);
+
+                                                            print(' arquivo temporario é : ${file} ');
+                                                            print(formattedDate);
+
+
+                                                            var result = await FirebaseFirestore.instance
+                                                                .collection("Condominio")
+                                                                .doc('condominio')
+                                                                .get();
+
+                                                            Map tags = (result.get('tags'));
+                                                            List tagsDisponiveis = [];
+
+                                                            print(tags.values.contains('Usado'));
+
+                                                            tags.removeWhere((key, value) => value == 'Usado');
+                                                            tagsDisponiveis.addAll(tags.keys);
+
+                                                            print(tagsDisponiveis);
+                                                            print(tags.keys);
+
+                                                            Navigator.push(context,
+                                                                MaterialPageRoute(builder: (context){
+                                                                  return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2, tagsDisponiveis, widget.Entrada);
+                                                                }));
+
+                                                          }
 
                                                         }else{
+
                                                           String DataEmpresaAnalise = documents['DataEntradaEmpresa'];
                                                           formattedDate2 = DataEmpresaAnalise;
 

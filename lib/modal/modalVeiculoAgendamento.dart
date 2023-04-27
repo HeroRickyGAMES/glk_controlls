@@ -14,7 +14,8 @@ class modalVeiculoAgendamento extends StatefulWidget {
   final dropValue2;
   final dropValue;
   List Galpoes;
-  modalVeiculoAgendamento(this.nomeUser, this.NomeEmpresa, this.dropValue2, this.dropValue, this.Galpoes, {super.key});
+  final String galpaoPrimario;
+  modalVeiculoAgendamento(this.nomeUser, this.NomeEmpresa, this.dropValue2, this.dropValue, this.Galpoes, this.galpaoPrimario, {super.key});
 
   @override
   State<modalVeiculoAgendamento> createState() => _modalVeiculoAgendamentoState();
@@ -36,7 +37,9 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
   TextEditingController telefoneinterface = TextEditingController();
 
   late DateTime dataAgendada;
+  late DateTime dataAgendadasaida;
   String dataAgendataST = '';
+  String dataAgendataSTsaida = '';
 
   List VeiculoOPC = [
     'Caminhão',
@@ -60,8 +63,6 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
         fontSize: 16.0,
       );
 
-
-
       //registre todos os valores no db
       var UID = FirebaseAuth.instance.currentUser?.uid;
 
@@ -75,14 +76,15 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
         'RGDoMotorista': RGMotorista,
         'Veiculo': Veiculo,
         'idDoc': idd,
-        'DataSaida': '',
+        'DataSaida': dataAgendataSTsaida,
         'PlacaVeiculo': VeiculoPlaca! + "(AG)",
         'Telefone': telefone,
         'EmpresadeOrigin': originEmpresa,
         'ColetaOuEntrega': coletaouentrega,
         'LacreouNao': '',
         'QuemAutorizou': widget.nomeUser,
-        'Status': 'Em Verificação',
+        'Status': 'Liberado Entrada',
+        'galpaoPrimario': widget.galpaoPrimario,
         'Horario Criado': dateTime,
         'saidaLiberadaPor': '',
         'uriImage': '',
@@ -301,7 +303,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                                     }else{
                                       if(dataAgendataST == ''){
                                         Fluttertoast.showToast(
-                                          msg: 'Selecione uma data para agendamento!',
+                                          msg: 'Selecione uma data para agendamento para entrada!',
                                           toastLength: Toast.LENGTH_SHORT,
                                           timeInSecForIosWeb: 1,
                                           backgroundColor: Colors.black,
@@ -309,7 +311,18 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                                           fontSize: 16.0,
                                         );
                                       }else{
-                                        MandarMT();
+                                        if(dataAgendataSTsaida == ''){
+                                          Fluttertoast.showToast(
+                                            msg: 'Selecione uma data para agendamento para saida!',
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.black,
+                                            textColor: Colors.white,
+                                            fontSize: 16.0,
+                                          );
+                                        }else{
+                                          MandarMT();
+                                        }
                                       }
                                     }
                                   }
@@ -342,6 +355,74 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                 'assets/icon.png',
                 width: 100,
                 height: 100,
+              ),
+              Text(
+                'Data de agendamento selecionada de entrada: ${dataAgendataST}',
+                style: const TextStyle(
+                    fontSize: 16
+                ),
+              ),
+              TextButton(
+                  onPressed: () {
+                    DatePicker.showDateTimePicker(context,
+                        showTitleActions: true,
+                        minTime: DateTime.now(),
+                        onChanged: (date) {
+                          print('change $date in time zone ' +
+                              date.timeZoneOffset.inHours.toString());
+                          dataAgendada = date;
+                          print(dataAgendada);
+                        }, onConfirm: (date) {
+                          print('confirm $date');
+                          dataAgendada = date;
+
+                          setState(() {
+                            dataAgendataST = DateFormat('dd-MM-yyyy HH:mm:ss').format(date).replaceAll('-', '/');
+                          });
+
+                        }, locale: LocaleType.pt);
+                  },
+                  child: const Text(
+                    'Selecione a data',
+                    style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 16
+                    ),
+                  )
+              ),
+              Text(
+                'Data de agendamento selecionada de saida: ${dataAgendataSTsaida}',
+                style: const TextStyle(
+                    fontSize: 16
+                ),
+              ),
+              TextButton(
+                  onPressed: () {
+                    DatePicker.showDateTimePicker(context,
+                        showTitleActions: true,
+                        minTime: DateTime.now(),
+                        onChanged: (date) {
+                          print('change $date in time zone ' +
+                              date.timeZoneOffset.inHours.toString());
+                          dataAgendadasaida = date;
+                          print(dataAgendadasaida);
+                        }, onConfirm: (date) {
+                          print('confirm $date');
+                          dataAgendada = date;
+
+                          setState(() {
+                            dataAgendataSTsaida = DateFormat('dd-MM-yyyy HH:mm:ss').format(date).replaceAll('-', '/');
+                          });
+
+                        }, locale: LocaleType.pt);
+                  },
+                  child: const Text(
+                    'Selecione a data',
+                    style: TextStyle(
+                        color: Colors.blue,
+                        fontSize: 16
+                    ),
+                  )
               ),
               Container(
                 padding: const EdgeInsets.only(top: 16),
@@ -619,68 +700,6 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                           ),
                         ),
                       ],
-                    ),
-                  ],
-                ),
-              ),
-              Column(
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    child: const Text(
-                      'Selecione um Galpão galpão (Selecione o que bate com com o nome da empresa)*',
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Text(
-                  'Data de agendamento selecionada ${dataAgendataST}',
-                style: const TextStyle(
-                    fontSize: 16
-                ),
-              ),
-              TextButton(
-                  onPressed: () {
-                    DatePicker.showDateTimePicker(context,
-                        showTitleActions: true,
-                        minTime: DateTime.now(),
-                        onChanged: (date) {
-                          print('change $date in time zone ' +
-                              date.timeZoneOffset.inHours.toString());
-                          dataAgendada = date;
-                          print(dataAgendada);
-                        }, onConfirm: (date) {
-                          print('confirm $date');
-                          dataAgendada = date;
-
-                          setState(() {
-                            dataAgendataST = DateFormat('dd-MM-yyyy HH:mm:ss').format(date).replaceAll('-', '/');
-                          });
-
-                        }, locale: LocaleType.pt);
-                  },
-                  child: const Text(
-                    'Selecione a data',
-                    style: TextStyle(
-                        color: Colors.blue,
-                      fontSize: 16
-                    ),
-                  )),
-              Container(
-                padding: const EdgeInsets.only(top: 16),
-                child:
-                Column(
-                  children: [
-                    const Text(
-                      'Está Entrando com Lacre ou Sem Lacre?',
-                      style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold
-                      ),
                     ),
                   ],
                 ),

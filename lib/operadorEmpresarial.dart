@@ -132,12 +132,12 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                             print('cheguei aqui');
 
                             Galpoes.addAll(res.data()['galpaes']);
-
+                            String galpaoPrimario = res.data()['galpaoPrimario'];
 
                             Navigator.pop(context);
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context){
-                                  return modalVeiculoAgendamento(widget.name, widget.empresaName,dropValue2, dropValue, Galpoes.keys.toList());
+                                  return modalVeiculoAgendamento(widget.name, widget.empresaName,dropValue2, dropValue, Galpoes.keys.toList(), galpaoPrimario);
                                 }));
 
                             print('tentando abrir');
