@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/anteLogin.dart';
+import 'package:glk_controls/listas/meusAgendamentos.dart';
 import 'package:glk_controls/modal/modalCadastroVeiculoInterno.dart';
 import 'package:glk_controls/modal/modalVeiculoAgendamento.dart';
 import 'package:glk_controls/relatorio.dart';
@@ -27,39 +28,6 @@ class operadorEmpresarial extends StatefulWidget {
 
   @override
   State<operadorEmpresarial> createState() => _operadorEmpresarialState();
-}
-
-class _PlateFormatter extends TextInputFormatter {
-  static const int _firstGroupLength = 3;
-  static const int _secondGroupLength = 4;
-  static const String _separator = ' ';
-
-  @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
-    String cleaned = newValue.text.replaceAll(RegExp('[^a-zA-Z0-9]'), '');
-    String plate = '';
-    int i = 0;
-    while (i < cleaned.length) {
-      int remaining = cleaned.length - i;
-      if (remaining > _firstGroupLength) {
-        plate += cleaned.substring(i, i + _firstGroupLength) + _separator;
-        i += _firstGroupLength;
-      } else {
-        plate += cleaned.substring(i, i + remaining);
-        i += remaining;
-      }
-      if (i == _firstGroupLength && remaining > 0) {
-        plate += _separator;
-      }
-    }
-    return TextEditingValue(
-      text: plate,
-      selection: TextSelection.fromPosition(
-        TextPosition(offset: plate.length),
-      ),
-    );
-  }
 }
 
 class _operadorEmpresarialState extends State<operadorEmpresarial> {
@@ -189,6 +157,15 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
 
       }
     }
+    meusAgendamentos(){
+
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context){
+            return meusAgendamentosActivity();
+          }));
+
+    }
+
     toRelatorio() async {
       showDialog(
         context: context,
@@ -295,6 +272,20 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                   ),
                   style: ElevatedButton.styleFrom(
                       primary: Colors.white24
+                  ),
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                child: ElevatedButton(
+                  onPressed: meusAgendamentos,
+                  child: Text(
+                    'Meus agendamentos',
+                    style: TextStyle(
+                      fontSize: tamanhotexto,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
