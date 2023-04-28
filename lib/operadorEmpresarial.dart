@@ -161,7 +161,7 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
 
       Navigator.push(context,
           MaterialPageRoute(builder: (context){
-            return meusAgendamentosActivity();
+            return meusAgendamentosActivity(widget.empresaName);
           }));
 
     }

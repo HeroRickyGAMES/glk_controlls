@@ -5,7 +5,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 
 class meusAgendamentosActivity extends StatefulWidget {
-  const meusAgendamentosActivity({Key? key}) : super(key: key);
+  String Empresa;
+  meusAgendamentosActivity(this.Empresa, {Key? key}) : super(key: key);
 
   @override
   State<meusAgendamentosActivity> createState() => _meusAgendamentosActivityState();
@@ -35,6 +36,7 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
             stream: FirebaseFirestore.instance
                 .collection('Autorizacoes')
                 .where("agendamento", isEqualTo: true)
+                .where("Empresa", isEqualTo: widget.Empresa)
                 .snapshots(),
             builder: (BuildContext context,
                 AsyncSnapshot<QuerySnapshot> snapshot) {
