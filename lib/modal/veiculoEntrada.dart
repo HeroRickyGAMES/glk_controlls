@@ -23,7 +23,9 @@ class veiculoEntrada extends StatefulWidget {
   String DateEntrada = '';
   String verificadoPor = '';
   String DatadeAnalise = '';
+  String lacreNum = '';
   bool interno;
+
   veiculoEntrada(
       this.lacreounao,
       this.empresaName,
@@ -40,7 +42,9 @@ class veiculoEntrada extends StatefulWidget {
       this.DateEntrada,
       this.verificadoPor,
       this.DatadeAnalise,
-      this.interno, {super.key}
+      this.interno,
+      this.lacreNum,
+      {super.key}
       );
   @override
   State<veiculoEntrada> createState() => _veiculoEntradaState();
@@ -49,10 +53,8 @@ class veiculoEntrada extends StatefulWidget {
 class _veiculoEntradaState extends State<veiculoEntrada> {
   bool lacrebool = false;
   String? lacreSt;
-
   @override
   Widget build(BuildContext context) {
-
 
     if(widget.lacreounao == 'lacre'){
 

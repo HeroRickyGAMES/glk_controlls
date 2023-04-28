@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/anteLogin.dart';
 import 'package:glk_controls/modal/modalCadastroVeiculoInterno.dart';
 import 'package:glk_controls/modal/modalVeiculoAgendamento.dart';
@@ -21,7 +22,8 @@ import 'package:glk_controls/listas/liberacoesOperadorEmpresarial.dart';
 class operadorEmpresarial extends StatefulWidget {
   final String name;
   final String empresaName;
-  const operadorEmpresarial(this.name, this.empresaName);
+  String Email;
+  operadorEmpresarial(this.name, this.empresaName, this.Email, {super.key});
 
   @override
   State<operadorEmpresarial> createState() => _operadorEmpresarialState();
@@ -329,42 +331,142 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
             crossAxisAlignment: CrossAxisAlignment.end,
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              Column(
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    child: ElevatedButton(
-                        onPressed: () async {
-                          await FirebaseAuth.instance.signOut().then((value) async {
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(16),
+                            child: ElevatedButton(
+                              onPressed: () async {
 
-                            var resulte = await FirebaseFirestore.instance
-                                .collection("Condominio")
-                                .doc('condominio')
-                                .get();
+                                showDialog(
+                                  context: context,
+                                  builder: (BuildContext context) {
+                                    return AlertDialog(
+                                      title: const Text('Deseja trocar a senha?'),
+                                      actions: [
+                                        Center(
+                                          child: Text(
+                                            'Enviaremos um email para esse email de conta logado.\nEmail: ${widget.Email}',
+                                            style: TextStyle(
+                                                fontSize: 18
+                                            ),
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.end,
+                                          children: [
+                                            TextButton(onPressed: (){
+                                              Navigator.of(context).pop();
+                                            },
+                                                child: const Text(
+                                                  'Cancelar',
+                                                  style: TextStyle(
+                                                      fontSize: 18
+                                                  ),
+                                                )
+                                            ),
+                                            TextButton(onPressed: () async {
+                                              Navigator.of(context).pop();
 
-                            String logoPath = resulte.get('imageURL');
+                                              try {
+                                                await FirebaseAuth.instance.sendPasswordResetEmail(email: widget.Email).then((value){
+                                                  Fluttertoast.showToast(
+                                                    msg: 'Enviado, verifique o email para resetar a senha!',
+                                                    toastLength: Toast.LENGTH_SHORT,
+                                                    timeInSecForIosWeb: 1,
+                                                    backgroundColor: Colors.black,
+                                                    textColor: Colors.white,
+                                                    fontSize: 16.0,
+                                                  );
+                                                  print('enviado!');
+                                                });
+                                              } catch (e) {
+                                                Fluttertoast.showToast(
+                                                  msg: 'Ocorreu um erro $e!',
+                                                  toastLength: Toast.LENGTH_SHORT,
+                                                  timeInSecForIosWeb: 1,
+                                                  backgroundColor: Colors.black,
+                                                  textColor: Colors.white,
+                                                  fontSize: 16.0,
+                                                );
+                                                print('Erro! $e');
+                                              }
 
-                            Navigator.pop(context);
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context){
-                                  return anteLogin(logoPath);
-                                }));
-                            print('Usuário desconectado');
-                          });
+                                            },
+                                                child: const Text(
+                                                  'Resetar Senha',
+                                                  style: TextStyle(
+                                                      fontSize: 18
+                                                  ),
+                                                )
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    );
+                                  },
+                                );
 
-                        },
-                        child: Text(
-                            'Logoff',
-                          style: TextStyle(
-                            fontSize: tamanhotexto,
-                            fontWeight: FontWeight.bold,
+                              },
+                              child: const Text(
+                                'Trocar Senha',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.grey
+                              ),
+                            ),
                           ),
-                        ),
-                      style: ElevatedButton.styleFrom(
-                          primary: Colors.red
+                        ],
                       ),
-                    ),
-                  )
+                      Column(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(16),
+                            child: ElevatedButton(
+                              onPressed: () async {
+                                await FirebaseAuth.instance.signOut().then((value) async {
+
+                                  var resulte = await FirebaseFirestore.instance
+                                      .collection("Condominio")
+                                      .doc('condominio')
+                                      .get();
+
+                                  String logoPath = resulte.get('imageURL');
+
+                                  Navigator.pop(context);
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context){
+                                        return anteLogin(logoPath);
+                                      }));
+                                  print('Usuário desconectado');
+                                });
+
+                              },
+                              child: const Text(
+                                'Logoff',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.red
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ],
               ),
               Row(

@@ -1,7 +1,5 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:connectivity_widget/connectivity_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -440,11 +438,13 @@ class _listEntradaState extends State<listEntrada> {
                                                             Map tags = (result.get('tags'));
                                                             List tagsDisponiveis = [];
 
+
                                                             print(tags.values.contains('Usado'));
 
                                                             tags.removeWhere((key, value) => value == 'Usado');
                                                             tagsDisponiveis.addAll(tags.keys);
 
+                                                            tagsDisponiveis.sort();
                                                             print(tagsDisponiveis);
                                                             print(tags.keys);
 
@@ -500,6 +500,8 @@ class _listEntradaState extends State<listEntrada> {
 
                                                           tags.removeWhere((key, value) => value == 'Usado');
                                                           tagsDisponiveis.addAll(tags.keys);
+
+                                                          tagsDisponiveis.sort();
 
                                                           print(tagsDisponiveis);
                                                           print(tags.keys);

@@ -203,6 +203,7 @@ class _loginState extends State<login> {
                                           bool saida = result.get('saida');
                                           bool relatorio = result.get('relatorio');
                                           bool painel = result.get('painel');
+                                          String Email = result.get('email');
 
 
                                           var resulte = await FirebaseFirestore.instance
@@ -215,7 +216,7 @@ class _loginState extends State<login> {
                                           Navigator.pop(context);
                                           Navigator.push(context,
                                               MaterialPageRoute(builder: (context){
-                                                return mainPorteiro(PorteiroNome, cadastro, entrada, saida, relatorio, painel, logoPath);
+                                                return mainPorteiro(PorteiroNome, cadastro, entrada, saida, relatorio, painel, logoPath, Email);
                                               }));
 
                                         }
@@ -259,11 +260,11 @@ class _loginState extends State<login> {
                                                       .get();
 
                                                   String empresaName = (result.get('empresa'));
-
+                                                  String Email = result.get('email');
                                                   Navigator.pop(context);
                                                   Navigator.push(context,
                                                       MaterialPageRoute(builder: (context){
-                                                        return operadorEmpresarial(nome, empresaName);
+                                                        return operadorEmpresarial(nome, empresaName, Email);
                                                       }));
 
                                                 }else{

@@ -140,9 +140,10 @@ checkislog(context) async {
                           bool saida = result.get('saida');
                           bool relatorio = result.get('relatorio');
                           bool painel = result.get('painel');
+                          String Email = result.get('email');
 
 
-                          var resulte = await dbInstance
+                          var resulte = await FirebaseFirestore.instance
                               .collection("Condominio")
                               .doc('condominio')
                               .get();
@@ -152,7 +153,7 @@ checkislog(context) async {
                           Navigator.pop(context);
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context){
-                                return mainPorteiro(PorteiroNome, cadastro, entrada, saida, relatorio, painel, logoPath);
+                                return mainPorteiro(PorteiroNome, cadastro, entrada, saida, relatorio, painel, logoPath, Email);
                               }));
 
                         }else{
@@ -361,11 +362,12 @@ checkislog(context) async {
                               .get();
 
                           String empresaName = (result.get('empresa'));
+                          String Email = result.get('email');
 
                           Navigator.pop(context);
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context){
-                                return operadorEmpresarial(nome, empresaName);
+                                return operadorEmpresarial(nome, empresaName, Email);
                               }));
 
                         }else{
@@ -483,11 +485,12 @@ checkislogOFFLine(context) async {
                 bool relatorio = result.get('relatorio');
                 bool painel = result.get('painel');
                 String PorteiroNome = result.get('nome');
+                String Email = result.get('email');
 
                 Navigator.pop(context);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context){
-                      return mainPorteiro(PorteiroNome, cadastro, entrada, saida, relatorio, painel, '');
+                      return mainPorteiro(PorteiroNome, cadastro, entrada, saida, relatorio, painel, '', Email);
                     }));
 
               });
@@ -662,11 +665,11 @@ checkislogOFFLine(context) async {
                               .get();
 
                           String empresaName = (result.get('empresa'));
-
+                          String Email = result.get('email');
                           Navigator.pop(context);
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context){
-                                return operadorEmpresarial(nome, empresaName);
+                                return operadorEmpresarial(nome, empresaName, Email);
                               }));
 
                         }else{

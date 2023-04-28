@@ -169,6 +169,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 bool saida = result.get('saida');
                 bool relatorio = result.get('relatorio');
                 bool painel = result.get('painel');
+                String Email = result.get('email');
 
                 FirebaseFirestore.instance.collection('Motoristas').doc().set({
                   'nomeMotorista': nomeMotorista,
@@ -185,7 +186,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 Navigator.pop(context);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context){
-                      return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath);
+                      return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath, Email);
                     }));
               }
             });
@@ -279,6 +280,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 bool saida = result.get('saida');
                 bool relatorio = result.get('relatorio');
                 bool painel = result.get('painel');
+                String Email = result.get('email');
 
                 FirebaseFirestore.instance.collection('Motoristas').doc().set({
                   'nomeMotorista': nomeMotorista,
@@ -295,7 +297,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 Navigator.pop(context);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context){
-                      return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath);
+                      return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath, Email);
                     }));
               }
             });
@@ -1032,7 +1034,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     bool saida = result.get('saida');
                     bool relatorio = result.get('relatorio');
                     bool painel = result.get('painel');
-
+                    String Email = result.get('email');
                     var resulte = await FirebaseFirestore.instance
                         .collection("Condominio")
                         .doc('condominio')
@@ -1043,7 +1045,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     Navigator.pop(context);
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context){
-                          return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath);
+                          return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath, Email);
                         }));
                     // retorna false para impedir que a navegação volte à tela anterior
 

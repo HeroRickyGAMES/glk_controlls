@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class UsuariosCadastrados extends StatefulWidget {
   String ADMName;
@@ -109,7 +111,7 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                 ),
               ],
             ),
-            interno == true ?  Container(
+            if (interno == true) SizedBox(
               height: 700,
               child: StreamBuilder(
                 stream: FirebaseFirestore.instance
@@ -217,11 +219,135 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
 
                                             },
                                             child: Row(
-                                              children: [
-                                                const Icon(Icons.delete),
+                                              children: const [
+                                                Icon(Icons.delete),
                                               ],
-                                            )
-                                        )
+                                            ),
+                                        ),
+                                        Container(
+                                          padding: const EdgeInsets.only(left: 16),
+                                          child: ElevatedButton(
+                                              onPressed: () async {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (BuildContext context) {
+                                                    return AlertDialog(
+                                                      title: Text('Usuario: ${documents['nome']}'),
+                                                      actions: [
+                                                        Center(
+                                                          child: Text(
+                                                            'Informações do Usuario: \n Email: ${documents['email']}',
+                                                            style: const TextStyle(
+                                                                fontSize: 18
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.end,
+                                                          children: [
+                                                            TextButton(onPressed: (){
+                                                              Navigator.of(context).pop();
+                                                            },
+                                                                child: const Text(
+                                                                  'Cancelar',
+                                                                  style: TextStyle(
+                                                                      fontSize: 18
+                                                                  ),
+                                                                )
+                                                            ),
+                                                            TextButton(onPressed: () async {
+                                                              Navigator.of(context).pop();
+                                                              showDialog(
+                                                                context: context,
+                                                                builder: (BuildContext context) {
+                                                                  return AlertDialog(
+                                                                    title: const Text('Tem certeza que deseja resetar essa senha?'),
+                                                                    actions: [
+                                                                      Center(
+                                                                        child: Container(
+                                                                          padding: const EdgeInsets.all(16),
+                                                                          child: const Text(
+                                                                            'Depois de fazer essa ação, enviaremos um email para a conta cadastrada',
+                                                                            style: TextStyle(
+                                                                                fontSize: 18
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      Row(
+                                                                        mainAxisAlignment: MainAxisAlignment.end,
+                                                                        children: [
+                                                                          TextButton(onPressed: (){
+                                                                            Navigator.of(context).pop();
+                                                                          },
+                                                                              child: const Text(
+                                                                                'Cancelar',
+                                                                                style: TextStyle(
+                                                                                    fontSize: 18
+                                                                                ),
+                                                                              )
+                                                                          ),
+                                                                          TextButton(onPressed: () async {
+                                                                            try {
+                                                                              await FirebaseAuth.instance.sendPasswordResetEmail(email: documents['email']).then((value){
+                                                                                Fluttertoast.showToast(
+                                                                                  msg: 'Enviado, verifique o email para resetar a senha!',
+                                                                                  toastLength: Toast.LENGTH_SHORT,
+                                                                                  timeInSecForIosWeb: 1,
+                                                                                  backgroundColor: Colors.black,
+                                                                                  textColor: Colors.white,
+                                                                                  fontSize: 16.0,
+                                                                                );
+                                                                                print('enviado!');
+                                                                              });
+                                                                            } catch (e) {
+                                                                              Fluttertoast.showToast(
+                                                                                msg: 'Ocorreu um erro $e!',
+                                                                                toastLength: Toast.LENGTH_SHORT,
+                                                                                timeInSecForIosWeb: 1,
+                                                                                backgroundColor: Colors.black,
+                                                                                textColor: Colors.white,
+                                                                                fontSize: 16.0,
+                                                                              );
+                                                                              print('Erro! $e');
+                                                                            }
+                                                                          },
+                                                                              child: const Text(
+                                                                                'Resetar Senha',
+                                                                                style: TextStyle(
+                                                                                    fontSize: 18
+                                                                                ),
+                                                                              )
+                                                                          )
+                                                                        ],
+                                                                      )
+                                                                    ],
+                                                                  );
+                                                                },
+                                                              );
+
+                                                            },
+                                                                child: const Text(
+                                                                  'Resetar Senha',
+                                                                  style: TextStyle(
+                                                                      fontSize: 18
+                                                                  ),
+                                                                )
+                                                            )
+                                                          ],
+                                                        )
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                              child: Row(
+                                                children: const [
+                                                  Icon(Icons.remove_red_eye),
+                                                ],
+                                              )
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -235,8 +361,7 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                   );
                 },
               ),
-            ) :
-            Container(
+            ) else SizedBox(
               height: 800,
               child: StreamBuilder(
                 stream: FirebaseFirestore.instance
@@ -326,7 +451,7 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                             });
                                                           },
                                                               child: const Text(
-                                                                'prosseguir',
+                                                                'Prosseguir',
                                                                 style: TextStyle(
                                                                     fontSize: 18
                                                                 ),
@@ -344,8 +469,132 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                               children: const [
                                                 Icon(Icons.delete),
                                               ],
-                                            )
-                                        )
+                                            ),
+                                        ),
+                                        Container(
+                                          padding: const EdgeInsets.only(left: 16),
+                                          child: ElevatedButton(
+                                              onPressed: () async {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (BuildContext context) {
+                                                    return AlertDialog(
+                                                      title: Text('Usuario: ${documentos['nome']}'),
+                                                      actions: [
+                                                        Center(
+                                                          child: Text(
+                                                            'Informações do Usuario: \n Email: ${documentos['email']}',
+                                                            style: const TextStyle(
+                                                                fontSize: 18
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Row(
+                                                          mainAxisAlignment: MainAxisAlignment.end,
+                                                          children: [
+                                                            TextButton(onPressed: (){
+                                                              Navigator.of(context).pop();
+                                                            },
+                                                                child: const Text(
+                                                                  'Cancelar',
+                                                                  style: TextStyle(
+                                                                      fontSize: 18
+                                                                  ),
+                                                                )
+                                                            ),
+                                                            TextButton(onPressed: () async {
+                                                              Navigator.of(context).pop();
+                                                              showDialog(
+                                                                context: context,
+                                                                builder: (BuildContext context) {
+                                                                  return AlertDialog(
+                                                                    title: const Text('Tem certeza que deseja resetar essa senha?'),
+                                                                    actions: [
+                                                                      Center(
+                                                                        child: Container(
+                                                                          padding: const EdgeInsets.all(16),
+                                                                          child: const Text(
+                                                                            'Depois de fazer essa ação, enviaremos um email para a conta cadastrada',
+                                                                            style: TextStyle(
+                                                                                fontSize: 18
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                      Row(
+                                                                        mainAxisAlignment: MainAxisAlignment.end,
+                                                                        children: [
+                                                                          TextButton(onPressed: (){
+                                                                            Navigator.of(context).pop();
+                                                                          },
+                                                                              child: const Text(
+                                                                                'Cancelar',
+                                                                                style: TextStyle(
+                                                                                    fontSize: 18
+                                                                                ),
+                                                                              )
+                                                                          ),
+                                                                          TextButton(onPressed: () async {
+                                                                            try {
+                                                                              await FirebaseAuth.instance.sendPasswordResetEmail(email: documentos['email']).then((value){
+                                                                                Fluttertoast.showToast(
+                                                                                  msg: 'Enviado, verifique o email para resetar a senha!',
+                                                                                  toastLength: Toast.LENGTH_SHORT,
+                                                                                  timeInSecForIosWeb: 1,
+                                                                                  backgroundColor: Colors.black,
+                                                                                  textColor: Colors.white,
+                                                                                  fontSize: 16.0,
+                                                                                );
+                                                                                print('enviado!');
+                                                                              });
+                                                                            } catch (e) {
+                                                                              Fluttertoast.showToast(
+                                                                                msg: 'Ocorreu um erro $e!',
+                                                                                toastLength: Toast.LENGTH_SHORT,
+                                                                                timeInSecForIosWeb: 1,
+                                                                                backgroundColor: Colors.black,
+                                                                                textColor: Colors.white,
+                                                                                fontSize: 16.0,
+                                                                              );
+                                                                              print('Erro! $e');
+                                                                            }
+                                                                          },
+                                                                              child: const Text(
+                                                                                'Resetar Senha',
+                                                                                style: TextStyle(
+                                                                                    fontSize: 18
+                                                                                ),
+                                                                              )
+                                                                          )
+                                                                        ],
+                                                                      )
+                                                                    ],
+                                                                  );
+                                                                },
+                                                              );
+
+                                                            },
+                                                                child: const Text(
+                                                                  'Resetar Senha',
+                                                                  style: TextStyle(
+                                                                      fontSize: 18
+                                                                  ),
+                                                                )
+                                                            )
+                                                          ],
+                                                        )
+                                                      ],
+                                                    );
+                                                  },
+                                                );
+                                              },
+                                              child: Row(
+                                                children: const [
+                                                  Icon(Icons.remove_red_eye),
+                                                ],
+                                              )
+                                          ),
+                                        ),
                                       ],
                                     ),
                                   ),

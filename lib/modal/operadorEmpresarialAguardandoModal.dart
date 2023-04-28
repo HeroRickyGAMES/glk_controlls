@@ -56,7 +56,7 @@ class operadorEmpresarialAguardando extends StatefulWidget {
   @override
   State<operadorEmpresarialAguardando> createState() => _operadorEmpresarialAguardandoState();
 }
-
+String AutorizoEntrada = 'Autorizo Entrada st';
 class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguardando> {
   bool lacrebool = false;
   String? lacreSt;
@@ -69,6 +69,17 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
   @override
   Widget build(BuildContext context) {
 
+    if(widget.lacreounao == 'lacre'){
+      setState(() {
+        AutorizoEntrada = 'Autorizo Entrada com lacre';
+      });
+    }
+
+    if(widget.lacreounao == 'naolacrado'){
+      setState(() {
+        AutorizoEntrada = 'Autorizo Entrada sem lacre';
+      });
+    }
 
     if(widget.lacreounao == 'lacre'){
 
@@ -233,7 +244,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
             Container(
               child:
               CheckboxListTile(
-                title: const Text('Autorizo Entrada'),
+                title: Text(AutorizoEntrada),
                 value: entradabool,
                 onChanged: (value) {
                   setState(() {

@@ -1,19 +1,15 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_widget/connectivity_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/Painel.dart';
 import 'package:glk_controls/btnsVerificarEntrada.dart';
 import 'package:glk_controls/btnsVerificarSaida.dart';
-import 'package:glk_controls/listas/listaEntrada.dart';
 import 'package:glk_controls/offlineService/mainPorteiroOffline.dart';
 import 'package:glk_controls/relatorio.dart';
 import 'package:glk_controls/modal/modalVeiculo.dart';
-import 'package:glk_controls/listas/listaSaida.dart';
 import 'package:glk_controls/anteLogin.dart';
 
 import 'firebase_options.dart';
@@ -35,9 +31,10 @@ class mainPorteiro extends StatefulWidget {
   bool saida;
   bool relatorio;
   bool painel;
+  String Email;
 
   final String PorteiroNome;
-  mainPorteiro(this.PorteiroNome, this.cadastro, this.entrada, this.saida, this.relatorio, this.painel, this.LogoPath, {super.key});
+  mainPorteiro(this.PorteiroNome, this.cadastro, this.entrada, this.saida, this.relatorio, this.painel, this.LogoPath, this.Email, {super.key});
 
   @override
   State<mainPorteiro> createState() => _mainPorteiroState();
@@ -357,40 +354,141 @@ class _mainPorteiroState extends State<mainPorteiro> {
               crossAxisAlignment: CrossAxisAlignment.end,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Column(
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(16),
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          await FirebaseAuth.instance.signOut().then((value) async {
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(16),
+                              child: ElevatedButton(
+                                onPressed: () async {
 
-                            var resulte = await FirebaseFirestore.instance
-                                .collection("Condominio")
-                                .doc('condominio')
-                                .get();
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Deseja trocar a senha?'),
+                                        actions: [
+                                          Center(
+                                            child: Text(
+                                              'Enviaremos um email para esse email de conta logado.\nEmail: ${widget.Email}',
+                                              style: TextStyle(
+                                                  fontSize: 18
+                                              ),
+                                            ),
+                                          ),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            children: [
+                                              TextButton(onPressed: (){
+                                                Navigator.of(context).pop();
+                                              },
+                                                  child: const Text(
+                                                    'Cancelar',
+                                                    style: TextStyle(
+                                                        fontSize: 18
+                                                    ),
+                                                  )
+                                              ),
+                                              TextButton(onPressed: () async {
+                                                Navigator.of(context).pop();
 
-                            String logoPath = resulte.get('imageURL');
+                                                try {
+                                                  await FirebaseAuth.instance.sendPasswordResetEmail(email: widget.Email).then((value){
+                                                    Fluttertoast.showToast(
+                                                      msg: 'Enviado, verifique o email para resetar a senha!',
+                                                      toastLength: Toast.LENGTH_SHORT,
+                                                      timeInSecForIosWeb: 1,
+                                                      backgroundColor: Colors.black,
+                                                      textColor: Colors.white,
+                                                      fontSize: 16.0,
+                                                    );
+                                                    print('enviado!');
+                                                  });
+                                                } catch (e) {
+                                                  Fluttertoast.showToast(
+                                                    msg: 'Ocorreu um erro $e!',
+                                                    toastLength: Toast.LENGTH_SHORT,
+                                                    timeInSecForIosWeb: 1,
+                                                    backgroundColor: Colors.black,
+                                                    textColor: Colors.white,
+                                                    fontSize: 16.0,
+                                                  );
+                                                  print('Erro! $e');
+                                                }
 
-                            Navigator.pop(context);
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context){
-                                  return anteLogin(logoPath);
-                                }));
-                            print('Usuário desconectado');
-                          });
+                                              },
+                                                  child: const Text(
+                                                    'Resetar Senha',
+                                                    style: TextStyle(
+                                                        fontSize: 18
+                                                    ),
+                                                  )
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      );
+                                    },
+                                  );
 
-                        },
-                        child: const Text(
-                          'Logoff',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
+                                },
+                                child: const Text(
+                                  'Trocar Senha',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.grey
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.red
+                        Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(16),
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  await FirebaseAuth.instance.signOut().then((value) async {
+
+                                    var resulte = await FirebaseFirestore.instance
+                                        .collection("Condominio")
+                                        .doc('condominio')
+                                        .get();
+
+                                    String logoPath = resulte.get('imageURL');
+
+                                    Navigator.pop(context);
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context){
+                                          return anteLogin(logoPath);
+                                        }));
+                                    print('Usuário desconectado');
+                                  });
+
+                                },
+                                child: const Text(
+                                  'Logoff',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.red
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
+                      ],
                     ),
                   ],
                 ),
