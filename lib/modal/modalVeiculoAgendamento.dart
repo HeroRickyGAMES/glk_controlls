@@ -21,17 +21,17 @@ class modalVeiculoAgendamento extends StatefulWidget {
   State<modalVeiculoAgendamento> createState() => _modalVeiculoAgendamentoState();
 }
 class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
-  String? coletaouentrega;
-  String? empresaSelecionada;
-  String? galpao;
+  String? coletaouentrega = '';
+  String? empresaSelecionada = '';
+  String? galpao = '';
 
   //fields
-  String? nomeMotorista;
-  String? RGMotorista;
-  String? Veiculo;
+  String? nomeMotorista = '';
+  String? RGMotorista = '';
+  String? Veiculo =  '';
   String? telefone = '';
-  String? VeiculoPlaca;
-  String? originEmpresa;
+  String? VeiculoPlaca = '';
+  String? originEmpresa = '';
   TextEditingController nameMotoristaAllcaps = TextEditingController();
   TextEditingController placaveiculointerface = TextEditingController();
   TextEditingController telefoneinterface = TextEditingController();
@@ -103,7 +103,8 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
         'Galpão': galpao,
         'tag': '',
         'motivo': motivo,
-        'interno': false
+        'interno': false,
+        'agendamento': true
       }).then((value) async {
         Fluttertoast.showToast(
           msg: 'Enviado com sucesso!',
@@ -143,7 +144,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
     uploadInfos() async {
       empresaSelecionada = widget.NomeEmpresa;
 
-      if(nomeMotorista == null){
+      if(nomeMotorista == ""){
         Fluttertoast.showToast(
           msg: 'Preencha o nome do motorista!',
           toastLength: Toast.LENGTH_SHORT,
@@ -153,7 +154,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
           fontSize: 16.0,
         );
       }else{
-        if(RGMotorista == null){
+        if(RGMotorista == ''){
           Fluttertoast.showToast(
             msg: 'Preencha o RG do motorista',
             toastLength: Toast.LENGTH_SHORT,
@@ -163,7 +164,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
             fontSize: 16.0,
           );
         }else{
-          if(Veiculo == null){
+          if(Veiculo == ''){
             Fluttertoast.showToast(
               msg: 'Preencha tipo de veiculo!',
               toastLength: Toast.LENGTH_SHORT,
@@ -173,7 +174,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
               fontSize: 16.0,
             );
           }else{
-            if(VeiculoPlaca == null){
+            if(VeiculoPlaca == ''){
               Fluttertoast.showToast(
                 msg: 'Preencha a placa do veiculo!',
                 toastLength: Toast.LENGTH_SHORT,
@@ -183,7 +184,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                 fontSize: 16.0,
               );
             }else{
-                if(empresaSelecionada == null){
+                if(empresaSelecionada == ''){
                   Fluttertoast.showToast(
                     msg: 'Selecione uma empresa!',
                     toastLength: Toast.LENGTH_SHORT,
@@ -193,7 +194,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                     fontSize: 16.0,
                   );
                 }else{
-                  if(coletaouentrega == null){
+                  if(coletaouentrega == ''){
                     Fluttertoast.showToast(
                       msg: 'Selecione se é coleta ou entrega!',
                       toastLength: Toast.LENGTH_SHORT,
