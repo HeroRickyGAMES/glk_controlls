@@ -163,7 +163,6 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                   Container(
                     padding: const EdgeInsets.all(16),
                     child: TextFormField(
-                      controller: respNameController,
                       onChanged: (valor){
                         vagas = valor.toUpperCase();
                         //Mudou mandou para a String

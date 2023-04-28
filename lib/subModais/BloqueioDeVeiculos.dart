@@ -161,7 +161,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                                       mainAxisAlignment: MainAxisAlignment.start,
                                                       children: [
                                                         Text('Veiculo:'  + documents['tipoVeiculo']),
-                                                        Text('Data do Bloqueio:'  + DateFormat('dd-MM-yyyy HH:mm:ss').format(documents['dataDoBloqueio'].toDate()).replaceAll('-', '/'),),
+                                                        Text('Data do Bloqueio:'  + documents['dataDoBloqueio'],),
                                                         Container(
                                                             padding: const EdgeInsets.all(16),
                                                             child: Text('Motivo: \n'  + documents['Motivo']
@@ -197,7 +197,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
 
                                                       Navigator.push(context,
                                                           MaterialPageRoute(builder: (context){
-                                                            return generatePDF2(documents['placa'], documents['tipoVeiculo'], documents['Motivo'], DateFormat('dd-MM-yyyy HH:mm:ss').format(documents['dataDoBloqueio'].toDate()).replaceAll('-', '/'));
+                                                            return generatePDF2(documents['placa'], documents['tipoVeiculo'], documents['Motivo'], documents['dataDoBloqueio']);
                                                           }));
 
                                                     }, child: const Text(
@@ -426,8 +426,6 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                             }else{
 
                                               //todo bloqueio db
-
-                                              DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
 
                                               var uuid = const Uuid();
 

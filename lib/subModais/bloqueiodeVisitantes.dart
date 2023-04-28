@@ -162,7 +162,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                                       mainAxisAlignment: MainAxisAlignment.start,
                                                       children: [
                                                         Text('Nome:'  + documents['nome']),
-                                                        Text('Data do Bloqueio:'  + DateFormat('dd-MM-yyyy HH:mm:ss').format(documents['dataDoBloqueio'].toDate()).replaceAll('-', '/'),),
+                                                        Text('Data do Bloqueio:'  + documents['dataDoBloqueio'].replaceAll('-', '/'),),
                                                         Container(
                                                             padding: const EdgeInsets.all(16),
                                                             child: Text('Motivo: \n'  + documents['Motivo']
@@ -197,7 +197,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
 
                                                       Navigator.push(context,
                                                           MaterialPageRoute(builder: (context){
-                                                            return generatePDF3(documents['nome'], documents['rg'], documents['Motivo'], DateFormat('dd-MM-yyyy HH:mm:ss').format(documents['dataDoBloqueio'].toDate()).replaceAll('-', '/'));
+                                                            return generatePDF3(documents['nome'], documents['rg'], documents['Motivo'], documents['dataDoBloqueio'].replaceAll('-', '/'));
                                                           }));
 
                                                     }, child: const Text(
