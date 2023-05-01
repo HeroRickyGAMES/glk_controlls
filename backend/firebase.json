@@ -2,18 +2,22 @@
   "emulators": {
     "auth": {
       "port": 9099,
-      "dataDir": "firebaseDbs/auth-data"
+      "dataDir": "firebaseDbs/auth-data",
+      "host": "0.0.0.0"
     },
     "firestore": {
       "port": 8080,
-      "dataDir": "firebaseDbs/firestore-data"
+      "dataDir": "firebaseDbs/firestore-data",
+      "host": "0.0.0.0"
     },
     "storage": {
       "port": 9199,
-      "dataDir": "firebaseDbs/storage-data"
+      "dataDir": "firebaseDbs/storage-data",
+      "host": "0.0.0.0"
     },
     "ui": {
-      "enabled": true
+      "enabled": true,
+      "host": "0.0.0.0"
     },
     "singleProjectMode": true
   },
