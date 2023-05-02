@@ -3,11 +3,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:glk_controls/cadastrese.dart';
-import 'package:glk_controls/mainEmpresa.dart';
 import 'package:glk_controls/mainPorteiro.dart';
 import 'package:glk_controls/setorADM.dart';
 import 'package:glk_controls/operadorEmpresarial.dart';
+
 //Programado por HeroRickyGames
 
 class login extends StatefulWidget {
@@ -21,14 +20,6 @@ class _loginState extends State<login> {
   bool visivel = true;
   final emailController = TextEditingController();
   final passController = TextEditingController();
-  toCadastrese(){
-
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context){
-          return const registro();
-        }));
-
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -3,6 +3,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:glk_controls/login.dart';
 import 'package:glk_controls/PainelAdministrativo/painelAdmin.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 class anteLogin extends StatefulWidget {
   String logoCondominio;
   anteLogin(this.logoCondominio, {Key? key}) : super(key: key);
@@ -12,11 +13,25 @@ class anteLogin extends StatefulWidget {
 }
 
 class _anteLoginState extends State<anteLogin> {
+
+
+  final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
+  setarComoOnline() async {
+
+    final SharedPreferences prefs = await _prefs;
+
+    await prefs.setBool('OfflineMode', false);
+
+  }
+
   @override
   Widget build(BuildContext context) {
     String User = '';
     String pass = '';
 
+
+    setarComoOnline();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

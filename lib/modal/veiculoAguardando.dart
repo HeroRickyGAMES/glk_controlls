@@ -8,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:glk_controls/callToAPI.dart';
 import 'package:intl/intl.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 //Programado por HeroRickyGames
 
@@ -732,6 +733,9 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                     child:
                     ElevatedButton(
                       onPressed: _uploadImage,
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent
+                      ),
                       child:
                       Column(
                         children: [
@@ -752,9 +756,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                           ),
                         ],
                       ),
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent
-                      ),
                     ),
                   ),
                   Container(
@@ -763,6 +764,9 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                     child:
                     ElevatedButton(
                       onPressed: _uploadImage2,
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent
+                      ),
                       child:
                       Column(
                         children: [
@@ -783,9 +787,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                           ),
                         ],
                       ),
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent
-                      ),
                     ),
                   ),
                 ],
@@ -804,6 +805,9 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                     child:
                     ElevatedButton(
                       onPressed: _uploadImage3,
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent
+                      ),
                       child:
                       Column(
                         children: [
@@ -824,9 +828,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                           ),
                         ],
                       ),
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent
-                      ),
                     ),
                   ),
                   Container(
@@ -835,6 +836,9 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                     child:
                     ElevatedButton(
                       onPressed: _uploadImage4,
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.transparent
+                      ),
                       child:
                       Column(
                         children: [
@@ -854,9 +858,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                             width: 200,
                           ),
                         ],
-                      ),
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent
                       ),
                     ),
                   ),
@@ -943,44 +944,19 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
                         if(await ConnectivityUtils.instance.isPhoneConnected()){
 
+                          final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+                          final SharedPreferences prefs = await _prefs;
+                          bool? offlinemode =  prefs.getBool('OfflineMode');
 
+                          if(offlinemode == true){
 
-
-                          final imageUrl = await _uploadImageToFirebase(imageFile!, widget.idDocumento);
-                          final imageUrl2 = await _uploadImageToFirebase2(imageFile2!, widget.idDocumento);
-                          String imageUrl3 = '';
-                          String imageUrl4 = '';
-
-
-                          if(imageFile3 != ''){
-                            imageUrl3 = await _uploadImageToFirebase3(imageFile3!, widget.idDocumento);
-
-                          }
-
-                          if(imageFile4 != ''){
-                            imageUrl4 = await _uploadImageToFirebase4(imageFile4!, widget.idDocumento);
-                          }
-
-                          FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                            'verificadoPor': widget.empresaName,
-                            'lacrenum': lacreSt,
-                            'LacreouNao': 'naolacrado',
-                            'DataDeAnalise': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
-                            'uriImage': imageUrl,
-                            'uriImage2': imageUrl2,
-                            'uriImage3': imageUrl3,
-                            'uriImage4': imageUrl4,
-                            'Status': 'Estacionário',
-                            'tag': tagSelecionada
-                          }).then((value) async {
-                            Fluttertoast.showToast(
-                              msg: 'Dados atualizados!',
-                              toastLength: Toast.LENGTH_SHORT,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.black,
-                              textColor: Colors.white,
-                              fontSize: 16.0,
-                            );
+                            FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                              'verificadoPor': widget.empresaName,
+                              'LacreouNao': 'naolacrado',
+                              'DataDeAnalise': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
+                              'tag': tagSelecionada,
+                              'Status': 'Liberado Saida',
+                            });
 
                             var result = await FirebaseFirestore.instance
                                 .collection("Condominio")
@@ -1001,10 +977,71 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                             callToVerifyReles();
                             Navigator.of(context).pop();
                             Navigator.pop(context);
-                          });
 
-                          print('Conectado!');
+                            print('Modo Offline Ativo');
+                          }else{
+                            final imageUrl = await _uploadImageToFirebase(imageFile!, widget.idDocumento);
+                            final imageUrl2 = await _uploadImageToFirebase2(imageFile2!, widget.idDocumento);
+                            String imageUrl3 = '';
+                            String imageUrl4 = '';
 
+
+                            if(imageFile3 != ''){
+                              imageUrl3 = await _uploadImageToFirebase3(imageFile3!, widget.idDocumento);
+
+                            }
+
+                            if(imageFile4 != ''){
+                              imageUrl4 = await _uploadImageToFirebase4(imageFile4!, widget.idDocumento);
+                            }
+
+                            FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                              'verificadoPor': widget.empresaName,
+                              'lacrenum': lacreSt,
+                              'LacreouNao': 'naolacrado',
+                              'DataDeAnalise': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
+                              'uriImage': imageUrl,
+                              'uriImage2': imageUrl2,
+                              'uriImage3': imageUrl3,
+                              'uriImage4': imageUrl4,
+                              'Status': 'Estacionário',
+                              'tag': tagSelecionada
+                            }).then((value) async {
+                              Fluttertoast.showToast(
+                                msg: 'Dados atualizados!',
+                                toastLength: Toast.LENGTH_SHORT,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.black,
+                                textColor: Colors.white,
+                                fontSize: 16.0,
+                              );
+
+                              var result = await FirebaseFirestore.instance
+                                  .collection("Condominio")
+                                  .doc('condominio')
+                                  .get();
+
+                              Map tags = (result.get('tags'));
+
+                              tags[tagSelecionada] = 'Usado';
+
+                              print(tags[tagSelecionada]);
+
+                              FirebaseFirestore.instance.collection('Condominio').doc('condominio').update({
+                                'tags': tags
+                              });
+
+                              //Fazer as regras do Rele
+                              callToVerifyReles();
+                              Navigator.of(context).pop();
+                              Navigator.pop(context);
+                            });
+
+                            print('Conectado!');
+
+
+                            print('Conectado!');
+                          }
                         }else{
 
                           FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
@@ -1012,7 +1049,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                             'LacreouNao': 'naolacrado',
                             'DataDeAnalise': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                             'tag': tagSelecionada,
-                            'Status': 'Estacionário',
+                            'Status': 'Liberado Saida',
                           });
 
                           var result = await FirebaseFirestore.instance

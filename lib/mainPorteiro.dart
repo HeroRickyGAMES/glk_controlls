@@ -12,6 +12,7 @@ import 'package:glk_controls/offlineService/mainPorteiroOffline.dart';
 import 'package:glk_controls/relatorio.dart';
 import 'package:glk_controls/modal/modalVeiculo.dart';
 import 'package:glk_controls/anteLogin.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'firebase_options.dart';
 
@@ -353,14 +354,66 @@ class _mainPorteiroState extends State<mainPorteiro> {
                   width: double.infinity,
                   padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                   child: ElevatedButton(
-                    onPressed: (){
+                    onPressed: () {
 
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text("Deseja colocar-se no modo offline?"),
+                            actions: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                children: [
+                                  ElevatedButton(onPressed: (){
+
+                                    Navigator.of(context).pop();
+
+                                  }, child: const Text('Cancelar'),
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Colors.red[800]
+                                    ),
+                                  ),
+                                  ElevatedButton(onPressed: () async {
+
+                                    final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+                                    final SharedPreferences prefs = await _prefs;
+
+                                    bool? offlinemode =  prefs.getBool('OfflineMode');
+
+                                    if(offlinemode == true){
+                                      await prefs.setBool('OfflineMode', false);
+                                    }else{
+                                      await prefs.setBool('OfflineMode', true);
+                                    }
+
+                                    Fluttertoast.showToast(
+                                      msg: 'Reinicie o app para que as auterações entrem em vigor!',
+                                      toastLength: Toast.LENGTH_LONG,
+                                      timeInSecForIosWeb: 5,
+                                      backgroundColor: Colors.black,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0,
+                                    );
+                                    Navigator.of(context).pop();
+                                  }, child: const Text('Prosseguir'),
+                                    style: ElevatedButton.styleFrom(
+                                        primary: Colors.green[800]
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          );
+                        },
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                         primary: Colors.red[800]
                     ),
                     child: const Text(
-                      'Liberação offline',
+                      'Ativar/Desativar modo Offline',
                       style: TextStyle(
                           fontSize: 16
                       ),

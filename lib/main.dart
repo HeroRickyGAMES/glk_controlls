@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:connectivity_widget/connectivity_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:glk_controls/mainActivityPrepare.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 //Programado por HeroRickyGames
 
@@ -18,6 +19,8 @@ void main() {
   );
 }
 
+final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+
 calltoprepare(context) async {
   ConnectivityUtils.instance
     ..serverToPing =
@@ -27,12 +30,29 @@ calltoprepare(context) async {
 
   if(await ConnectivityUtils.instance.isPhoneConnected()){
     print('Conectado!');
-    String calloff = 'NaoAtivo';
-    Navigator.pop(context);
-    Navigator.push(context,
-        MaterialPageRoute(builder: (context){
-          return mainActivityPrepare(calloff);
-        }));
+    final SharedPreferences prefs = await _prefs;
+
+    bool? offlinemode =  prefs.getBool('OfflineMode');
+
+
+    if(offlinemode == true){
+      String calloff = 'Ativo';
+      Navigator.pop(context);
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context){
+            return mainActivityPrepare(calloff);
+          }));
+      print('Em modo offline!');
+    }else{
+      print('Conectado!');
+      String calloff = 'NaoAtivo';
+      Navigator.pop(context);
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context){
+            return mainActivityPrepare(calloff);
+          }));
+
+    }
 
   }else{
     String calloff = 'Ativo';

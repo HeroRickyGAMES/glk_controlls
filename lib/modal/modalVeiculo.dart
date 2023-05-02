@@ -5,6 +5,7 @@ import 'package:connectivity_widget/connectivity_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:uuid/uuid.dart';
 import 'package:glk_controls/mainPorteiro.dart';
 import 'package:intl/intl.dart';
@@ -567,7 +568,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                         MandarMT();
                                         print('Desconectado!');
                                       }
-
                                     }
                                   }
                                 }else{
@@ -578,11 +578,21 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                         (response) => response.contains("This is a test!");
 
                                   if(await ConnectivityUtils.instance.isPhoneConnected()){
-                                    MandarMT();
-                                    print('Conectado!');
 
+                                    final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+                                    final SharedPreferences prefs = await _prefs;
+                                    bool? offlinemode =  prefs.getBool('OfflineMode');
+
+                                    if(offlinemode == true){
+                                      Status = 'Liberado Entrada';
+                                      MandarMT();
+                                      print('Modo Offline Ativo');
+                                    }else{
+                                      MandarMT();
+                                      print('Conectado!');
+                                    }
                                   }else{
-                                    Status = 'Liberado Saida';
+                                    Status = 'Liberado Entrada';
                                     MandarMT();
                                     print('Desconectado!');
                                   }
