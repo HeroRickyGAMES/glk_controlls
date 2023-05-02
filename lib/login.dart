@@ -103,7 +103,6 @@ class _loginState extends State<login> {
                          setState(() {
                            visivel = !visivel;
                          });
-                        print('Botão favorito pressionado!');
                       },
                     )
                   ],
