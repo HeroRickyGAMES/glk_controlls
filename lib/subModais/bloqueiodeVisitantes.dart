@@ -405,7 +405,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
 
                                             //todo bloqueio db
 
-                                            var dateTime= DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
+                                            var dateTime= DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
 
                                             var uuid = const Uuid();
 

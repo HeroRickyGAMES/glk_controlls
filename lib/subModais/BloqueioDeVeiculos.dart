@@ -437,7 +437,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                                  'Motivo': bloqueioMotivo,
                                                  'tipoVeiculo' : Veiculost,
                                                   'id': idd,
-                                                  'dataDoBloqueio': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
+                                                  'dataDoBloqueio': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                                                 }
                                               );
 

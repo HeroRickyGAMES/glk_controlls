@@ -965,7 +965,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                             'verificadoPor': widget.empresaName,
                             'lacrenum': lacreSt,
                             'LacreouNao': 'naolacrado',
-                            'DataDeAnalise': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
+                            'DataDeAnalise': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                             'uriImage': imageUrl,
                             'uriImage2': imageUrl2,
                             'uriImage3': imageUrl3,
@@ -1010,7 +1010,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                           FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                             'verificadoPor': widget.empresaName,
                             'LacreouNao': 'naolacrado',
-                            'DataDeAnalise': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
+                            'DataDeAnalise': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                             'tag': tagSelecionada,
                             'Status': 'Estacionário',
                           });
@@ -1127,7 +1127,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                                   'uriImage3': imageUrl3,
                                   'uriImage4': imageUrl4,
                                   'Status': 'Estacionário',
-                                  'DataDeAnalise': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
+                                  'DataDeAnalise': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                                   'tag': tagSelecionada,
                                 }).then((value) {
 
@@ -1167,7 +1167,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                                   'LacreouNao': 'lacre',
                                   'Status': 'Estacionário',
                                   'tag': tagSelecionada,
-                                  'DataDeAnalise': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
+                                  'DataDeAnalise': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
 
                                 });
                                 //Fazer as regras do Rele

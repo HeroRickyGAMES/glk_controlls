@@ -306,7 +306,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                       if(lacrebool == false){
                         if(entradabool == true){
                           FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                            'DataEntradaEmpresa': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
+                            'DataEntradaEmpresa': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                             'Galpão': galpaoSelecionado,
                             'Status': 'Liberado Entrada'
                           }).then((value){
@@ -322,7 +322,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                         if(regeitado == true){
 
                           FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                            'DataAnaliseEmpresa': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
+                            'DataAnaliseEmpresa': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                             'Status': 'Rejeitado'
                           }).then((value){
                             Navigator.pop(context);
@@ -343,7 +343,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                         }else{
                           if(entradabool == true){
                             FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                              'DataEntradaEmpresa': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
+                              'DataEntradaEmpresa': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                               'Galpão': galpaoSelecionado,
                               'Status': 'Liberado Entrada'
                             }).then((value){
@@ -360,7 +360,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                           }
                           if(regeitado == true){
                             FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                              'DataEntradaEmpresa': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
+                              'DataEntradaEmpresa': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                               'Galpão': galpaoSelecionado,
                               'Status': 'Rejeitado'
                             }).then((value){

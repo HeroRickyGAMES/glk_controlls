@@ -282,7 +282,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                     }).then((value){
                       if(lacrebool == false){
                         FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                          'DataSaida': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
+                          'DataSaida': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                           'Status': 'Liberado Saida'
                         });
                         Navigator.pop(context);
@@ -300,7 +300,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                           );
                         }else{
                           FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                            'DataSaida': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
+                            'DataSaida': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                             'Status': 'Liberado Saida'
                           });
                           Navigator.pop(context);
@@ -310,7 +310,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                   }else{
                     if(lacrebool == false){
                       FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                        'DataSaida': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
+                        'DataSaida': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                         'Status': 'Liberado Saida'
                       });
                       Navigator.pop(context);
@@ -328,7 +328,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                         );
                       }else{
                         FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                          'DataSaida': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
+                          'DataSaida': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                           'Status': 'Liberado Saida'
                         });
                         Navigator.pop(context);

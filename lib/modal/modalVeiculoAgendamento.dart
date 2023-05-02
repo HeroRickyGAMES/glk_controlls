@@ -66,7 +66,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
       //registre todos os valores no db
       var UID = FirebaseAuth.instance.currentUser?.uid;
 
-      var dateTime= DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
+      var dateTime= DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
 
       var uuid = const Uuid();
 
@@ -95,9 +95,9 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
         'verificadoPor': 'Estacionário',
         'Empresa': widget.NomeEmpresa,
         'DataDeAnalise': '',
-        'DataEntradaEmpresa': DateFormat('dd-MM-yyyy HH:mm:ss').format(dataAgendada).replaceAll('-', '/'),
-        'DataEntrada': DateFormat('dd-MM-yyyy HH:mm:ss').format(dataAgendada).replaceAll('-', '/'),
-        'DataAnaliseEmpresa': DateFormat('dd-MM-yyyy HH:mm:ss').format(dataAgendada).replaceAll('-', '/'),
+        'DataEntradaEmpresa': DateFormat('MM-dd-yyyy HH:mm:ss').format(dataAgendada).replaceAll('-', '/'),
+        'DataEntrada': DateFormat('MM-dd-yyyy HH:mm:ss').format(dataAgendada).replaceAll('-', '/'),
+        'DataAnaliseEmpresa': DateFormat('MM-dd-yyyy HH:mm:ss').format(dataAgendada).replaceAll('-', '/'),
         'DateSaidaPortaria': '',
         'liberouSaida': '',
         'Galpão': galpao,
@@ -373,7 +373,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                           dataAgendada = date;
 
                           setState(() {
-                            dataAgendataST = DateFormat('dd-MM-yyyy HH:mm:ss').format(date).replaceAll('-', '/');
+                            dataAgendataST = DateFormat('MM-dd-yyyy HH:mm:ss').format(date).replaceAll('-', '/');
                           });
 
                         }, locale: LocaleType.pt);
@@ -407,7 +407,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                           dataAgendada = date;
 
                           setState(() {
-                            dataAgendataSTsaida = DateFormat('dd-MM-yyyy HH:mm:ss').format(date).replaceAll('-', '/');
+                            dataAgendataSTsaida = DateFormat('MM-dd-yyyy HH:mm:ss').format(date).replaceAll('-', '/');
                           });
 
                         }, locale: LocaleType.pt);

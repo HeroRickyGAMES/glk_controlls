@@ -169,7 +169,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                             //registre todos os valores no db
                             var UID = FirebaseAuth.instance.currentUser?.uid;
 
-                            var dateTime= DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
+                            var dateTime= DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
 
                             var uuid = const Uuid();
 
@@ -259,7 +259,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                             //registre todos os valores no db
                             var UID = FirebaseAuth.instance.currentUser?.uid;
 
-                            var dateTime= DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
+                            var dateTime= DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
 
                             var uuid = const Uuid();
 

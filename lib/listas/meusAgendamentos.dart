@@ -123,7 +123,7 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                               dataAgendada = date;
 
                                                               setState(() {
-                                                                dataAgendataST = DateFormat('dd-MM-yyyy HH:mm:ss').format(date).replaceAll('-', '/');
+                                                                dataAgendataST = DateFormat('MM-dd-yyyy HH:mm:ss').format(date).replaceAll('-', '/');
                                                               });
 
                                                             }, locale: LocaleType.pt);
@@ -157,7 +157,7 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                               dataAgendada = date;
 
                                                               setState(() {
-                                                                dataAgendataSTsaida = DateFormat('dd-MM-yyyy HH:mm:ss').format(date).replaceAll('-', '/');
+                                                                dataAgendataSTsaida = DateFormat('MM-dd-yyyy HH:mm:ss').format(date).replaceAll('-', '/');
                                                               });
 
                                                             }, locale: LocaleType.pt);

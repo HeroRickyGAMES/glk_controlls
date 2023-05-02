@@ -648,7 +648,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                         callToVerifyReles();
 
                         FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                          'DataSaida': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
+                          'DataSaida': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                           'Status': 'Saida',
                           'saidaLiberadaPor': widget.porteiroName
                         }).then((value){
@@ -696,7 +696,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                                 'tags': tags
                               });
                           FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                            'DataSaida': DateFormat('dd-MM-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
+                            'DataSaida': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                             'Status': 'Saida',
                             'saidaLiberadaPor': widget.porteiroName
                           }).then((value){
