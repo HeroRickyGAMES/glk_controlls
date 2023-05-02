@@ -433,7 +433,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                 ),
               ),
             ),
-            Container(
+            SizedBox(
               height: 50,
               width: double.infinity,
               child: Row(
@@ -447,7 +447,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                     ),
                   ),
                   Text(
-                    ' - Portaria - ' + widget.liberadopor,
+                    ' - Portaria - ${widget.liberadopor}',
                     style: const TextStyle(
                         fontSize: 16
                     ),
@@ -455,7 +455,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                 ],
               ),
             ),
-            Container(
+            SizedBox(
               height: 50,
               width: double.infinity,
               child: Row(
@@ -469,7 +469,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                     ),
                   ),
                   Text(
-                    ' - Analise da Empresa - ' + widget.Empresadestino,
+                    ' - Analise da Empresa - ${widget.Empresadestino}',
                     style: const TextStyle(
                         fontSize: 16
                     ),
@@ -477,7 +477,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                 ],
               ),
             ),
-            Container(
+            SizedBox(
               height: 50,
               width: double.infinity,
               child: Row(
@@ -491,7 +491,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                     ),
                   ),
                   Text(
-                    ' - Portaria - ' + widget.verificadoPor,
+                    ' - Portaria - ${widget.verificadoPor}',
                     style: const TextStyle(
                         fontSize: 16
                     ),
@@ -499,7 +499,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                 ],
               ),
             ),
-            Container(
+            SizedBox(
               height: 50,
               width: double.infinity,
               child: Row(
@@ -513,7 +513,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                     ),
                   ),
                   Text(
-                    ' - Solicitação de saída - ' + widget.Empresadestino,
+                    ' - Solicitação de saída - ${widget.Empresadestino}',
                     style: const TextStyle(
                         fontSize: 16
                     ),
@@ -525,7 +525,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                'Nome: ' + widget.nomeMotorista,
+                'Nome: ${widget.nomeMotorista}',
                 style: const TextStyle(
                     fontSize: 16
                 ),
@@ -535,7 +535,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                'Veiculo: ' + widget.Veiculo,
+                'Veiculo: ${widget.Veiculo}',
                 style: const TextStyle(
                     fontSize: 16
                 ),
@@ -545,7 +545,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                'Placa: ' + widget.PlacaVeiculo,
+                'Placa: ${widget.PlacaVeiculo}',
                 style: const TextStyle(
                     fontSize: 16
                 ),
@@ -555,7 +555,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                'Empresa de destino: ' + widget.Empresadestino,
+                'Empresa de destino: ${widget.Empresadestino}',
                 style: const TextStyle(
                     fontSize: 18
                 ),
@@ -565,7 +565,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                'Empresa de origem: ' + widget.EmpresadeOrigin,
+                'Empresa de origem: ${widget.EmpresadeOrigin}',
                 style: const TextStyle(
                     fontSize: 18
                 ),
@@ -748,7 +748,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                       padding: const EdgeInsets.all(16),
                       child:
                       Text(
-                        'Operador: ' + widget.porteiroName,
+                        'Operador: ${widget.porteiroName}',
                         style: const TextStyle(
                             fontSize: 16
                         ),

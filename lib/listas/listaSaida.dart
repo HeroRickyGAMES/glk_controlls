@@ -309,7 +309,7 @@ class _listaSaidaState extends State<listaSaida> {
 
                                                   if(documents['PlacaVeiculo'].contains('(AG)')){
 
-                                                    if(int.parse(DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/').replaceAll('/', '').replaceAll(' ', '').replaceAll(':', '')) >= int.parse(documents['DataSaida'].replaceAll('/', '').replaceAll(' ', '').replaceAll(':', ''))){
+                                                    if(int.parse(DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/').replaceAll('/', '').replaceAll(":", "").replaceAll(" ", "")) >= int.parse(documents['DataSaida'].replaceAll('/', '').replaceAll(' ', '').replaceAll(':', ''))){
                                                       String lacreounao = documents['LacreouNao'];
                                                       String empresaName = documents['EmpresadeOrigin'];
                                                       String liberadopor = documents['QuemAutorizou'];

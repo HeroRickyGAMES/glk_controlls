@@ -10,6 +10,8 @@ import 'package:glk_controls/operadorEmpresarial.dart';
 import 'package:glk_controls/setorADM.dart';
 import 'package:glk_controls/firebase_options.dart';
 import 'package:glk_controls/anteLogin.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class mainActivityPrepare extends StatefulWidget {
   String calloff;
@@ -27,388 +29,446 @@ checkislog(context) async {
 
   var dbInstance = FirebaseFirestore.instance;
 
-  await FirebaseAuth.instance
-      .idTokenChanges()
-      .listen((User? user) async {
-    if (user == null) {
+  final info = await PackageInfo.fromPlatform();
 
-      var resulte = await dbInstance
-          .collection("Condominio")
-          .doc('condominio')
-          .get();
+  var server = await FirebaseFirestore.instance
+      .collection("Server")
+      .doc('ServerValues')
+      .get();
 
-      String logoPath = resulte.get('imageURL');
+  if(info.version == (server.get('app-version'))){
 
-      print('User is currently signed out!');
-      Navigator.pop(context);
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context){
-            return anteLogin(logoPath);
-          }));
 
-    } else {
+    FirebaseAuth.instance
+        .idTokenChanges()
+        .listen((User? user) async {
+      if (user == null) {
 
-      var UID = FirebaseAuth.instance.currentUser?.uid;
+        var resulte = await dbInstance
+            .collection("Condominio")
+            .doc('condominio')
+            .get();
 
-      var db = dbInstance;
-      db.collection('Users').doc(UID).get().then((event){
-        print("${event.data()}");
+        String logoPath = resulte.get('imageURL');
 
-        event.data()?.forEach((key, value) {
+        print('User is currently signed out!');
+        Navigator.pop(context);
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context){
+              return anteLogin(logoPath);
+            }));
 
-          print(key);
-          print(value);
+      } else {
 
-          if(value == 'ADM'){
+        var UID = FirebaseAuth.instance.currentUser?.uid;
 
-            var db = dbInstance;
-            var UID = FirebaseAuth.instance.currentUser?.uid;
-            db.collection('Users').doc(UID).get().then((event){
-              print("${event.data()}");
+        var db = dbInstance;
+        db.collection('Users').doc(UID).get().then((event){
+          print("${event.data()}");
 
-              event.data()?.forEach((key, value) {
+          event.data()?.forEach((key, value) {
 
-                print(key);
-                print(value);
+            print(key);
+            print(value);
 
-                if(key == 'nome'){
-                  String ADMName = value;
+            if(value == 'ADM'){
 
-                  print('O ADM é ' + ADMName);
+              var db = dbInstance;
+              var UID = FirebaseAuth.instance.currentUser?.uid;
+              db.collection('Users').doc(UID).get().then((event){
+                print("${event.data()}");
 
-                  var db = dbInstance;
-                  var UID = FirebaseAuth.instance.currentUser?.uid;
-                  db.collection('Users').doc(UID).get().then((event){
-                    print("${event.data()}");
+                event.data()?.forEach((key, value) {
 
-                    Navigator.pop(context);
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context){
-                          return setorADM(ADMName);
-                        }));
+                  print(key);
+                  print(value);
+
+                  if(key == 'nome'){
+                    String ADMName = value;
+
+                    print('O ADM é ' + ADMName);
+
+                    var db = dbInstance;
+                    var UID = FirebaseAuth.instance.currentUser?.uid;
+                    db.collection('Users').doc(UID).get().then((event){
+                      print("${event.data()}");
+
+                      Navigator.pop(context);
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context){
+                            return setorADM(ADMName);
+                          }));
+                    }
+                    );
                   }
-                  );
-                }
 
-              });
+                });
 
+              }
+              );
+              print('Ele é um ADM');
+              //Passar o codigo para mandar a tela
             }
-            );
-            print('Ele é um ADM');
-            //Passar o codigo para mandar a tela
-          }
 
-          if(value == 'porteiro'){
+            if(value == 'porteiro'){
 
-            var db = dbInstance;
-            var UID = FirebaseAuth.instance.currentUser?.uid;
-            db.collection('Users').doc(UID).get().then((event){
-              print("${event.data()}");
+              var db = dbInstance;
+              var UID = FirebaseAuth.instance.currentUser?.uid;
+              db.collection('Users').doc(UID).get().then((event){
+                print("${event.data()}");
 
-              event.data()?.forEach((key, value) {
+                event.data()?.forEach((key, value) {
 
-                print(key);
-                print(value);
+                  print(key);
+                  print(value);
 
-                if(key == 'nome'){
-                  String PorteiroNome = value;
+                  if(key == 'nome'){
+                    String PorteiroNome = value;
 
-                  print('Porteiro name é' + PorteiroNome);
+                    print('Porteiro name é' + PorteiroNome);
 
-                  var db = dbInstance;
-                  var UID = FirebaseAuth.instance.currentUser?.uid;
-                  db.collection('Users').doc(UID).get().then((event){
-                    print("${event.data()}");
+                    var db = dbInstance;
+                    var UID = FirebaseAuth.instance.currentUser?.uid;
+                    db.collection('Users').doc(UID).get().then((event){
+                      print("${event.data()}");
 
-                    event.data()?.forEach((key, value) async {
+                      event.data()?.forEach((key, value) async {
 
-                      print(key);
-                      print(value);
+                        print(key);
+                        print(value);
 
-                      if(key == 'estaativo'){
-                        if(value == true){
+                        if(key == 'estaativo'){
+                          if(value == true){
 
-                          print('Porteiro name é' + PorteiroNome);
+                            print('Porteiro name é' + PorteiroNome);
 
-                          var result = await dbInstance
-                              .collection("porteiro")
-                              .doc(UID)
-                              .get();
+                            var result = await dbInstance
+                                .collection("porteiro")
+                                .doc(UID)
+                                .get();
 
-                          bool cadastro = result.get('cadastrar');
-                          bool entrada = result.get('entrada');
-                          bool saida = result.get('saida');
-                          bool relatorio = result.get('relatorio');
-                          bool painel = result.get('painel');
-                          String Email = result.get('email');
+                            bool cadastro = result.get('cadastrar');
+                            bool entrada = result.get('entrada');
+                            bool saida = result.get('saida');
+                            bool relatorio = result.get('relatorio');
+                            bool painel = result.get('painel');
+                            String Email = result.get('email');
 
 
-                          var resulte = await FirebaseFirestore.instance
-                              .collection("Condominio")
-                              .doc('condominio')
-                              .get();
+                            var resulte = await FirebaseFirestore.instance
+                                .collection("Condominio")
+                                .doc('condominio')
+                                .get();
 
-                          String logoPath = resulte.get('imageURL');
+                            String logoPath = resulte.get('imageURL');
 
-                          Navigator.pop(context);
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context){
-                                return mainPorteiro(PorteiroNome, cadastro, entrada, saida, relatorio, painel, logoPath, Email);
-                              }));
+                            Navigator.pop(context);
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context){
+                                  return mainPorteiro(PorteiroNome, cadastro, entrada, saida, relatorio, painel, logoPath, Email);
+                                }));
 
-                        }else{
+                          }else{
 
-                          print('O está ativo está funcionando!');
+                            print('O está ativo está funcionando!');
 
-                          AlertDialog alert = AlertDialog(
-                            title: const Text("Sua conta ainda não está ativa!"),
-                            content: const Text("A sua conta não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
-                            actions: [
-                              TextButton(
-                                  onPressed: (){
-                                    SystemNavigator.pop();
-                                  },
-                                  child: const Text('Ok')
-                              ),
-                            ],
-                          );
+                            AlertDialog alert = AlertDialog(
+                              title: const Text("Sua conta ainda não está ativa!"),
+                              content: const Text("A sua conta não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
+                              actions: [
+                                TextButton(
+                                    onPressed: (){
+                                      SystemNavigator.pop();
+                                    },
+                                    child: const Text('Ok')
+                                ),
+                              ],
+                            );
 
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return alert;
-                            },
-                          );
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return alert;
+                              },
+                            );
+                          }
+
+
                         }
 
+                      });
 
-                      }
-
-                    });
-
+                    }
+                    );
                   }
-                  );
-                }
 
-              });
+                });
 
+              }
+              );
+              print('Ele é um porteiro');
+              //Passar o codigo para mandar a tela
             }
-            );
-            print('Ele é um porteiro');
-            //Passar o codigo para mandar a tela
-          }
 
-          if(value == 'empresa'){
-            print('Ele é uma empresa');
+            if(value == 'empresa'){
+              print('Ele é uma empresa');
 
-            db.collection('Users').doc(UID).get().then((event){
-              print("${event.data()}");
+              db.collection('Users').doc(UID).get().then((event){
+                print("${event.data()}");
 
-              event.data()?.forEach((key, value) {
+                event.data()?.forEach((key, value) {
 
-                print(key);
-                print(value);
+                  print(key);
+                  print(value);
 
-                bool relatorio = false;
+                  bool relatorio = false;
 
-                if(key == 'nome'){
-                  print('É uma empresa');
-                  String nome = value;
-                  //Passar o codigo para mandar a tela
-                  var db = dbInstance;
-                  var UID = FirebaseAuth.instance.currentUser?.uid;
-                  db.collection('Users').doc(UID).get().then((event){
-                    print("${event.data()}");
+                  if(key == 'nome'){
+                    print('É uma empresa');
+                    String nome = value;
+                    //Passar o codigo para mandar a tela
+                    var db = dbInstance;
+                    var UID = FirebaseAuth.instance.currentUser?.uid;
+                    db.collection('Users').doc(UID).get().then((event){
+                      print("${event.data()}");
 
-                    event.data()?.forEach((key, value) {
+                      event.data()?.forEach((key, value) {
 
-                      print(key);
-                      print(value);
+                        print(key);
+                        print(value);
 
-                      if(key == 'estaativo'){
-                        if(value == true){
+                        if(key == 'estaativo'){
+                          if(value == true){
 
-                          var db2 = dbInstance;
-                          db2.collection('Users').doc(UID).get().then((event){
-                            print("${event.data()}");
+                            var db2 = dbInstance;
+                            db2.collection('Users').doc(UID).get().then((event){
+                              print("${event.data()}");
 
-                            event.data()?.forEach((key, value) {
+                              event.data()?.forEach((key, value) {
 
-                              print(key);
-                              print(value);
+                                print(key);
+                                print(value);
 
-                              if(key == 'nome'){
-                                print('É uma empresa');
-                                String nome = value;
-                                //Passar o codigo para mandar a tela
-                                var db = dbInstance;
-                                var UID = FirebaseAuth.instance.currentUser?.uid;
-                                db.collection('Users').doc(UID).get().then((event){
-                                  print("${event.data()}");
+                                if(key == 'nome'){
+                                  print('É uma empresa');
+                                  String nome = value;
+                                  //Passar o codigo para mandar a tela
+                                  var db = dbInstance;
+                                  var UID = FirebaseAuth.instance.currentUser?.uid;
+                                  db.collection('Users').doc(UID).get().then((event){
+                                    print("${event.data()}");
 
-                                  event.data()?.forEach((key, value) {
+                                    event.data()?.forEach((key, value) {
 
-                                    print(key);
-                                    print(value);
+                                      print(key);
+                                      print(value);
 
-                                    if(key == 'RelatorioDays'){
+                                      if(key == 'RelatorioDays'){
 
-                                      String dayHj = '${DateTime.now().day}';
-                                      print('Dia do relatiorio são ${value}');
-                                      print('Dia de hoje é ${DateTime.now().day}');
+                                        String dayHj = '${DateTime.now().day}';
+                                        print('Dia do relatiorio são ${value}');
+                                        print('Dia de hoje é ${DateTime.now().day}');
 
-                                      if(value.contains(dayHj)){
-                                        relatorio = true;
+                                        if(value.contains(dayHj)){
+                                          relatorio = true;
 
-                                        Navigator.pop(context);
-                                        Navigator.push(context,
-                                            MaterialPageRoute(builder: (context){
-                                              return mainEmpresa(nome, relatorio);
-                                            }));
+                                          Navigator.pop(context);
+                                          Navigator.push(context,
+                                              MaterialPageRoute(builder: (context){
+                                                return mainEmpresa(nome, relatorio);
+                                              }));
 
-                                      }else{
-                                        relatorio = false;
+                                        }else{
+                                          relatorio = false;
 
-                                        Navigator.pop(context);
-                                        Navigator.push(context,
-                                            MaterialPageRoute(builder: (context){
-                                              return mainEmpresa(nome, relatorio);
-                                            }));
+                                          Navigator.pop(context);
+                                          Navigator.push(context,
+                                              MaterialPageRoute(builder: (context){
+                                                return mainEmpresa(nome, relatorio);
+                                              }));
+
+                                        }
+
 
                                       }
+                                    });
 
-
-                                    }
-                                  });
-
+                                  }
+                                  );
                                 }
-                                );
-                              }
 
-                            });
+                              });
 
+                            }
+                            );
+
+                          }else{
+                            print('O está ativo está funcionando!');
+
+                            AlertDialog alert = AlertDialog(
+                              title: const Text("Sua conta ainda não está ativa!"),
+                              content: const Text("A sua conta não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
+                              actions: [
+                                TextButton(
+                                    onPressed: (){
+                                      SystemNavigator.pop();
+                                    },
+                                    child: const Text('Ok')
+                                ),
+                              ],
+                            );
+
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return alert;
+                              },
+                            );
                           }
-                          );
 
-                        }else{
-                          print('O está ativo está funcionando!');
 
-                          AlertDialog alert = AlertDialog(
-                            title: const Text("Sua conta ainda não está ativa!"),
-                            content: const Text("A sua conta não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
-                            actions: [
-                              TextButton(
-                                  onPressed: (){
-                                    SystemNavigator.pop();
-                                  },
-                                  child: const Text('Ok')
-                              ),
-                            ],
-                          );
-
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return alert;
-                            },
-                          );
                         }
 
+                      });
 
-                      }
-
-                    });
-
+                    }
+                    );
                   }
-                  );
-                }
 
-              });
+                });
 
+              }
+              );
             }
-            );
-          }
-          if(value == 'operadorEmpresarial'){
-            print('Ele é um Operador Empresarial');
+            if(value == 'operadorEmpresarial'){
+              print('Ele é um Operador Empresarial');
 
-            db.collection('Users').doc(UID).get().then((event){
-              print("${event.data()}");
+              db.collection('Users').doc(UID).get().then((event){
+                print("${event.data()}");
 
-              event.data()?.forEach((key, value) {
+                event.data()?.forEach((key, value) {
 
-                print(key);
-                print(value);
+                  print(key);
+                  print(value);
 
-                if(key == 'nome'){
-                  print('Ele é um Operador Empresarial');
-                  String nome = value;
-                  //Passar o codigo para mandar a tela
-                  var db = dbInstance;
-                  var UID = FirebaseAuth.instance.currentUser?.uid;
-                  db.collection('Users').doc(UID).get().then((event){
-                    print("${event.data()}");
+                  if(key == 'nome'){
+                    print('Ele é um Operador Empresarial');
+                    String nome = value;
+                    //Passar o codigo para mandar a tela
+                    var db = dbInstance;
+                    var UID = FirebaseAuth.instance.currentUser?.uid;
+                    db.collection('Users').doc(UID).get().then((event){
+                      print("${event.data()}");
 
-                    event.data()?.forEach((key, value) async {
+                      event.data()?.forEach((key, value) async {
 
-                      print(key);
-                      print(value);
+                        print(key);
+                        print(value);
 
-                      if(key == 'estaativo'){
-                        if(value == true){
+                        if(key == 'estaativo'){
+                          if(value == true){
 
-                          var result = await dbInstance
-                              .collection("operadorEmpresarial")
-                              .doc(UID)
-                              .get();
+                            var result = await dbInstance
+                                .collection("operadorEmpresarial")
+                                .doc(UID)
+                                .get();
 
-                          String empresaName = (result.get('empresa'));
-                          String Email = result.get('email');
+                            String empresaName = (result.get('empresa'));
+                            String Email = result.get('email');
 
-                          Navigator.pop(context);
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context){
-                                return operadorEmpresarial(nome, empresaName, Email);
-                              }));
+                            Navigator.pop(context);
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context){
+                                  return operadorEmpresarial(nome, empresaName, Email);
+                                }));
 
-                        }else{
+                          }else{
 
-                          print('O está ativo está funcionando!');
+                            print('O está ativo está funcionando!');
 
-                          AlertDialog alert = AlertDialog(
-                            title: const Text("Sua conta ainda não está ativa!"),
-                            content: const Text("A sua conta não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
-                            actions: [
-                              TextButton(
-                                  onPressed: (){
-                                    SystemNavigator.pop();
-                                  },
-                                  child: const Text('Ok')
-                              ),
-                            ],
-                          );
+                            AlertDialog alert = AlertDialog(
+                              title: const Text("Sua conta ainda não está ativa!"),
+                              content: const Text("A sua conta não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
+                              actions: [
+                                TextButton(
+                                    onPressed: (){
+                                      SystemNavigator.pop();
+                                    },
+                                    child: const Text('Ok')
+                                ),
+                              ],
+                            );
 
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return alert;
-                            },
-                          );
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return alert;
+                              },
+                            );
+                          }
                         }
-                      }
-                    });
+                      });
+                    }
+                    );
                   }
-                  );
-                }
-              });
+                });
+              }
+              );
             }
-            );
-          }
-        });
+          });
+        }
+        );
       }
-      );
-    }
-  });
+    });
+
+  }else{
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text(
+              'Nova atualização!',
+              style: TextStyle(
+                  fontSize: 19
+              ),
+            ),
+            content: Text(
+              'O app lançou uma atualização!\nAtualize agora pelo site!\nA versão instalada em seu dispositivo é a ${info.version}\nMas a mais atualizada é a ${(server.get('app-version'))}',
+              style: const TextStyle(
+                  fontSize: 18
+              ),
+            ),
+            actions: [
+              TextButton(onPressed: () async {
+
+                const url = 'https://github.com/HeroRickyGAMES/glk_controlls/releases';
+
+                if (await canLaunch(url)) {
+
+                  await launch(url);
+
+                } else {
+
+                  throw'Não foi possível abrir a URL: $url';
+
+                }
+
+                Navigator.pop(context);
+              }, child: const Text(
+                'Baixar versão mais atualizada',
+                style: TextStyle(
+                    fontSize: 19
+                ),
+              )
+              ),
+            ],
+          );
+        }
+    );
+  }
 }
+
 checkislogOFFLine(context) async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -421,7 +481,7 @@ checkislogOFFLine(context) async {
   );
 
   var dbInstance = FirebaseFirestore.instance;
-  await FirebaseAuth.instance
+  FirebaseAuth.instance
       .idTokenChanges()
       .listen((User? user) async {
     if (user == null) {
