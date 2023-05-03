@@ -289,7 +289,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
             Column(
               children: [
                 Container(
-                  width: double.infinity,
+                  width: 500,
                   padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                   child: ElevatedButton(
                     onPressed: widget.cadastro? openModal: null,
@@ -302,7 +302,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                   ),
                 ),
                 Container(
-                  width: double.infinity,
+                  width: 500,
                   padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                   child: ElevatedButton(
                     onPressed: widget.entrada? entradaMT : null,
@@ -318,7 +318,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                   ),
                 ),
                 Container(
-                  width: double.infinity,
+                  width: 500,
                   padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                   child: ElevatedButton(
                     onPressed: widget.saida ? saidaMT : null,
@@ -334,7 +334,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                   ),
                 ),
                 Container(
-                  width: double.infinity,
+                  width: 500,
                   padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                   child: ElevatedButton(
                     onPressed: widget.relatorio ? relatorioMT : null,
@@ -351,7 +351,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                 ),
                 widget.painel ?
                 Container(
-                  width: double.infinity,
+                  width: 500,
                   padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                   child: ElevatedButton(
                     onPressed: painelMT,
@@ -367,7 +367,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                   ),
                 ) : const Text(''),
                 Container(
-                  width: double.infinity,
+                  width: 500,
                   padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                   child: ElevatedButton(
                     onPressed: () {
@@ -436,7 +436,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                   ),
                 ),
                 Container(
-                  width: double.infinity,
+                  width: 500,
                   padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                   child: ElevatedButton(
                     onPressed: () async {

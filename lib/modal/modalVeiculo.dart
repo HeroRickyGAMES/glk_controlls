@@ -964,8 +964,11 @@ class _modalPorteiroState extends State<modalPorteiro> {
                       children: [
                         Expanded(
                           child: RadioListTile(
-                            title: const Text(
-                                "Com Lacre"
+                            title: Text(
+                                "Com Lacre",
+                              style: TextStyle(
+                                  fontSize: tamanhotexto
+                              ),
                             ),
                             value: "lacre",
                             groupValue: lacreounao,
@@ -983,7 +986,12 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         ),
                         Expanded(
                           child: RadioListTile(
-                            title: const Text("Sem Lacre",),
+                            title: Text(
+                              "Sem Lacre",
+                              style: TextStyle(
+                                  fontSize: tamanhotexto
+                              ),
+                            ),
                             value: "naolacrado",
                             groupValue: lacreounao,
                             onChanged: (value){

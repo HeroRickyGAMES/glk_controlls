@@ -215,279 +215,281 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
         title: const Text('GLK Controls - OPERADORES DE EMPRESAS'),
         backgroundColor: Colors.red[700],
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                  width: 180,
-                  height: 180,
-                  padding: const EdgeInsets.all(16),
-                  child:
-                  Image.asset(
-                    'assets/icon.png',
-                    fit: BoxFit.contain,
-                  )
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
-                child: ElevatedButton(onPressed: (){
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context){
-                        return liberacoesOperadorEmpresarial(widget.name, widget.empresaName);
-                      }));
-                },
-                  style: ElevatedButton.styleFrom(
-                      primary: Colors.green[700]
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    width: 180,
+                    height: 180,
+                    padding: const EdgeInsets.all(16),
+                    child:
+                    Image.asset(
+                      'assets/icon.png',
+                      fit: BoxFit.contain,
+                    )
+                ),
+              ],
+            ),
+            Column(
+              children: [
+                Container(
+                  width: 500,
+                  padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                  child: ElevatedButton(onPressed: (){
+                    Navigator.push(context,
+                        MaterialPageRoute(builder: (context){
+                          return liberacoesOperadorEmpresarial(widget.name, widget.empresaName);
+                        }));
+                  },
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.green[700]
+                    ),
+                      child: Text(
+                          'Liberações',
+                        style: TextStyle(
+                            fontSize: tamanhotexto,
+                            fontWeight: FontWeight.bold,
+                        ),
+                      ),
                   ),
+                ),
+                Container(
+                  width: 500,
+                  padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                  child: ElevatedButton(
+                    onPressed: openModal,
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.white24
+                    ),
                     child: Text(
-                        'Liberações',
+                      'Agendamento',
                       style: TextStyle(
-                          fontSize: tamanhotexto,
-                          fontWeight: FontWeight.bold,
+                        fontSize: tamanhotexto,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
-                child: ElevatedButton(
-                  onPressed: openModal,
-                  style: ElevatedButton.styleFrom(
-                      primary: Colors.white24
                   ),
-                  child: Text(
-                    'Agendamento',
-                    style: TextStyle(
-                      fontSize: tamanhotexto,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
+                ),
+                Container(
+                  width: 500,
+                  padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                  child: ElevatedButton(
+                    onPressed: meusAgendamentos,
+                    child: Text(
+                      'Meus agendamentos',
+                      style: TextStyle(
+                        fontSize: tamanhotexto,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
-                child: ElevatedButton(
-                  onPressed: meusAgendamentos,
-                  child: Text(
-                    'Meus agendamentos',
-                    style: TextStyle(
-                      fontSize: tamanhotexto,
-                      fontWeight: FontWeight.bold,
+                Container(
+                  width: 500,
+                  padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                  child: ElevatedButton(onPressed: toRelatorio,
+                    child: Text(
+                      'Relatórios',
+                      style: TextStyle(
+                        fontSize: tamanhotexto,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
-                child: ElevatedButton(onPressed: toRelatorio,
-                  child: Text(
-                    'Relatórios',
-                    style: TextStyle(
-                      fontSize: tamanhotexto,
-                      fontWeight: FontWeight.bold,
+                Container(
+                  width: 500,
+                  padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                  child: ElevatedButton(
+                    onPressed: cadastrarVeiculoInterno,
+                    child: Text(
+                      'Cadastrar veiculo interno',
+                      style: TextStyle(
+                        fontSize: tamanhotexto,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
-                child: ElevatedButton(
-                  onPressed: cadastrarVeiculoInterno,
-                  child: Text(
-                    'Cadastrar veiculo interno',
-                    style: TextStyle(
-                      fontSize: tamanhotexto,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.end,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(16),
-                            child: ElevatedButton(
-                              onPressed: () async {
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(16),
+                              child: ElevatedButton(
+                                onPressed: () async {
 
-                                showDialog(
-                                  context: context,
-                                  builder: (BuildContext context) {
-                                    return AlertDialog(
-                                      title: const Text('Deseja trocar a senha?'),
-                                      actions: [
-                                        Center(
-                                          child: Text(
-                                            'Enviaremos um email para esse email de conta logado.\nEmail: ${widget.Email}',
-                                            style: TextStyle(
-                                                fontSize: 18
+                                  showDialog(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        title: const Text('Deseja trocar a senha?'),
+                                        actions: [
+                                          Center(
+                                            child: Text(
+                                              'Enviaremos um email para esse email de conta logado.\nEmail: ${widget.Email}',
+                                              style: TextStyle(
+                                                  fontSize: 18
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        Row(
-                                          mainAxisAlignment: MainAxisAlignment.end,
-                                          children: [
-                                            TextButton(onPressed: (){
-                                              Navigator.of(context).pop();
-                                            },
-                                                child: const Text(
-                                                  'Cancelar',
-                                                  style: TextStyle(
-                                                      fontSize: 18
-                                                  ),
-                                                )
-                                            ),
-                                            TextButton(onPressed: () async {
-                                              Navigator.of(context).pop();
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.end,
+                                            children: [
+                                              TextButton(onPressed: (){
+                                                Navigator.of(context).pop();
+                                              },
+                                                  child: const Text(
+                                                    'Cancelar',
+                                                    style: TextStyle(
+                                                        fontSize: 18
+                                                    ),
+                                                  )
+                                              ),
+                                              TextButton(onPressed: () async {
+                                                Navigator.of(context).pop();
 
-                                              try {
-                                                await FirebaseAuth.instance.sendPasswordResetEmail(email: widget.Email).then((value){
+                                                try {
+                                                  await FirebaseAuth.instance.sendPasswordResetEmail(email: widget.Email).then((value){
+                                                    Fluttertoast.showToast(
+                                                      msg: 'Enviado, verifique o email para resetar a senha!',
+                                                      toastLength: Toast.LENGTH_SHORT,
+                                                      timeInSecForIosWeb: 1,
+                                                      backgroundColor: Colors.black,
+                                                      textColor: Colors.white,
+                                                      fontSize: 16.0,
+                                                    );
+                                                    print('enviado!');
+                                                  });
+                                                } catch (e) {
                                                   Fluttertoast.showToast(
-                                                    msg: 'Enviado, verifique o email para resetar a senha!',
+                                                    msg: 'Ocorreu um erro $e!',
                                                     toastLength: Toast.LENGTH_SHORT,
                                                     timeInSecForIosWeb: 1,
                                                     backgroundColor: Colors.black,
                                                     textColor: Colors.white,
                                                     fontSize: 16.0,
                                                   );
-                                                  print('enviado!');
-                                                });
-                                              } catch (e) {
-                                                Fluttertoast.showToast(
-                                                  msg: 'Ocorreu um erro $e!',
-                                                  toastLength: Toast.LENGTH_SHORT,
-                                                  timeInSecForIosWeb: 1,
-                                                  backgroundColor: Colors.black,
-                                                  textColor: Colors.white,
-                                                  fontSize: 16.0,
-                                                );
-                                                print('Erro! $e');
-                                              }
+                                                  print('Erro! $e');
+                                                }
 
-                                            },
-                                                child: const Text(
-                                                  'Resetar Senha',
-                                                  style: TextStyle(
-                                                      fontSize: 18
-                                                  ),
-                                                )
-                                            )
-                                          ],
-                                        )
-                                      ],
-                                    );
-                                  },
-                                );
+                                              },
+                                                  child: const Text(
+                                                    'Resetar Senha',
+                                                    style: TextStyle(
+                                                        fontSize: 18
+                                                    ),
+                                                  )
+                                              )
+                                            ],
+                                          )
+                                        ],
+                                      );
+                                    },
+                                  );
 
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  primary: Colors.grey
-                              ),
-                              child: const Text(
-                                'Trocar Senha',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.grey
+                                ),
+                                child: const Text(
+                                  'Trocar Senha',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(16),
-                            child: ElevatedButton(
-                              onPressed: () async {
-                                await FirebaseAuth.instance.signOut().then((value) async {
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(16),
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  await FirebaseAuth.instance.signOut().then((value) async {
 
-                                  var resulte = await FirebaseFirestore.instance
-                                      .collection("Condominio")
-                                      .doc('condominio')
-                                      .get();
+                                    var resulte = await FirebaseFirestore.instance
+                                        .collection("Condominio")
+                                        .doc('condominio')
+                                        .get();
 
-                                  String logoPath = resulte.get('imageURL');
+                                    String logoPath = resulte.get('imageURL');
 
-                                  Navigator.pop(context);
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context){
-                                        return anteLogin(logoPath);
-                                      }));
-                                  print('Usuário desconectado');
-                                });
+                                    Navigator.pop(context);
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context){
+                                          return anteLogin(logoPath);
+                                        }));
+                                    print('Usuário desconectado');
+                                  });
 
-                              },
-                              style: ElevatedButton.styleFrom(
-                                  primary: Colors.red
-                              ),
-                              child: const Text(
-                                'Logoff',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.red
+                                ),
+                                child: const Text(
+                                  'Logoff',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                      width: 180,
-                      height: 180,
+                          ],
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                        width: 180,
+                        height: 180,
+                        padding: const EdgeInsets.all(16),
+                        child:
+                        Image.asset(
+                          'assets/sanca.png',
+                          fit: BoxFit.contain,
+                        )
+                    ),
+                    Container(
                       padding: const EdgeInsets.all(16),
                       child:
-                      Image.asset(
-                        'assets/sanca.png',
-                        fit: BoxFit.contain,
-                      )
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    child:
-                    Text(
-                      'Operador: ${widget.name}',
-                      style: TextStyle(
-                          fontSize: tamanhotexto
+                      Text(
+                        'Operador: ${widget.name}',
+                        style: TextStyle(
+                            fontSize: tamanhotexto
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

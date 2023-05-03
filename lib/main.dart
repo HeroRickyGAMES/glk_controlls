@@ -88,11 +88,13 @@ class _loginScreenState extends State<loginScreen> {
       calltoprepare(context);
     });
     return Scaffold(
-      body: Image.asset(
-          'assets/glkcontrols-init.gif',
-        fit: BoxFit.fill,
-        width: double.infinity,
-        height: double.infinity,
+      body: Center(
+        child: Image.asset(
+            'assets/glkcontrols-init.gif',
+          fit: BoxFit.fill,
+          width: 700,
+          height: double.infinity,
+        ),
       ),
    );
   }

@@ -54,114 +54,102 @@ class _anteLoginState extends State<anteLogin> {
         centerTitle: true,
         title: const Text('GLK Controls')
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(16),
-            width: double.infinity,
-            child: Image.asset(
-                'assets/icon.png',
-              width: 200,
-              height: 200,
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(16),
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: (){
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context){
-                      return const login();
-                    }));
-              },
-              style: ElevatedButton.styleFrom(
-                  primary: Colors.yellow[700]
+      body: Center(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(16),
+              width: 500,
+              child: Image.asset(
+                  'assets/icon.png',
+                width: 200,
+                height: 200,
               ),
-              child: Text(
-                  'Login',
-                style: TextStyle(
-                  fontSize: tamanhotexto,
-                  color: Colors.black
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              width: 500,
+              child: ElevatedButton(
+                onPressed: (){
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context){
+                        return const login();
+                      }));
+                },
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.yellow[700]
+                ),
+                child: Text(
+                    'Login',
+                  style: TextStyle(
+                    fontSize: tamanhotexto,
+                    color: Colors.black
+                  ),
                 ),
               ),
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(16),
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: (){
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return AlertDialog(
-                      title: const Text('Painel Administrativo'),
-                      actions: [
-                        TextFormField(
-                          onChanged: (valor){
-                            User = valor;
-                            //Mudou mandou para a String
-                          },
-                          keyboardType: TextInputType.name,
-                          enableSuggestions: false,
-                          obscureText: false,
-                          autocorrect: false,
-                          decoration: InputDecoration(
-                            border: const OutlineInputBorder(),
-                            hintText: 'User',
-                            hintStyle: TextStyle(
-                                fontSize: tamanhotexto
+            Container(
+              padding: const EdgeInsets.all(16),
+              width: 500,
+              child: ElevatedButton(
+                onPressed: (){
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return AlertDialog(
+                        title: const Text('Painel Administrativo'),
+                        actions: [
+                          TextFormField(
+                            onChanged: (valor){
+                              User = valor;
+                              //Mudou mandou para a String
+                            },
+                            keyboardType: TextInputType.name,
+                            enableSuggestions: false,
+                            obscureText: false,
+                            autocorrect: false,
+                            decoration: InputDecoration(
+                              border: const OutlineInputBorder(),
+                              hintText: 'User',
+                              hintStyle: TextStyle(
+                                  fontSize: tamanhotexto
+                              ),
                             ),
                           ),
-                        ),
-                        TextFormField(
-                          onChanged: (valor){
-                            pass = valor;
-                            //Mudou mandou para a String
-                          },
-                          keyboardType: TextInputType.visiblePassword,
-                          enableSuggestions: false,
-                          obscureText: true,
-                          autocorrect: false,
-                          decoration: InputDecoration(
-                            border: const OutlineInputBorder(),
-                            hintText: 'Senha',
-                            hintStyle: TextStyle(
-                                fontSize: tamanhotexto
+                          TextFormField(
+                            onChanged: (valor){
+                              pass = valor;
+                              //Mudou mandou para a String
+                            },
+                            keyboardType: TextInputType.visiblePassword,
+                            enableSuggestions: false,
+                            obscureText: true,
+                            autocorrect: false,
+                            decoration: InputDecoration(
+                              border: const OutlineInputBorder(),
+                              hintText: 'Senha',
+                              hintStyle: TextStyle(
+                                  fontSize: tamanhotexto
+                              ),
                             ),
                           ),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: const Text('Cancelar'),
-                            ),
-                            TextButton(
-                              onPressed: () {
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text('Cancelar'),
+                              ),
+                              TextButton(
+                                onPressed: () {
 
-                                if(User == ''){
-                                  Fluttertoast.showToast(
-                                      msg: 'Preencha o usuario!',
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      gravity: ToastGravity.CENTER,
-                                      timeInSecForIosWeb: 1,
-                                      backgroundColor: Colors.grey[600],
-                                      textColor: Colors.white,
-                                      fontSize: tamanhotexto
-                                  );
-                                }else{
-
-                                  if(pass == ''){
-
+                                  if(User == ''){
                                     Fluttertoast.showToast(
-                                        msg: 'Preencha a senha!',
+                                        msg: 'Preencha o usuario!',
                                         toastLength: Toast.LENGTH_SHORT,
                                         gravity: ToastGravity.CENTER,
                                         timeInSecForIosWeb: 1,
@@ -169,23 +157,48 @@ class _anteLoginState extends State<anteLogin> {
                                         textColor: Colors.white,
                                         fontSize: tamanhotexto
                                     );
-
                                   }else{
-                                    if(User == 'GRUPOLK'){
 
-                                      if(pass == 'GLK@12345678\$'){
+                                    if(pass == ''){
 
-                                        Navigator.of(context).pop();
+                                      Fluttertoast.showToast(
+                                          msg: 'Preencha a senha!',
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.CENTER,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.grey[600],
+                                          textColor: Colors.white,
+                                          fontSize: tamanhotexto
+                                      );
 
-                                        Navigator.pop(context);
-                                        Navigator.push(context,
-                                            MaterialPageRoute(builder: (context){
-                                              return const painelAdmin();
-                                            }));
+                                    }else{
+                                      if(User == 'GRUPOLK'){
+
+                                        if(pass == 'GLK@12345678\$'){
+
+                                          Navigator.of(context).pop();
+
+                                          Navigator.pop(context);
+                                          Navigator.push(context,
+                                              MaterialPageRoute(builder: (context){
+                                                return const painelAdmin();
+                                              }));
+
+                                        }else{
+                                          Fluttertoast.showToast(
+                                              msg: 'Senha invalida!',
+                                              toastLength: Toast.LENGTH_SHORT,
+                                              gravity: ToastGravity.CENTER,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor: Colors.grey[600],
+                                              textColor: Colors.white,
+                                              fontSize: tamanhotexto
+                                          );
+                                        }
 
                                       }else{
                                         Fluttertoast.showToast(
-                                            msg: 'Senha invalida!',
+                                            msg: 'Usuario invalido!',
                                             toastLength: Toast.LENGTH_SHORT,
                                             gravity: ToastGravity.CENTER,
                                             timeInSecForIosWeb: 1,
@@ -194,52 +207,41 @@ class _anteLoginState extends State<anteLogin> {
                                             fontSize: tamanhotexto
                                         );
                                       }
-
-                                    }else{
-                                      Fluttertoast.showToast(
-                                          msg: 'Usuario invalido!',
-                                          toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.CENTER,
-                                          timeInSecForIosWeb: 1,
-                                          backgroundColor: Colors.grey[600],
-                                          textColor: Colors.white,
-                                          fontSize: tamanhotexto
-                                      );
                                     }
                                   }
-                                }
-                              },
-                              child: const Text('Prosseguir'),
-                            ),
-                          ],
-                        ),
-                      ],
-                    );
-                  },
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                  primary: Colors.grey
-              ),
-              child: Text(
-                'Painel',
-                style: TextStyle(
-                    fontSize: tamanhotexto,
-                    color: Colors.white
+                                },
+                                child: const Text('Prosseguir'),
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                    primary: Colors.grey
+                ),
+                child: Text(
+                  'Painel',
+                  style: TextStyle(
+                      fontSize: tamanhotexto,
+                      color: Colors.white
+                  ),
                 ),
               ),
             ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(16),
-            width: double.infinity,
-            child: Image.network(
-              widget.logoCondominio,
-              width: 200,
-              height: 200,
+            Container(
+              padding: const EdgeInsets.all(16),
+              width: 500,
+              child: Image.network(
+                widget.logoCondominio,
+                width: 200,
+                height: 200,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

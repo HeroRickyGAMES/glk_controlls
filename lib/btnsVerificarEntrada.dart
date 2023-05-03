@@ -39,7 +39,7 @@ class _btnsVerificarEntradaState extends State<btnsVerificarEntrada> {
         title: Text('Qual entrada está operando?'),
         centerTitle: true,
       ),
-      body: Container(
+      body: Center(
         child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -49,7 +49,7 @@ class _btnsVerificarEntradaState extends State<btnsVerificarEntrada> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(
-                        width: double.infinity,
+                        width: 500,
                         padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                         child: ElevatedButton(
                           onPressed: (){
@@ -70,7 +70,7 @@ class _btnsVerificarEntradaState extends State<btnsVerificarEntrada> {
                         ),
                       ),
                       Container(
-                        width: double.infinity,
+                        width: 500,
                         padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                         child: ElevatedButton(
                           onPressed: (){

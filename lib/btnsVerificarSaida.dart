@@ -41,62 +41,62 @@ class _btnsVerificarSaidaState extends State<btnsVerificarSaida> {
         title: Text('Qual entrada está operando?'),
         centerTitle: true,
       ),
-      body: Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
-                child: ElevatedButton(
-                  onPressed: (){
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  width: 500,
+                  padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                  child: ElevatedButton(
+                    onPressed: (){
 
-                    Saida = 'Rele02';
+                      Saida = 'Rele02';
 
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context){
-                          return listaSaida(widget.PorteiroName, Saida);
-                        }));
-                  },
-                  child: Text(
-                    'Saida 01',
-                    style: TextStyle(
-                        fontSize: tamanhotextobtns
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context){
+                            return listaSaida(widget.PorteiroName, Saida);
+                          }));
+                    },
+                    child: Text(
+                      'Saida 01',
+                      style: TextStyle(
+                          fontSize: tamanhotextobtns
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
-                child: ElevatedButton(
-                  onPressed: (){
+                Container(
+                  width: 500,
+                  padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                  child: ElevatedButton(
+                    onPressed: (){
 
-                    Saida = 'Rele04';
+                      Saida = 'Rele04';
 
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context){
-                          return listaSaida(widget.PorteiroName, Saida);
-                        }));
-                  },
-                  child: Text(
-                    'Saida 02',
-                    style: TextStyle(
-                        fontSize: tamanhotextobtns
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context){
+                            return listaSaida(widget.PorteiroName, Saida);
+                          }));
+                    },
+                    child: Text(
+                      'Saida 02',
+                      style: TextStyle(
+                          fontSize: tamanhotextobtns
+                      ),
                     ),
                   ),
                 ),
-              ),
-            ],
-          ),
-        ],
+              ],
+            ),
+          ],
+        ),
       ),
-    ),
     );
   }
 }
