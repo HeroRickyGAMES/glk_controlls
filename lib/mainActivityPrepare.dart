@@ -1,3 +1,4 @@
+import 'package:enhanced_url_launcher/enhanced_url_launcher.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,7 +12,6 @@ import 'package:glk_controls/setorADM.dart';
 import 'package:glk_controls/firebase_options.dart';
 import 'package:glk_controls/anteLogin.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class mainActivityPrepare extends StatefulWidget {
   String calloff;
@@ -442,16 +442,12 @@ checkislog(context) async {
             actions: [
               TextButton(onPressed: () async {
 
-                const url = 'https://github.com/HeroRickyGAMES/glk_controlls/releases';
-
-                if (await canLaunch(url)) {
-
-                  await launch(url);
-
-                } else {
-
-                  throw'Não foi possível abrir a URL: $url';
-
+                Uri uri = Uri.parse("https://github.com/HeroRickyGAMES/glk_controlls/releases");
+                if (!await launchUrl(
+                  uri,
+                  mode: LaunchMode.externalApplication,
+                )) {
+                  throw Exception('Could not launch $uri');
                 }
 
                 Navigator.pop(context);
