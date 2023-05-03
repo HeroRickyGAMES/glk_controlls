@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_widget/connectivity_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/Painel.dart';
@@ -64,7 +65,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
         timeInSecForIosWeb: 10,
         backgroundColor: Colors.black,
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: 16,
       );
       Fluttertoast.showToast(
         msg: 'Você está offline, então algumas ações no app irão demorar mais do que o normal,',
@@ -72,7 +73,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
         timeInSecForIosWeb: 10,
         backgroundColor: Colors.black,
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: 16,
       );
       Fluttertoast.showToast(
         msg: 'Mas assim que a rede for reestabelecida, reinicie o app para usar o servidor online do app!',
@@ -80,7 +81,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
         timeInSecForIosWeb: 10,
         backgroundColor: Colors.black,
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: 16,
       );
 
       print('Desconectado!');
@@ -239,6 +240,21 @@ class _mainPorteiroState extends State<mainPorteiro> {
 
     }
 
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
+    
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -277,10 +293,10 @@ class _mainPorteiroState extends State<mainPorteiro> {
                   padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                   child: ElevatedButton(
                     onPressed: widget.cadastro? openModal: null,
-                      child: const Text(
+                      child: Text(
                           'Novo cadastro',
                         style: TextStyle(
-                            fontSize: 16
+                            fontSize: tamanhotexto
                         ),
                       ),
                   ),
@@ -293,10 +309,10 @@ class _mainPorteiroState extends State<mainPorteiro> {
                     style: ElevatedButton.styleFrom(
                         primary: Colors.green[700]
                     ),
-                    child: const Text(
+                    child: Text(
                       'Verificar Entrada',
                       style: TextStyle(
-                          fontSize: 16
+                          fontSize: tamanhotexto
                       ),
                     ),
                   ),
@@ -309,10 +325,10 @@ class _mainPorteiroState extends State<mainPorteiro> {
                     style: ElevatedButton.styleFrom(
                         primary: Colors.yellow[800]
                     ),
-                    child: const Text(
+                    child: Text(
                       'Verificar Saída',
                       style: TextStyle(
-                          fontSize: 16
+                          fontSize: tamanhotexto
                       ),
                     ),
                   ),
@@ -325,10 +341,10 @@ class _mainPorteiroState extends State<mainPorteiro> {
                     style: ElevatedButton.styleFrom(
                       //primary: Colors.yellow[800]
                     ),
-                    child: const Text(
+                    child: Text(
                       'Relatorio',
                       style: TextStyle(
-                          fontSize: 16
+                          fontSize: tamanhotexto
                       ),
                     ),
                   ),
@@ -342,10 +358,10 @@ class _mainPorteiroState extends State<mainPorteiro> {
                     style: ElevatedButton.styleFrom(
                       //primary: Colors.yellow[800]
                     ),
-                    child: const Text(
+                    child: Text(
                       'Painel',
                       style: TextStyle(
-                          fontSize: 16
+                          fontSize: tamanhotexto
                       ),
                     ),
                   ),
@@ -355,7 +371,6 @@ class _mainPorteiroState extends State<mainPorteiro> {
                   padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                   child: ElevatedButton(
                     onPressed: () {
-
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
@@ -394,7 +409,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                                       timeInSecForIosWeb: 5,
                                       backgroundColor: Colors.black,
                                       textColor: Colors.white,
-                                      fontSize: 16.0,
+                                      fontSize: tamanhotexto,
                                     );
                                     Navigator.of(context).pop();
                                   }, child: const Text('Prosseguir'),
@@ -412,10 +427,10 @@ class _mainPorteiroState extends State<mainPorteiro> {
                     style: ElevatedButton.styleFrom(
                         primary: Colors.red[800]
                     ),
-                    child: const Text(
+                    child: Text(
                       'Ativar/Desativar modo Offline',
                       style: TextStyle(
-                          fontSize: 16
+                          fontSize: tamanhotexto
                       ),
                     ),
                   ),
@@ -446,12 +461,12 @@ class _mainPorteiroState extends State<mainPorteiro> {
                                     },
                                     obscureText: true,
                                     keyboardType: TextInputType.visiblePassword,
-                                    decoration: const InputDecoration(
-                                      border: OutlineInputBorder(),
+                                    decoration: InputDecoration(
+                                      border: const OutlineInputBorder(),
                                       hintText: 'Senha',
 
                                       hintStyle: TextStyle(
-                                          fontSize: 16
+                                          fontSize: tamanhotexto
                                       ),
                                     ),
                                   ),
@@ -459,10 +474,10 @@ class _mainPorteiroState extends State<mainPorteiro> {
                                 Center(
                                     child: ValueListenableBuilder(valueListenable: dropValue, builder: (context, String value, _){
                                       return DropdownButton(
-                                        hint: const Text(
+                                        hint: Text(
                                           'Selecione uma entrada *',
                                           style: TextStyle(
-                                              fontSize: 16
+                                              fontSize: tamanhotexto
                                           ),
                                         ),
                                         value: (value.isEmpty)? null : value,
@@ -493,8 +508,8 @@ class _mainPorteiroState extends State<mainPorteiro> {
                                           child:
                                           Text(
                                             opcao,
-                                            style: const TextStyle(
-                                                fontSize: 16
+                                            style: TextStyle(
+                                                fontSize: tamanhotexto
                                             ),
                                           ),
                                         ),
@@ -524,7 +539,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                                             timeInSecForIosWeb: 1,
                                             backgroundColor: Colors.black,
                                             textColor: Colors.white,
-                                            fontSize: 16.0,
+                                            fontSize: tamanhotexto,
                                           );
                                         }else{
                                           if(Senha == "glk@12345678\$"){
@@ -535,7 +550,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                                               timeInSecForIosWeb: 1,
                                               backgroundColor: Colors.black,
                                               textColor: Colors.white,
-                                              fontSize: 16.0,
+                                              fontSize: tamanhotexto,
                                             );
 
                                             var result = await FirebaseFirestore.instance
@@ -868,7 +883,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                                               timeInSecForIosWeb: 1,
                                               backgroundColor: Colors.black,
                                               textColor: Colors.white,
-                                              fontSize: 16.0,
+                                              fontSize: tamanhotexto,
                                             );
                                           }
                                         }
@@ -888,10 +903,10 @@ class _mainPorteiroState extends State<mainPorteiro> {
                     style: ElevatedButton.styleFrom(
                         primary: Colors.red[800]
                     ),
-                    child: const Text(
+                    child: Text(
                       'Liberação de pânico',
                       style: TextStyle(
-                          fontSize: 16
+                          fontSize: tamanhotexto
                       ),
                     ),
                   ),
@@ -925,8 +940,8 @@ class _mainPorteiroState extends State<mainPorteiro> {
                                           Center(
                                             child: Text(
                                               'Enviaremos um email para esse email de conta logado.\nEmail: ${widget.Email}',
-                                              style: const TextStyle(
-                                                  fontSize: 18
+                                              style: TextStyle(
+                                                  fontSize: tamanhotextobtns
                                               ),
                                             ),
                                           ),
@@ -936,10 +951,10 @@ class _mainPorteiroState extends State<mainPorteiro> {
                                               TextButton(onPressed: (){
                                                 Navigator.of(context).pop();
                                               },
-                                                  child: const Text(
+                                                  child: Text(
                                                     'Cancelar',
                                                     style: TextStyle(
-                                                        fontSize: 18
+                                                        fontSize: tamanhotextobtns
                                                     ),
                                                   )
                                               ),
@@ -954,7 +969,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                                                       timeInSecForIosWeb: 1,
                                                       backgroundColor: Colors.black,
                                                       textColor: Colors.white,
-                                                      fontSize: 16.0,
+                                                      fontSize: tamanhotexto,
                                                     );
                                                     print('enviado!');
                                                   });
@@ -965,16 +980,16 @@ class _mainPorteiroState extends State<mainPorteiro> {
                                                     timeInSecForIosWeb: 1,
                                                     backgroundColor: Colors.black,
                                                     textColor: Colors.white,
-                                                    fontSize: 16.0,
+                                                    fontSize: tamanhotexto,
                                                   );
                                                   print('Erro! $e');
                                                 }
 
                                               },
-                                                  child: const Text(
+                                                  child: Text(
                                                     'Resetar Senha',
                                                     style: TextStyle(
-                                                        fontSize: 18
+                                                        fontSize: tamanhotextobtns
                                                     ),
                                                   )
                                               )
@@ -1057,9 +1072,9 @@ class _mainPorteiroState extends State<mainPorteiro> {
                       padding: const EdgeInsets.all(16),
                       child:
                       Text(
-                        'Operador: ' + widget.PorteiroNome,
-                        style: const TextStyle(
-                            fontSize: 16
+                        'Operador: ${widget.PorteiroNome}',
+                        style: TextStyle(
+                            fontSize: tamanhotexto
                         ),
                       ),
                     ),

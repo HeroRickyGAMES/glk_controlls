@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -22,6 +25,22 @@ class _loginState extends State<login> {
   final passController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
+    
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
@@ -56,11 +75,11 @@ class _loginState extends State<login> {
                       padding: const EdgeInsets.all(16),
                       child: TextField(
                         controller: emailController,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          border: const OutlineInputBorder(),
                           hintText: 'Email',
                           hintStyle: TextStyle(
-                              fontSize: 16
+                              fontSize: tamanhotexto
                           ),
                         ),
                       ),
@@ -75,11 +94,11 @@ class _loginState extends State<login> {
                       obscureText: visivel,
                       enableSuggestions: false,
                       autocorrect: false,
-                      decoration: const InputDecoration(
-                        border: OutlineInputBorder(),
+                      decoration: InputDecoration(
+                        border: const OutlineInputBorder(),
                         hintText: 'Senha',
                         hintStyle: TextStyle(
-                            fontSize: 16
+                            fontSize: tamanhotexto
                         ),
                       ),
                     ),
@@ -303,7 +322,7 @@ class _loginState extends State<login> {
                                 timeInSecForIosWeb: 1,
                                 backgroundColor: Colors.black,
                                 textColor: Colors.white,
-                                fontSize: 16.0,
+                                fontSize: tamanhotexto,
                               );
                             });
 
@@ -312,10 +331,10 @@ class _loginState extends State<login> {
                         }else{
                         }
                       },
-                      child: const Text(
+                      child: Text(
                         'Login',
                         style: TextStyle(
-                            fontSize: 16
+                            fontSize: tamanhotexto
                         ),
                       ),
                     ),

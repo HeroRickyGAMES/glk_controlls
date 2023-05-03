@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:glk_controls/modal/modalVeiculoPesquisafill.dart';
 
@@ -27,6 +30,22 @@ class _listaUsuariosState extends State<listaUsuarios> {
 
   @override
   Widget build(BuildContext context) {
+
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
+
     String input = widget.NomeMotorista;
     if (verificaSeSoTemLetras(input)) {
       print('dando verdadeiro');
@@ -73,8 +92,8 @@ class _listaUsuariosState extends State<listaUsuarios> {
                         height: 50,
                         child: Center(
                             child: Text( 'Nome do Motorista: '+ documents['nomeMotorista'],
-                              style: const TextStyle(
-                                fontSize: 16
+                              style: TextStyle(
+                                fontSize: tamanhotexto
                               ),
                             )
                         ),
@@ -84,8 +103,8 @@ class _listaUsuariosState extends State<listaUsuarios> {
                         height: 50,
                         child: Center(
                             child: Text( 'RG do motorista: '+ documents['RGDoMotorista'],
-                              style: const TextStyle(
-                                  fontSize: 16
+                              style: TextStyle(
+                                  fontSize: tamanhotexto
                               ),
                             )
                         ),
@@ -162,10 +181,10 @@ class _listaUsuariosState extends State<listaUsuarios> {
                         }
                         print(listaNome);
 
-                      }, child: const Text(
+                      }, child: Text(
                           'Selecionar esse motorista',
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: tamanhotextobtns
                         ),
                       )
                       )
@@ -207,8 +226,8 @@ class _listaUsuariosState extends State<listaUsuarios> {
                         height: 50,
                         child: Center(
                             child: Text( 'Nome do Motorista: '+ documents['nomeMotorista'],
-                              style: const TextStyle(
-                                  fontSize: 18
+                              style: TextStyle(
+                                  fontSize: tamanhotextobtns
                               ),
                             )
                         ),
@@ -218,8 +237,8 @@ class _listaUsuariosState extends State<listaUsuarios> {
                         height: 50,
                         child: Center(
                             child: Text( 'RG do motorista: '+ documents['RGDoMotorista'],
-                              style: const TextStyle(
-                                  fontSize: 18
+                              style: TextStyle(
+                                  fontSize: tamanhotextobtns
                               ),
                             )
                         ),
@@ -296,10 +315,10 @@ class _listaUsuariosState extends State<listaUsuarios> {
                         }
                         print(listaNome);
 
-                      }, child: const Text(
+                      }, child: Text(
                         'Selecionar esse motorista',
                         style: TextStyle(
-                            fontSize: 18
+                            fontSize: tamanhotextobtns
                         ),
                       )
                       )

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_widget/connectivity_widget.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -78,6 +79,21 @@ class _modalPorteiroState extends State<modalPorteiro> {
   @override
   Widget build(BuildContext context) {
 
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
+
     MandarMT() async {
       Fluttertoast.showToast(
         msg: 'Enviando informações para o servidor...',
@@ -85,7 +101,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.black,
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: tamanhotexto,
       );
 
       print(lacreounao);
@@ -98,7 +114,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
         var uuid = const Uuid();
 
-        String idd = "${DateTime.now().toString()}" + uuid.v4();
+        String idd = "${DateTime.now().toString()}${uuid.v4()}";
         FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
           'nomeMotorista': nomeMotorista,
           'RGDoMotorista': RGMotorista,
@@ -141,7 +157,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
             timeInSecForIosWeb: 1,
             backgroundColor: Colors.black,
             textColor: Colors.white,
-            fontSize: 16.0,
+            fontSize: tamanhotexto,
           );
           widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
 
@@ -158,7 +174,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
               if(key == 'nome'){
                 String PorteiroNome = value;
 
-                print('Porteiro name é' + PorteiroNome);
+                print('Porteiro name é$PorteiroNome');
 
                 var UID = FirebaseAuth.instance.currentUser?.uid;
                 var result = await FirebaseFirestore.instance
@@ -209,7 +225,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
         var uuid = const Uuid();
 
-        String idd = "${DateTime.now().toString()}" + uuid.v4();
+        String idd = "${DateTime.now().toString()}${uuid.v4()}";
         FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
           'nomeMotorista': nomeMotorista,
           'RGDoMotorista': RGMotorista,
@@ -253,7 +269,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
             timeInSecForIosWeb: 1,
             backgroundColor: Colors.black,
             textColor: Colors.white,
-            fontSize: 16.0,
+            fontSize: tamanhotexto,
           );
           widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
 
@@ -270,7 +286,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
               if(key == 'nome'){
                 String PorteiroNome = value;
 
-                print('Porteiro name é' + PorteiroNome);
+                print('Porteiro name é$PorteiroNome');
 
                 var UID = FirebaseAuth.instance.currentUser?.uid;
                 var result = await FirebaseFirestore.instance
@@ -340,7 +356,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.black,
           textColor: Colors.white,
-          fontSize: 16.0,
+          fontSize: tamanhotexto,
         );
       }else{
         if(RGMotorista == null){
@@ -350,7 +366,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
             timeInSecForIosWeb: 1,
             backgroundColor: Colors.black,
             textColor: Colors.white,
-            fontSize: 16.0,
+            fontSize: tamanhotexto,
           );
         }else{
           if(Veiculo == null){
@@ -360,7 +376,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
               timeInSecForIosWeb: 1,
               backgroundColor: Colors.black,
               textColor: Colors.white,
-              fontSize: 16.0,
+              fontSize: tamanhotexto,
             );
           }else{
             if(VeiculoPlaca == null){
@@ -370,7 +386,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 timeInSecForIosWeb: 1,
                 backgroundColor: Colors.black,
                 textColor: Colors.white,
-                fontSize: 16.0,
+                fontSize: tamanhotexto,
               );
             }else{
                 if(empresaSelecionada == null){
@@ -380,7 +396,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     timeInSecForIosWeb: 1,
                     backgroundColor: Colors.black,
                     textColor: Colors.white,
-                    fontSize: 16.0,
+                    fontSize: tamanhotexto,
                   );
                 }else{
                   if(coletaouentrega == null){
@@ -390,7 +406,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                       timeInSecForIosWeb: 1,
                       backgroundColor: Colors.black,
                       textColor: Colors.white,
-                      fontSize: 16.0,
+                      fontSize: tamanhotexto,
                     );
                   }else{
 
@@ -401,7 +417,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         timeInSecForIosWeb: 1,
                         backgroundColor: Colors.black,
                         textColor: Colors.white,
-                        fontSize: 16.0,
+                        fontSize: tamanhotexto,
                       );
                     }else{
 
@@ -412,7 +428,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                           timeInSecForIosWeb: 1,
                           backgroundColor: Colors.black,
                           textColor: Colors.white,
-                          fontSize: 16.0,
+                          fontSize: tamanhotexto,
                         );
                       }else{
 //Ele vai verificar se o usuario está bloqueado ou não.
@@ -470,7 +486,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                             timeInSecForIosWeb: 1,
                             backgroundColor: Colors.black,
                             textColor: Colors.white,
-                            fontSize: 16.0,
+                            fontSize: tamanhotexto,
                           );
                         }else{
                           if(VeiculosBLk.contains(VeiculoPlaca)){
@@ -481,7 +497,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                               timeInSecForIosWeb: 1,
                               backgroundColor: Colors.black,
                               textColor: Colors.white,
-                              fontSize: 16.0,
+                              fontSize: tamanhotexto,
                             );
                           }else{
 
@@ -535,7 +551,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                         timeInSecForIosWeb: 1,
                                         backgroundColor: Colors.black,
                                         textColor: Colors.white,
-                                        fontSize: 16.0,
+                                        fontSize: tamanhotexto,
                                       );
                                     }else{
                                       ConnectivityUtils.instance
@@ -637,11 +653,11 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   keyboardType: TextInputType.name,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
                     hintText: 'Nome completo do motorista *',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
@@ -657,21 +673,21 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   keyboardType: TextInputType.number,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
                     hintText: 'RG do motorista * ',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
               ),
               Container(
                 padding: const EdgeInsets.all(16),
-                child: const Text(
+                child: Text(
                   'Veiculo *',
                   style: TextStyle(
-                      fontSize: 16,
+                      fontSize: tamanhotexto,
                       fontWeight: FontWeight.bold
                   ),
                 ),
@@ -679,10 +695,10 @@ class _modalPorteiroState extends State<modalPorteiro> {
               Center(
                   child: ValueListenableBuilder(valueListenable: widget.dropValue2, builder: (context, String value, _){
                     return DropdownButton(
-                      hint: const Text(
+                      hint: Text(
                         'Selecione um veiculo *',
                         style: TextStyle(
-                            fontSize: 16
+                            fontSize: tamanhotexto
                         ),
                       ),
                       value: (value.isEmpty)? null : value,
@@ -697,8 +713,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         child:
                         Text(
                           opcao,
-                          style: const TextStyle(
-                              fontSize: 16
+                          style: TextStyle(
+                              fontSize: tamanhotexto
                           ),
                         ),
                       ),
@@ -719,11 +735,11 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     );
                     //Mudou mandou para a String
                   },
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
                     hintText: 'Placa do Veiculo * ',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
@@ -747,7 +763,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         timeInSecForIosWeb: 1,
                         backgroundColor: Colors.black,
                         textColor: Colors.white,
-                        fontSize: 16.0,
+                        fontSize: tamanhotexto,
                       );
                     }
 
@@ -756,11 +772,11 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   keyboardType: TextInputType.number,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
                     hintText: 'Telefone',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
@@ -773,11 +789,11 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     telefoneinterface.text = telefone!;
                     //Mudou mandou para a String
                   },
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
                     hintText: 'Empresa de Origem',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
@@ -789,21 +805,21 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     motivo = valor;
                     //Mudou mandou para a String
                   },
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
                     hintText: 'Observação',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
               ),
               Center(
                 child: CheckboxListTile(
-                  title: const Text(
+                  title: Text(
                       'Veiculo Interno',
                     style: TextStyle(
-                        fontSize: 16,
+                        fontSize: tamanhotexto,
 
                     ),
                   ),
@@ -823,10 +839,10 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                     onPressed: (){
                                       Navigator.of(context).pop();
                                     },
-                                    child: const Text('Cancelar'),
                                   style: ElevatedButton.styleFrom(
                                       primary: Colors.red
                                   ),
+                                    child: const Text('Cancelar'),
                                 ),
                                 ElevatedButton(
                                   onPressed: (){
@@ -835,10 +851,10 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                       Navigator.of(context).pop();
                                     });
                                   },
-                                  child: const Text('Prosseguir'),
                                   style: ElevatedButton.styleFrom(
                                       primary: Colors.green
                                   ),
+                                  child: const Text('Prosseguir'),
                                 ),
                               ],
                             )
@@ -854,10 +870,10 @@ class _modalPorteiroState extends State<modalPorteiro> {
               ),
               Container(
                 padding: const EdgeInsets.all(16),
-                child: const Text(
+                child: Text(
                   'Empresa destino *',
                   style: TextStyle(
-                      fontSize: 16,
+                      fontSize: tamanhotexto,
                       fontWeight: FontWeight.bold
                   ),
                 ),
@@ -865,10 +881,10 @@ class _modalPorteiroState extends State<modalPorteiro> {
               Center(
                   child: ValueListenableBuilder(valueListenable: widget.dropValue, builder: (context, String value, _){
                     return DropdownButton(
-                      hint: const Text(
+                      hint: Text(
                         'Selecione uma empresa',
                         style: TextStyle(
-                            fontSize: 16
+                            fontSize: tamanhotexto
                         ),
                       ),
                       value: (value.isEmpty)? null : value,
@@ -883,8 +899,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         child:
                         Text(
                           opcao,
-                          style: const TextStyle(
-                              fontSize: 16
+                          style: TextStyle(
+                              fontSize: tamanhotexto
                           ),
                         ),
                       ),
@@ -902,10 +918,10 @@ class _modalPorteiroState extends State<modalPorteiro> {
                       children: [
                         Expanded(
                           child: RadioListTile(
-                            title: const Text(
+                            title: Text(
                                 "Coleta",
                               style: TextStyle(
-                                fontSize: 16
+                                fontSize: tamanhotexto
                               ),
                             ),
                             value: "coleta",
@@ -919,10 +935,10 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         ),
                         Expanded(
                           child: RadioListTile(
-                            title: const Text(
+                            title: Text(
                                 "Entrega",
                               style: TextStyle(
-                                  fontSize: 16
+                                  fontSize: tamanhotexto
                               ),
                             ),
                             value: "entrega",
@@ -1013,9 +1029,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     padding: const EdgeInsets.all(16),
                     child:
                     Text(
-                      'Operador: ' + widget.nomeUser,
-                      style: const TextStyle(
-                          fontSize: 16
+                      'Operador: ${widget.nomeUser}',
+                      style: TextStyle(
+                          fontSize: tamanhotexto
                       ),
                     ),
                   ),

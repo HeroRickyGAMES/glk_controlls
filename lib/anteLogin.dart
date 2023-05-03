@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -30,6 +33,20 @@ class _anteLoginState extends State<anteLogin> {
     String User = '';
     String pass = '';
 
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
 
     setarComoOnline();
     return Scaffold(
@@ -60,15 +77,15 @@ class _anteLoginState extends State<anteLogin> {
                       return const login();
                     }));
               },
-              child: const Text(
-                  'Login',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.black
-                ),
-              ),
               style: ElevatedButton.styleFrom(
                   primary: Colors.yellow[700]
+              ),
+              child: Text(
+                  'Login',
+                style: TextStyle(
+                  fontSize: tamanhotexto,
+                  color: Colors.black
+                ),
               ),
             ),
           ),
@@ -92,11 +109,11 @@ class _anteLoginState extends State<anteLogin> {
                           enableSuggestions: false,
                           obscureText: false,
                           autocorrect: false,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
+                          decoration: InputDecoration(
+                            border: const OutlineInputBorder(),
                             hintText: 'User',
                             hintStyle: TextStyle(
-                                fontSize: 16
+                                fontSize: tamanhotexto
                             ),
                           ),
                         ),
@@ -109,11 +126,11 @@ class _anteLoginState extends State<anteLogin> {
                           enableSuggestions: false,
                           obscureText: true,
                           autocorrect: false,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
+                          decoration: InputDecoration(
+                            border: const OutlineInputBorder(),
                             hintText: 'Senha',
                             hintStyle: TextStyle(
-                                fontSize: 16
+                                fontSize: tamanhotexto
                             ),
                           ),
                         ),
@@ -137,7 +154,7 @@ class _anteLoginState extends State<anteLogin> {
                                       timeInSecForIosWeb: 1,
                                       backgroundColor: Colors.grey[600],
                                       textColor: Colors.white,
-                                      fontSize: 16.0
+                                      fontSize: tamanhotexto
                                   );
                                 }else{
 
@@ -150,7 +167,7 @@ class _anteLoginState extends State<anteLogin> {
                                         timeInSecForIosWeb: 1,
                                         backgroundColor: Colors.grey[600],
                                         textColor: Colors.white,
-                                        fontSize: 16.0
+                                        fontSize: tamanhotexto
                                     );
 
                                   }else{
@@ -174,7 +191,7 @@ class _anteLoginState extends State<anteLogin> {
                                             timeInSecForIosWeb: 1,
                                             backgroundColor: Colors.grey[600],
                                             textColor: Colors.white,
-                                            fontSize: 16.0
+                                            fontSize: tamanhotexto
                                         );
                                       }
 
@@ -186,7 +203,7 @@ class _anteLoginState extends State<anteLogin> {
                                           timeInSecForIosWeb: 1,
                                           backgroundColor: Colors.grey[600],
                                           textColor: Colors.white,
-                                          fontSize: 16.0
+                                          fontSize: tamanhotexto
                                       );
                                     }
                                   }
@@ -201,15 +218,15 @@ class _anteLoginState extends State<anteLogin> {
                   },
                 );
               },
-              child: const Text(
-                'Painel',
-                style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white
-                ),
-              ),
               style: ElevatedButton.styleFrom(
                   primary: Colors.grey
+              ),
+              child: Text(
+                'Painel',
+                style: TextStyle(
+                    fontSize: tamanhotexto,
+                    color: Colors.white
+                ),
               ),
             ),
           ),

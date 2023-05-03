@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class cadastroVeiculoInterno extends StatefulWidget {
@@ -23,6 +26,22 @@ class _cadastroVeiculoInternoState extends State<cadastroVeiculoInterno> {
 
   @override
   Widget build(BuildContext context) {
+
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
+    
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cadastro de Veiculos internos'),
@@ -48,11 +67,11 @@ class _cadastroVeiculoInternoState extends State<cadastroVeiculoInterno> {
               keyboardType: TextInputType.name,
               enableSuggestions: false,
               autocorrect: false,
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 hintText: 'Placa * ',
                 hintStyle: TextStyle(
-                    fontSize: 16
+                    fontSize: tamanhotexto
                 ),
               ),
             ),
@@ -60,10 +79,10 @@ class _cadastroVeiculoInternoState extends State<cadastroVeiculoInterno> {
           Center(
               child: ValueListenableBuilder(valueListenable: dropValue, builder: (context, String value, _){
                 return DropdownButton(
-                  hint: const Text(
+                  hint: Text(
                     'Selecione um veiculo *',
                     style: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                   value: (value.isEmpty)? null : value,
@@ -78,8 +97,8 @@ class _cadastroVeiculoInternoState extends State<cadastroVeiculoInterno> {
                     child:
                     Text(
                       opcao,
-                      style: const TextStyle(
-                          fontSize: 16
+                      style: TextStyle(
+                          fontSize: tamanhotexto
                       ),
                     ),
                   ),
@@ -98,7 +117,13 @@ class _cadastroVeiculoInternoState extends State<cadastroVeiculoInterno> {
                       Navigator.pop(context);
                     });
                   },
-                  child: const Text('Prosseguir')
+                  child:
+                  Text(
+                      'Prosseguir',
+                    style: TextStyle(
+                      fontSize: tamanhotextobtns
+                    ),
+                  )
               )
           ),
         ],

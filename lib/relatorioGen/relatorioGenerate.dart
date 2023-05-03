@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'generatePDF/gerarPDF.dart';
 
@@ -74,6 +77,20 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
   @override
   Widget build(BuildContext context) {
 
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
 
     if(widget.lacreounao == 'lacre'){
 
@@ -108,10 +125,10 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               padding: const EdgeInsets.all(16),
               alignment: Alignment.center,
               child:
-              const Text(
+              Text(
                 'Liberação: ' + 'Motorista e Veiculo',
                 style: TextStyle(
-                    fontSize: 16
+                    fontSize: tamanhotexto 
                 ),
               ),
             ),
@@ -124,14 +141,14 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
                 children: [
                   Text(
                     'Data: ${widget.horarioCriacao}' ,
-                    style: const TextStyle(
-                        fontSize: 16
+                    style: TextStyle(
+                        fontSize: tamanhotexto 
                     ),
                   ),
                   Text(
-                    ' - Portaria - ' + widget.liberadopor,
-                    style: const TextStyle(
-                        fontSize: 16
+                    ' - Portaria - ${widget.liberadopor}',
+                    style: TextStyle(
+                        fontSize: tamanhotexto 
                     ),
                   ),
                 ],
@@ -146,14 +163,14 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
                 children: [
                   Text(
                     'Data: ${widget.DatadeAnalise}' ,
-                    style: const TextStyle(
-                        fontSize: 16
+                    style: TextStyle(
+                        fontSize: tamanhotexto 
                     ),
                   ),
                   Text(
-                    ' - Analise na Empresa - ' + widget.EmpresaDoc,
-                    style: const TextStyle(
-                        fontSize: 16
+                    ' - Analise na Empresa - ${widget.EmpresaDoc}',
+                    style: TextStyle(
+                        fontSize: tamanhotexto 
                     ),
                   ),
                 ],
@@ -168,14 +185,14 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
                 children: [
                   Text(
                     'Data: ${widget.DateEntrada}' ,
-                    style: const TextStyle(
-                        fontSize: 16
+                    style: TextStyle(
+                        fontSize: tamanhotexto 
                     ),
                   ),
                   Text(
-                    ' - Entrada - ' + widget.verificadoPor,
-                    style: const TextStyle(
-                        fontSize: 16
+                    ' - Entrada - ${widget.verificadoPor}',
+                    style: TextStyle(
+                        fontSize: tamanhotexto 
                     ),
                   ),
                 ],
@@ -190,14 +207,14 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
                 children: [
                   Text(
                     'Data: ${widget.DataSaidaPortaria}' ,
-                    style: const TextStyle(
-                        fontSize: 16
+                    style: TextStyle(
+                        fontSize: tamanhotexto 
                     ),
                   ),
                   Text(
-                    ' - Saida - ' + widget.saidaLiberadaPor,
-                    style: const TextStyle(
-                        fontSize: 16
+                    ' - Saida - ${widget.saidaLiberadaPor}',
+                    style: TextStyle(
+                        fontSize: tamanhotexto 
                     ),
                   ),
                 ],
@@ -207,9 +224,9 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                'Nome: ' + widget.nomeMotorista,
-                style: const TextStyle(
-                    fontSize: 16
+                'Nome: ${widget.nomeMotorista}',
+                style: TextStyle(
+                    fontSize: tamanhotexto 
                 ),
               ),
             ),
@@ -217,9 +234,9 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                'RG: ' + widget.RG,
-                style: const TextStyle(
-                    fontSize: 16
+                'RG: ${widget.RG}',
+                style: TextStyle(
+                    fontSize: tamanhotexto 
                 ),
               ),
             ),
@@ -227,9 +244,9 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                'Veiculo: ' + widget.Veiculo,
-                style: const TextStyle(
-                    fontSize: 16
+                'Veiculo: ${widget.Veiculo}',
+                style: TextStyle(
+                    fontSize: tamanhotexto 
                 ),
               ),
             ),
@@ -237,9 +254,9 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                'Placa: ' + widget.PlacaVeiculo,
-                style: const TextStyle(
-                    fontSize: 16
+                'Placa: ${widget.PlacaVeiculo}',
+                style: TextStyle(
+                    fontSize: tamanhotexto 
                 ),
               ),
             ),
@@ -247,9 +264,9 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                'Empresa de destino: ' + widget.Empresadestino,
-                style: const TextStyle(
-                    fontSize: 16
+                'Empresa de destino: ${widget.Empresadestino}',
+                style: TextStyle(
+                    fontSize: tamanhotexto 
                 ),
               ),
             ),
@@ -257,9 +274,9 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                'Telefone: ' + widget.telefone,
-                style: const TextStyle(
-                    fontSize: 16
+                'Telefone: ${widget.telefone}',
+                style: TextStyle(
+                    fontSize: tamanhotexto 
                 ),
               ),
             ),
@@ -267,9 +284,9 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                'Empresa de origem: ' + widget.EmpresadeOrigin,
-                style: const TextStyle(
-                    fontSize: 16
+                'Empresa de origem: ${widget.EmpresadeOrigin}',
+                style: TextStyle(
+                    fontSize: tamanhotexto 
                 ),
               ),
             ),
@@ -277,9 +294,9 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                'Galpão: ' + widget.Galpao,
-                style: const TextStyle(
-                    fontSize: 16
+                'Galpão: ${widget.Galpao}',
+                style: TextStyle(
+                    fontSize: tamanhotexto 
                 ),
               ),
             ),
@@ -309,11 +326,11 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
                 keyboardType: TextInputType.number,
                 //enableSuggestions: false,
                 //autocorrect: false,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
                   hintText: 'Numero do lacre *',
                   hintStyle: TextStyle(
-                      fontSize: 16
+                      fontSize: tamanhotexto 
                   ),
                 ),
               ),
@@ -387,10 +404,10 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
                       }));
 
                 },
-                child: const Text(
+                child: Text(
                   'Gerar/Imprimir',
                   style: TextStyle(
-                      fontSize: 18
+                      fontSize: tamanhotextobtns 
                   ),
                 ),
               ),

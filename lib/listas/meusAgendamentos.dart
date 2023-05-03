@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -15,6 +18,22 @@ class meusAgendamentosActivity extends StatefulWidget {
 class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
   @override
   Widget build(BuildContext context) {
+
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Meus Agendamentos'),
@@ -64,8 +83,8 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                         children: [
                           Text(
                             'Placa: ${documents['PlacaVeiculo']}',
-                            style: const TextStyle(
-                                fontSize: 16
+                            style: TextStyle(
+                                fontSize: tamanhotexto
                             ),
                           ),
                           Row(
@@ -103,8 +122,8 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                     padding: EdgeInsets.all(16),
                                                     child: Text(
                                                       'Data de agendamento selecionada de entrada: ${dataAgendataST}',
-                                                      style: const TextStyle(
-                                                          fontSize: 16
+                                                      style: TextStyle(
+                                                          fontSize: tamanhotexto
                                                       ),
                                                     ),
                                                   ),
@@ -128,18 +147,18 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
 
                                                             }, locale: LocaleType.pt);
                                                       },
-                                                      child: const Text(
+                                                      child: Text(
                                                         'Selecione a data',
                                                         style: TextStyle(
                                                             color: Colors.blue,
-                                                            fontSize: 16
+                                                            fontSize: tamanhotexto
                                                         ),
                                                       )
                                                   ),
                                                   Text(
                                                     'Data de agendamento selecionada de saida: ${dataAgendataSTsaida}',
-                                                    style: const TextStyle(
-                                                        fontSize: 16
+                                                    style: TextStyle(
+                                                        fontSize: tamanhotexto
                                                     ),
                                                   ),
                                                   TextButton(
@@ -162,11 +181,11 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
 
                                                             }, locale: LocaleType.pt);
                                                       },
-                                                      child: const Text(
+                                                      child: Text(
                                                         'Selecione a data',
                                                         style: TextStyle(
                                                             color: Colors.blue,
-                                                            fontSize: 16
+                                                            fontSize: tamanhotexto
                                                         ),
                                                       )
                                                   ),
@@ -187,11 +206,11 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                       keyboardType: TextInputType.name,
                                                       enableSuggestions: false,
                                                       autocorrect: false,
-                                                      decoration: const InputDecoration(
+                                                      decoration: InputDecoration(
                                                         border: OutlineInputBorder(),
                                                         hintText: 'Nome completo do motorista *',
                                                         hintStyle: TextStyle(
-                                                            fontSize: 16
+                                                            fontSize: tamanhotexto
                                                         ),
                                                       ),
                                                     ),
@@ -214,11 +233,11 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                       keyboardType: TextInputType.number,
                                                       enableSuggestions: false,
                                                       autocorrect: false,
-                                                      decoration: const InputDecoration(
+                                                      decoration: InputDecoration(
                                                         border: OutlineInputBorder(),
                                                         hintText: 'RG do motorista * ',
                                                         hintStyle: TextStyle(
-                                                            fontSize: 16
+                                                            fontSize: tamanhotexto
                                                         ),
                                                       ),
                                                     ),
@@ -242,11 +261,11 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                         )}(AG)';
                                                         //Mudou mandou para a String
                                                       },
-                                                      decoration: const InputDecoration(
+                                                      decoration: InputDecoration(
                                                         border: OutlineInputBorder(),
                                                         hintText: 'Placa do Veiculo * ',
                                                         hintStyle: TextStyle(
-                                                            fontSize: 16
+                                                            fontSize: tamanhotexto
                                                         ),
                                                       ),
                                                     ),
@@ -276,7 +295,7 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                             timeInSecForIosWeb: 1,
                                                             backgroundColor: Colors.black,
                                                             textColor: Colors.white,
-                                                            fontSize: 16.0,
+                                                            fontSize: tamanhotexto,
                                                           );
                                                         }
                                                         //Mudou mandou para a String
@@ -284,11 +303,11 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                       keyboardType: TextInputType.number,
                                                       enableSuggestions: false,
                                                       autocorrect: false,
-                                                      decoration: const InputDecoration(
+                                                      decoration: InputDecoration(
                                                         border: OutlineInputBorder(),
                                                         hintText: 'Telefone',
                                                         hintStyle: TextStyle(
-                                                            fontSize: 16
+                                                            fontSize: tamanhotexto
                                                         ),
                                                       ),
                                                     ),
@@ -308,11 +327,11 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                         //Mudou mandou para a String
                                                       },
                                                       controller: originEmpresaController,
-                                                      decoration: const InputDecoration(
+                                                      decoration: InputDecoration(
                                                         border: OutlineInputBorder(),
                                                         hintText: 'Empresa de Origem',
                                                         hintStyle: TextStyle(
-                                                            fontSize: 16
+                                                            fontSize: tamanhotexto
                                                         ),
                                                       ),
                                                     ),
@@ -334,7 +353,7 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                         ),
                                                       ),
                                                       Container(
-                                                        padding: const EdgeInsets.only(top: 16),
+                                                        padding: EdgeInsets.only(top: 16),
                                                         child: ElevatedButton(
                                                           onPressed: (){
 
@@ -345,7 +364,7 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                                 timeInSecForIosWeb: 1,
                                                                 backgroundColor: Colors.black,
                                                                 textColor: Colors.white,
-                                                                fontSize: 16.0,
+                                                                fontSize: tamanhotexto,
                                                               );
                                                             }else{
                                                               if(RGMotorista == ''){
@@ -355,7 +374,7 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                                   timeInSecForIosWeb: 1,
                                                                   backgroundColor: Colors.black,
                                                                   textColor: Colors.white,
-                                                                  fontSize: 16.0,
+                                                                  fontSize: tamanhotexto,
                                                                 );
                                                               }else{
                                                                 if(VeiculoPlaca == ''){
@@ -365,7 +384,7 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                                     timeInSecForIosWeb: 1,
                                                                     backgroundColor: Colors.black,
                                                                     textColor: Colors.white,
-                                                                    fontSize: 16.0,
+                                                                    fontSize: tamanhotexto,
                                                                   );
                                                                 }else{
 
@@ -376,7 +395,7 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                                       timeInSecForIosWeb: 1,
                                                                       backgroundColor: Colors.black,
                                                                       textColor: Colors.white,
-                                                                      fontSize: 16.0,
+                                                                      fontSize: tamanhotexto,
                                                                     );
                                                                   }else{
                                                                     if(dataAgendataSTsaida == ''){
@@ -386,7 +405,7 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                                         timeInSecForIosWeb: 1,
                                                                         backgroundColor: Colors.black,
                                                                         textColor: Colors.white,
-                                                                        fontSize: 16.0,
+                                                                        fontSize: tamanhotexto,
                                                                       );
                                                                     }else{
                                                                       FirebaseFirestore.instance.collection('Autorizacoes').doc(documents['idDoc']).update({
@@ -435,7 +454,7 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                             timeInSecForIosWeb: 1,
                                             backgroundColor: Colors.grey[600],
                                             textColor: Colors.white,
-                                            fontSize: 16.0
+                                            fontSize: tamanhotexto
                                         );
                                       });
                                     },

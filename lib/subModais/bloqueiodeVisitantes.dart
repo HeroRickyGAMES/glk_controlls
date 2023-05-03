@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -19,6 +22,22 @@ class bloqueioDeVisitantes extends StatefulWidget {
 class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
   @override
   Widget build(BuildContext context) {
+
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -44,46 +63,46 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                 children: [
                   Container(
                     padding: const EdgeInsets.all(16),
-                    child: const Text(
+                    child: Text(
                       'Nome',
                       style: TextStyle(
-                          fontSize: 16
+                          fontSize: tamanhotexto
                       ),
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.all(16),
-                    child: const Text(
+                    child: Text(
                       'RG',
                       style: TextStyle(
-                          fontSize: 16
+                          fontSize: tamanhotexto
                       ),
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.all(16),
-                    child: const Text(
+                    child: Text(
                       'Data',
                       style: TextStyle(
-                          fontSize: 16
+                          fontSize: tamanhotexto
                       ),
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.all(16),
-                    child: const Text(
+                    child: Text(
                       '',
                       style: TextStyle(
-                          fontSize: 16
+                          fontSize: tamanhotexto
                       ),
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.all(16),
-                    child: const Text(
+                    child: Text(
                       '',
                       style: TextStyle(
-                          fontSize: 16
+                          fontSize: tamanhotexto
                       ),
                     ),
                   ),
@@ -121,22 +140,22 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                               children: [
                                 Text(
                                   documents['nome'],
-                                  style: const TextStyle(
-                                      fontSize: 16
+                                  style: TextStyle(
+                                      fontSize: tamanhotexto
                                   ),
                                 ),
                                 Text(
                                   documents['rg'],
-                                  style: const TextStyle(
-                                      fontSize: 16
+                                  style: TextStyle(
+                                      fontSize: tamanhotexto
                                   ),
                                 ),
                                 Row(
                                   children: [
                                     Text(
                                       documents['dataDoBloqueio'].replaceAll('-', '/'),
-                                      style: const TextStyle(
-                                          fontSize: 16
+                                      style: TextStyle(
+                                          fontSize: tamanhotexto
                                       ),
                                     ),
                                     TextButton(
@@ -181,15 +200,15 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
 
                                                       Navigator.of(context).pop();
 
-                                                    }, child: const Text(
-                                                      'Voltar',
-                                                      style: TextStyle(
-                                                          fontSize: 16
-                                                      ),
-                                                    ),
+                                                    },
                                                       style: ElevatedButton.styleFrom(
                                                           primary: Colors.red
+                                                      ), child: Text(
+                                                      'Voltar',
+                                                      style: TextStyle(
+                                                          fontSize: tamanhotexto
                                                       ),
+                                                    ),
                                                     ),
                                                     ElevatedButton(onPressed: (){
 
@@ -200,15 +219,15 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                                             return generatePDF3(documents['nome'], documents['rg'], documents['Motivo'], documents['dataDoBloqueio'].replaceAll('-', '/'));
                                                           }));
 
-                                                    }, child: const Text(
-                                                      'Imprimir',
-                                                      style: TextStyle(
-                                                          fontSize: 16
-                                                      ),
-                                                    ),
+                                                    },
                                                       style: ElevatedButton.styleFrom(
                                                           primary: Colors.blue
+                                                      ), child: Text(
+                                                      'Imprimir',
+                                                      style: TextStyle(
+                                                          fontSize: tamanhotexto
                                                       ),
+                                                    ),
                                                     ),
                                                   ],
                                                 )
@@ -230,7 +249,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                               timeInSecForIosWeb: 1,
                                               backgroundColor: Colors.grey[600],
                                               textColor: Colors.white,
-                                              fontSize: 16.0
+                                              fontSize: tamanhotexto
                                           );
                                         });
                                       },
@@ -287,11 +306,11 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                       keyboardType: TextInputType.text,
                                       enableSuggestions: false,
                                       autocorrect: false,
-                                      decoration: const InputDecoration(
-                                        border: OutlineInputBorder(),
+                                      decoration: InputDecoration(
+                                        border: const OutlineInputBorder(),
                                         hintText: 'Nome do Motorista * ',
                                         hintStyle: TextStyle(
-                                            fontSize: 16
+                                            fontSize: tamanhotexto
                                         ),
                                       ),
                                     ),
@@ -308,11 +327,11 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                       keyboardType: TextInputType.number,
                                       enableSuggestions: false,
                                       autocorrect: false,
-                                      decoration: const InputDecoration(
-                                        border: OutlineInputBorder(),
+                                      decoration: InputDecoration(
+                                        border: const OutlineInputBorder(),
                                         hintText: 'RG do Motorista (Só numeros)* ',
                                         hintStyle: TextStyle(
-                                            fontSize: 16
+                                            fontSize: tamanhotexto
                                         ),
                                       ),
                                     ),
@@ -336,11 +355,11 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                       keyboardType: TextInputType.multiline,
                                       enableSuggestions: false,
                                       autocorrect: false,
-                                      decoration: const InputDecoration(
-                                        border: OutlineInputBorder(),
+                                      decoration: InputDecoration(
+                                        border: const OutlineInputBorder(),
                                         hintText: 'Motivo do Bloqueio * ',
                                         hintStyle: TextStyle(
-                                            fontSize: 16
+                                            fontSize: tamanhotexto
                                         ),
                                       ),
                                     ),
@@ -355,15 +374,15 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
 
                                       Navigator.of(context).pop();
 
-                                    }, child: const Text(
-                                      'Cancelar',
-                                      style: TextStyle(
-                                          fontSize: 16
-                                      ),
-                                    ),
+                                    },
                                       style: ElevatedButton.styleFrom(
                                           primary: Colors.red
+                                      ), child: Text(
+                                      'Cancelar',
+                                      style: TextStyle(
+                                          fontSize: tamanhotexto
                                       ),
+                                    ),
                                     ),
                                     ElevatedButton(onPressed: (){
 
@@ -376,7 +395,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                             timeInSecForIosWeb: 1,
                                             backgroundColor: Colors.grey[600],
                                             textColor: Colors.white,
-                                            fontSize: 16.0
+                                            fontSize: tamanhotexto
                                         );
 
                                       }else{
@@ -388,7 +407,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                               timeInSecForIosWeb: 1,
                                               backgroundColor: Colors.grey[600],
                                               textColor: Colors.white,
-                                              fontSize: 16.0
+                                              fontSize: tamanhotexto
                                           );
                                         }else{
                                           if(bloqueioMotivo == ''){
@@ -399,7 +418,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                                 timeInSecForIosWeb: 1,
                                                 backgroundColor: Colors.grey[600],
                                                 textColor: Colors.white,
-                                                fontSize: 16.0
+                                                fontSize: tamanhotexto
                                             );
                                           }else{
 
@@ -409,7 +428,7 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
 
                                             var uuid = const Uuid();
 
-                                            String idd = "${DateTime.now().toString()}" + uuid.v4();
+                                            String idd = "${DateTime.now().toString()}${uuid.v4()}";
 
                                             FirebaseFirestore.instance.collection('VisitantesBloqueados').doc(idd).set(
                                                 {
@@ -426,15 +445,15 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                                         }
                                       }
 
-                                    }, child: const Text(
-                                      'Prosseguir',
-                                      style: TextStyle(
-                                          fontSize: 16
-                                      ),
-                                    ),
+                                    },
                                       style: ElevatedButton.styleFrom(
                                           primary: Colors.green
+                                      ), child: Text(
+                                      'Prosseguir',
+                                      style: TextStyle(
+                                          fontSize: tamanhotexto
                                       ),
+                                    ),
                                     ),
                                   ],
                                 )
@@ -443,14 +462,14 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                           },
                         );
                       },
-                      child: const Text(
-                        'Bloquear',
-                        style: TextStyle(
-                            fontSize: 16
-                        ),
-                      ),
                       style: ElevatedButton.styleFrom(
                           primary: Colors.red
+                      ),
+                      child: Text(
+                        'Bloquear',
+                        style: TextStyle(
+                            fontSize: tamanhotexto
+                        ),
                       ),
                     ),
                   ],
@@ -465,28 +484,28 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                       onPressed: (){
                         Navigator.pop(context);
                       },
-                      child: const Text(
-                        'Cancelar',
-                        style: TextStyle(
-                            fontSize: 16
-                        ),
-                      ),
                       style: ElevatedButton.styleFrom(
                           primary: Colors.red
+                      ),
+                      child: Text(
+                        'Cancelar',
+                        style: TextStyle(
+                            fontSize: tamanhotexto
+                        ),
                       ),
                     ),
                     ElevatedButton(
                       onPressed: (){
                         Navigator.pop(context);
                       },
-                      child: const Text(
-                        'Prosseguir',
-                        style: TextStyle(
-                            fontSize: 16
-                        ),
-                      ),
                       style: ElevatedButton.styleFrom(
                           primary: Colors.green
+                      ),
+                      child: Text(
+                        'Prosseguir',
+                        style: TextStyle(
+                            fontSize: tamanhotexto
+                        ),
                       ),
                     ),
                   ],
@@ -509,9 +528,9 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                     padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                     child:
                     Text(
-                      'ADM : ' + widget.ADMName,
-                      style: const TextStyle(
-                          fontSize: 16
+                      'ADM : ${widget.ADMName}',
+                      style: TextStyle(
+                          fontSize: tamanhotexto
                       ),
                     ),
                   ),

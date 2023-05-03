@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_widget/connectivity_widget.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -408,6 +409,21 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
       }
     }
 
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
+
     TextEditingController _textEditingController = TextEditingController(text: _textoPredefinido);
     return Scaffold(
       appBar: AppBar(
@@ -426,10 +442,10 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
               padding: const EdgeInsets.all(16),
               alignment: Alignment.center,
               child:
-              const Text(
+              Text(
                 'Liberação: ' + 'Motorista e Veiculo',
                 style: TextStyle(
-                    fontSize: 16
+                    fontSize: tamanhotexto
                 ),
               ),
             ),
@@ -442,14 +458,14 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                 children: [
                   Text(
                     'Data: ${widget.horarioCriacao}' ,
-                    style: const TextStyle(
-                        fontSize: 16
+                    style: TextStyle(
+                        fontSize: tamanhotexto
                     ),
                   ),
                   Text(
                     ' - Portaria - ${widget.liberadopor}',
-                    style: const TextStyle(
-                        fontSize: 16
+                    style: TextStyle(
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ],
@@ -464,14 +480,14 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                 children: [
                   Text(
                     'Data: ${widget.DatadeAnalise}' ,
-                    style: const TextStyle(
-                        fontSize: 16
+                    style: TextStyle(
+                        fontSize: tamanhotexto
                     ),
                   ),
                   Text(
                     ' - Analise da Empresa - ${widget.Empresadestino}',
-                    style: const TextStyle(
-                        fontSize: 16
+                    style: TextStyle(
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ],
@@ -486,14 +502,14 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                 children: [
                   Text(
                     'Data: ${widget.DateEntrada}' ,
-                    style: const TextStyle(
-                        fontSize: 16
+                    style: TextStyle(
+                        fontSize: tamanhotexto
                     ),
                   ),
                   Text(
                     ' - Portaria - ${widget.verificadoPor}',
-                    style: const TextStyle(
-                        fontSize: 16
+                    style: TextStyle(
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ],
@@ -508,14 +524,14 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                 children: [
                   Text(
                     'Data: ${widget.DataSaida}' ,
-                    style: const TextStyle(
-                        fontSize: 16
+                    style: TextStyle(
+                        fontSize: tamanhotexto
                     ),
                   ),
                   Text(
                     ' - Solicitação de saída - ${widget.Empresadestino}',
-                    style: const TextStyle(
-                        fontSize: 16
+                    style: TextStyle(
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ],
@@ -526,8 +542,8 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
               child:
               Text(
                 'Nome: ${widget.nomeMotorista}',
-                style: const TextStyle(
-                    fontSize: 16
+                style: TextStyle(
+                    fontSize: tamanhotexto
                 ),
               ),
             ),
@@ -536,8 +552,8 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
               child:
               Text(
                 'Veiculo: ${widget.Veiculo}',
-                style: const TextStyle(
-                    fontSize: 16
+                style: TextStyle(
+                    fontSize: tamanhotexto
                 ),
               ),
             ),
@@ -546,8 +562,8 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
               child:
               Text(
                 'Placa: ${widget.PlacaVeiculo}',
-                style: const TextStyle(
-                    fontSize: 16
+                style: TextStyle(
+                    fontSize: tamanhotexto
                 ),
               ),
             ),
@@ -556,8 +572,8 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
               child:
               Text(
                 'Empresa de destino: ${widget.Empresadestino}',
-                style: const TextStyle(
-                    fontSize: 18
+                style: TextStyle(
+                    fontSize: tamanhotextobtns
                 ),
               ),
             ),
@@ -566,8 +582,8 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
               child:
               Text(
                 'Empresa de origem: ${widget.EmpresadeOrigin}',
-                style: const TextStyle(
-                    fontSize: 18
+                style: TextStyle(
+                    fontSize: tamanhotextobtns
                 ),
               ),
             ),
@@ -613,7 +629,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                       timeInSecForIosWeb: 1,
                       backgroundColor: Colors.black,
                       textColor: Colors.white,
-                      fontSize: 16.0,
+                      fontSize: tamanhotexto,
                     );
                   }else{
                     if(dadosConferido == false){
@@ -623,7 +639,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                         timeInSecForIosWeb: 1,
                         backgroundColor: Colors.black,
                         textColor: Colors.white,
-                        fontSize: 16.0,
+                        fontSize: tamanhotexto,
                       );
                     }else{
 
@@ -677,7 +693,7 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                             timeInSecForIosWeb: 1,
                             backgroundColor: Colors.black,
                             textColor: Colors.white,
-                            fontSize: 16.0,
+                            fontSize: tamanhotexto,
                           );
                         }else{
                           var result = await FirebaseFirestore.instance
@@ -721,10 +737,10 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                     }
                   }
                 },
-                child: const Text(
+                child: Text(
                   'Prosseguir',
                   style: TextStyle(
-                      fontSize: 18
+                      fontSize: tamanhotextobtns
                   ),
                 ),
               ),
@@ -749,8 +765,8 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                       child:
                       Text(
                         'Operador: ${widget.porteiroName}',
-                        style: const TextStyle(
-                            fontSize: 16
+                        style: TextStyle(
+                            fontSize: tamanhotexto
                         ),
                       ),
                     ),

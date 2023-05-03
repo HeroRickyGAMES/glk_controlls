@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:uuid/uuid.dart';
@@ -94,6 +97,22 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
 
   @override
   Widget build(BuildContext context) {
+
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cadastro de Empresas'),
@@ -118,11 +137,11 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                       keyboardType: TextInputType.name,
                       enableSuggestions: false,
                       autocorrect: false,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'Nome da Empresa *',
                         hintStyle: TextStyle(
-                            fontSize: 16
+                            fontSize: tamanhotexto
                         ),
                       ),
                     ),
@@ -148,11 +167,11 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                           enableSuggestions: false,
                           autocorrect: false,
                           obscureText: false,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             border: OutlineInputBorder(),
                             hintText: 'Galpões *',
                             hintStyle: TextStyle(
-                                fontSize: 16
+                                fontSize: tamanhotexto
                             ),
                           ),
                           onFieldSubmitted: _addTag,
@@ -170,11 +189,11 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                       keyboardType: TextInputType.number,
                       enableSuggestions: false,
                       autocorrect: false,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'Quantidade de vagas para cada galpão *',
                         hintStyle: TextStyle(
-                            fontSize: 18
+                            fontSize: tamanhotextobtns
                         ),
                       ),
                     ),
@@ -190,11 +209,11 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                       keyboardType: TextInputType.name,
                       enableSuggestions: false,
                       autocorrect: false,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'Responsável pela Empresa * ',
                         hintStyle: TextStyle(
-                            fontSize: 18
+                            fontSize: tamanhotextobtns
                         ),
                       ),
                     ),
@@ -217,11 +236,11 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                       keyboardType: TextInputType.number,
                       enableSuggestions: false,
                       autocorrect: false,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         hintText: 'Telefone',
                         hintStyle: TextStyle(
-                            fontSize: 16
+                            fontSize: tamanhotexto
                         ),
                       ),
                     ),
@@ -231,10 +250,10 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                     child: Center(
                         child: ValueListenableBuilder(valueListenable: dropValue, builder: (context, String value, _){
                           return DropdownButton(
-                            hint: const Text(
+                            hint: Text(
                               'Selecione o Galpão de recepção *',
                               style: TextStyle(
-                                  fontSize: 16
+                                  fontSize: tamanhotexto
                               ),
                             ),
                             value: (value.isEmpty)? null : value,
@@ -251,8 +270,8 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                               child:
                               Text(
                                 opcao,
-                                style: const TextStyle(
-                                    fontSize: 16
+                                style: TextStyle(
+                                    fontSize: tamanhotexto
                                 ),
                               ),
                             ),
@@ -272,16 +291,16 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                           child: ElevatedButton(onPressed: (){
                             tags.clear();
                           },
-                              child: const Text(
-                                  'Cancelar',
-                                style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.bold
-                                ),
-                              ),
                             style: ElevatedButton.styleFrom(
                                 primary: Colors.red
                             ),
+                              child: Text(
+                                  'Cancelar',
+                                style: TextStyle(
+                                    fontSize: tamanhotextobtns,
+                                    fontWeight: FontWeight.bold
+                                ),
+                              ),
                           ),
                         ),
                         Container(
@@ -296,7 +315,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                       timeInSecForIosWeb: 1,
                                       backgroundColor: Colors.black,
                                       textColor: Colors.white,
-                                      fontSize: 18,
+                                      fontSize: tamanhotextobtns,
                                     );
                                   }else{
                                     if(galpaoNum == ''){
@@ -306,7 +325,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                         timeInSecForIosWeb: 1,
                                         backgroundColor: Colors.black,
                                         textColor: Colors.white,
-                                        fontSize: 18,
+                                        fontSize: tamanhotextobtns,
                                       );
                                     }else{
                                       if(tags.isEmpty){
@@ -316,7 +335,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                           timeInSecForIosWeb: 1,
                                           backgroundColor: Colors.black,
                                           textColor: Colors.white,
-                                          fontSize: 18,
+                                          fontSize: tamanhotextobtns,
                                         );
                                       }else{
                                         if(respName == ''){
@@ -326,7 +345,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                             timeInSecForIosWeb: 1,
                                             backgroundColor: Colors.black,
                                             textColor: Colors.white,
-                                            fontSize: 18,
+                                            fontSize: tamanhotextobtns,
                                           );
                                         }else{
                                           if(telNum == ''){
@@ -336,7 +355,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                               timeInSecForIosWeb: 1,
                                               backgroundColor: Colors.black,
                                               textColor: Colors.white,
-                                              fontSize: 18,
+                                              fontSize: tamanhotextobtns,
                                             );
                                           }else{
                                             if(vagas == ''){
@@ -346,7 +365,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                 timeInSecForIosWeb: 1,
                                                 backgroundColor: Colors.black,
                                                 textColor: Colors.white,
-                                                fontSize: 18,
+                                                fontSize: tamanhotextobtns,
                                               );
                                             }else{
                                               if(galpaoPikadoPrincipal == ''){
@@ -356,7 +375,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                   timeInSecForIosWeb: 1,
                                                   backgroundColor: Colors.black,
                                                   textColor: Colors.white,
-                                                  fontSize: 18,
+                                                  fontSize: tamanhotextobtns,
                                                 );
                                               }else{
                                                 var result = await FirebaseFirestore.instance
@@ -376,7 +395,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                     timeInSecForIosWeb: 1,
                                                     backgroundColor: Colors.black,
                                                     textColor: Colors.white,
-                                                    fontSize: 18,
+                                                    fontSize: tamanhotextobtns,
                                                   );
                                                 }else{
                                                   if(galpoesDisponiveis < tags.length){
@@ -386,7 +405,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                       timeInSecForIosWeb: 1,
                                                       backgroundColor: Colors.black,
                                                       textColor: Colors.white,
-                                                      fontSize: 18,
+                                                      fontSize: tamanhotextobtns,
                                                     );
                                                   }else{
                                                     print(tags);
@@ -408,7 +427,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                           timeInSecForIosWeb: 1,
                                                           backgroundColor: Colors.black,
                                                           textColor: Colors.white,
-                                                          fontSize: 18,
+                                                          fontSize: tamanhotextobtns,
                                                         );
                                                       }else{
                                                         if(i == tags.length){
@@ -418,7 +437,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                             timeInSecForIosWeb: 1,
                                                             backgroundColor: Colors.black,
                                                             textColor: Colors.white,
-                                                            fontSize: 18,
+                                                            fontSize: tamanhotextobtns,
                                                           );
                                                           var uuid = const Uuid();
 
@@ -458,7 +477,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                                 timeInSecForIosWeb: 1,
                                                                 backgroundColor: Colors.black,
                                                                 textColor: Colors.white,
-                                                                fontSize: 18,
+                                                                fontSize: tamanhotextobtns,
                                                               );
                                                               galpoesUsados.addAll(gpLs);
 
@@ -483,15 +502,15 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                     }
                                   }
                             },
-                              child: const Text(
-                                  'Prosseguir',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold
-                              ),
-                            ),
                             style: ElevatedButton.styleFrom(
                               primary: Colors.green
+                            ),
+                              child: Text(
+                                  'Prosseguir',
+                              style: TextStyle(
+                                fontSize: tamanhotextobtns,
+                                fontWeight: FontWeight.bold
+                              ),
                             ),
                           ),
                         ),
@@ -501,8 +520,8 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                   Container(
                     child: Text(
                       'Galpões Usados: ${GpUsados}',
-                      style: const TextStyle(
-                          fontSize: 20,
+                      style: TextStyle(
+                          fontSize: tamanhotextobtns,
                           fontWeight: FontWeight.bold
                       ),
                     ),
@@ -510,8 +529,8 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                   Container(
                     child: Text(
                         'Numero de Galpões Disponiveis: ${GpDisp}',
-                      style: const TextStyle(
-                          fontSize: 20,
+                      style: TextStyle(
+                          fontSize: tamanhotextobtns,
                           fontWeight: FontWeight.bold
                       ),
                     ),

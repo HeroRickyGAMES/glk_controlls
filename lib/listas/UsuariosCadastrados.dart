@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -13,6 +16,7 @@ class UsuariosCadastrados extends StatefulWidget {
 }
 
 class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
+
 
   bool interno = true;
   String OperadorTipe = 'Operador Interno';
@@ -36,6 +40,23 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
 
   @override
   Widget build(BuildContext context) {
+
+
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -49,8 +70,8 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
               child: CheckboxListTile(
                 title: Text(
                   OperadorTipe,
-                  style: const TextStyle(
-                      fontSize: 18
+                  style: TextStyle(
+                      fontSize: tamanhotextobtns
                   ),
                 ),
                 value: interno,
@@ -76,36 +97,38 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
               Container(
-                padding: const EdgeInsets.all(16),
-                child: const Text(
+                padding: EdgeInsets.all(16),
+                child: Text(
                     "Nome",
                   style: TextStyle(
+                      fontSize: tamanhotexto
                   ),
                 ),
               ),
                 Container(
                   padding: const EdgeInsets.all(16),
-                  child: const Text(
+                  child: Text(
                     "Empresa",
                     style: TextStyle(
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.all(16),
-                  child: const Text(
+                  padding: EdgeInsets.all(16),
+                  child: Text(
                     "Status",
                     style: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
                 Container(
-                  padding: const EdgeInsets.all(16),
-                  child: const Text(
+                  padding: EdgeInsets.all(16),
+                  child: Text(
                     "",
                     style: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
@@ -143,20 +166,20 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(documents['nome'],
-                              style: const TextStyle(
-                                fontSize: 16
+                              style: TextStyle(
+                                  fontSize: tamanhotexto
                                 ),
                               ),
-                              const Text('SLG Sanca',
+                              Text('SLG Sanca',
                                 style: TextStyle(
-                                    fontSize: 16
+                                    fontSize: tamanhotexto
                                 ),
                               ),
                               Row(
                                 children: [
-                                  const Text('Interno',
+                                  Text('Interno',
                                     style: TextStyle(
-                                        fontSize: 16
+                                        fontSize: tamanhotexto
                                     ),
                                   ),
                                   Container(
@@ -174,11 +197,11 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                   return AlertDialog(
                                                     title: Text(documents['nome']),
                                                     actions: [
-                                                      const Center(
+                                                      Center(
                                                         child: Text(
                                                           'Deseja Excluir?',
                                                           style: TextStyle(
-                                                              fontSize: 18
+                                                              fontSize: tamanhotextobtns
                                                           ),
                                                         ),
                                                       ),
@@ -188,10 +211,10 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                           TextButton(onPressed: (){
                                                             Navigator.of(context).pop();
                                                           },
-                                                              child: const Text(
+                                                              child: Text(
                                                                 'Cancelar',
                                                                 style: TextStyle(
-                                                                    fontSize: 18
+                                                                    fontSize: tamanhotextobtns
                                                                 ),
                                                               )
                                                           ),
@@ -203,10 +226,10 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                               Navigator.of(context).pop();
                                                             });
                                                           },
-                                                              child: const Text(
+                                                              child: Text(
                                                                 'Prosseguir',
                                                                 style: TextStyle(
-                                                                    fontSize: 18
+                                                                    fontSize: tamanhotextobtns
                                                                 ),
                                                               )
                                                           )
@@ -237,8 +260,8 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                         Center(
                                                           child: Text(
                                                             'Informações do Usuario: \n Email: ${documents['email']}',
-                                                            style: const TextStyle(
-                                                                fontSize: 18
+                                                            style: TextStyle(
+                                                                fontSize: tamanhotextobtns
                                                             ),
                                                           ),
                                                         ),
@@ -248,10 +271,10 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                             TextButton(onPressed: (){
                                                               Navigator.of(context).pop();
                                                             },
-                                                                child: const Text(
+                                                                child: Text(
                                                                   'Cancelar',
                                                                   style: TextStyle(
-                                                                      fontSize: 18
+                                                                      fontSize: tamanhotextobtns
                                                                   ),
                                                                 )
                                                             ),
@@ -266,10 +289,10 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                                       Center(
                                                                         child: Container(
                                                                           padding: const EdgeInsets.all(16),
-                                                                          child: const Text(
+                                                                          child: Text(
                                                                             'Depois de fazer essa ação, enviaremos um email para a conta cadastrada',
                                                                             style: TextStyle(
-                                                                                fontSize: 18
+                                                                                fontSize: tamanhotextobtns
                                                                             ),
                                                                           ),
                                                                         ),
@@ -280,10 +303,10 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                                           TextButton(onPressed: (){
                                                                             Navigator.of(context).pop();
                                                                           },
-                                                                              child: const Text(
+                                                                              child: Text(
                                                                                 'Cancelar',
                                                                                 style: TextStyle(
-                                                                                    fontSize: 18
+                                                                                    fontSize: tamanhotextobtns
                                                                                 ),
                                                                               )
                                                                           ),
@@ -312,10 +335,10 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                                               print('Erro! $e');
                                                                             }
                                                                           },
-                                                                              child: const Text(
+                                                                              child: Text(
                                                                                 'Resetar Senha',
                                                                                 style: TextStyle(
-                                                                                    fontSize: 18
+                                                                                    fontSize: tamanhotextobtns
                                                                                 ),
                                                                               )
                                                                           )
@@ -327,10 +350,10 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                               );
 
                                                             },
-                                                                child: const Text(
+                                                                child: Text(
                                                                   'Resetar Senha',
                                                                   style: TextStyle(
-                                                                      fontSize: 18
+                                                                      fontSize: tamanhotextobtns
                                                                   ),
                                                                 )
                                                             )
@@ -421,11 +444,11 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                   return AlertDialog(
                                                     title: Text(documentos['nome']),
                                                     actions: [
-                                                      const Center(
+                                                      Center(
                                                         child: Text(
                                                           'Deseja Excluir?',
                                                           style: TextStyle(
-                                                              fontSize: 18
+                                                              fontSize: tamanhotextobtns
                                                           ),
                                                         ),
                                                       ),
@@ -435,10 +458,10 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                           TextButton(onPressed: (){
                                                             Navigator.of(context).pop();
                                                           },
-                                                              child: const Text(
+                                                              child: Text(
                                                                 'Cancelar',
                                                                 style: TextStyle(
-                                                                    fontSize: 18
+                                                                    fontSize: tamanhotextobtns
                                                                 ),
                                                               )
                                                           ),
@@ -450,10 +473,10 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                               Navigator.of(context).pop();
                                                             });
                                                           },
-                                                              child: const Text(
+                                                              child: Text(
                                                                 'Prosseguir',
                                                                 style: TextStyle(
-                                                                    fontSize: 18
+                                                                    fontSize: tamanhotextobtns
                                                                 ),
                                                               )
                                                           )
@@ -484,8 +507,8 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                         Center(
                                                           child: Text(
                                                             'Informações do Usuario: \n Email: ${documentos['email']}',
-                                                            style: const TextStyle(
-                                                                fontSize: 18
+                                                            style: TextStyle(
+                                                                fontSize: tamanhotextobtns
                                                             ),
                                                           ),
                                                         ),
@@ -495,10 +518,10 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                             TextButton(onPressed: (){
                                                               Navigator.of(context).pop();
                                                             },
-                                                                child: const Text(
+                                                                child: Text(
                                                                   'Cancelar',
                                                                   style: TextStyle(
-                                                                      fontSize: 18
+                                                                      fontSize: tamanhotextobtns
                                                                   ),
                                                                 )
                                                             ),
@@ -513,10 +536,10 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                                       Center(
                                                                         child: Container(
                                                                           padding: const EdgeInsets.all(16),
-                                                                          child: const Text(
+                                                                          child: Text(
                                                                             'Depois de fazer essa ação, enviaremos um email para a conta cadastrada',
                                                                             style: TextStyle(
-                                                                                fontSize: 18
+                                                                                fontSize: tamanhotextobtns
                                                                             ),
                                                                           ),
                                                                         ),
@@ -527,10 +550,10 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                                           TextButton(onPressed: (){
                                                                             Navigator.of(context).pop();
                                                                           },
-                                                                              child: const Text(
+                                                                              child: Text(
                                                                                 'Cancelar',
                                                                                 style: TextStyle(
-                                                                                    fontSize: 18
+                                                                                    fontSize: tamanhotextobtns
                                                                                 ),
                                                                               )
                                                                           ),
@@ -559,10 +582,10 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                                               print('Erro! $e');
                                                                             }
                                                                           },
-                                                                              child: const Text(
+                                                                              child: Text(
                                                                                 'Resetar Senha',
                                                                                 style: TextStyle(
-                                                                                    fontSize: 18
+                                                                                    fontSize: tamanhotextobtns
                                                                                 ),
                                                                               )
                                                                           )
@@ -574,10 +597,10 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                               );
 
                                                             },
-                                                                child: const Text(
+                                                                child: Text(
                                                                   'Resetar Senha',
                                                                   style: TextStyle(
-                                                                      fontSize: 18
+                                                                      fontSize: tamanhotextobtns
                                                                   ),
                                                                 )
                                                             )

@@ -22,10 +22,25 @@ class painelAdmin extends StatefulWidget {
 class _painelAdminState extends State<painelAdmin> {
   @override
   Widget build(BuildContext context) {
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Configurações'),
+        title: Text('Configurações'),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,7 +61,7 @@ class _painelAdminState extends State<painelAdmin> {
                         timeInSecForIosWeb: 1,
                         backgroundColor: Colors.grey[600],
                         textColor: Colors.white,
-                        fontSize: 16.0
+                        fontSize: tamanhotexto
                     );
 
                   }else{
@@ -115,10 +130,10 @@ class _painelAdminState extends State<painelAdmin> {
                     }
                   }
                 },
-                child: const Text(
+                child: Text(
                     'Configuração',
                   style: TextStyle(
-                      fontSize: 18,
+                      fontSize: tamanhotextobtns ,
                   ),
                 ),
               ),
@@ -155,15 +170,15 @@ class _painelAdminState extends State<painelAdmin> {
                       return painelADM('ADM GLK', logoPath);
                     }));
               },
-              child: const Text(
-                  'Painel',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white
-                ),
-              ),
               style: ElevatedButton.styleFrom(
                   primary: Colors.grey
+              ),
+              child: Text(
+                  'Painel',
+                style: TextStyle(
+                  fontSize: tamanhotextobtns,
+                  color: Colors.white
+                ),
               ),
             ),
           ),
@@ -190,15 +205,15 @@ class _painelAdminState extends State<painelAdmin> {
                           return anteLogin(logoPath);
                         }));
                   },
-                  child: const Text(
-                    'Sair',
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.white
-                    ),
-                  ),
                   style: ElevatedButton.styleFrom(
                       primary: Colors.grey
+                  ),
+                  child: Text(
+                    'Sair',
+                    style: TextStyle(
+                        fontSize: tamanhotexto,
+                        color: Colors.white
+                    ),
                   ),
                 ),
               ],

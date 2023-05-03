@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:glk_controls/modal/cadastroEmpresa.dart';
 import 'package:glk_controls/modal/cadastroUsuarioADM.dart';
@@ -27,10 +30,26 @@ class _painelADMState extends State<painelADM> {
 
   @override
   Widget build(BuildContext context) {
+
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('SETOR ADIMISTRATIVO - Painel'),
+        title: Text('SETOR ADIMISTRATIVO - Painel'),
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -75,10 +94,10 @@ class _painelADMState extends State<painelADM> {
 
                         },
                         child:
-                        const Text(
+                        Text(
                           'Cadastrar Empresa',
                           style: TextStyle(
-                              fontSize: 16
+                              fontSize: tamanhotexto
                           ),
                         ),
                       ),
@@ -115,6 +134,7 @@ class _painelADMState extends State<painelADM> {
 
                             final dropValue = ValueNotifier('');
 
+
                             Navigator.pop(context);
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context){
@@ -122,15 +142,15 @@ class _painelADMState extends State<painelADM> {
                                 }));
                           });
                         },
-                        child:
-                        const Text(
-                          'Cadastrar Operador da Empresa',
-                          style: TextStyle(
-                              fontSize: 16
-                          ),
-                        ),
                         style: ElevatedButton.styleFrom(
                             primary: Colors.green
+                        ),
+                        child:
+                        Text(
+                          'Cadastrar Operador da Empresa',
+                          style: TextStyle(
+                              fontSize: tamanhotexto
+                          ),
                         ),
                       ),
                     ),
@@ -162,16 +182,16 @@ class _painelADMState extends State<painelADM> {
                                 return operadorInterno(widget.ADMName, widget.LogoPath);
                               }));
                         },
-                        child:
-                        const Text(
-                          'Cadastrar Operador Interno',
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.black
-                          ),
-                        ),
                         style: ElevatedButton.styleFrom(
                             primary: Colors.yellow
+                        ),
+                        child:
+                        Text(
+                          'Cadastrar Operador Interno',
+                          style: TextStyle(
+                              fontSize: tamanhotexto,
+                              color: Colors.black
+                          ),
                         ),
                       ),
                     ),
@@ -187,15 +207,15 @@ class _painelADMState extends State<painelADM> {
                                 return relatorio(widget.ADMName, widget.LogoPath);
                               }));
                         },
-                        child:
-                        const Text(
-                          'Relatorios Gerais',
-                          style: TextStyle(
-                              fontSize: 16
-                          ),
-                        ),
                         style: ElevatedButton.styleFrom(
                             primary: Colors.grey
+                        ),
+                        child:
+                        Text(
+                          'Relatorios Gerais',
+                          style: TextStyle(
+                              fontSize: tamanhotexto
+                          ),
                         ),
                       ),
                     ),
@@ -228,15 +248,15 @@ class _painelADMState extends State<painelADM> {
                               }));
 
                         },
-                        child:
-                        const Text(
-                          'Empresas Cadastrados',
-                          style: TextStyle(
-                              fontSize: 16
-                          ),
-                        ),
                         style: ElevatedButton.styleFrom(
                             primary: Colors.grey[400]
+                        ),
+                        child:
+                        Text(
+                          'Empresas Cadastrados',
+                          style: TextStyle(
+                              fontSize: tamanhotexto
+                          ),
                         ),
                       ),
                     ),
@@ -252,15 +272,15 @@ class _painelADMState extends State<painelADM> {
                                 return UsuariosCadastrados(widget.ADMName, widget.LogoPath);
                               }));
                         },
-                        child:
-                        const Text(
-                          'Usuarios Cadastrados',
-                          style: TextStyle(
-                              fontSize: 16
-                          ),
-                        ),
                         style: ElevatedButton.styleFrom(
                             primary: Colors.purple
+                        ),
+                        child:
+                        Text(
+                          'Usuarios Cadastrados',
+                          style: TextStyle(
+                              fontSize: tamanhotexto
+                          ),
                         ),
                       ),
                     ),
@@ -289,10 +309,10 @@ class _painelADMState extends State<painelADM> {
                               }));
                         },
                         child:
-                        const Text(
+                        Text(
                           'Configurações de Relês',
                           style: TextStyle(
-                              fontSize: 16
+                              fontSize: tamanhotexto
                           ),
                         ),
                       ),
@@ -309,15 +329,15 @@ class _painelADMState extends State<painelADM> {
                                 return bloqueioDePlacas(widget.ADMName, widget.LogoPath);
                               }));
                         },
-                        child:
-                        const Text(
-                          'Bloqueio de veiculos',
-                          style: TextStyle(
-                              fontSize: 16
-                          ),
-                        ),
                         style: ElevatedButton.styleFrom(
                             primary: Colors.red
+                        ),
+                        child:
+                        Text(
+                          'Bloqueio de veiculos',
+                          style: TextStyle(
+                              fontSize: tamanhotexto
+                          ),
                         ),
                       ),
                     ),
@@ -333,15 +353,15 @@ class _painelADMState extends State<painelADM> {
                                 return bloqueioDeVisitantes(widget.ADMName, widget.LogoPath);
                               }));
                         },
-                        child:
-                        const Text(
-                          'Bloqueio de visitantes',
-                          style: TextStyle(
-                              fontSize: 16
-                          ),
-                        ),
                         style: ElevatedButton.styleFrom(
                             primary: Colors.red
+                        ),
+                        child:
+                        Text(
+                          'Bloqueio de visitantes',
+                          style: TextStyle(
+                              fontSize: tamanhotexto
+                          ),
                         ),
                       ),
                     ),
@@ -363,9 +383,9 @@ class _painelADMState extends State<painelADM> {
                         padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                         child:
                         Text(
-                          'ADM : ' + widget.ADMName,
-                          style: const TextStyle(
-                              fontSize: 16
+                          'ADM : ${widget.ADMName}',
+                          style: TextStyle(
+                              fontSize: tamanhotexto
                           ),
                         ),
                       ),

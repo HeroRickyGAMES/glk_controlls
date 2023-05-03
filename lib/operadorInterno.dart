@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -29,6 +32,21 @@ class _operadorInternoState extends State<operadorInterno> {
 
   @override
   Widget build(BuildContext context) {
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -54,11 +72,11 @@ class _operadorInternoState extends State<operadorInterno> {
                   keyboardType: TextInputType.name,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
                     hintText: 'Nome Completo *',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
@@ -73,11 +91,11 @@ class _operadorInternoState extends State<operadorInterno> {
                   keyboardType: TextInputType.number,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
                     hintText: 'RG *',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
@@ -92,11 +110,11 @@ class _operadorInternoState extends State<operadorInterno> {
                   keyboardType: TextInputType.number,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
                     hintText: 'Telefone',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
@@ -111,11 +129,11 @@ class _operadorInternoState extends State<operadorInterno> {
                   keyboardType: TextInputType.emailAddress,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
                     hintText: 'Email *',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
@@ -131,11 +149,11 @@ class _operadorInternoState extends State<operadorInterno> {
                   enableSuggestions: false,
                   autocorrect: false,
                   obscureText: visivel,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
                     hintText: 'Senha *',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
@@ -158,10 +176,10 @@ class _operadorInternoState extends State<operadorInterno> {
                 children: [
                   Container(
                     padding: const EdgeInsets.all(16),
-                    child: const Text(
+                    child: Text(
                         'Permissões',
                       style: TextStyle(
-                        fontSize: 16,
+                        fontSize: tamanhotexto,
                       ),
                     ),
                   ),
@@ -250,7 +268,7 @@ class _operadorInternoState extends State<operadorInterno> {
                         timeInSecForIosWeb: 1,
                         backgroundColor: Colors.black,
                         textColor: Colors.white,
-                        fontSize: 16,
+                        fontSize: tamanhotexto,
                       );
                     }else{
                       if(RG == ''){
@@ -260,7 +278,7 @@ class _operadorInternoState extends State<operadorInterno> {
                           timeInSecForIosWeb: 1,
                           backgroundColor: Colors.black,
                           textColor: Colors.white,
-                          fontSize: 16,
+                          fontSize: tamanhotexto,
                         );
                       }else{
 
@@ -271,7 +289,7 @@ class _operadorInternoState extends State<operadorInterno> {
                             timeInSecForIosWeb: 1,
                             backgroundColor: Colors.black,
                             textColor: Colors.white,
-                            fontSize: 16,
+                            fontSize: tamanhotexto,
                           );
                         }else{
                           if(pass == ''){
@@ -281,7 +299,7 @@ class _operadorInternoState extends State<operadorInterno> {
                               timeInSecForIosWeb: 1,
                               backgroundColor: Colors.black,
                               textColor: Colors.white,
-                              fontSize: 16,
+                              fontSize: tamanhotexto,
                             );
                           }else{
 
@@ -299,7 +317,7 @@ class _operadorInternoState extends State<operadorInterno> {
                                 timeInSecForIosWeb: 1,
                                 backgroundColor: Colors.black,
                                 textColor: Colors.white,
-                                fontSize: 16,
+                                fontSize: tamanhotexto,
                               );
                               FirebaseFirestore.instance.collection('porteiro').doc(userCredential.user?.uid).set(
                                   {
@@ -339,7 +357,7 @@ class _operadorInternoState extends State<operadorInterno> {
                                   timeInSecForIosWeb: 1,
                                   backgroundColor: Colors.black,
                                   textColor: Colors.white,
-                                  fontSize: 16,
+                                  fontSize: tamanhotexto,
                                 );
                                 Navigator.pop(context);
                               });
@@ -352,7 +370,7 @@ class _operadorInternoState extends State<operadorInterno> {
                                 timeInSecForIosWeb: 1,
                                 backgroundColor: Colors.black,
                                 textColor: Colors.white,
-                                fontSize: 16,
+                                fontSize: tamanhotexto,
                               );
                             }
                             await app.delete();
@@ -362,10 +380,10 @@ class _operadorInternoState extends State<operadorInterno> {
                       }
                     }
                   },
-                  child: const Text(
+                  child: Text(
                     'Cadastrar usuario',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: tamanhotexto,
                       fontWeight: FontWeight.bold
                     ),
                   ),
@@ -390,9 +408,9 @@ class _operadorInternoState extends State<operadorInterno> {
                       padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                       child:
                       Text(
-                        'ADM : ' + widget.ADMName,
-                        style: const TextStyle(
-                            fontSize: 16
+                        'ADM : ${widget.ADMName}',
+                        style: TextStyle(
+                            fontSize: tamanhotexto
                         ),
                       ),
                     ),

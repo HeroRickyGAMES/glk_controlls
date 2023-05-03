@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class empresaCadastrada extends StatefulWidget {
@@ -13,6 +16,21 @@ class empresaCadastrada extends StatefulWidget {
 class _empresaCadastradaState extends State<empresaCadastrada> {
   @override
   Widget build(BuildContext context) {
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -32,7 +50,7 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                   ),
                 ),
               ),
-              Container(
+              SizedBox(
                 width: double.infinity,
                 child:
                 Row(
@@ -56,17 +74,17 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                     ),
                     Container(
                       padding: const EdgeInsets.all(16),
-                      child: const Text(
+                      child: Text(
                         '',
                         style: TextStyle(
-                            fontSize: 16
+                            fontSize: tamanhotexto
                         ),
                       ),
                     ),
                   ],
                 ),
               ),
-              Container(
+              SizedBox(
                 width: double.infinity,
                 height: 500,
                 child: StreamBuilder(
@@ -103,14 +121,14 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                                     children: [
                                       Text(
                                           documents['nome'],
-                                        style: const TextStyle(
-                                          fontSize: 16
+                                        style: TextStyle(
+                                          fontSize: tamanhotexto
                                         ),
                                       ),
                                       Text(
                                         documents['vagas'],
-                                        style: const TextStyle(
-                                            fontSize: 16
+                                        style: TextStyle(
+                                            fontSize: tamanhotexto
                                         ),
                                       ),
                                       ElevatedButton(onPressed: () async {
@@ -121,11 +139,11 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                                             return AlertDialog(
                                               title: Text(documents['nome']),
                                               actions: [
-                                                const Center(
+                                                Center(
                                                   child: Text(
                                                       'Deseja Excluir?',
                                                     style: TextStyle(
-                                                        fontSize: 18
+                                                        fontSize: tamanhotextobtns
                                                     ),
                                                   ),
                                                 ),
@@ -135,10 +153,10 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                                                     TextButton(onPressed: (){
                                                       Navigator.of(context).pop();
                                                     },
-                                                        child: const Text(
+                                                        child: Text(
                                                             'Cancelar',
                                                           style: TextStyle(
-                                                              fontSize: 16
+                                                              fontSize: tamanhotexto
                                                           ),
                                                         )
                                                     ),
@@ -186,10 +204,10 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                                                         }
                                                       }
                                                     },
-                                                        child: const Text(
+                                                        child: Text(
                                                             'Prosseguir',
                                                           style: TextStyle(
-                                                              fontSize: 16
+                                                              fontSize: tamanhotexto
                                                           ),
                                                         )
                                                     )
@@ -232,9 +250,9 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                       padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                       child:
                       Text(
-                        'ADM : ' + widget.ADMName,
-                        style: const TextStyle(
-                            fontSize: 16
+                        'ADM : ${widget.ADMName}',
+                        style: TextStyle(
+                            fontSize: tamanhotexto
                         ),
                       ),
                     ),

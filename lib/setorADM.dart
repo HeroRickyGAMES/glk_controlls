@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:glk_controls/Painel.dart';
 
@@ -15,6 +18,20 @@ class setorADM extends StatefulWidget {
 class _setorADMState extends State<setorADM> {
   @override
   Widget build(BuildContext context) {
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -32,10 +49,10 @@ class _setorADMState extends State<setorADM> {
 
                 },
                 child:
-                const Text(
+                Text(
                   'Cadastrar',
                   style: TextStyle(
-                      fontSize: 16
+                      fontSize: tamanhotexto
                   ),
                 ),
               ),
@@ -49,10 +66,10 @@ class _setorADMState extends State<setorADM> {
 
                 },
                 child:
-                const Text(
+                Text(
                   'Entrada',
                   style: TextStyle(
-                      fontSize: 16
+                      fontSize: tamanhotexto
                   ),
                 ),
               ),
@@ -66,10 +83,10 @@ class _setorADMState extends State<setorADM> {
 
                 },
                 child:
-                const Text(
+                Text(
                   'Saída',
                   style: TextStyle(
-                      fontSize: 16
+                      fontSize: tamanhotexto
                   ),
                 ),
               ),
@@ -83,10 +100,10 @@ class _setorADMState extends State<setorADM> {
 
                 },
                 child:
-                const Text(
+                Text(
                   'Relatorio',
                   style: TextStyle(
-                      fontSize: 16
+                      fontSize: tamanhotexto
                   ),
                 ),
               ),
@@ -112,10 +129,10 @@ class _setorADMState extends State<setorADM> {
 
                 },
                 child:
-                const Text(
+                Text(
                   'Painel',
                   style: TextStyle(
-                      fontSize: 16
+                      fontSize: tamanhotexto
                   ),
                 ),
               ),
@@ -138,9 +155,9 @@ class _setorADMState extends State<setorADM> {
                 padding: const EdgeInsets.all(16),
                 child:
                 Text(
-                  'ADM : ' + widget.ADMName,
-                  style: const TextStyle(
-                      fontSize: 16
+                  'ADM : ${widget.ADMName}',
+                  style: TextStyle(
+                      fontSize: tamanhotexto
                   ),
                 ),
               ),

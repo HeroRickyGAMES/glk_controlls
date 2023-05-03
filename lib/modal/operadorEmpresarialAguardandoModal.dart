@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -69,6 +72,22 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
   @override
   Widget build(BuildContext context) {
 
+
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
+
     if(widget.lacreounao == 'lacre'){
       setState(() {
         AutorizoEntrada = 'Autorizo Entrada com lacre';
@@ -101,7 +120,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
       appBar: AppBar(
         backgroundColor: Colors.yellow,
         centerTitle: true,
-        title: const Text(
+        title: Text(
             'GLK Controls - Liberação de Veiculo',
           style: TextStyle(
               color: Colors.black
@@ -122,14 +141,14 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                 children: [
                   Text(
                     'Data: ${widget.horarioCriacao}' ,
-                    style: const TextStyle(
-                        fontSize: 16
+                    style: TextStyle(
+                        fontSize: tamanhotexto
                     ),
                   ),
                   Text(
                     ' - Portaria - ' + widget.liberadopor,
-                    style: const TextStyle(
-                        fontSize: 16
+                    style: TextStyle(
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ],
@@ -140,8 +159,8 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
               child:
               Text(
                 'Nome: ' + widget.nomeMotorista,
-                style: const TextStyle(
-                    fontSize: 16
+                style: TextStyle(
+                    fontSize: tamanhotexto
                 ),
               ),
             ),
@@ -150,8 +169,8 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
               child:
               Text(
                 'Veiculo: ' + widget.Veiculo,
-                style: const TextStyle(
-                    fontSize: 16
+                style: TextStyle(
+                    fontSize: tamanhotexto
                 ),
               ),
             ),
@@ -160,8 +179,8 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
               child:
               Text(
                 'Placa: ' + widget.PlacaVeiculo,
-                style: const TextStyle(
-                    fontSize: 16
+                style: TextStyle(
+                    fontSize: tamanhotexto
                 ),
               ),
             ),
@@ -170,8 +189,8 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
               child:
               Text(
                 'Empresa de destino: ' + widget.Empresadestino,
-                style: const TextStyle(
-                    fontSize: 16
+                style: TextStyle(
+                    fontSize: tamanhotexto
                 ),
               ),
             ),
@@ -180,8 +199,8 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
               child:
               Text(
                 'Empresa de origem: ' + widget.EmpresadeOrigin,
-                style: const TextStyle(
-                    fontSize: 16
+                style: TextStyle(
+                    fontSize: tamanhotexto
                 ),
               ),
             ),
@@ -190,8 +209,8 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
               child:
               Text(
                 'Observação: ' + widget.motivo,
-                style: const TextStyle(
-                    fontSize: 16
+                style: TextStyle(
+                    fontSize: tamanhotexto
                 ),
               ),
             ),
@@ -199,10 +218,10 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
               children: [
                 Container(
                   padding: const EdgeInsets.all(16),
-                  child: const Text(
+                  child: Text(
                     'Galpões da Empresa *',
                     style: TextStyle(
-                        fontSize: 16,
+                        fontSize: tamanhotexto,
                         fontWeight: FontWeight.bold
                     ),
                   ),
@@ -210,10 +229,10 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                 Center(
                     child: ValueListenableBuilder(valueListenable: dropValue, builder: (context, String value, _){
                       return DropdownButton(
-                        hint: const Text(
+                        hint: Text(
                           'Selecione um galpão',
                           style: TextStyle(
-                              fontSize: 16
+                              fontSize: tamanhotexto
                           ),
                         ),
                         value: (value.isEmpty)? null : value,
@@ -230,8 +249,8 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                           child:
                           Text(
                             opcao,
-                            style: const TextStyle(
-                                fontSize: 16
+                            style: TextStyle(
+                                fontSize: tamanhotexto
                             ),
                           ),
                         ),
@@ -260,7 +279,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
             Container(
               child:
               CheckboxListTile(
-                title: const Text('Rejeito a Entrada'),
+                title: Text('Rejeito a Entrada'),
                 value: regeitado,
                 onChanged: (value) {
                   setState(() {
@@ -291,7 +310,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                       timeInSecForIosWeb: 1,
                       backgroundColor: Colors.black,
                       textColor: Colors.white,
-                      fontSize: 16.0,
+                      fontSize: tamanhotexto,
                     );
                   }else{
 
@@ -338,7 +357,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                             timeInSecForIosWeb: 1,
                             backgroundColor: Colors.black,
                             textColor: Colors.white,
-                            fontSize: 16.0,
+                            fontSize: tamanhotexto,
                           );
                         }else{
                           if(entradabool == true){
@@ -372,10 +391,10 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
                     }
                   }
                 },
-                child: const Text(
+                child: Text(
                   'Prosseguir',
                   style: TextStyle(
-                      fontSize: 16
+                      fontSize: tamanhotextobtns
                   ),
                 ),
               ),

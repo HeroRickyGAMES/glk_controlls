@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -72,6 +75,22 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
     lacreSt = widget.lacradoStr;
 
     TextEditingController _textEditingController = TextEditingController(text: _textoPredefinido);
+
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.yellow,
@@ -97,14 +116,14 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                 children: [
                   Text(
                     'Data: ${widget.horarioCriacao}' ,
-                    style: const TextStyle(
-                        fontSize: 16
+                    style: TextStyle(
+                        fontSize: tamanhotexto
                     ),
                   ),
                   Text(
-                    ' - Portaria - ' + widget.liberadopor,
-                    style: const TextStyle(
-                        fontSize: 16
+                    ' - Portaria - ${widget.liberadopor}',
+                    style: TextStyle(
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ],
@@ -119,14 +138,14 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                 children: [
                   Text(
                     'Data: ${widget.DateEntrada}' ,
-                    style: const TextStyle(
-                        fontSize: 16
+                    style: TextStyle(
+                        fontSize: tamanhotexto
                     ),
                   ),
                   Text(
-                    ' - Analise na Empresa - ' + widget.empresaName,
-                    style: const TextStyle(
-                        fontSize: 16
+                    ' - Analise na Empresa - ${widget.empresaName}',
+                    style: TextStyle(
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ],
@@ -141,14 +160,14 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                 children: [
                   Text(
                     'Data: ${widget.DatadeAnalise}' ,
-                    style: const TextStyle(
-                        fontSize: 16
+                    style: TextStyle(
+                        fontSize: tamanhotexto
                     ),
                   ),
                   Text(
-                    ' - Entrada - ' + widget.verificadoPor,
-                    style: const TextStyle(
-                        fontSize: 16
+                    ' - Entrada - ${widget.verificadoPor}',
+                    style: TextStyle(
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ],
@@ -158,9 +177,9 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                  'Nome: ' + widget.nomeMotorista,
-                style: const TextStyle(
-                    fontSize: 16
+                  'Nome: ${widget.nomeMotorista}',
+                style: TextStyle(
+                    fontSize: tamanhotexto
                 ),
               ),
             ),
@@ -168,9 +187,9 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                  'Veiculo: ' + widget.Veiculo,
-                style: const TextStyle(
-                    fontSize: 16
+                  'Veiculo: ${widget.Veiculo}',
+                style: TextStyle(
+                    fontSize: tamanhotexto
                 ),
               ),
             ),
@@ -178,9 +197,9 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                  'Placa: ' + widget.PlacaVeiculo,
-                style: const TextStyle(
-                    fontSize: 16
+                  'Placa: ${widget.PlacaVeiculo}',
+                style: TextStyle(
+                    fontSize: tamanhotexto
                 ),
               ),
             ),
@@ -188,9 +207,9 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                  'Empresa de destino: ' + widget.Empresadestino,
-                style: const TextStyle(
-                    fontSize: 16
+                  'Empresa de destino: ${widget.Empresadestino}',
+                style: TextStyle(
+                    fontSize: tamanhotexto
                 ),
               ),
             ),
@@ -198,9 +217,9 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                  'Empresa de origem: ' + widget.EmpresadeOrigin,
-                style: const TextStyle(
-                    fontSize: 16
+                  'Empresa de origem: ${widget.EmpresadeOrigin}',
+                style: TextStyle(
+                    fontSize: tamanhotexto
                 ),
               ),
             ),
@@ -208,9 +227,9 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                  'Galpão: ' + widget.Galpao,
-                style: const TextStyle(
-                    fontSize: 16
+                  'Galpão: ${widget.Galpao}',
+                style: TextStyle(
+                    fontSize: tamanhotexto
                 ),
               ),
             ),
@@ -240,11 +259,11 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                   keyboardType: TextInputType.number,
                   //enableSuggestions: false,
                   //autocorrect: false,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
                     hintText: 'Numero do lacre *',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
@@ -296,7 +315,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                             timeInSecForIosWeb: 1,
                             backgroundColor: Colors.black,
                             textColor: Colors.white,
-                            fontSize: 16.0,
+                            fontSize: tamanhotexto,
                           );
                         }else{
                           FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
@@ -324,7 +343,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                           timeInSecForIosWeb: 1,
                           backgroundColor: Colors.black,
                           textColor: Colors.white,
-                          fontSize: 16.0,
+                          fontSize: tamanhotexto,
                         );
                       }else{
                         FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
@@ -336,10 +355,10 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                     }
                   }
                 },
-                child: const Text(
+                child: Text(
                   'Prosseguir',
                   style: TextStyle(
-                      fontSize: 16
+                      fontSize: tamanhotexto
                   ),
                 ),
               ),
@@ -363,9 +382,9 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                       padding: const EdgeInsets.all(16),
                       child:
                       Text(
-                        'Operador: ' + widget.empresaName,
-                        style: const TextStyle(
-                            fontSize: 16
+                        'Operador: ${widget.empresaName}',
+                        style: TextStyle(
+                            fontSize: tamanhotexto
                         ),
                       ),
                     ),

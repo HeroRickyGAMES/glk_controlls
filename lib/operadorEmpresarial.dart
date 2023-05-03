@@ -245,6 +245,9 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                         return liberacoesOperadorEmpresarial(widget.name, widget.empresaName);
                       }));
                 },
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.green[700]
+                  ),
                     child: Text(
                         'Liberações',
                       style: TextStyle(
@@ -252,9 +255,6 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                           fontWeight: FontWeight.bold,
                       ),
                     ),
-                  style: ElevatedButton.styleFrom(
-                      primary: Colors.green[700]
-                  ),
                 ),
               ),
               Container(
@@ -262,6 +262,9 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                 padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                 child: ElevatedButton(
                   onPressed: openModal,
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.white24
+                  ),
                   child: Text(
                     'Agendamento',
                     style: TextStyle(
@@ -269,9 +272,6 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                       color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                      primary: Colors.white24
                   ),
                 ),
               ),
@@ -406,14 +406,14 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                                 );
 
                               },
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.grey
+                              ),
                               child: const Text(
                                 'Trocar Senha',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                  primary: Colors.grey
                               ),
                             ),
                           ),
@@ -443,14 +443,14 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                                 });
 
                               },
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.red
+                              ),
                               child: const Text(
                                 'Logoff',
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                 ),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                  primary: Colors.red
                               ),
                             ),
                           ),
@@ -477,7 +477,7 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                     padding: const EdgeInsets.all(16),
                     child:
                     Text(
-                      'Operador: ' + widget.name,
+                      'Operador: ${widget.name}',
                       style: TextStyle(
                           fontSize: tamanhotexto
                       ),

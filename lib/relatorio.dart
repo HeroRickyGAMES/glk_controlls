@@ -177,7 +177,7 @@ class _relatorioState extends State<relatorio> {
                     padding: const EdgeInsets.all(16),
                     child:
                     Text(
-                      'Operador: ' + widget.operadorName,
+                      'Operador: ${widget.operadorName}',
                       style: TextStyle(
                           fontSize: tamanhotexto
                       ),

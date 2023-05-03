@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:glk_controls/subModais/ReleConfigOnly.dart';
 
@@ -20,10 +23,25 @@ class _releModalConfigState extends State<releModalConfig> {
     String urlString = widget.urlPadrao;
     TextEditingController urlStringRele = TextEditingController(text: widget.urlPadrao);
 
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Configurações de Relê'),
+        title: Text('Configurações de Relê'),
       ),
       body:
       Column(
@@ -43,19 +61,19 @@ class _releModalConfigState extends State<releModalConfig> {
             children: [
               Container(
                 padding: const EdgeInsets.all(16),
-                  child: const Text(
+                  child: Text(
                       'Entrada',
                     style: TextStyle(
-                      fontSize: 18
+                      fontSize: tamanhotextobtns
                     ),
                   )
               ),
               Container(
                   padding: const EdgeInsets.all(16),
-                  child: const Text(
+                  child: Text(
                     'Saida',
                     style: TextStyle(
-                        fontSize: 18
+                        fontSize: tamanhotextobtns
                     ),
                   )
               ),
@@ -107,26 +125,26 @@ class _releModalConfigState extends State<releModalConfig> {
                                 return ReleConfigOnly(dropValue, dropValue2, funcao1, dropValue3, dropValue4, dropValue5, dropValue6, dropValue7, dropValue8, funcao2, funcao3, funcao4, EntradaouSaida, ipRele, DocRele);
                               }));
                         },
-                        child: const Text(
+                        child: Text(
                             'Entrada 01',
                           style: TextStyle(
-                              fontSize: 18
+                              fontSize: tamanhotextobtns
                           ),
                         ),
                       ),
                       Row(
                         children: [
-                          const Text(
+                          Text(
                               'IP: ',
                             style: TextStyle(
-                                fontSize: 18,
+                                fontSize: tamanhotextobtns,
                                 fontWeight: FontWeight.bold
                             ),
                           ),
                           Text(
                             widget.urlPadrao,
-                            style: const TextStyle(
-                                fontSize: 18,
+                            style: TextStyle(
+                                fontSize: tamanhotextobtns,
                             ),
                           ),
                         ],
@@ -177,26 +195,26 @@ class _releModalConfigState extends State<releModalConfig> {
                                 return ReleConfigOnly(dropValue, dropValue2, funcao1, dropValue3, dropValue4, dropValue5, dropValue6, dropValue7, dropValue8, funcao2, funcao3, funcao4, EntradaouSaida, ipRele, DocRele);
                               }));
                         },
-                        child: const Text(
+                        child: Text(
                           'Saida 01',
                           style: TextStyle(
-                              fontSize: 18
+                              fontSize: tamanhotextobtns
                           ),
                         ),
                       ),
                       Row(
                         children: [
-                          const Text(
+                          Text(
                             'IP: ',
                             style: TextStyle(
-                                fontSize: 18,
+                                fontSize: tamanhotextobtns,
                                 fontWeight: FontWeight.bold
                             ),
                           ),
                           Text(
                             widget.urlPadrao2,
-                            style: const TextStyle(
-                              fontSize: 18,
+                            style: TextStyle(
+                              fontSize: tamanhotextobtns,
                             ),
                           ),
                         ],
@@ -253,26 +271,26 @@ class _releModalConfigState extends State<releModalConfig> {
                                 return ReleConfigOnly(dropValue, dropValue2, funcao1, dropValue3, dropValue4, dropValue5, dropValue6, dropValue7, dropValue8, funcao2, funcao3, funcao4, EntradaouSaida, ipRele, DocRele);
                               }));
                         },
-                        child: const Text(
+                        child: Text(
                           'Entrada 02',
                           style: TextStyle(
-                              fontSize: 18
+                              fontSize: tamanhotextobtns
                           ),
                         ),
                       ),
                       Row(
                         children: [
-                          const Text(
+                          Text(
                             'IP: ',
                             style: TextStyle(
-                                fontSize: 18,
+                                fontSize: tamanhotextobtns,
                                 fontWeight: FontWeight.bold
                             ),
                           ),
                           Text(
                             widget.urlPadrao,
-                            style: const TextStyle(
-                              fontSize: 18,
+                            style: TextStyle(
+                              fontSize: tamanhotextobtns,
                             ),
                           ),
                         ],
@@ -323,26 +341,26 @@ class _releModalConfigState extends State<releModalConfig> {
                                 return ReleConfigOnly(dropValue, dropValue2, funcao1, dropValue3, dropValue4, dropValue5, dropValue6, dropValue7, dropValue8, funcao2, funcao3, funcao4, EntradaouSaida, ipRele, DocRele);
                               }));
                         },
-                        child: const Text(
+                        child: Text(
                           'Saida 02',
                           style: TextStyle(
-                              fontSize: 18
+                              fontSize: tamanhotextobtns
                           ),
                         ),
                       ),
                       Row(
                         children: [
-                          const Text(
+                          Text(
                             'IP: ',
                             style: TextStyle(
-                                fontSize: 18,
+                                fontSize: tamanhotextobtns,
                                 fontWeight: FontWeight.bold
                             ),
                           ),
                           Text(
                             widget.urlPadrao2,
-                            style: const TextStyle(
-                              fontSize: 18,
+                            style: TextStyle(
+                              fontSize: tamanhotextobtns,
                             ),
                           ),
                         ],
@@ -372,9 +390,9 @@ class _releModalConfigState extends State<releModalConfig> {
                   padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                   child:
                   Text(
-                    'ADM : ' + widget.ADMName,
-                    style: const TextStyle(
-                        fontSize: 20
+                    'ADM : ${widget.ADMName}',
+                    style: TextStyle(
+                        fontSize: tamanhotextobtns
                     ),
                   ),
                 ),

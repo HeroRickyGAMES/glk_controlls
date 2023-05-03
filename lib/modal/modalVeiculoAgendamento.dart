@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:uuid/uuid.dart';
@@ -53,6 +56,21 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
   @override
   Widget build(BuildContext context) {
 
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
+    
     MandarMT(){
       Fluttertoast.showToast(
         msg: 'Enviando informações para o servidor...',
@@ -60,7 +78,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.black,
         textColor: Colors.white,
-        fontSize: 16.0,
+        fontSize: tamanhotexto,
       );
 
       //registre todos os valores no db
@@ -70,14 +88,14 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
 
       var uuid = const Uuid();
 
-      String idd = "${DateTime.now().toString()}" + uuid.v4();
+      String idd = "${DateTime.now().toString()}${uuid.v4()}";
       FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
         'nomeMotorista': nomeMotorista,
         'RGDoMotorista': RGMotorista,
         'Veiculo': Veiculo,
         'idDoc': idd,
         'DataSaida': dataAgendataSTsaida,
-        'PlacaVeiculo': VeiculoPlaca! + "(AG)",
+        'PlacaVeiculo': "${VeiculoPlaca!}(AG)",
         'Telefone': telefone,
         'EmpresadeOrigin': originEmpresa,
         'ColetaOuEntrega': coletaouentrega,
@@ -112,7 +130,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.black,
           textColor: Colors.white,
-          fontSize: 16.0,
+          fontSize: tamanhotexto,
         );
 
         var UID = FirebaseAuth.instance.currentUser?.uid;
@@ -151,7 +169,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.black,
           textColor: Colors.white,
-          fontSize: 16.0,
+          fontSize: tamanhotexto,
         );
       }else{
         if(RGMotorista == ''){
@@ -161,7 +179,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
             timeInSecForIosWeb: 1,
             backgroundColor: Colors.black,
             textColor: Colors.white,
-            fontSize: 16.0,
+            fontSize: tamanhotexto,
           );
         }else{
           if(Veiculo == ''){
@@ -171,7 +189,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
               timeInSecForIosWeb: 1,
               backgroundColor: Colors.black,
               textColor: Colors.white,
-              fontSize: 16.0,
+              fontSize: tamanhotexto,
             );
           }else{
             if(VeiculoPlaca == ''){
@@ -181,7 +199,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                 timeInSecForIosWeb: 1,
                 backgroundColor: Colors.black,
                 textColor: Colors.white,
-                fontSize: 16.0,
+                fontSize: tamanhotexto,
               );
             }else{
                 if(empresaSelecionada == ''){
@@ -191,7 +209,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                     timeInSecForIosWeb: 1,
                     backgroundColor: Colors.black,
                     textColor: Colors.white,
-                    fontSize: 16.0,
+                    fontSize: tamanhotexto,
                   );
                 }else{
                   if(coletaouentrega == ''){
@@ -201,7 +219,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                       timeInSecForIosWeb: 1,
                       backgroundColor: Colors.black,
                       textColor: Colors.white,
-                      fontSize: 16.0,
+                      fontSize: tamanhotexto,
                     );
                   }else{
 
@@ -215,7 +233,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                         timeInSecForIosWeb: 1,
                         backgroundColor: Colors.black,
                         textColor: Colors.white,
-                        fontSize: 16.0,
+                        fontSize: tamanhotexto,
                       );
                     }else{
                       if(dataAgendataST == ''){
@@ -225,7 +243,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                           timeInSecForIosWeb: 1,
                           backgroundColor: Colors.black,
                           textColor: Colors.white,
-                          fontSize: 16.0,
+                          fontSize: tamanhotexto,
                         );
                       }else{
                         if(dataAgendataSTsaida == ''){
@@ -235,7 +253,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                             timeInSecForIosWeb: 1,
                             backgroundColor: Colors.black,
                             textColor: Colors.white,
-                            fontSize: 16.0,
+                            fontSize: tamanhotexto,
                           );
                         }else{
                           //Fez uma vez agora ele vai verificar se o motorista também está bloqueado!
@@ -280,7 +298,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                               timeInSecForIosWeb: 1,
                               backgroundColor: Colors.black,
                               textColor: Colors.white,
-                              fontSize: 16.0,
+                              fontSize: tamanhotexto,
                             );
                           }else{
                             if(VeiculosBLk.contains(VeiculoPlaca)){
@@ -291,7 +309,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                                 timeInSecForIosWeb: 1,
                                 backgroundColor: Colors.black,
                                 textColor: Colors.white,
-                                fontSize: 16.0,
+                                fontSize: tamanhotexto,
                               );
                             }else{
 
@@ -319,7 +337,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                                   timeInSecForIosWeb: 1,
                                   backgroundColor: Colors.black,
                                   textColor: Colors.white,
-                                  fontSize: 16.0,
+                                  fontSize: tamanhotexto,
                                 );
                               }else{
                                 MandarMT();
@@ -340,7 +358,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('GLK Controls - Cadastro: Motorista e Veiculo'),
+        title: Text('GLK Controls - Cadastro: Motorista e Veiculo'),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -354,8 +372,8 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
               ),
               Text(
                 'Data de agendamento selecionada de entrada: ${dataAgendataST}',
-                style: const TextStyle(
-                    fontSize: 16
+                style: TextStyle(
+                    fontSize: tamanhotexto
                 ),
               ),
               TextButton(
@@ -364,8 +382,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                         showTitleActions: true,
                         minTime: DateTime.now(),
                         onChanged: (date) {
-                          print('change $date in time zone ' +
-                              date.timeZoneOffset.inHours.toString());
+                          print('change $date in time zone ${date.timeZoneOffset.inHours}');
                           dataAgendada = date;
                           print(dataAgendada);
                         }, onConfirm: (date) {
@@ -378,18 +395,18 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
 
                         }, locale: LocaleType.pt);
                   },
-                  child: const Text(
+                  child: Text(
                     'Selecione a data',
                     style: TextStyle(
                         color: Colors.blue,
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   )
               ),
               Text(
                 'Data de agendamento selecionada de saida: ${dataAgendataSTsaida}',
-                style: const TextStyle(
-                    fontSize: 16
+                style: TextStyle(
+                    fontSize: tamanhotexto
                 ),
               ),
               TextButton(
@@ -398,8 +415,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                         showTitleActions: true,
                         minTime: DateTime.now(),
                         onChanged: (date) {
-                          print('change $date in time zone ' +
-                              date.timeZoneOffset.inHours.toString());
+                          print('change $date in time zone ${date.timeZoneOffset.inHours}');
                           dataAgendadasaida = date;
                           print(dataAgendadasaida);
                         }, onConfirm: (date) {
@@ -412,11 +428,11 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
 
                         }, locale: LocaleType.pt);
                   },
-                  child: const Text(
+                  child: Text(
                     'Selecione a data',
                     style: TextStyle(
                         color: Colors.blue,
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   )
               ),
@@ -431,11 +447,11 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                   keyboardType: TextInputType.name,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Nome Completo do Motorista *',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
@@ -451,21 +467,21 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                   keyboardType: TextInputType.number,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'RG do Motorista (Sem digitos) * ',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
               ),
               Container(
                 padding: const EdgeInsets.all(16),
-                child: const Text(
+                child: Text(
                   'Veiculo *',
                   style: TextStyle(
-                      fontSize: 16,
+                      fontSize: tamanhotexto,
                       fontWeight: FontWeight.bold
                   ),
                 ),
@@ -473,10 +489,10 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
               Center(
                   child: ValueListenableBuilder(valueListenable: widget.dropValue2, builder: (context, String value, _){
                     return DropdownButton(
-                      hint: const Text(
+                      hint: Text(
                         'Selecione um veiculo *',
                         style: TextStyle(
-                            fontSize: 16
+                            fontSize: tamanhotexto
                         ),
                       ),
                       value: (value.isEmpty)? null : value,
@@ -491,8 +507,8 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                         child:
                         Text(
                           opcao,
-                          style: const TextStyle(
-                              fontSize: 16
+                          style: TextStyle(
+                              fontSize: tamanhotexto
                           ),
                         ),
                       ),
@@ -502,10 +518,10 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
               ),
               Container(
                 padding: const EdgeInsets.all(16),
-                child: const Text(
+                child: Text(
                   'Galpão *',
                   style: TextStyle(
-                      fontSize: 16,
+                      fontSize: tamanhotexto,
                       fontWeight: FontWeight.bold
                   ),
                 ),
@@ -513,10 +529,10 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
               Center(
                   child: ValueListenableBuilder(valueListenable: widget.dropValue, builder: (context, String value, _){
                     return DropdownButton(
-                      hint: const Text(
+                      hint: Text(
                         'Selecione um Galpão *',
                         style: TextStyle(
-                            fontSize: 16
+                            fontSize: tamanhotexto
                         ),
                       ),
                       value: (value.isEmpty)? null : value,
@@ -531,8 +547,8 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                         child:
                         Text(
                           opcao,
-                          style: const TextStyle(
-                              fontSize: 16
+                          style: TextStyle(
+                              fontSize: tamanhotexto
                           ),
                         ),
                       ),
@@ -553,11 +569,11 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                     );
                     //Mudou mandou para a String
                   },
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Placa do Veiculo * ',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
@@ -581,7 +597,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                         timeInSecForIosWeb: 1,
                         backgroundColor: Colors.black,
                         textColor: Colors.white,
-                        fontSize: 16.0,
+                        fontSize: tamanhotexto,
                       );
                     }
 
@@ -590,11 +606,11 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                   keyboardType: TextInputType.number,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Telefone',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
@@ -607,21 +623,21 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                     telefoneinterface.text = telefone!;
                     //Mudou mandou para a String
                   },
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Empresa de Origem',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
               ),
               Container(
                 padding: const EdgeInsets.all(16),
-                child: const Text(
+                child: Text(
                   'Empresa destino *',
                   style: TextStyle(
-                      fontSize: 16,
+                      fontSize: tamanhotexto,
                       fontWeight: FontWeight.bold
                   ),
                 ),
@@ -630,8 +646,8 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                 padding: const EdgeInsets.all(16),
                 child: Text(
                   widget.NomeEmpresa,
-                  style: const TextStyle(
-                      fontSize: 16,
+                  style: TextStyle(
+                      fontSize: tamanhotexto,
                       fontWeight: FontWeight.bold
                   ),
                 ),
@@ -643,11 +659,11 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                     motivo = valor;
                     //Mudou mandou para a String
                   },
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Motivo',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
@@ -662,10 +678,10 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                       children: [
                         Expanded(
                           child: RadioListTile(
-                            title: const Text(
+                            title: Text(
                                 "Coleta",
                               style: TextStyle(
-                                fontSize: 16
+                                fontSize: tamanhotexto
                               ),
                             ),
                             value: "coleta",
@@ -680,10 +696,10 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
 
                         Expanded(
                           child: RadioListTile(
-                            title: const Text(
+                            title: Text(
                                 "Entrega",
                               style: TextStyle(
-                                  fontSize: 16
+                                  fontSize: tamanhotexto
                               ),
                             ),
                             value: "entrega",
@@ -703,10 +719,10 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
               ElevatedButton(
               onPressed: uploadInfos,
               child:
-              const Text(
+              Text(
                   'Prosseguir',
                 style: TextStyle(
-                    fontSize: 16,
+                    fontSize: tamanhotextobtns,
                     fontWeight: FontWeight.bold
                 ),
               )
@@ -728,9 +744,9 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                     padding: const EdgeInsets.all(16),
                     child:
                     Text(
-                      'Operador: ' + widget.nomeUser,
-                      style: const TextStyle(
-                          fontSize: 16
+                      'Operador: ${widget.nomeUser}',
+                      style: TextStyle(
+                          fontSize: tamanhotexto
                       ),
                     ),
                   ),
@@ -742,7 +758,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
 
                   // retorna false para impedir que a navegação volte à tela anterior
                   return false;
-                }, child: const Text(''),
+                }, child: Text(''),
               ),
             ],
           ),

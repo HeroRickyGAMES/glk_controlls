@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:glk_controls/listas/listaSaida.dart';
 
@@ -17,11 +20,28 @@ class _btnsVerificarSaidaState extends State<btnsVerificarSaida> {
   String Saida = '';
   @override
   Widget build(BuildContext context) {
+
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Qual entrada está operando?'),
+        title: Text('Qual entrada está operando?'),
         centerTitle: true,
-      ),body: Container(
+      ),
+      body: Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -43,10 +63,10 @@ class _btnsVerificarSaidaState extends State<btnsVerificarSaida> {
                           return listaSaida(widget.PorteiroName, Saida);
                         }));
                   },
-                  child: const Text(
+                  child: Text(
                     'Saida 01',
                     style: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotextobtns
                     ),
                   ),
                 ),
@@ -64,10 +84,10 @@ class _btnsVerificarSaidaState extends State<btnsVerificarSaida> {
                           return listaSaida(widget.PorteiroName, Saida);
                         }));
                   },
-                  child: const Text(
+                  child: Text(
                     'Saida 02',
                     style: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotextobtns
                     ),
                   ),
                 ),

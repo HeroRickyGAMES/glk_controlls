@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/modal/veiculoEntrada.dart';
 import 'package:glk_controls/pesquisaDir/pesquisa.dart';
@@ -23,38 +22,6 @@ class liberacoesOperadorEmpresarial extends StatefulWidget {
 
   @override
   State<liberacoesOperadorEmpresarial> createState() => _liberacoesOperadorEmpresarialState();
-}
-
-class _PlateFormatter extends TextInputFormatter {
-  static const int _firstGroupLength = 3;
-  static const String _separator = ' ';
-
-  @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
-    String cleaned = newValue.text.replaceAll(RegExp('[^a-zA-Z0-9]'), '');
-    String plate = '';
-    int i = 0;
-    while (i < cleaned.length) {
-      int remaining = cleaned.length - i;
-      if (remaining > _firstGroupLength) {
-        plate += cleaned.substring(i, i + _firstGroupLength) + _separator;
-        i += _firstGroupLength;
-      } else {
-        plate += cleaned.substring(i, i + remaining);
-        i += remaining;
-      }
-      if (i == _firstGroupLength && remaining > 0) {
-        plate += _separator;
-      }
-    }
-    return TextEditingValue(
-      text: plate,
-      selection: TextSelection.fromPosition(
-        TextPosition(offset: plate.length),
-      ),
-    );
-  }
 }
 
 class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpresarial> {

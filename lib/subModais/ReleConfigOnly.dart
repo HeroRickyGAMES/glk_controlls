@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -78,6 +81,23 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
 
   @override
   Widget build(BuildContext context) {
+
+
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
+    
     rele1fuc1 = widget.funcao;
     rele2fuc1 = widget.funcao2;
     rele3fuc2 = widget.funcao3;
@@ -89,7 +109,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: const Text('Configuração do Relê'),
+        title: Text('Configuração do Relê'),
       ),
       body: Container(
         padding: const EdgeInsets.all(16),
@@ -111,8 +131,8 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                     padding: const EdgeInsets.all(16),
                     child: Text(
                       widget.EntradaOuSaida,
-                      style: const TextStyle(
-                          fontSize: 16,
+                      style: TextStyle(
+                          fontSize: tamanhotexto,
                           fontWeight: FontWeight.bold
                       ),
                     ),
@@ -121,10 +141,10 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Container(
-                        child: const Text(
+                        child: Text(
                           "IP:",
                           style: TextStyle(
-                              fontSize: 16,
+                              fontSize: tamanhotexto,
                               fontWeight: FontWeight.bold
                           ),
                         ),
@@ -156,20 +176,20 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                     children: [
                       Container(
                         padding: const EdgeInsets.all(16),
-                        child: const Text(
+                        child: Text(
                           "Rele 01:",
                           style: TextStyle(
-                              fontSize: 16,
+                              fontSize: tamanhotexto,
                           ),
                         ),
                       ),
                       Center(
                           child: ValueListenableBuilder(valueListenable: widget.dropValue2, builder: (context, String value, _){
                             return DropdownButton(
-                              hint: const Text(
+                              hint: Text(
                                 'Local *',
                                 style: TextStyle(
-                                    fontSize: 16
+                                    fontSize: tamanhotexto
                                 ),
                               ),
                               value: (value.isEmpty)? null : value,
@@ -184,8 +204,8 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                 child:
                                 Text(
                                   opcao,
-                                  style: const TextStyle(
-                                      fontSize: 16
+                                  style: TextStyle(
+                                      fontSize: tamanhotexto
                                   ),
                                 ),
                               ),
@@ -195,17 +215,17 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                       ),
                       Text(
                           "Função: " + rele1fuc1,
-                        style: const TextStyle(
-                            fontSize: 16
+                        style: TextStyle(
+                            fontSize: tamanhotexto
                         ),
                       ),
                       Center(
                           child: ValueListenableBuilder(valueListenable: widget.dropValue, builder: (context, String value, _){
                             return DropdownButton(
-                              hint: const Text(
+                              hint: Text(
                                 'Selecione a função *',
                                 style: TextStyle(
-                                    fontSize: 16
+                                    fontSize: tamanhotexto
                                 ),
                               ),
                               value: (value.isEmpty)? null : value,
@@ -220,8 +240,8 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                 child:
                                 Text(
                                   opcao,
-                                  style: const TextStyle(
-                                      fontSize: 16
+                                  style: TextStyle(
+                                      fontSize: tamanhotexto
                                   ),
                                 ),
                               ),
@@ -236,20 +256,20 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                     children: [
                       Container(
                         padding: const EdgeInsets.all(16),
-                        child: const Text(
+                        child: Text(
                           "Rele 02:",
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: tamanhotexto,
                           ),
                         ),
                       ),
                       Center(
                           child: ValueListenableBuilder(valueListenable: widget.dropValue3, builder: (context, String value, _){
                             return DropdownButton(
-                              hint: const Text(
+                              hint: Text(
                                 'Local *',
                                 style: TextStyle(
-                                    fontSize: 16
+                                    fontSize: tamanhotexto
                                 ),
                               ),
                               value: (value.isEmpty)? null : value,
@@ -264,8 +284,8 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                 child:
                                 Text(
                                   opcao,
-                                  style: const TextStyle(
-                                      fontSize: 16
+                                  style: TextStyle(
+                                      fontSize: tamanhotexto
                                   ),
                                 ),
                               ),
@@ -275,17 +295,17 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                       ),
                       Text(
                         "Função: " + rele2fuc1,
-                        style: const TextStyle(
-                            fontSize: 16
+                        style: TextStyle(
+                            fontSize: tamanhotexto
                         ),
                       ),
                       Center(
                           child: ValueListenableBuilder(valueListenable: widget.dropValue4, builder: (context, String value, _){
                             return DropdownButton(
-                              hint: const Text(
+                              hint: Text(
                                 'Selecione a função *',
                                 style: TextStyle(
-                                    fontSize: 16
+                                    fontSize: tamanhotexto
                                 ),
                               ),
                               value: (value.isEmpty)? null : value,
@@ -300,8 +320,8 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                 child:
                                 Text(
                                   opcao,
-                                  style: const TextStyle(
-                                      fontSize: 16
+                                  style: TextStyle(
+                                      fontSize: tamanhotexto
                                   ),
                                 ),
                               ),
@@ -316,20 +336,20 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                     children: [
                       Container(
                         padding: const EdgeInsets.all(16),
-                        child: const Text(
+                        child: Text(
                           "Rele 03:",
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: tamanhotexto,
                           ),
                         ),
                       ),
                       Center(
                           child: ValueListenableBuilder(valueListenable: widget.dropValue5, builder: (context, String value, _){
                             return DropdownButton(
-                              hint: const Text(
+                              hint: Text(
                                 'Local *',
                                 style: TextStyle(
-                                    fontSize: 16
+                                    fontSize: tamanhotexto
                                 ),
                               ),
                               value: (value.isEmpty)? null : value,
@@ -344,8 +364,8 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                 child:
                                 Text(
                                   opcao,
-                                  style: const TextStyle(
-                                      fontSize: 16
+                                  style: TextStyle(
+                                      fontSize: tamanhotexto
                                   ),
                                 ),
                               ),
@@ -355,17 +375,17 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                       ),
                       Text(
                         "Função: " + rele4fuc2,
-                        style: const TextStyle(
-                            fontSize: 16
+                        style: TextStyle(
+                            fontSize: tamanhotexto
                         ),
                       ),
                       Center(
                           child: ValueListenableBuilder(valueListenable: widget.dropValue6, builder: (context, String value, _){
                             return DropdownButton(
-                              hint: const Text(
+                              hint: Text(
                                 'Selecione a função *',
                                 style: TextStyle(
-                                    fontSize: 16
+                                    fontSize: tamanhotexto
                                 ),
                               ),
                               value: (value.isEmpty)? null : value,
@@ -380,8 +400,8 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                 child:
                                 Text(
                                   opcao,
-                                  style: const TextStyle(
-                                      fontSize: 16
+                                  style: TextStyle(
+                                      fontSize: tamanhotexto
                                   ),
                                 ),
                               ),
@@ -396,20 +416,20 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                     children: [
                       Container(
                         padding: const EdgeInsets.all(16),
-                        child: const Text(
+                        child: Text(
                           "Rele 04:",
                           style: TextStyle(
-                            fontSize: 16,
+                            fontSize: tamanhotexto,
                           ),
                         ),
                       ),
                       Center(
                           child: ValueListenableBuilder(valueListenable: widget.dropValue8, builder: (context, String value, _){
                             return DropdownButton(
-                              hint: const Text(
+                              hint: Text(
                                 'Local *',
                                 style: TextStyle(
-                                    fontSize: 16
+                                    fontSize: tamanhotexto
                                 ),
                               ),
                               value: (value.isEmpty)? null : value,
@@ -424,8 +444,8 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                 child:
                                 Text(
                                   opcao,
-                                  style: const TextStyle(
-                                      fontSize: 16
+                                  style: TextStyle(
+                                      fontSize: tamanhotexto
                                   ),
                                 ),
                               ),
@@ -435,17 +455,17 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                       ),
                       Text(
                         "Função: " + rele3fuc2,
-                        style: const TextStyle(
-                            fontSize: 16
+                        style: TextStyle(
+                            fontSize: tamanhotexto
                         ),
                       ),
                       Center(
                           child: ValueListenableBuilder(valueListenable: widget.dropValue7, builder: (context, String value, _){
                             return DropdownButton(
-                              hint: const Text(
+                              hint: Text(
                                 'Selecione a função *',
                                 style: TextStyle(
-                                    fontSize: 16
+                                    fontSize: tamanhotexto
                                 ),
                               ),
                               value: (value.isEmpty)? null : value,
@@ -460,8 +480,8 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                 child:
                                 Text(
                                   opcao,
-                                  style: const TextStyle(
-                                      fontSize: 16
+                                  style: TextStyle(
+                                      fontSize: tamanhotexto
                                   ),
                                 ),
                               ),
@@ -483,15 +503,15 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                       onPressed: (){
                         Navigator.pop(context);
                       },
-                      child: const Text(
-                          'Cancelar',
-                        style: TextStyle(
-                            fontSize: 16
-                        ),
-                      ),
                     style: ElevatedButton.styleFrom(
                         primary: Colors.red
                     ),
+                      child: Text(
+                          'Cancelar',
+                        style: TextStyle(
+                            fontSize: tamanhotexto
+                        ),
+                      ),
                   ),
                   ElevatedButton(
                     onPressed: (){
@@ -504,7 +524,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                           timeInSecForIosWeb: 1,
                           backgroundColor: Colors.black,
                           textColor: Colors.white,
-                          fontSize: 16.0,
+                          fontSize: tamanhotexto,
                         );
                       }else{
 
@@ -515,7 +535,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                             timeInSecForIosWeb: 1,
                             backgroundColor: Colors.black,
                             textColor: Colors.white,
-                            fontSize: 16.0,
+                            fontSize: tamanhotexto,
                           );
                         }else{
                           if(Local == ""){
@@ -525,7 +545,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                               timeInSecForIosWeb: 1,
                               backgroundColor: Colors.black,
                               textColor: Colors.white,
-                              fontSize: 16.0,
+                              fontSize: tamanhotexto,
                             );
                           }else{
                             if(rele2fuc1 == ''){
@@ -535,7 +555,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                 timeInSecForIosWeb: 1,
                                 backgroundColor: Colors.black,
                                 textColor: Colors.white,
-                                fontSize: 16.0,
+                                fontSize: tamanhotexto,
                               );
                             }else{
                               if(Local2  == ''){
@@ -545,7 +565,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                   timeInSecForIosWeb: 1,
                                   backgroundColor: Colors.black,
                                   textColor: Colors.white,
-                                  fontSize: 16.0,
+                                  fontSize: tamanhotexto,
                                 );
                               }else{
                                 if(rele3fuc2 == ''){
@@ -555,7 +575,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                     timeInSecForIosWeb: 1,
                                     backgroundColor: Colors.black,
                                     textColor: Colors.white,
-                                    fontSize: 16.0,
+                                    fontSize: tamanhotexto,
                                   );
                                 }else{
                                   if(Local3 == ''){
@@ -565,7 +585,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                       timeInSecForIosWeb: 1,
                                       backgroundColor: Colors.black,
                                       textColor: Colors.white,
-                                      fontSize: 16.0,
+                                      fontSize: tamanhotexto,
                                     );
                                   }else{
                                     if(rele4fuc2 == ''){
@@ -575,7 +595,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                         timeInSecForIosWeb: 1,
                                         backgroundColor: Colors.black,
                                         textColor: Colors.white,
-                                        fontSize: 16.0,
+                                        fontSize: tamanhotexto,
                                       );
                                     }else{
                                       if(Local4 == ''){
@@ -585,7 +605,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                           timeInSecForIosWeb: 1,
                                           backgroundColor: Colors.black,
                                           textColor: Colors.white,
-                                          fontSize: 16.0,
+                                          fontSize: tamanhotexto,
                                         );
                                       }else{
                                         //todo mandar para o db
@@ -608,7 +628,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                             timeInSecForIosWeb: 1,
                                             backgroundColor: Colors.black,
                                             textColor: Colors.white,
-                                            fontSize: 16.0,
+                                            fontSize: tamanhotexto,
                                           );
 
                                           Navigator.pop(context);
@@ -623,14 +643,14 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                         }
                       }
                     },
-                    child: const Text(
-                      'Prosseguir',
-                      style: TextStyle(
-                          fontSize: 16
-                      ),
-                    ),
                     style: ElevatedButton.styleFrom(
                         primary: Colors.green
+                    ),
+                    child: Text(
+                      'Prosseguir',
+                      style: TextStyle(
+                          fontSize: tamanhotexto
+                      ),
                     ),
                   )
                 ],

@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -18,6 +21,21 @@ class bloqueioDePlacas extends StatefulWidget {
 class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
   @override
   Widget build(BuildContext context) {
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -43,46 +61,46 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                 children: [
                   Container(
                     padding: const EdgeInsets.all(16),
-                    child: const Text(
+                    child: Text(
                         'Placa',
                       style: TextStyle(
-                          fontSize: 16
+                          fontSize: tamanhotexto
                       ),
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.all(16),
-                    child: const Text(
+                    child: Text(
                         'Veiculo',
                       style: TextStyle(
-                          fontSize: 16
+                          fontSize: tamanhotexto
                       ),
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.all(16),
-                    child: const Text(
+                    child: Text(
                         'Data',
                       style: TextStyle(
-                          fontSize: 16
+                          fontSize: tamanhotexto
                       ),
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.all(16),
-                    child: const Text(
+                    child: Text(
                       '',
                       style: TextStyle(
-                          fontSize: 16
+                          fontSize: tamanhotexto
                       ),
                     ),
                   ),
                   Container(
                     padding: const EdgeInsets.all(16),
-                    child: const Text(
+                    child: Text(
                       '',
                       style: TextStyle(
-                          fontSize: 16
+                          fontSize: tamanhotexto
                       ),
                     ),
                   ),
@@ -120,22 +138,22 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                               children: [
                                 Text(
                                     documents['placa'],
-                                  style: const TextStyle(
-                                      fontSize: 16
+                                  style: TextStyle(
+                                      fontSize: tamanhotexto
                                   ),
                                 ),
                                 Text(
                                   documents['tipoVeiculo'],
-                                  style: const TextStyle(
-                                      fontSize: 16
+                                  style: TextStyle(
+                                      fontSize: tamanhotexto
                                   ),
                                 ),
                                 Row(
                                   children: [
                                     Text(
                                       documents['dataDoBloqueio'].replaceAll('-', '/'),
-                                      style: const TextStyle(
-                                          fontSize: 16
+                                      style: TextStyle(
+                                          fontSize: tamanhotexto
                                       ),
                                     ),
                                     TextButton(
@@ -181,15 +199,15 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
 
                                                       Navigator.of(context).pop();
 
-                                                    }, child: const Text(
-                                                        'Voltar',
-                                                      style: TextStyle(
-                                                          fontSize: 16
-                                                      ),
-                                                    ),
+                                                    },
                                                       style: ElevatedButton.styleFrom(
                                                           primary: Colors.red
+                                                      ), child: Text(
+                                                        'Voltar',
+                                                      style: TextStyle(
+                                                          fontSize: tamanhotexto
                                                       ),
+                                                    ),
                                                     ),
                                                     ElevatedButton(onPressed: (){
 
@@ -200,15 +218,15 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                                             return generatePDF2(documents['placa'], documents['tipoVeiculo'], documents['Motivo'], documents['dataDoBloqueio']);
                                                           }));
 
-                                                    }, child: const Text(
-                                                        'Imprimir',
-                                                      style: TextStyle(
-                                                          fontSize: 16
-                                                      ),
-                                                    ),
+                                                    },
                                                       style: ElevatedButton.styleFrom(
                                                           primary: Colors.blue
+                                                      ), child: Text(
+                                                        'Imprimir',
+                                                      style: TextStyle(
+                                                          fontSize: tamanhotexto
                                                       ),
+                                                    ),
                                                     ),
                                                   ],
                                                 )
@@ -230,7 +248,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                               timeInSecForIosWeb: 1,
                                               backgroundColor: Colors.grey[600],
                                               textColor: Colors.white,
-                                              fontSize: 16.0
+                                              fontSize: tamanhotexto
                                           );
                                         });
                                       },
@@ -298,11 +316,11 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                         controller: placaController,
                                         enableSuggestions: false,
                                         autocorrect: false,
-                                        decoration: const InputDecoration(
-                                          border: OutlineInputBorder(),
+                                        decoration: InputDecoration(
+                                          border: const OutlineInputBorder(),
                                           hintText: 'Placa do veiculo * ',
                                           hintStyle: TextStyle(
-                                              fontSize: 16
+                                              fontSize: tamanhotexto
                                           ),
                                         ),
                                       ),
@@ -310,10 +328,10 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                     Center(
                                         child: ValueListenableBuilder(valueListenable: dropValue, builder: (context, String value, _){
                                           return DropdownButton(
-                                            hint: const Text(
+                                            hint: Text(
                                               'Veiculo *',
                                               style: TextStyle(
-                                                  fontSize: 16
+                                                  fontSize: tamanhotexto
                                               ),
                                             ),
                                             value: (value.isEmpty)? null : value,
@@ -330,8 +348,8 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                               child:
                                               Text(
                                                 opcao,
-                                                style: const TextStyle(
-                                                    fontSize: 16
+                                                style: TextStyle(
+                                                    fontSize: tamanhotexto
                                                 ),
                                               ),
                                             ),
@@ -358,11 +376,11 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                         keyboardType: TextInputType.multiline,
                                         enableSuggestions: false,
                                         autocorrect: false,
-                                        decoration: const InputDecoration(
-                                          border: OutlineInputBorder(),
+                                        decoration: InputDecoration(
+                                          border: const OutlineInputBorder(),
                                           hintText: 'Motivo do Bloqueio * ',
                                           hintStyle: TextStyle(
-                                              fontSize: 16
+                                              fontSize: tamanhotexto
                                           ),
                                         ),
                                       ),
@@ -377,15 +395,15 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
 
                                         Navigator.of(context).pop();
 
-                                      }, child: const Text(
-                                        'Cancelar',
-                                        style: TextStyle(
-                                            fontSize: 16
-                                        ),
-                                      ),
+                                      },
                                         style: ElevatedButton.styleFrom(
                                             primary: Colors.red
+                                        ), child: Text(
+                                        'Cancelar',
+                                        style: TextStyle(
+                                            fontSize: tamanhotexto
                                         ),
+                                      ),
                                       ),
                                       ElevatedButton(onPressed: (){
 
@@ -398,7 +416,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                               timeInSecForIosWeb: 1,
                                               backgroundColor: Colors.grey[600],
                                               textColor: Colors.white,
-                                              fontSize: 16.0
+                                              fontSize: tamanhotexto
                                           );
 
                                         }else{
@@ -410,7 +428,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                                 timeInSecForIosWeb: 1,
                                                 backgroundColor: Colors.grey[600],
                                                 textColor: Colors.white,
-                                                fontSize: 16.0
+                                                fontSize: tamanhotexto
                                             );
                                           }else{
                                             if(bloqueioMotivo == ''){
@@ -421,7 +439,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                                   timeInSecForIosWeb: 1,
                                                   backgroundColor: Colors.grey[600],
                                                   textColor: Colors.white,
-                                                  fontSize: 16.0
+                                                  fontSize: tamanhotexto
                                               );
                                             }else{
 
@@ -429,7 +447,7 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
 
                                               var uuid = const Uuid();
 
-                                              String idd = "${DateTime.now().toString()}" + uuid.v4();
+                                              String idd = "${DateTime.now().toString()}${uuid.v4()}";
 
                                               FirebaseFirestore.instance.collection('VeiculosBloqueados').doc(idd).set(
                                                 {
@@ -446,15 +464,15 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                                           }
                                         }
 
-                                      }, child: const Text(
-                                        'Prosseguir',
-                                        style: TextStyle(
-                                            fontSize: 16
-                                        ),
-                                      ),
+                                      },
                                         style: ElevatedButton.styleFrom(
                                             primary: Colors.green
+                                        ), child: Text(
+                                        'Prosseguir',
+                                        style: TextStyle(
+                                            fontSize: tamanhotexto
                                         ),
+                                      ),
                                       ),
                                     ],
                                   )
@@ -463,15 +481,15 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                             },
                           );
                         },
-                        child: const Text(
-                            'Bloquear',
-                          style: TextStyle(
-                              fontSize: 16
-                          ),
-                        ),
                       style: ElevatedButton.styleFrom(
                           primary: Colors.red
                       ),
+                        child: Text(
+                            'Bloquear',
+                          style: TextStyle(
+                              fontSize: tamanhotexto
+                          ),
+                        ),
                     ),
                   ],
                 ),
@@ -485,28 +503,28 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                       onPressed: (){
                         Navigator.pop(context);
                       },
-                      child: const Text(
-                        'Cancelar',
-                        style: TextStyle(
-                            fontSize: 16
-                        ),
-                      ),
                       style: ElevatedButton.styleFrom(
                           primary: Colors.red
+                      ),
+                      child: Text(
+                        'Cancelar',
+                        style: TextStyle(
+                            fontSize: tamanhotexto
+                        ),
                       ),
                     ),
                     ElevatedButton(
                       onPressed: (){
                         Navigator.pop(context);
                       },
-                      child: const Text(
-                        'Prosseguir',
-                        style: TextStyle(
-                            fontSize: 16
-                        ),
-                      ),
                       style: ElevatedButton.styleFrom(
                           primary: Colors.green
+                      ),
+                      child: Text(
+                        'Prosseguir',
+                        style: TextStyle(
+                            fontSize: tamanhotexto
+                        ),
                       ),
                     ),
                   ],
@@ -529,9 +547,9 @@ class _bloqueioDePlacasState extends State<bloqueioDePlacas> {
                     padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                     child:
                     Text(
-                      'ADM : ' + widget.ADMName,
-                      style: const TextStyle(
-                          fontSize: 16
+                      'ADM : ${widget.ADMName}',
+                      style: TextStyle(
+                          fontSize: tamanhotexto
                       ),
                     ),
                   ),

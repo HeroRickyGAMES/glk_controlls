@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:uuid/uuid.dart';
@@ -37,6 +40,22 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
 
   @override
   Widget build(BuildContext context) {
+
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
+    
     //fields
     String? nomeMotorista = widget.autofillName;
     String? RGMotorista = widget.autofillRG;
@@ -61,7 +80,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
           timeInSecForIosWeb: 1,
           backgroundColor: Colors.black,
           textColor: Colors.white,
-          fontSize: 16.0,
+          fontSize: tamanhotexto,
         );
       }else{
 
@@ -72,7 +91,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
             timeInSecForIosWeb: 1,
             backgroundColor: Colors.black,
             textColor: Colors.white,
-            fontSize: 16.0,
+            fontSize: tamanhotexto,
           );
         }else{
           if(Veiculo == null){
@@ -82,7 +101,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
               timeInSecForIosWeb: 1,
               backgroundColor: Colors.black,
               textColor: Colors.white,
-              fontSize: 16.0,
+              fontSize: tamanhotexto,
             );
           }else{
             if(VeiculoPlaca == null){
@@ -92,7 +111,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                 timeInSecForIosWeb: 1,
                 backgroundColor: Colors.black,
                 textColor: Colors.white,
-                fontSize: 16.0,
+                fontSize: tamanhotexto,
               );
             }else{
               if(originEmpresa == null){
@@ -102,7 +121,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                   timeInSecForIosWeb: 1,
                   backgroundColor: Colors.black,
                   textColor: Colors.white,
-                  fontSize: 16.0,
+                  fontSize: tamanhotexto,
                 );
               }else{
                 if(galpao == null){
@@ -112,7 +131,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                     timeInSecForIosWeb: 1,
                     backgroundColor: Colors.black,
                     textColor: Colors.white,
-                    fontSize: 16.0,
+                    fontSize: tamanhotexto,
                   );
                 }else{
                   if(empresaSelecionada == null){
@@ -122,7 +141,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                       timeInSecForIosWeb: 1,
                       backgroundColor: Colors.black,
                       textColor: Colors.white,
-                      fontSize: 16.0,
+                      fontSize: tamanhotexto,
                     );
                   }else{
                     if(coletaouentrega == null){
@@ -132,7 +151,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                         timeInSecForIosWeb: 1,
                         backgroundColor: Colors.black,
                         textColor: Colors.white,
-                        fontSize: 16.0,
+                        fontSize: tamanhotexto,
                       );
                     }else{
                       if(lacreounao == null){
@@ -142,7 +161,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                           timeInSecForIosWeb: 1,
                           backgroundColor: Colors.black,
                           textColor: Colors.white,
-                          fontSize: 16.0,
+                          fontSize: tamanhotexto,
                         );
                       }else{
                         if(transportadora == ''){
@@ -152,7 +171,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                             timeInSecForIosWeb: 1,
                             backgroundColor: Colors.black,
                             textColor: Colors.white,
-                            fontSize: 16.0,
+                            fontSize: tamanhotexto,
                           );
                         }else{
                           Fluttertoast.showToast(
@@ -161,7 +180,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                             timeInSecForIosWeb: 1,
                             backgroundColor: Colors.black,
                             textColor: Colors.white,
-                            fontSize: 16.0,
+                            fontSize: tamanhotexto,
                           );
                           print(lacreounao);
                           if(lacreounao == 'lacre'){
@@ -173,7 +192,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
 
                             var uuid = const Uuid();
 
-                            String idd = "${DateTime.now().toString()}" + uuid.v4();
+                            String idd = "${DateTime.now().toString()}${uuid.v4()}";
                             FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
                               'nomeMotorista': nomeMotorista,
                               'RGDoMotorista': RGMotorista,
@@ -204,7 +223,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                                 timeInSecForIosWeb: 1,
                                 backgroundColor: Colors.black,
                                 textColor: Colors.white,
-                                fontSize: 16.0,
+                                fontSize: tamanhotexto,
                               );
                               widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
                               widget.galpaes.removeRange(0, widget.galpaes.length);
@@ -222,7 +241,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                                   if(key == 'nome'){
                                     String PorteiroNome = value;
 
-                                    print('Porteiro name é' + PorteiroNome);
+                                    print('Porteiro name é$PorteiroNome');
 
                                     var UID = FirebaseAuth.instance.currentUser?.uid;
                                     var result = await FirebaseFirestore.instance
@@ -263,7 +282,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
 
                             var uuid = const Uuid();
 
-                            String idd = "${DateTime.now().toString()}" + uuid.v4();
+                            String idd = "${DateTime.now().toString()}${uuid.v4()}";
                             FirebaseFirestore.instance.collection('Autorizacoes').doc(idd).set({
                               'nomeMotorista': nomeMotorista,
                               'RGDoMotorista': RGMotorista,
@@ -292,7 +311,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                                 timeInSecForIosWeb: 1,
                                 backgroundColor: Colors.black,
                                 textColor: Colors.white,
-                                fontSize: 16.0,
+                                fontSize: tamanhotexto,
                               );
                               widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
                               widget.galpaes.removeRange(0, widget.galpaes.length);
@@ -310,7 +329,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                                   if(key == 'nome'){
                                     String PorteiroNome = value;
 
-                                    print('Porteiro name é' + PorteiroNome);
+                                    print('Porteiro name é$PorteiroNome');
 
                                     var UID = FirebaseAuth.instance.currentUser?.uid;
                                     var result = await FirebaseFirestore.instance
@@ -379,19 +398,13 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                   if(key == 'nome'){
                     String PorteiroNome = value;
 
-                    print('Porteiro name é' + PorteiroNome);
+                    print('Porteiro name é$PorteiroNome');
 
                     var UID = FirebaseAuth.instance.currentUser?.uid;
                     var result = await FirebaseFirestore.instance
                         .collection("porteiro")
                         .doc(UID)
                         .get();
-
-                    bool cadastro = result.get('cadastrar');
-                    bool entrada = result.get('entrada');
-                    bool saida = result.get('saida');
-                    bool relatorio = result.get('relatorio');
-                    bool painel = result.get('painel');
 
 
                     Navigator.pop(context);
@@ -413,7 +426,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                   color: Colors.white,
                 )
             ),
-            const Text('GLK Controls - Cadastro: Motorista e Veiculo'),
+            Text('GLK Controls - Cadastro: Motorista e Veiculo'),
           ],
         ),
       ),
@@ -438,11 +451,11 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                   keyboardType: TextInputType.name,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Nome Completo do Motorista *',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
@@ -459,21 +472,21 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                   keyboardType: TextInputType.number,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'RG do Motorista (Sem digitos) * ',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
               ),
               Container(
                 padding: const EdgeInsets.all(16),
-                child: const Text(
+                child: Text(
                   'Veiculo *',
                   style: TextStyle(
-                      fontSize: 16,
+                      fontSize: tamanhotexto,
                       fontWeight: FontWeight.bold
                   ),
                 ),
@@ -481,10 +494,10 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
               Center(
                   child: ValueListenableBuilder(valueListenable: widget.dropValue3, builder: (context, String value, _){
                     return DropdownButton(
-                      hint: const Text(
+                      hint: Text(
                         'Selecione um tipo de Veiculo *',
                         style: TextStyle(
-                            fontSize: 16
+                            fontSize: tamanhotexto
                         ),
                       ),
                       value: (value.isEmpty)? null : value,
@@ -499,8 +512,8 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                         child:
                         Text(
                           opcao,
-                          style: const TextStyle(
-                              fontSize: 16
+                          style: TextStyle(
+                              fontSize: tamanhotexto
                           ),
                         ),
                       ),
@@ -521,11 +534,11 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                     );
                     //Mudou mandou para a String
                   },
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Placa do Veiculo * ',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
@@ -538,11 +551,11 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                     transportadora = valor;
                     //Mudou mandou para a String
                   },
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Transportadora * ',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
@@ -562,11 +575,11 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                   keyboardType: TextInputType.number,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Telefone',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
@@ -579,21 +592,21 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                     telefoneinterface.text = telefone!;
                     //Mudou mandou para a String
                   },
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Empresa de Origem *',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
               ),
               Container(
                 padding: const EdgeInsets.all(16),
-                child: const Text(
+                child: Text(
                   'Empresa destino *',
                   style: TextStyle(
-                      fontSize: 16,
+                      fontSize: tamanhotexto,
                       fontWeight: FontWeight.bold
                   ),
                 ),
@@ -601,10 +614,10 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
               Center(
                   child: ValueListenableBuilder(valueListenable: widget.dropValue, builder: (context, String value, _){
                     return DropdownButton(
-                      hint: const Text(
+                      hint: Text(
                         'Selecione uma empresa',
                         style: TextStyle(
-                            fontSize: 16
+                            fontSize: tamanhotexto
                         ),
                       ),
                       value: (value.isEmpty)? null : value,
@@ -619,8 +632,8 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                         child:
                         Text(
                           opcao,
-                          style: const TextStyle(
-                              fontSize: 16
+                          style: TextStyle(
+                              fontSize: tamanhotexto
                           ),
                         ),
                       ),
@@ -638,10 +651,10 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                       children: [
                         Expanded(
                           child: RadioListTile(
-                            title: const Text(
+                            title: Text(
                               "Coleta",
                               style: TextStyle(
-                                  fontSize: 16
+                                  fontSize: tamanhotexto
                               ),
                             ),
                             value: "coleta",
@@ -656,10 +669,10 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
 
                         Expanded(
                           child: RadioListTile(
-                            title: const Text(
+                            title: Text(
                               "Entrega",
                               style: TextStyle(
-                                  fontSize: 16
+                                  fontSize: tamanhotexto
                               ),
                             ),
                             value: "entrega",
@@ -680,10 +693,10 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                 children: [
                   Container(
                     padding: const EdgeInsets.all(16),
-                    child: const Text(
+                    child: Text(
                       'Selecione um disponivel Galpão (Selecione o que bate com com o nome da empresa)*',
                       style: TextStyle(
-                          fontSize: 16,
+                          fontSize: tamanhotexto,
                           fontWeight: FontWeight.bold
                       ),
                     ),
@@ -691,10 +704,10 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                   Center(
                       child: ValueListenableBuilder(valueListenable: widget.dropValue2, builder: (context, String value, _){
                         return DropdownButton(
-                          hint: const Text(
+                          hint: Text(
                             'Selecione um Galpão',
                             style: TextStyle(
-                                fontSize: 16
+                                fontSize: tamanhotexto
                             ),
                           ),
                           value: (value.isEmpty)? null : value,
@@ -710,8 +723,8 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                             child:
                             Text(
                               opcao,
-                              style: const TextStyle(
-                                  fontSize: 16
+                              style: TextStyle(
+                                  fontSize: tamanhotexto
                               ),
                             ),
                           ),
@@ -726,18 +739,18 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                 child:
                 Column(
                   children: [
-                    const Text(
+                    Text(
                       'Está Entrando com Lacre ou Sem Lacre?',
                       style: TextStyle(
-                          fontSize: 16,
+                          fontSize: tamanhotexto,
                           fontWeight: FontWeight.bold
                       ),
                     ),
                     RadioListTile(
-                      title: const Text(
+                      title: Text(
                         "Com Lacre",
                         style: TextStyle(
-                            fontSize: 16
+                            fontSize: tamanhotexto
                         ),
                       ),
                       value: "lacre",
@@ -753,10 +766,10 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                       },
                     ),
                     RadioListTile(
-                      title: const Text(
+                      title: Text(
                         "Sem Lacre",
                         style: TextStyle(
-                            fontSize: 16
+                            fontSize: tamanhotexto
                         ),
                       ),
                       value: "naolacrado",
@@ -782,26 +795,26 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                         //keyboardType: TextInputType.number,
                         //enableSuggestions: false,
                         //autocorrect: false,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                           border: OutlineInputBorder(),
                           hintText: 'Numero do lacre *',
                           hintStyle: TextStyle(
-                              fontSize: 16
+                              fontSize: tamanhotexto
                           ),
                         ),
                       ),
                     )
-                        :const Text(''),
+                        :Text(''),
                   ],
                 ),
               ),
               ElevatedButton(
                   onPressed: uploadInfos,
                   child:
-                  const Text(
+                  Text(
                     'Adicionar novo Motorista',
                     style: TextStyle(
-                        fontSize: 16,
+                        fontSize: tamanhotexto,
                         fontWeight: FontWeight.bold
                     ),
                   )
@@ -823,9 +836,9 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                     padding: const EdgeInsets.all(16),
                     child:
                     Text(
-                      'Operador: ' + widget.nomeUser,
-                      style: const TextStyle(
-                          fontSize: 16
+                      'Operador: ${widget.nomeUser}',
+                      style: TextStyle(
+                          fontSize: tamanhotexto
                       ),
                     ),
                   ),
@@ -843,13 +856,6 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                       .doc(UID)
                       .get();
 
-                  bool cadastro = result.get('cadastrar');
-                  bool entrada = result.get('entrada');
-                  bool saida = result.get('saida');
-                  bool relatorio = result.get('relatorio');
-                  bool painel = result.get('painel');
-
-
                   Navigator.pop(context);
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context){
@@ -857,7 +863,7 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                       }));
                   // retorna false para impedir que a navegação volte à tela anterior
                   return false;
-                }, child: const Text(''),
+                }, child: Text(''),
               ),
             ],
           ),

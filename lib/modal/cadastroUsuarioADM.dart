@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:glk_controls/Painel.dart';
 
 class cadastroUsuarioModal extends StatefulWidget {
   var dropValue;
@@ -70,6 +74,22 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
   }
   @override
   Widget build(BuildContext context) {
+
+    double tamanhotexto = 20;
+    double tamanhotextobtns = 16;
+
+    if(kIsWeb){
+      tamanhotexto = 25;
+      tamanhotextobtns = 34;
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Cadastro de Operadores de Empresas'),
@@ -92,11 +112,11 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                   keyboardType: TextInputType.name,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Nome completo *',
                     hintStyle: TextStyle(
-                        fontSize: 18
+                        fontSize: tamanhotextobtns
                     ),
                   ),
                 ),
@@ -111,11 +131,11 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                   keyboardType: TextInputType.number,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'RG (Sem o dígito) * ',
                     hintStyle: TextStyle(
-                        fontSize: 18
+                        fontSize: tamanhotextobtns
                     ),
                   ),
                 ),
@@ -130,11 +150,11 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                   keyboardType: TextInputType.number,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Telefone',
                     hintStyle: TextStyle(
-                        fontSize: 18
+                        fontSize: tamanhotextobtns
                     ),
                   ),
                 ),
@@ -149,11 +169,11 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                   keyboardType: TextInputType.emailAddress,
                   enableSuggestions: false,
                   autocorrect: false,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Email *',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
@@ -169,11 +189,11 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                   enableSuggestions: false,
                   autocorrect: false,
                   obscureText: visivel,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     hintText: 'Senha * ',
                     hintStyle: TextStyle(
-                        fontSize: 16
+                        fontSize: tamanhotexto
                     ),
                   ),
                 ),
@@ -194,10 +214,10 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
               ),
               Container(
                 padding: const EdgeInsets.all(16),
-                child: const Text(
+                child: Text(
                   'Empresa do Operador *',
                   style: TextStyle(
-                      fontSize: 16,
+                      fontSize: tamanhotexto,
                       fontWeight: FontWeight.bold
                   ),
                 ),
@@ -205,10 +225,10 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
               Center(
                   child: ValueListenableBuilder(valueListenable: widget.dropValue, builder: (context, String value, _){
                     return DropdownButton(
-                      hint: const Text(
+                      hint: Text(
                         'Selecione uma empresa',
                         style: TextStyle(
-                            fontSize: 16
+                            fontSize: tamanhotexto
                         ),
                       ),
                       value: (value.isEmpty)? null : value,
@@ -224,8 +244,8 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                         child:
                         Text(
                           opcao,
-                          style: const TextStyle(
-                              fontSize: 18
+                          style: TextStyle(
+                              fontSize: tamanhotextobtns
                           ),
                         ),
                       ),
@@ -245,7 +265,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                             timeInSecForIosWeb: 1,
                             backgroundColor: Colors.black,
                             textColor: Colors.white,
-                            fontSize: 18,
+                            fontSize: tamanhotextobtns,
                           );
                       }else{
 
@@ -256,7 +276,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                             timeInSecForIosWeb: 1,
                             backgroundColor: Colors.black,
                             textColor: Colors.white,
-                            fontSize: 18,
+                            fontSize: tamanhotextobtns,
                           );
                         }else{
 
@@ -267,7 +287,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                               timeInSecForIosWeb: 1,
                               backgroundColor: Colors.black,
                               textColor: Colors.white,
-                              fontSize: 18,
+                              fontSize: tamanhotextobtns,
                             );
                           }else{
                             if(empresaSelecionada == ''){
@@ -277,7 +297,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                                 timeInSecForIosWeb: 1,
                                 backgroundColor: Colors.black,
                                 textColor: Colors.white,
-                                fontSize: 18,
+                                fontSize: tamanhotextobtns,
                               );
                             }else{
                               if(pass == ''){
@@ -287,7 +307,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                                   timeInSecForIosWeb: 1,
                                   backgroundColor: Colors.black,
                                   textColor: Colors.white,
-                                  fontSize: 18,
+                                  fontSize: tamanhotextobtns,
                                 );
                               }else{
                                 showDialog(
@@ -351,7 +371,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                                     timeInSecForIosWeb: 1,
                                     backgroundColor: Colors.black,
                                     textColor: Colors.white,
-                                    fontSize: 18,
+                                    fontSize: tamanhotextobtns,
                                   );
                                   FirebaseFirestore.instance.collection('operadorEmpresarial').doc(userCredential.user?.uid).set(
                                       {
@@ -385,7 +405,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                                       timeInSecForIosWeb: 1,
                                       backgroundColor: Colors.black,
                                       textColor: Colors.white,
-                                      fontSize: 18,
+                                      fontSize: tamanhotextobtns,
                                     );
                                     widget.listaNome.clear();
                                     Navigator.of(context).pop();
@@ -399,7 +419,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                                     timeInSecForIosWeb: 1,
                                     backgroundColor: Colors.black,
                                     textColor: Colors.white,
-                                    fontSize: 18,
+                                    fontSize: tamanhotextobtns,
                                   );
                                 }
                                 await app.delete();
@@ -409,10 +429,10 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                         }
                       }
                     },
-                    child: const Text(
+                    child: Text(
                       'Confirmar cadastro',
                       style: TextStyle(
-                          fontSize: 18,
+                          fontSize: tamanhotextobtns,
                           fontWeight: FontWeight.bold
                       ),),
                   )
@@ -436,11 +456,31 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                       padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                       child:
                       Text(
-                        'ADM : ' + widget.ADMName,
-                        style: const TextStyle(
-                            fontSize: 18
+                        'ADM : ${widget.ADMName}',
+                        style: TextStyle(
+                            fontSize: tamanhotextobtns
                         ),
                       ),
+                    ),
+                    WillPopScope(
+                      onWillPop: () async {
+
+                        widget.listaNome.clear();
+                        var result = await FirebaseFirestore.instance
+                            .collection("Condominio")
+                            .doc('condominio')
+                            .get();
+
+                        String logoPath = result.get('imageURL');
+
+                        Navigator.pop(context);
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context){
+                              return painelADM(widget.ADMName, logoPath);
+                            }));
+
+                        return false;
+                      }, child: const Text(''),
                     ),
                   ],
                 ),
