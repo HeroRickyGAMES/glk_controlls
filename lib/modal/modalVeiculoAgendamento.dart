@@ -6,7 +6,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:uuid/uuid.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:intl/intl.dart';
 
 //Programado Por HeroRickyGames
@@ -51,6 +50,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
     'Caminhonete',
     'Carro de passeio',
     'Moto',
+    'Carreta'
   ];
 
   String motivo = '';

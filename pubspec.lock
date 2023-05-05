@@ -374,30 +374,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_calendar_carousel:
-    dependency: "direct main"
-    description:
-      name: flutter_calendar_carousel
-      sha256: da198154b3a7254757ead8d40eee4f2fa53d4500fe8a226cccb951e8763f988b
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.1"
-  flutter_date_pickers:
-    dependency: "direct main"
-    description:
-      name: flutter_date_pickers
-      sha256: "8e35077959d0cb6a915ad1f8c27e5d1e3ef6b1eb13fbefaa18680a3d6c118e13"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.4.2"
-  flutter_datetime_picker:
-    dependency: "direct main"
-    description:
-      name: flutter_datetime_picker
-      sha256: "8e695c63c769350e541951227c2775190ec73ceda774a315b1dc9a99d5facfe5"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.5.1"
   flutter_image_compress:
     dependency: "direct main"
     description:
@@ -414,11 +390,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.1"
-  flutter_localizations:
-    dependency: transitive
-    description: flutter
-    source: sdk
-    version: "0.0.0"
   flutter_picker:
     dependency: "direct main"
     description:

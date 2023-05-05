@@ -317,23 +317,9 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
             lacrebool ?
             Container(
               padding: const EdgeInsets.all(16),
-              child: TextFormField(
-                controller: _textEditingController,
-                onChanged: (valor){
-                  lacreSt = valor;
-                  //Mudou mandou para a String
-                },
-                keyboardType: TextInputType.number,
-                //enableSuggestions: false,
-                //autocorrect: false,
-                decoration: InputDecoration(
-                  border: const OutlineInputBorder(),
-                  hintText: 'Numero do lacre *',
-                  hintStyle: TextStyle(
-                      fontSize: tamanhotexto 
-                  ),
-                ),
-              ),
+              child: Text(
+                "Numero do Lacre ${widget.lacradoStr}"
+              )
             )
                 :const Text(''),
             Container(

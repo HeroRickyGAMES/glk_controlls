@@ -47,7 +47,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
     'Caminhonete',
     'Carro de passeio',
     'Moto',
+    'Carreta'
   ];
+
   String Status = '';
 
   bool veiculoInterno = false;
@@ -431,57 +433,10 @@ class _modalPorteiroState extends State<modalPorteiro> {
                           fontSize: tamanhotexto,
                         );
                       }else{
-//Ele vai verificar se o usuario está bloqueado ou não.
-                        print("chegou aqui");
 
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return const AlertDialog(
-                              title: Text('Aguarde!'),
-                              actions: [
-                                Center(
-                                  child: CircularProgressIndicator(),
-                                )
-                              ],
-                            );
-                          },
-                        );
-
-                        List Visitantes = [];
-
-                        final VisitantesBloqueadosCollection = FirebaseFirestore.instance.collection('VisitantesBloqueados');
-                        final snapshot = await VisitantesBloqueadosCollection.get();
-                        final documentsvist = snapshot.docs;
-                        for (final docvisit in documentsvist) {
-                          final id = docvisit.id;
-                          final name = docvisit.get('rg');
-                          print('$id - $name');
-
-                          Visitantes.add(name);
-
-                        }
-                        print('Visitantes bloqueados no RG $Visitantes');
-                        print('Listagem de usuários concluída com sucesso!');
-
-                        List VeiculosBLk = [];
-
-                        final VeiculosBloqueadosCollection = FirebaseFirestore.instance.collection('VisitantesBloqueados');
-                        final snapshot2 = await VeiculosBloqueadosCollection.get();
-                        final VeiculosBLKK = snapshot.docs;
-                        for (final docVeiculoBlock in VeiculosBLKK) {
-                          final id = docVeiculoBlock.id;
-                          final name = docVeiculoBlock.get('nome');
-                          print('$id - $name');
-
-                          VeiculosBLk.add(name);
-
-                        }
-
-                        if(Visitantes.contains(RGMotorista)){
-                          Navigator.of(context).pop();
+                        if(VeiculoPlaca!.length != 8){
                           Fluttertoast.showToast(
-                            msg: 'Este visitante está bloqueado!',
+                            msg: 'A placa está escrita errada, faltam caracteres!',
                             toastLength: Toast.LENGTH_SHORT,
                             timeInSecForIosWeb: 1,
                             backgroundColor: Colors.black,
@@ -489,70 +444,159 @@ class _modalPorteiroState extends State<modalPorteiro> {
                             fontSize: tamanhotexto,
                           );
                         }else{
-                          if(VeiculosBLk.contains(VeiculoPlaca)){
-                            Navigator.of(context).pop();
-                            Fluttertoast.showToast(
-                              msg: 'Este visitante está bloqueado!',
-                              toastLength: Toast.LENGTH_SHORT,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.black,
-                              textColor: Colors.white,
-                              fontSize: tamanhotexto,
+                          if(VeiculoPlaca!.contains(" ")){
+
+                            //Ele vai verificar se o usuario está bloqueado ou não.
+                            print("chegou aqui");
+
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return const AlertDialog(
+                                  title: Text('Aguarde!'),
+                                  actions: [
+                                    Center(
+                                      child: CircularProgressIndicator(),
+                                    )
+                                  ],
+                                );
+                              },
                             );
-                          }else{
+                            List Visitantes = [];
 
-
-
-                            if(veiculoInterno == true){
-                              Status = 'Estacionário';
-                            }
-
-                            final usersCollection = FirebaseFirestore.instance.collection('empresa');
-                            final snapshot = await usersCollection.get();
-                            final documents = snapshot.docs;
-                            for (final doc in documents) {
-                              final id = doc.id;
-                              final name = doc.get('nome');
+                            final VisitantesBloqueadosCollection = FirebaseFirestore.instance.collection('VisitantesBloqueados');
+                            final snapshot = await VisitantesBloqueadosCollection.get();
+                            final documentsvist = snapshot.docs;
+                            for (final docvisit in documentsvist) {
+                              final id = docvisit.id;
+                              final name = docvisit.get('rg');
                               print('$id - $name');
 
-                              if(doc.get('nome') == empresaSelecionada){
-                                galpaoPrimario = doc.get('galpaoPrimario');
-                                Map galpaesEmpresa = doc.get('galpaes');
+                              Visitantes.add(name);
 
-                                String idEmpresa = doc.get('id');
+                            }
+                            print('Visitantes bloqueados no RG $Visitantes');
+                            print('Listagem de usuários concluída com sucesso!');
 
+                            List VeiculosBLk = [];
 
-                                List veiculosDeEmpresa = [];
-                                List idEmpresaList = [];
+                            final VeiculosBloqueadosCollection = FirebaseFirestore.instance.collection('VisitantesBloqueados');
+                            final snapshot2 = await VeiculosBloqueadosCollection.get();
+                            final VeiculosBLKK = snapshot.docs;
+                            for (final docVeiculoBlock in VeiculosBLKK) {
+                              final id = docVeiculoBlock.id;
+                              final name = docVeiculoBlock.get('nome');
+                              print('$id - $name');
 
-                                final veiculosDeEmpresasCollection = FirebaseFirestore.instance.collection('veiculosDeEmpresa');
-                                final snapshot3 = await veiculosDeEmpresasCollection.get();
-                                final veiculosDeEmpresas = snapshot.docs;
-                                for (final docveiculosDeEmpresas in veiculosDeEmpresas) {
-                                  final id = docveiculosDeEmpresas.id;
-                                  final name = docveiculosDeEmpresas.get('nome');
-                                  final idList = docveiculosDeEmpresas.get('id');
-                                  print('$id - $name');
+                              VeiculosBLk.add(name);
 
-                                  veiculosDeEmpresa.add(name);
-                                  idEmpresaList.add(idList);
+                            }
 
+                            if(Visitantes.contains(RGMotorista)){
+                              Navigator.of(context).pop();
+                              Fluttertoast.showToast(
+                                msg: 'Este visitante está bloqueado!',
+                                toastLength: Toast.LENGTH_SHORT,
+                                timeInSecForIosWeb: 1,
+                                backgroundColor: Colors.black,
+                                textColor: Colors.white,
+                                fontSize: tamanhotexto,
+                              );
+                            }else{
+                              if(VeiculosBLk.contains(VeiculoPlaca)){
+                                Navigator.of(context).pop();
+                                Fluttertoast.showToast(
+                                  msg: 'Este visitante está bloqueado!',
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.black,
+                                  textColor: Colors.white,
+                                  fontSize: tamanhotexto,
+                                );
+                              }else{
+                                if(veiculoInterno == true){
+                                  Status = 'Estacionário';
                                 }
 
-                                if(veiculosDeEmpresa.contains(VeiculoPlaca)){
+                                final usersCollection = FirebaseFirestore.instance.collection('empresa');
+                                final snapshot = await usersCollection.get();
+                                final documents = snapshot.docs;
+                                for (final doc in documents) {
+                                  final id = doc.id;
+                                  final name = doc.get('nome');
+                                  print('$id - $name');
 
-                                  if(idEmpresaList.contains(idEmpresa)){
-                                    print(galpaesEmpresa.values.first);
+                                  if(doc.get('nome') == empresaSelecionada){
+                                    galpaoPrimario = doc.get('galpaoPrimario');
+                                    Map galpaesEmpresa = doc.get('galpaes');
 
-                                    if(galpaesEmpresa.values.first == 0){
-                                      Fluttertoast.showToast(
-                                        msg: 'Não há mais vagas disponiveis!',
-                                        toastLength: Toast.LENGTH_SHORT,
-                                        timeInSecForIosWeb: 1,
-                                        backgroundColor: Colors.black,
-                                        textColor: Colors.white,
-                                        fontSize: tamanhotexto,
-                                      );
+                                    String idEmpresa = doc.get('id');
+
+
+                                    List veiculosDeEmpresa = [];
+                                    List idEmpresaList = [];
+
+                                    final veiculosDeEmpresasCollection = FirebaseFirestore.instance.collection('veiculosDeEmpresa');
+                                    final snapshot3 = await veiculosDeEmpresasCollection.get();
+                                    final veiculosDeEmpresas = snapshot3.docs;
+                                    for (final docveiculosDeEmpresas in veiculosDeEmpresas) {
+                                      final id = docveiculosDeEmpresas.id;
+                                      final name = docveiculosDeEmpresas.get('nome');
+                                      final idList = docveiculosDeEmpresas.get('id');
+                                      print('$id - $name');
+
+                                      veiculosDeEmpresa.add(name);
+                                      idEmpresaList.add(idList);
+
+                                    }
+
+                                    if(veiculosDeEmpresa.contains(VeiculoPlaca)){
+
+                                      if(idEmpresaList.contains(idEmpresa)){
+                                        print(galpaesEmpresa.values.first);
+
+                                        if(galpaesEmpresa.values.first == 0){
+                                          Fluttertoast.showToast(
+                                            msg: 'Não há mais vagas disponiveis!',
+                                            toastLength: Toast.LENGTH_SHORT,
+                                            timeInSecForIosWeb: 1,
+                                            backgroundColor: Colors.black,
+                                            textColor: Colors.white,
+                                            fontSize: tamanhotexto,
+                                          );
+                                        }else{
+                                          ConnectivityUtils.instance
+                                            ..serverToPing =
+                                                "https://gist.githubusercontent.com/Vanethos/dccc4b4605fc5c5aa4b9153dacc7391c/raw/355ccc0e06d0f84fdbdc83f5b8106065539d9781/gistfile1.txt"
+                                            ..verifyResponseCallback =
+                                                (response) => response.contains("This is a test!");
+
+                                          //todo subtract
+                                          galpaesEmpresa[galpaesEmpresa.keys.first] = galpaesEmpresa[galpaesEmpresa.keys.first] - 1;
+
+                                          print(galpaesEmpresa);
+
+                                          FirebaseFirestore.instance.collection('empresa').doc(idEmpresa).update({
+                                            'galpaes': galpaesEmpresa
+                                          });
+
+                                          if(await ConnectivityUtils.instance.isPhoneConnected()){
+                                            veiculoInterno == true;
+                                            Status = 'Estacionário';
+                                            print(galpaoPrimario);
+                                            MandarMT();
+
+                                            print('Conectado!');
+
+                                          }else{
+                                            veiculoInterno == true;
+                                            Status = 'Liberado Saida';
+                                            print(galpaoPrimario);
+                                            MandarMT();
+                                            print('Desconectado!');
+                                          }
+                                        }
+                                      }
                                     }else{
                                       ConnectivityUtils.instance
                                         ..serverToPing =
@@ -560,61 +604,39 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                         ..verifyResponseCallback =
                                             (response) => response.contains("This is a test!");
 
-                                      //todo subtract
-                                      galpaesEmpresa[galpaesEmpresa.keys.first] = galpaesEmpresa[galpaesEmpresa.keys.first] - 1;
-
-                                      print(galpaesEmpresa);
-
-                                      FirebaseFirestore.instance.collection('empresa').doc(idEmpresa).update({
-                                        'galpaes': galpaesEmpresa
-                                      });
-
                                       if(await ConnectivityUtils.instance.isPhoneConnected()){
-                                        veiculoInterno == true;
-                                        Status = 'Estacionário';
-                                        print(galpaoPrimario);
-                                        MandarMT();
 
-                                        print('Conectado!');
+                                        final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+                                        final SharedPreferences prefs = await _prefs;
+                                        bool? offlinemode =  prefs.getBool('OfflineMode');
 
+                                        if(offlinemode == true){
+                                          Status = 'Liberado Entrada';
+                                          MandarMT();
+                                          print('Modo Offline Ativo');
+                                        }else{
+                                          MandarMT();
+                                          print('Conectado!');
+                                        }
                                       }else{
-                                        veiculoInterno == true;
-                                        Status = 'Liberado Saida';
-                                        print(galpaoPrimario);
+                                        Status = 'Liberado Entrada';
                                         MandarMT();
                                         print('Desconectado!');
                                       }
                                     }
                                   }
-                                }else{
-                                  ConnectivityUtils.instance
-                                    ..serverToPing =
-                                        "https://gist.githubusercontent.com/Vanethos/dccc4b4605fc5c5aa4b9153dacc7391c/raw/355ccc0e06d0f84fdbdc83f5b8106065539d9781/gistfile1.txt"
-                                    ..verifyResponseCallback =
-                                        (response) => response.contains("This is a test!");
-
-                                  if(await ConnectivityUtils.instance.isPhoneConnected()){
-
-                                    final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-                                    final SharedPreferences prefs = await _prefs;
-                                    bool? offlinemode =  prefs.getBool('OfflineMode');
-
-                                    if(offlinemode == true){
-                                      Status = 'Liberado Entrada';
-                                      MandarMT();
-                                      print('Modo Offline Ativo');
-                                    }else{
-                                      MandarMT();
-                                      print('Conectado!');
-                                    }
-                                  }else{
-                                    Status = 'Liberado Entrada';
-                                    MandarMT();
-                                    print('Desconectado!');
-                                  }
                                 }
                               }
                             }
+                          }else{
+                            Fluttertoast.showToast(
+                              msg: 'A placa está escrita errada!',
+                              toastLength: Toast.LENGTH_SHORT,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.black,
+                              textColor: Colors.white,
+                              fontSize: tamanhotexto,
+                            );
                           }
                         }
                       }

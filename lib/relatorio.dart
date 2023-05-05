@@ -19,7 +19,7 @@ class relatorio extends StatefulWidget {
 
 class _relatorioState extends State<relatorio> {
 
-  String? Pesquisa;
+  String Pesquisa = '';
   @override
   Widget build(BuildContext context) {
 
@@ -47,9 +47,14 @@ class _relatorioState extends State<relatorio> {
     }
 
     pesquisarmet() async {
+    List nome = [];
+    List Placa = [];
+    List Empresa = [];
+    List rg = [];
 
+    Pesquisa.toUpperCase();
 
-      if(Pesquisa == null){
+      if(Pesquisa == ''){
 
         Fluttertoast.showToast(
           msg: 'Preencha algum parametro na pesquisa!',
@@ -62,62 +67,63 @@ class _relatorioState extends State<relatorio> {
 
       }else{
 
-        FirebaseFirestore.instance
-            .collection('Autorizacoes')
-            .get()
-            .then((QuerySnapshot querySnapshot) {
-          querySnapshot.docs.forEach((doc) {
+        final veiculosDeEmpresasCollection = FirebaseFirestore.instance.collection('Autorizacoes');
+        final snapshot = await veiculosDeEmpresasCollection.get();
+        final veiculosDeEmpresas = snapshot.docs;
+        for (final docveiculosDeEmpresas in veiculosDeEmpresas) {
+          final id = docveiculosDeEmpresas.id;
 
-            if(doc["nomeMotorista"] == Pesquisa ){
+          nome.add(docveiculosDeEmpresas.get('nomeMotorista'));
+          Placa.add(docveiculosDeEmpresas.get('PlacaVeiculo'));
+          Empresa.add(docveiculosDeEmpresas.get('Empresa'));
+          rg.add(docveiculosDeEmpresas.get('RGDoMotorista'));
 
-              String oqPesquisar = 'nomeMotorista';
+          print(nome);
+          print(Placa);
+          print(Empresa);
+          print(rg);
+        }
+        
+        if(nome.contains(Pesquisa)){
+          String oqPesquisar = 'nomeMotorista';
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context){
+                return pesquisaRelatorio(Pesquisa!, oqPesquisar);
+              }));
+        }else{
+            if(Placa.contains(Pesquisa)){
+              String oqPesquisar = 'PlacaVeiculo';
               Navigator.push(context,
                   MaterialPageRoute(builder: (context){
                     return pesquisaRelatorio(Pesquisa!, oqPesquisar);
                   }));
-
             }else{
-
-              if(doc["PlacaVeiculo"] == Pesquisa ){
-
-                String oqPesquisar = 'PlacaVeiculo';
+              if(Empresa.contains(Pesquisa)){
+                String oqPesquisar = 'Empresa';
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context){
                       return pesquisaRelatorio(Pesquisa!, oqPesquisar);
                     }));
               }else{
-                if(doc["Empresa"] == Pesquisa){
-                  String oqPesquisar = 'Empresa';
+                if(rg.contains(Pesquisa)){
+                  String oqPesquisar = 'RGDoMotorista';
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context){
                         return pesquisaRelatorio(Pesquisa!, oqPesquisar);
                       }));
                 }else{
-                  if(doc["Galpão"] == Pesquisa){
-                    String oqPesquisar = 'Galpão';
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context){
-                          return pesquisaRelatorio(Pesquisa!, oqPesquisar);
-                        }));
-                  }else{
-
-                    Fluttertoast.showToast(
-                      msg: 'Infelizmente não achei nada do que você pesquisou, por favor, tente novamente!',
-                      toastLength: Toast.LENGTH_SHORT,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.black,
-                      textColor: Colors.white,
-                      fontSize: 16.0,
-                    );
-
-                  }
+                  Fluttertoast.showToast(
+                    msg: 'Infelizmente não achei nada do que você pesquisou, por favor, tente novamente!',
+                    toastLength: Toast.LENGTH_SHORT,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Colors.black,
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
                 }
               }
             }
-
-          });
-        });
-
+        }
       }
     }
 

@@ -204,8 +204,6 @@ class _listEntradaState extends State<listEntrada> {
                               );
 
                             }else{
-
-
                               FirebaseFirestore.instance
                                   .collection('Autorizacoes')
                                   .get()
@@ -499,11 +497,11 @@ class _listEntradaState extends State<listEntrada> {
 
                                                           Map tags = (result.get('tags'));
                                                           List tagsDisponiveis = [];
-
+                                                          print(tags);
                                                           print(tags.values.contains('Usado'));
 
                                                           tags.removeWhere((key, value) => value == 'Usado');
-                                                          tagsDisponiveis.addAll(tags.keys);
+                                                          tagsDisponiveis.addAll(tags.keys.toList());
 
                                                           tagsDisponiveis.sort();
 

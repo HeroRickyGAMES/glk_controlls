@@ -3,9 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:intl/intl.dart';
 
 class meusAgendamentosActivity extends StatefulWidget {
   String Empresa;
@@ -66,6 +64,7 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                 .collection('Autorizacoes')
                 .where("agendamento", isEqualTo: true)
                 .where("Empresa", isEqualTo: widget.Empresa)
+                .where("Status", isEqualTo: 'Liberado Entrada')
                 .snapshots(),
             builder: (BuildContext context,
                 AsyncSnapshot<QuerySnapshot> snapshot) {
