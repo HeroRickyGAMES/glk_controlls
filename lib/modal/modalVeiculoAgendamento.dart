@@ -39,10 +39,12 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
   TextEditingController placaveiculointerface = TextEditingController();
   TextEditingController telefoneinterface = TextEditingController();
 
-  late DateTime dataAgendada;
-  late DateTime dataAgendadasaida;
+  DateTime dataAgendada = DateTime(2023);
+  DateTime dataAgendadasaida = DateTime(2023);
   String dataAgendataST = '';
   String dataAgendataSTsaida = '';
+  TimeOfDay selectedTime = TimeOfDay.now();
+  TimeOfDay selectedTime2 = TimeOfDay.now();
 
   List VeiculoOPC = [
     'Caminhão',
@@ -55,6 +57,57 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
 
   @override
   Widget build(BuildContext context) {
+
+    Future<void> _selectDate(BuildContext context) async {
+      final DateTime? picked = await showDatePicker(
+          context: context,
+          initialDate: DateTime.now(),
+          firstDate: DateTime.now(),
+          lastDate: DateTime(2025)
+      );
+      if (picked != null && picked != dataAgendada) {
+        setState(() {
+          dataAgendada = picked;
+        });
+      }
+      if(dataAgendada == DateTime(2023)){
+
+      }else{
+        final TimeOfDay? pickedTime = await showTimePicker(
+          context: context,
+          initialTime: selectedTime,
+        );
+        setState(() {
+          selectedTime = pickedTime!;
+          dataAgendataST = "${dataAgendada.month}/${dataAgendada.day}/${dataAgendada.year} ${pickedTime.toString().replaceAll("TimeOfDay", "").replaceAll("(", "").replaceAll(")", "")}";
+        });
+      }
+    }
+    Future<void> _selectDate2(BuildContext context) async {
+      final DateTime? picked = await showDatePicker(
+          context: context,
+          initialDate: DateTime.now(),
+          firstDate: DateTime.now(),
+          lastDate: DateTime(2025)
+      );
+      if (picked != null && picked != dataAgendadasaida) {
+        setState(() {
+          dataAgendadasaida = picked;
+        });
+      }
+      if(dataAgendada == DateTime(2023)){
+
+      }else{
+        final TimeOfDay? pickedTime = await showTimePicker(
+          context: context,
+          initialTime: selectedTime,
+        );
+        setState(() {
+          selectedTime2 = pickedTime!;
+          dataAgendataSTsaida = "${dataAgendadasaida.month}/${dataAgendadasaida.day}/${dataAgendadasaida.year} ${pickedTime.toString().replaceAll("TimeOfDay", "").replaceAll("(", "").replaceAll(")", "")}";
+        });
+      }
+    }
 
     double tamanhotexto = 20;
     double tamanhotextobtns = 16;
@@ -358,7 +411,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('GLK Controls - Cadastro: Motorista e Veiculo'),
+        title: const Text('GLK Controls - Cadastro: Motorista e Veiculo'),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -370,71 +423,24 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                 width: 100,
                 height: 100,
               ),
-              Text(
-                'Data de agendamento selecionada de entrada: ${dataAgendataST}',
-                style: TextStyle(
-                    fontSize: tamanhotexto
-                ),
+              Container(
+                padding: EdgeInsets.all(8),
+                  child:
+                  const Text('Devido algumas váriaveis do aplicativo, o padrão de datas ficou como o padrão gringo (MM/DD/AAAA)')
               ),
-              TextButton(
-                  onPressed: () {
-                    DatePicker.showDateTimePicker(context,
-                        showTitleActions: true,
-                        minTime: DateTime.now(),
-                        onChanged: (date) {
-                          print('change $date in time zone ${date.timeZoneOffset.inHours}');
-                          dataAgendada = date;
-                          print(dataAgendada);
-                        }, onConfirm: (date) {
-                          print('confirm $date');
-                          dataAgendada = date;
-
-                          setState(() {
-                            dataAgendataST = DateFormat('MM-dd-yyyy HH:mm:ss').format(date).replaceAll('-', '/');
-                          });
-
-                        }, locale: LocaleType.pt);
-                  },
-                  child: Text(
-                    'Selecione a data',
-                    style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: tamanhotexto
-                    ),
-                  )
+              Text(dataAgendataST == ''
+                  ? 'Nenhum data selecionada'
+                  : 'Data selecionada: $dataAgendataST'),
+              ElevatedButton(
+                onPressed: () => _selectDate(context),
+                child: const Text('Selecionar data'),
               ),
-              Text(
-                'Data de agendamento selecionada de saida: ${dataAgendataSTsaida}',
-                style: TextStyle(
-                    fontSize: tamanhotexto
-                ),
-              ),
-              TextButton(
-                  onPressed: () {
-                    DatePicker.showDateTimePicker(context,
-                        showTitleActions: true,
-                        minTime: DateTime.now(),
-                        onChanged: (date) {
-                          print('change $date in time zone ${date.timeZoneOffset.inHours}');
-                          dataAgendadasaida = date;
-                          print(dataAgendadasaida);
-                        }, onConfirm: (date) {
-                          print('confirm $date');
-                          dataAgendada = date;
-
-                          setState(() {
-                            dataAgendataSTsaida = DateFormat('MM-dd-yyyy HH:mm:ss').format(date).replaceAll('-', '/');
-                          });
-
-                        }, locale: LocaleType.pt);
-                  },
-                  child: Text(
-                    'Selecione a data',
-                    style: TextStyle(
-                        color: Colors.blue,
-                        fontSize: tamanhotexto
-                    ),
-                  )
+              Text(dataAgendataSTsaida == ''
+                  ? 'Nenhum data selecionada'
+                  : 'Data selecionada: $dataAgendataSTsaida'),
+              ElevatedButton(
+                onPressed: () => _selectDate2(context),
+                child: const Text('Selecionar data'),
               ),
               Container(
                 padding: const EdgeInsets.only(top: 16),
@@ -448,7 +454,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                   enableSuggestions: false,
                   autocorrect: false,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     hintText: 'Nome Completo do Motorista *',
                     hintStyle: TextStyle(
                         fontSize: tamanhotexto
@@ -468,7 +474,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                   enableSuggestions: false,
                   autocorrect: false,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     hintText: 'RG do Motorista (Sem digitos) * ',
                     hintStyle: TextStyle(
                         fontSize: tamanhotexto
@@ -570,7 +576,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                     //Mudou mandou para a String
                   },
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     hintText: 'Placa do Veiculo * ',
                     hintStyle: TextStyle(
                         fontSize: tamanhotexto
@@ -607,7 +613,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                   enableSuggestions: false,
                   autocorrect: false,
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     hintText: 'Telefone',
                     hintStyle: TextStyle(
                         fontSize: tamanhotexto
@@ -624,7 +630,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                     //Mudou mandou para a String
                   },
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     hintText: 'Empresa de Origem',
                     hintStyle: TextStyle(
                         fontSize: tamanhotexto
@@ -660,7 +666,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                     //Mudou mandou para a String
                   },
                   decoration: InputDecoration(
-                    border: OutlineInputBorder(),
+                    border: const OutlineInputBorder(),
                     hintText: 'Motivo',
                     hintStyle: TextStyle(
                         fontSize: tamanhotexto
@@ -758,7 +764,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
 
                   // retorna false para impedir que a navegação volte à tela anterior
                   return false;
-                }, child: Text(''),
+                }, child: const Text(''),
               ),
             ],
           ),

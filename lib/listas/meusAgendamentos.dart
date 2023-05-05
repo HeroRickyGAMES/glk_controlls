@@ -16,6 +16,16 @@ class meusAgendamentosActivity extends StatefulWidget {
 }
 
 class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
+
+  String dataAgendataST = '';
+  String dataAgendataSTsaida = '';
+
+  DateTime dataAgendada = DateTime(2023);
+  DateTime dataAgendadasaida = DateTime(2023);
+
+  TimeOfDay selectedTime = TimeOfDay.now();
+  TimeOfDay selectedTime2 = TimeOfDay.now();
+
   @override
   Widget build(BuildContext context) {
 
@@ -102,295 +112,260 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                     String VeiculoPlaca = documents['PlacaVeiculo'].replaceAll('(AG)', "");
                                     String telefone = documents['Telefone'];
                                     String originEmpresa = documents['EmpresadeOrigin'];
-                                    String dataAgendataST = documents['DataEntrada'];
-                                    String dataAgendataSTsaida = documents['DataSaida'];
-
-                                    late DateTime dataAgendada;
-                                    late DateTime dataAgendadasaida;
+                                    dataAgendataST = documents['DataEntrada'];
+                                    dataAgendataSTsaida = documents['DataSaida'];
 
                                     showDialog(
                                       context: context,
                                       builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          title: const Text('Editar agendamento'),
-                                          actions: [
-                                            Container(
-                                              padding: const EdgeInsets.all(16),
-                                              child: Column(
-                                                children: [
+                                        return StatefulBuilder(
+                                          builder: (BuildContext context, StateSetter setState) {
+                                            return SingleChildScrollView(
+                                              child: AlertDialog(
+                                                title: const Text('Editar agendamento'),
+                                                actions: [
                                                   Container(
-                                                    padding: EdgeInsets.all(16),
-                                                    child: Text(
-                                                      'Data de agendamento selecionada de entrada: ${dataAgendataST}',
-                                                      style: TextStyle(
-                                                          fontSize: tamanhotexto
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  TextButton(
-                                                      onPressed: () {
-                                                        DatePicker.showDateTimePicker(context,
-                                                            showTitleActions: true,
-                                                            minTime: DateTime.now(),
-                                                            onChanged: (date) {
-                                                              print('change $date in time zone ' +
-                                                                  date.timeZoneOffset.inHours.toString());
-                                                              dataAgendada = date;
-                                                              print(dataAgendada);
-                                                            }, onConfirm: (date) {
-                                                              print('confirm $date');
-                                                              dataAgendada = date;
-
+                                                    padding: const EdgeInsets.all(16),
+                                                    child: Column(
+                                                      children: [
+                                                        Container(
+                                                            padding: EdgeInsets.all(8),
+                                                            child:
+                                                            const Text('Devido algumas váriaveis do aplicativo, o padrão de datas ficou como o padrão gringo (MM/DD/AAAA)')
+                                                        ),
+                                                        Text(dataAgendataST == ''
+                                                            ? 'Nenhum data selecionada'
+                                                            : 'Data selecionada: $dataAgendataST'),
+                                                        ElevatedButton(
+                                                          onPressed: () async {
+                                                            final DateTime? picked = await showDatePicker(
+                                                                context: context,
+                                                                initialDate: DateTime.now(),
+                                                                firstDate: DateTime.now(),
+                                                                lastDate: DateTime(2025)
+                                                            );
+                                                            if (picked != null && picked != dataAgendada) {
                                                               setState(() {
-                                                                dataAgendataST = DateFormat('MM-dd-yyyy HH:mm:ss').format(date).replaceAll('-', '/');
+                                                                dataAgendada = picked;
                                                               });
+                                                            }
+                                                            if(dataAgendada == DateTime(2023)){
 
-                                                            }, locale: LocaleType.pt);
-                                                      },
-                                                      child: Text(
-                                                        'Selecione a data',
-                                                        style: TextStyle(
-                                                            color: Colors.blue,
-                                                            fontSize: tamanhotexto
-                                                        ),
-                                                      )
-                                                  ),
-                                                  Text(
-                                                    'Data de agendamento selecionada de saida: ${dataAgendataSTsaida}',
-                                                    style: TextStyle(
-                                                        fontSize: tamanhotexto
-                                                    ),
-                                                  ),
-                                                  TextButton(
-                                                      onPressed: () {
-                                                        DatePicker.showDateTimePicker(context,
-                                                            showTitleActions: true,
-                                                            minTime: DateTime.now(),
-                                                            onChanged: (date) {
-                                                              print('change $date in time zone ' +
-                                                                  date.timeZoneOffset.inHours.toString());
-                                                              dataAgendadasaida = date;
-                                                              print(dataAgendadasaida);
-                                                            }, onConfirm: (date) {
-                                                              print('confirm $date');
-                                                              dataAgendada = date;
-
-                                                              setState(() {
-                                                                dataAgendataSTsaida = DateFormat('MM-dd-yyyy HH:mm:ss').format(date).replaceAll('-', '/');
-                                                              });
-
-                                                            }, locale: LocaleType.pt);
-                                                      },
-                                                      child: Text(
-                                                        'Selecione a data',
-                                                        style: TextStyle(
-                                                            color: Colors.blue,
-                                                            fontSize: tamanhotexto
-                                                        ),
-                                                      )
-                                                  ),
-                                                  Container(
-                                                      padding: const EdgeInsets.only(top: 16),
-                                                      child: const Text(
-                                                          'Nome:'
-                                                      )
-                                                  ),
-                                                  Container(
-                                                    padding: const EdgeInsets.only(top: 16),
-                                                    child: TextFormField(
-                                                      controller: nameMotoristaAllcaps,
-                                                      onChanged: (valor){
-                                                        nomeMotorista = valor.toUpperCase();
-                                                        //Mudou mandou para a String
-                                                      },
-                                                      keyboardType: TextInputType.name,
-                                                      enableSuggestions: false,
-                                                      autocorrect: false,
-                                                      decoration: InputDecoration(
-                                                        border: OutlineInputBorder(),
-                                                        hintText: 'Nome completo do motorista *',
-                                                        hintStyle: TextStyle(
-                                                            fontSize: tamanhotexto
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                      padding: const EdgeInsets.only(top: 16),
-                                                      child: const Text(
-                                                          'RG:'
-                                                      )
-                                                  ),
-                                                  Container(
-                                                    padding: const EdgeInsets.only(top: 16),
-                                                    child: TextFormField(
-                                                      onChanged: (valor){
-                                                        RGMotorista = valor;
-                                                        nameMotoristaAllcaps.text = nomeMotorista;
-                                                        //Mudou mandou para a String
-                                                      },
-                                                      controller: RGController,
-                                                      keyboardType: TextInputType.number,
-                                                      enableSuggestions: false,
-                                                      autocorrect: false,
-                                                      decoration: InputDecoration(
-                                                        border: OutlineInputBorder(),
-                                                        hintText: 'RG do motorista * ',
-                                                        hintStyle: TextStyle(
-                                                            fontSize: tamanhotexto
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                      padding: const EdgeInsets.only(top: 16),
-                                                      child: const Text(
-                                                          'Placa: '
-                                                      )
-                                                  ),
-                                                  Container(
-                                                    padding: const EdgeInsets.only(top: 16),
-                                                    child: TextFormField(
-                                                      controller: placaveiculointerface,
-                                                      onChanged: (valor){
-
-                                                        String valorpuro = valor.toUpperCase();
-                                                        VeiculoPlaca = '${valorpuro.replaceAllMapped(
-                                                          RegExp(r'^([a-zA-Z]{3})([0-9a-zA-Z]{4})$'),
-                                                              (Match m) => '${m[1]} ${m[2]}',
-                                                        )}(AG)';
-                                                        //Mudou mandou para a String
-                                                      },
-                                                      decoration: InputDecoration(
-                                                        border: OutlineInputBorder(),
-                                                        hintText: 'Placa do Veiculo * ',
-                                                        hintStyle: TextStyle(
-                                                            fontSize: tamanhotexto
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                      padding: const EdgeInsets.only(top: 16),
-                                                      child: const Text(
-                                                          'Telefone: '
-                                                      )
-                                                  ),
-                                                  Container(
-                                                    padding: const EdgeInsets.only(top: 16),
-                                                    child: TextFormField(
-                                                      controller: telefoneinterface,
-                                                      onChanged: (valor){
-                                                        placaveiculointerface.text = VeiculoPlaca!;
-                                                        String valorpuro = valor.toUpperCase();
-
-                                                        telefone = valorpuro.replaceAllMapped(
-                                                            RegExp(r'^([0-9]{2})([0-9]{5})([0-9]{4})$'),
-                                                                (Match m) => '${m[1]} ${m[2]}-${m[3]} '
-                                                        );
-                                                        if(VeiculoPlaca!.length != 8){
-                                                          Fluttertoast.showToast(
-                                                            msg: 'A placa está escrita errada, faltam caracteres!',
-                                                            toastLength: Toast.LENGTH_SHORT,
-                                                            timeInSecForIosWeb: 1,
-                                                            backgroundColor: Colors.black,
-                                                            textColor: Colors.white,
-                                                            fontSize: tamanhotexto,
-                                                          );
-                                                        }
-                                                        //Mudou mandou para a String
-                                                      },
-                                                      keyboardType: TextInputType.number,
-                                                      enableSuggestions: false,
-                                                      autocorrect: false,
-                                                      decoration: InputDecoration(
-                                                        border: OutlineInputBorder(),
-                                                        hintText: 'Telefone',
-                                                        hintStyle: TextStyle(
-                                                            fontSize: tamanhotexto
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Container(
-                                                      padding: const EdgeInsets.only(top: 16),
-                                                      child: const Text(
-                                                          'Empresa de Origem: '
-                                                      )
-                                                  ),
-                                                  Container(
-                                                    padding: const EdgeInsets.only(top: 16),
-                                                    child: TextFormField(
-                                                      onChanged: (valor){
-                                                        originEmpresa = valor;
-                                                        telefoneinterface.text = telefone;
-                                                        //Mudou mandou para a String
-                                                      },
-                                                      controller: originEmpresaController,
-                                                      decoration: InputDecoration(
-                                                        border: OutlineInputBorder(),
-                                                        hintText: 'Empresa de Origem',
-                                                        hintStyle: TextStyle(
-                                                            fontSize: tamanhotexto
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Row(
-                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                    children: [
-                                                      Container(
-                                                        padding: const EdgeInsets.only(top: 16),
-                                                        child: ElevatedButton(
-                                                          onPressed: (){
-
-                                                          },
-                                                          style: ElevatedButton.styleFrom(
-                                                              primary: Colors.red
-                                                          ),
-                                                          child: const Text('Cancelar'),
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        padding: EdgeInsets.only(top: 16),
-                                                        child: ElevatedButton(
-                                                          onPressed: (){
-
-                                                            if(nomeMotorista == ''){
-                                                              Fluttertoast.showToast(
-                                                                msg: 'Preencha o nome do motorista!',
-                                                                toastLength: Toast.LENGTH_SHORT,
-                                                                timeInSecForIosWeb: 1,
-                                                                backgroundColor: Colors.black,
-                                                                textColor: Colors.white,
-                                                                fontSize: tamanhotexto,
-                                                              );
                                                             }else{
-                                                              if(RGMotorista == ''){
+                                                              final TimeOfDay? pickedTime = await showTimePicker(
+                                                                context: context,
+                                                                initialTime: selectedTime,
+                                                              );
+                                                              setState(() {
+                                                                selectedTime = pickedTime!;
+                                                                dataAgendataST = "${dataAgendada.month}/${dataAgendada.day}/${dataAgendada.year} ${pickedTime.toString().replaceAll("TimeOfDay", "").replaceAll("(", "").replaceAll(")", "")}";
+                                                              });
+                                                            }
+                                                          },
+                                                          child: const Text('Selecionar data'),
+                                                        ),
+                                                        Text(dataAgendataSTsaida == ''
+                                                            ? 'Nenhum data selecionada'
+                                                            : 'Data selecionada: $dataAgendataSTsaida'),
+                                                        ElevatedButton(
+                                                          onPressed: () async {
+                                                            final DateTime? picked = await showDatePicker(
+                                                                context: context,
+                                                                initialDate: DateTime.now(),
+                                                                firstDate: DateTime.now(),
+                                                                lastDate: DateTime(2025)
+                                                            );
+                                                            if (picked != null && picked != dataAgendadasaida) {
+                                                              setState(() {
+                                                                dataAgendadasaida = picked;
+                                                              });
+                                                            }
+                                                            if(dataAgendada == DateTime(2023)){
+
+                                                            }else{
+                                                              final TimeOfDay? pickedTime = await showTimePicker(
+                                                                context: context,
+                                                                initialTime: selectedTime,
+                                                              );
+                                                              setState(() {
+                                                                selectedTime2 = pickedTime!;
+                                                                dataAgendataSTsaida = "${dataAgendadasaida.month}/${dataAgendadasaida.day}/${dataAgendadasaida.year} ${pickedTime.toString().replaceAll("TimeOfDay", "").replaceAll("(", "").replaceAll(")", "")}";
+                                                              });
+                                                            }
+                                                          },
+                                                          child: const Text('Selecionar data'),
+                                                        ),
+                                                        Container(
+                                                            padding: const EdgeInsets.only(top: 16),
+                                                            child: const Text(
+                                                                'Nome:'
+                                                            )
+                                                        ),
+                                                        Container(
+                                                          padding: const EdgeInsets.only(top: 16),
+                                                          child: TextFormField(
+                                                            controller: nameMotoristaAllcaps,
+                                                            onChanged: (valor){
+                                                              nomeMotorista = valor.toUpperCase();
+                                                              //Mudou mandou para a String
+                                                            },
+                                                            keyboardType: TextInputType.name,
+                                                            enableSuggestions: false,
+                                                            autocorrect: false,
+                                                            decoration: InputDecoration(
+                                                              border: OutlineInputBorder(),
+                                                              hintText: 'Nome completo do motorista *',
+                                                              hintStyle: TextStyle(
+                                                                  fontSize: tamanhotexto
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                            padding: const EdgeInsets.only(top: 16),
+                                                            child: const Text(
+                                                                'RG:'
+                                                            )
+                                                        ),
+                                                        Container(
+                                                          padding: const EdgeInsets.only(top: 16),
+                                                          child: TextFormField(
+                                                            onChanged: (valor){
+                                                              RGMotorista = valor;
+                                                              nameMotoristaAllcaps.text = nomeMotorista;
+                                                              //Mudou mandou para a String
+                                                            },
+                                                            controller: RGController,
+                                                            keyboardType: TextInputType.number,
+                                                            enableSuggestions: false,
+                                                            autocorrect: false,
+                                                            decoration: InputDecoration(
+                                                              border: OutlineInputBorder(),
+                                                              hintText: 'RG do motorista * ',
+                                                              hintStyle: TextStyle(
+                                                                  fontSize: tamanhotexto
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                            padding: const EdgeInsets.only(top: 16),
+                                                            child: const Text(
+                                                                'Placa: '
+                                                            )
+                                                        ),
+                                                        Container(
+                                                          padding: const EdgeInsets.only(top: 16),
+                                                          child: TextFormField(
+                                                            controller: placaveiculointerface,
+                                                            onChanged: (valor){
+
+                                                              String valorpuro = valor.toUpperCase();
+                                                              VeiculoPlaca = '${valorpuro.replaceAllMapped(
+                                                                RegExp(r'^([a-zA-Z]{3})([0-9a-zA-Z]{4})$'),
+                                                                    (Match m) => '${m[1]} ${m[2]}',
+                                                              )}(AG)';
+                                                              //Mudou mandou para a String
+                                                            },
+                                                            decoration: InputDecoration(
+                                                              border: OutlineInputBorder(),
+                                                              hintText: 'Placa do Veiculo * ',
+                                                              hintStyle: TextStyle(
+                                                                  fontSize: tamanhotexto
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                            padding: const EdgeInsets.only(top: 16),
+                                                            child: const Text(
+                                                                'Telefone: '
+                                                            )
+                                                        ),
+                                                        Container(
+                                                          padding: const EdgeInsets.only(top: 16),
+                                                          child: TextFormField(
+                                                            controller: telefoneinterface,
+                                                            onChanged: (valor){
+                                                              placaveiculointerface.text = VeiculoPlaca!;
+                                                              String valorpuro = valor.toUpperCase();
+
+                                                              telefone = valorpuro.replaceAllMapped(
+                                                                  RegExp(r'^([0-9]{2})([0-9]{5})([0-9]{4})$'),
+                                                                      (Match m) => '${m[1]} ${m[2]}-${m[3]} '
+                                                              );
+                                                              if(VeiculoPlaca!.length != 8){
                                                                 Fluttertoast.showToast(
-                                                                  msg: 'Preencha o RG do motorista!',
+                                                                  msg: 'A placa está escrita errada, faltam caracteres!',
                                                                   toastLength: Toast.LENGTH_SHORT,
                                                                   timeInSecForIosWeb: 1,
                                                                   backgroundColor: Colors.black,
                                                                   textColor: Colors.white,
                                                                   fontSize: tamanhotexto,
                                                                 );
-                                                              }else{
-                                                                if(VeiculoPlaca == ''){
-                                                                  Fluttertoast.showToast(
-                                                                    msg: 'Preencha a placa do motorista!',
-                                                                    toastLength: Toast.LENGTH_SHORT,
-                                                                    timeInSecForIosWeb: 1,
-                                                                    backgroundColor: Colors.black,
-                                                                    textColor: Colors.white,
-                                                                    fontSize: tamanhotexto,
-                                                                  );
-                                                                }else{
+                                                              }
+                                                              //Mudou mandou para a String
+                                                            },
+                                                            keyboardType: TextInputType.number,
+                                                            enableSuggestions: false,
+                                                            autocorrect: false,
+                                                            decoration: InputDecoration(
+                                                              border: OutlineInputBorder(),
+                                                              hintText: 'Telefone',
+                                                              hintStyle: TextStyle(
+                                                                  fontSize: tamanhotexto
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Container(
+                                                            padding: const EdgeInsets.only(top: 16),
+                                                            child: const Text(
+                                                                'Empresa de Origem: '
+                                                            )
+                                                        ),
+                                                        Container(
+                                                          padding: const EdgeInsets.only(top: 16),
+                                                          child: TextFormField(
+                                                            onChanged: (valor){
+                                                              originEmpresa = valor;
+                                                              telefoneinterface.text = telefone;
+                                                              //Mudou mandou para a String
+                                                            },
+                                                            controller: originEmpresaController,
+                                                            decoration: InputDecoration(
+                                                              border: OutlineInputBorder(),
+                                                              hintText: 'Empresa de Origem',
+                                                              hintStyle: TextStyle(
+                                                                  fontSize: tamanhotexto
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        Row(
+                                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                                          children: [
+                                                            Container(
+                                                              padding: const EdgeInsets.only(top: 16),
+                                                              child: ElevatedButton(
+                                                                onPressed: (){
+                                                                  Navigator.of(context).pop();
+                                                                },
+                                                                style: ElevatedButton.styleFrom(
+                                                                    primary: Colors.red
+                                                                ),
+                                                                child: const Text('Cancelar'),
+                                                              ),
+                                                            ),
+                                                            Container(
+                                                              padding: EdgeInsets.only(top: 16),
+                                                              child: ElevatedButton(
+                                                                onPressed: (){
 
-                                                                  if(dataAgendataST == ''){
+                                                                  if(nomeMotorista == ''){
                                                                     Fluttertoast.showToast(
-                                                                      msg: 'Selecione uma data de entrada!',
+                                                                      msg: 'Preencha o nome do motorista!',
                                                                       toastLength: Toast.LENGTH_SHORT,
                                                                       timeInSecForIosWeb: 1,
                                                                       backgroundColor: Colors.black,
@@ -398,9 +373,9 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                                       fontSize: tamanhotexto,
                                                                     );
                                                                   }else{
-                                                                    if(dataAgendataSTsaida == ''){
+                                                                    if(RGMotorista == ''){
                                                                       Fluttertoast.showToast(
-                                                                        msg: 'Selecione uma data de saida!',
+                                                                        msg: 'Preencha o RG do motorista!',
                                                                         toastLength: Toast.LENGTH_SHORT,
                                                                         timeInSecForIosWeb: 1,
                                                                         backgroundColor: Colors.black,
@@ -408,34 +383,68 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                                         fontSize: tamanhotexto,
                                                                       );
                                                                     }else{
-                                                                      FirebaseFirestore.instance.collection('Autorizacoes').doc(documents['idDoc']).update({
-                                                                        'nomeMotorista': nomeMotorista,
-                                                                        'RGDoMotorista': RGMotorista,
-                                                                        'PlacaVeiculo': VeiculoPlaca,
-                                                                        'Telefone': telefone,
-                                                                        'DataEntrada': dataAgendataST,
-                                                                        'DataSaida': dataAgendataSTsaida
-                                                                      }).then((value){
-                                                                        Navigator.of(context).pop();
-                                                                      });
+                                                                      if(VeiculoPlaca == ''){
+                                                                        Fluttertoast.showToast(
+                                                                          msg: 'Preencha a placa do motorista!',
+                                                                          toastLength: Toast.LENGTH_SHORT,
+                                                                          timeInSecForIosWeb: 1,
+                                                                          backgroundColor: Colors.black,
+                                                                          textColor: Colors.white,
+                                                                          fontSize: tamanhotexto,
+                                                                        );
+                                                                      }else{
+
+                                                                        if(dataAgendataST == ''){
+                                                                          Fluttertoast.showToast(
+                                                                            msg: 'Selecione uma data de entrada!',
+                                                                            toastLength: Toast.LENGTH_SHORT,
+                                                                            timeInSecForIosWeb: 1,
+                                                                            backgroundColor: Colors.black,
+                                                                            textColor: Colors.white,
+                                                                            fontSize: tamanhotexto,
+                                                                          );
+                                                                        }else{
+                                                                          if(dataAgendataSTsaida == ''){
+                                                                            Fluttertoast.showToast(
+                                                                              msg: 'Selecione uma data de saida!',
+                                                                              toastLength: Toast.LENGTH_SHORT,
+                                                                              timeInSecForIosWeb: 1,
+                                                                              backgroundColor: Colors.black,
+                                                                              textColor: Colors.white,
+                                                                              fontSize: tamanhotexto,
+                                                                            );
+                                                                          }else{
+                                                                            FirebaseFirestore.instance.collection('Autorizacoes').doc(documents['idDoc']).update({
+                                                                              'nomeMotorista': nomeMotorista,
+                                                                              'RGDoMotorista': RGMotorista,
+                                                                              'PlacaVeiculo': VeiculoPlaca,
+                                                                              'Telefone': telefone,
+                                                                              'DataEntrada': dataAgendataST,
+                                                                              'DataSaida': dataAgendataSTsaida
+                                                                            }).then((value){
+                                                                              Navigator.of(context).pop();
+                                                                            });
+                                                                          }
+                                                                        }
+                                                                      }
                                                                     }
                                                                   }
-                                                                }
-                                                              }
-                                                            }
-                                                          },
-                                                          style: ElevatedButton.styleFrom(
-                                                              primary: Colors.green
-                                                          ),
-                                                          child: const Text('Prosseguir'),
+                                                                },
+                                                                style: ElevatedButton.styleFrom(
+                                                                    primary: Colors.green
+                                                                ),
+                                                                child: const Text('Prosseguir'),
+                                                              ),
+                                                            ),
+                                                          ],
                                                         ),
-                                                      ),
-                                                    ],
-                                                  ),
+                                                      ],
+                                                    ),
+                                                  )
                                                 ],
                                               ),
-                                            )
-                                          ],
+                                            );
+                                          },
                                         );
                                       },
                                     );
