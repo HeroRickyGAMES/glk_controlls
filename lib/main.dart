@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'package:connectivity_widget/connectivity_widget.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:glk_controls/mainActivityPrepare.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -78,7 +80,13 @@ class _loginScreenState extends State<loginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    
+    if(kIsWeb){
+      SystemChrome.setApplicationSwitcherDescription(
+          const ApplicationSwitcherDescription(
+            label: 'GLK CONTROLS',
+          ));
+    }
+
     Timer(const Duration(seconds: 8), () {
 
       calltoprepare(context);
