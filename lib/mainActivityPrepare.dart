@@ -442,7 +442,7 @@ checkislog(context) async {
             actions: [
               TextButton(onPressed: () async {
 
-                Uri uri = Uri.parse("https://github.com/HeroRickyGAMES/glk_controlls/releases");
+                Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=com.hrs.flutter.glk_controls");
                 if (!await launchUrl(
                   uri,
                   mode: LaunchMode.externalApplication,

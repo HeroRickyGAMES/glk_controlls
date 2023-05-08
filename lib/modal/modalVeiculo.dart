@@ -541,8 +541,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                     final veiculosDeEmpresas = snapshot3.docs;
                                     for (final docveiculosDeEmpresas in veiculosDeEmpresas) {
                                       final id = docveiculosDeEmpresas.id;
-                                      final name = docveiculosDeEmpresas.get('nome');
-                                      final idList = docveiculosDeEmpresas.get('id');
+                                      final name = docveiculosDeEmpresas.get('Placa');
+                                      final idList = docveiculosDeEmpresas.get('idEmpresa');
                                       print('$id - $name');
 
                                       veiculosDeEmpresa.add(name);

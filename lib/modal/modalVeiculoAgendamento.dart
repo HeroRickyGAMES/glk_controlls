@@ -667,7 +667,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                   },
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
-                    hintText: 'Motivo',
+                    hintText: 'Observação',
                     hintStyle: TextStyle(
                         fontSize: tamanhotexto
                     ),
