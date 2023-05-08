@@ -46,7 +46,6 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
       //aspect = 1.0;
       aspect = 1.0;
 
-      print(aspect);
     }else{
       if(Platform.isAndroid){
 
@@ -398,7 +397,6 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
 
                                                               Galpoes.keys.toList();
 
-                                                              print(Galpoes.keys);
 
                                                               String liberadopor = documents['QuemAutorizou'];
                                                               String horarioCriacao = documents['Horario Criado'];

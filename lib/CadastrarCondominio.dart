@@ -140,7 +140,6 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
         );
 
       });
-      print(imageFile);
     }
 
     Future<String> _uploadImageToFirebase(File file, String id) async {
@@ -164,7 +163,6 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
 
       // Recupere a URL do download da imagem para salvar no banco de dados
       final url = await reference.getDownloadURL();
-      print(url);
       return url;
     }
 
@@ -317,8 +315,6 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
               child: TextFormField(
                 onChanged: (valor){
                   tags = int.parse(valor);
-                  print(tags);
-                  print(valor);
                   //Mudou mandou para a String
                 },
                 keyboardType: TextInputType.number,
@@ -533,15 +529,12 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                                         final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
                                         Map<String, String> tagsDisp = {};
 
-                                        print(tags);
                                         int number = tags;
 
                                         for (int i = number; i >= 1; i--) {
-                                          print(i);
                                           tagsDisp.addAll({ '$i': 'naoUsado'});
 
                                           if(tagsDisp.length == number){
-                                            print('pronto!');
                                             FirebaseFirestore.instance.collection('Condominio').doc(idd).update({
                                               'Empresa': empresa,
                                               'Endereço': endereco,

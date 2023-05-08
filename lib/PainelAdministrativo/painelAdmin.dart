@@ -101,7 +101,6 @@ class _painelAdminState extends State<painelAdmin> {
 
                       final tempDir = await getTemporaryDirectory();
 
-                      print(tempDir);
                       final file = File('${tempDir.path}/imagem.jpg');
                       final file2 = File('${tempDir.path}/imagem2.jpg');
                       await file.writeAsBytes(compressedImage);

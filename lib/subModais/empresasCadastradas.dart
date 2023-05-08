@@ -170,7 +170,6 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
                                                       int galpoesRestantes = result.get('galpoes');
                                                       Map galpoes = documents['galpaes'];
 
-                                                      print(galpoesUsados);
 
                                                       int vagasDisp = result.get('vagas');
 
@@ -186,8 +185,6 @@ class _empresaCadastradaState extends State<empresaCadastrada> {
 
                                                           int resultadoVagas = vagasDisp + int.parse(documents['vagas']);
 
-                                                          print(galpoesUsados);
-                                                          print(documents['id']);
 
                                                           FirebaseFirestore.instance
                                                               .collection('empresa')

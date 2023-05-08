@@ -29,7 +29,6 @@ calltoprepare(context) async {
         (response) => response.contains("This is a test!");
 
   if(await ConnectivityUtils.instance.isPhoneConnected()){
-    print('Conectado!');
     final SharedPreferences prefs = await _prefs;
 
     bool? offlinemode =  prefs.getBool('OfflineMode');
@@ -42,9 +41,7 @@ calltoprepare(context) async {
           MaterialPageRoute(builder: (context){
             return mainActivityPrepare(calloff);
           }));
-      print('Em modo offline!');
     }else{
-      print('Conectado!');
       String calloff = 'NaoAtivo';
       Navigator.pop(context);
       Navigator.push(context,
@@ -61,7 +58,6 @@ calltoprepare(context) async {
         MaterialPageRoute(builder: (context){
           return mainActivityPrepare(calloff);
         }));
-    print('Desconectado!');
   }
 }
 class loginScreen extends StatefulWidget {

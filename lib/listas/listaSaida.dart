@@ -482,8 +482,6 @@ class _listaSaidaState extends State<listaSaida> {
                                                     .doc(Entrada)
                                                     .get();
 
-                                                print('aqui');
-                                                print(result.get('localAplicacao1'));
 
                                                 //rele 1
                                                 if(result.get('localAplicacao1') == "Cancela"){
@@ -491,7 +489,6 @@ class _listaSaidaState extends State<listaSaida> {
 
                                                   if(result.get('funcao-rele1').contains('Pulso')){
 
-                                                    print(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
 
                                                     rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
                                                   }else{
@@ -620,7 +617,6 @@ class _listaSaidaState extends State<listaSaida> {
 
                                                       rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
 
-                                                      print(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
                                                     }else{
                                                       await Future.delayed(const Duration(seconds: 5));
                                                       releFarol03();

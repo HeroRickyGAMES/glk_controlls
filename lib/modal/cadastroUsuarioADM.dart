@@ -42,24 +42,14 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
     final documents = snapshot.docs;
 
     for (final doc in documents) {
-
-      print(documents.length);
-
       tst.addAll(documents);
 
       if(documents.length == tst.length){
         final id = doc.id;
         final name = doc.get('nome');
-        print('$id - $name');
-
         Names.add(name);
-
-
         IDSe = id;
         NamesE = name;
-
-
-        print(Names);
       }
     }
   }
@@ -207,7 +197,6 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                       setState(() {
                         visivel = !visivel;
                       });
-                      print('Botão favorito pressionado!');
                     },
                   )
                 ],
@@ -333,16 +322,13 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
 
                                 for (final doc in documents) {
 
-                                  print(documents.length);
 
                                   tst.addAll(documents);
                                   final id = doc.id;
                                   IDSe = id;
                                   empresaSelecionada = empresaSelecionada.replaceAll(IDSe, '');
-                                  print(empresaSelecionada);
 
                                   final name = doc.get('nome');
-                                  print('$id - $name');
 
                                   Names.add(name);
 
@@ -354,10 +340,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                                   empresaSelecionada = empresaSelecionada.replaceAll(IDSe, '');
 
 
-                                  print('ID Empresa: ' + empresaID);
-                                  print('Empresa Selecionada ' + empresaSelecionada);
 
-                                  print(Names);
                                 }
                                 FirebaseApp app = await Firebase.initializeApp(
                                     name: 'Secondary', options: Firebase.app().options);

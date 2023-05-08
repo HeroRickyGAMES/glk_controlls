@@ -53,7 +53,6 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
         .collection("empresa")
         .get();
     for (var res in result.docs) {
-      print(res.data()['nome']);
 
       setState(() {
         listaNome.add(res.data()['nome']);
@@ -64,12 +63,9 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
         var db = FirebaseFirestore.instance;
         var UID = FirebaseAuth.instance.currentUser?.uid;
         db.collection('Users').doc(UID).get().then((event){
-          print("${event.data()}");
 
           event.data()?.forEach((key, value) {
 
-            print(key);
-            print(value);
 
             if(key == 'nome'){
               String PorteiroNomee = value;
@@ -77,12 +73,9 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
               var db = FirebaseFirestore.instance;
               var UID = FirebaseAuth.instance.currentUser?.uid;
               db.collection('Users').doc(UID).get().then((event){
-                print("${event.data()}");
 
                 event.data()?.forEach((key, value) async {
 
-                  print(key);
-                  print(value);
 
                   if(key == 'nome'){
 
@@ -94,13 +87,8 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                       //print('cheguei aqui');
                       for (int i = resultEmpresa.docs.length; i >= 1; i--) {
                         if(i == resultEmpresa.docs.length){
-                          print('cheguei aqui');
-                          print(res.data()['nome'] == widget.empresaName);
-                          print(res.data()['nome']);
-                          print(widget.empresaName);
                           if(res.data()['nome'] == widget.empresaName){
 
-                            print('cheguei aqui');
 
                             Galpoes.addAll(res.data()['galpaes']);
                             String galpaoPrimario = res.data()['galpaoPrimario'];
@@ -111,7 +99,6 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                                   return modalVeiculoAgendamento(widget.name, widget.empresaName,dropValue2, dropValue, Galpoes.keys.toList(), galpaoPrimario);
                                 }));
 
-                            print('tentando abrir');
 
                           }
                         }
@@ -127,7 +114,6 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
         );
       });
     }
-    print(listaNome);
   }
 
   Widget build(BuildContext context) {
@@ -147,7 +133,6 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
       //aspect = 1.0;
       aspect = 1.0;
 
-      print(aspect);
     }else{
       if(Platform.isAndroid){
 
@@ -377,7 +362,6 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                                                       textColor: Colors.white,
                                                       fontSize: 16.0,
                                                     );
-                                                    print('enviado!');
                                                   });
                                                 } catch (e) {
                                                   Fluttertoast.showToast(
@@ -388,7 +372,6 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                                                     textColor: Colors.white,
                                                     fontSize: 16.0,
                                                   );
-                                                  print('Erro! $e');
                                                 }
 
                                               },
@@ -440,7 +423,6 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                                         MaterialPageRoute(builder: (context){
                                           return anteLogin(logoPath);
                                         }));
-                                    print('Usuário desconectado');
                                   });
 
                                 },

@@ -167,7 +167,6 @@ class _operadorInternoState extends State<operadorInterno> {
                       setState(() {
                         visivel = !visivel;
                       });
-                      print('Botão favorito pressionado!');
                     },
                   )
                 ],

@@ -60,14 +60,12 @@ class _listEntradaState extends State<listEntrada> {
           .collection("empresa")
           .get();
       result.docs.forEach((res) {
-        print(res.data()['nome']);
 
         setState(() {
           listaNome.add(res.data()['nome']);
 
           galpao.addAll(res.data()['galpaes']);
 
-          print('dentro da array: ${galpao}' );
           final dropValue = ValueNotifier('');
           final dropValue2 = ValueNotifier('');
           final dropValue3 = ValueNotifier('');
@@ -75,12 +73,9 @@ class _listEntradaState extends State<listEntrada> {
           var db = FirebaseFirestore.instance;
           var UID = FirebaseAuth.instance.currentUser?.uid;
           db.collection('Users').doc(UID).get().then((event){
-            print("${event.data()}");
 
             event.data()?.forEach((key, value) {
 
-              print(key);
-              print(value);
 
               if(key == 'nome'){
                 String PorteiroNomee = value;
@@ -88,12 +83,9 @@ class _listEntradaState extends State<listEntrada> {
                 var db = FirebaseFirestore.instance;
                 var UID = FirebaseAuth.instance.currentUser?.uid;
                 db.collection('Users').doc(UID).get().then((event){
-                  print("${event.data()}");
 
                   event.data()?.forEach((key, value) {
 
-                    print(key);
-                    print(value);
 
                     if(key == 'nome'){
 
@@ -122,7 +114,6 @@ class _listEntradaState extends State<listEntrada> {
         });
 
       });
-      print(listaNome);
     }
 
     return Scaffold(
@@ -395,8 +386,6 @@ class _listEntradaState extends State<listEntrada> {
 
                                                         if(documents['PlacaVeiculo'].contains('(AG)')){
 
-                                                          print(int.parse(DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/').replaceAll('/', '').replaceAll(":", "").replaceAll(" ", "")));
-                                                          print(int.parse(documents['DataEntradaEmpresa'].replaceAll('/', '').replaceAll(' ', '').replaceAll(':', '')));
 
                                                           if(int.parse(DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/').replaceAll('/', '').replaceAll(":", "").replaceAll(" ", "")) >= int.parse(documents['DataEntradaEmpresa'].replaceAll('/', '').replaceAll(' ', '').replaceAll(':', ''))){
 
@@ -428,8 +417,6 @@ class _listEntradaState extends State<listEntrada> {
                                                             final file4 = File('${tempDir.path}/imagem.jpg');
                                                             await file4.writeAsBytes(compressedImage);
 
-                                                            print(' arquivo temporario é : ${file} ');
-                                                            print(formattedDate);
 
 
                                                             var result = await FirebaseFirestore.instance
@@ -441,14 +428,11 @@ class _listEntradaState extends State<listEntrada> {
                                                             List tagsDisponiveis = [];
 
 
-                                                            print(tags.values.contains('Usado'));
 
                                                             tags.removeWhere((key, value) => value == 'Usado');
                                                             tagsDisponiveis.addAll(tags.keys);
 
                                                             tagsDisponiveis.sort();
-                                                            print(tagsDisponiveis);
-                                                            print(tags.keys);
 
                                                             Navigator.push(context,
                                                                 MaterialPageRoute(builder: (context){
@@ -487,8 +471,6 @@ class _listEntradaState extends State<listEntrada> {
                                                           final file4 = File('${tempDir.path}/imagem.jpg');
                                                           await file4.writeAsBytes(compressedImage);
 
-                                                          print(' arquivo temporario é : ${file} ');
-                                                          print(formattedDate);
 
                                                           var result = await FirebaseFirestore.instance
                                                               .collection("Condominio")
@@ -497,16 +479,12 @@ class _listEntradaState extends State<listEntrada> {
 
                                                           Map tags = (result.get('tags'));
                                                           List tagsDisponiveis = [];
-                                                          print(tags);
-                                                          print(tags.values.contains('Usado'));
 
                                                           tags.removeWhere((key, value) => value == 'Usado');
                                                           tagsDisponiveis.addAll(tags.keys.toList());
 
                                                           tagsDisponiveis.sort();
 
-                                                          print(tagsDisponiveis);
-                                                          print(tags.keys);
 
                                                           Navigator.push(context,
                                                               MaterialPageRoute(builder: (context){
@@ -622,8 +600,6 @@ class _listEntradaState extends State<listEntrada> {
                                                       .doc(Entrada)
                                                       .get();
 
-                                                  print('aqui');
-                                                  print(result.get('localAplicacao1'));
 
                                                   //rele 1
                                                   if(result.get('localAplicacao1') == "Cancela"){
@@ -631,7 +607,6 @@ class _listEntradaState extends State<listEntrada> {
 
                                                     if(result.get('funcao-rele1').contains('Pulso')){
 
-                                                      print(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
 
                                                       rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
                                                     }else{
@@ -760,7 +735,6 @@ class _listEntradaState extends State<listEntrada> {
 
                                                         rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
 
-                                                        print(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
                                                       }else{
                                                         await Future.delayed(const Duration(seconds: 5));
                                                         releFarol03();

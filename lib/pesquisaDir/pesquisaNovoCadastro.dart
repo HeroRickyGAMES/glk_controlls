@@ -43,7 +43,6 @@ class _pesquisaCadastroState extends State<pesquisaCadastro> {
       //aspect = 1.0;
       aspect = 1.0;
 
-      print(aspect);
     }else{
       if(Platform.isAndroid){
 
@@ -83,14 +82,12 @@ class _pesquisaCadastroState extends State<pesquisaCadastro> {
           .collection("empresa")
           .get();
       for (var res in result.docs) {
-        print(res.data()['nome']);
 
         setState(() {
           listaNome.add(res.data()['nome']);
 
           galpao.addAll(res.data()['galpaes']);
 
-          print('dentro da array: ${galpao}' );
           final dropValue = ValueNotifier('');
           final dropValue2 = ValueNotifier('');
           final dropValue3 = ValueNotifier('');
@@ -98,12 +95,9 @@ class _pesquisaCadastroState extends State<pesquisaCadastro> {
           var db = FirebaseFirestore.instance;
           var UID = FirebaseAuth.instance.currentUser?.uid;
           db.collection('Users').doc(UID).get().then((event){
-            print("${event.data()}");
 
             event.data()?.forEach((key, value) {
 
-              print(key);
-              print(value);
 
               if(key == 'nome'){
                 String PorteiroNomee = value;
@@ -111,12 +105,9 @@ class _pesquisaCadastroState extends State<pesquisaCadastro> {
                 var db = FirebaseFirestore.instance;
                 var UID = FirebaseAuth.instance.currentUser?.uid;
                 db.collection('Users').doc(UID).get().then((event){
-                  print("${event.data()}");
 
                   event.data()?.forEach((key, value) {
 
-                    print(key);
-                    print(value);
 
                     if(key == 'nome'){
                       Navigator.pop(context);
@@ -134,7 +125,6 @@ class _pesquisaCadastroState extends State<pesquisaCadastro> {
           );
         });
       }
-      print(listaNome);
     }
     return Scaffold(
       appBar: AppBar(

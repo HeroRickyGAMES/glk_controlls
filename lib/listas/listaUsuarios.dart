@@ -48,10 +48,8 @@ class _listaUsuariosState extends State<listaUsuarios> {
 
     String input = widget.NomeMotorista;
     if (verificaSeSoTemLetras(input)) {
-      print('dando verdadeiro');
       PesquisaNome = widget.NomeMotorista;
     } else {
-      print('dando falso');
       PesquisaRGMotorista = widget.NomeMotorista;
     }
 
@@ -117,14 +115,12 @@ class _listaUsuariosState extends State<listaUsuarios> {
                             .collection("empresa")
                             .get();
                         for (var res in result.docs) {
-                          print(res.data()['nome']);
 
                           setState(() {
                             listaNome.add(res.data()['nome']);
 
                             galpao.addAll(res.data()['galpaes']);
 
-                            print('dentro da array: ${galpao}' );
                             final dropValue = ValueNotifier('');
                             final dropValue2 = ValueNotifier('');
                             final dropValue3 = ValueNotifier('');
@@ -132,12 +128,9 @@ class _listaUsuariosState extends State<listaUsuarios> {
                             var db = FirebaseFirestore.instance;
                             var UID = FirebaseAuth.instance.currentUser?.uid;
                             db.collection('Users').doc(UID).get().then((event){
-                              print("${event.data()}");
 
                               event.data()?.forEach((key, value) {
 
-                                print(key);
-                                print(value);
 
                                 if(key == 'nome'){
                                   String PorteiroNomee = value;
@@ -145,12 +138,9 @@ class _listaUsuariosState extends State<listaUsuarios> {
                                   var db = FirebaseFirestore.instance;
                                   var UID = FirebaseAuth.instance.currentUser?.uid;
                                   db.collection('Users').doc(UID).get().then((event){
-                                    print("${event.data()}");
 
                                     event.data()?.forEach((key, value) {
 
-                                      print(key);
-                                      print(value);
 
                                       if(key == 'nome'){
 
@@ -179,7 +169,6 @@ class _listaUsuariosState extends State<listaUsuarios> {
                             );
                           });
                         }
-                        print(listaNome);
 
                       }, child: Text(
                           'Selecionar esse motorista',
@@ -251,14 +240,12 @@ class _listaUsuariosState extends State<listaUsuarios> {
                             .collection("empresa")
                             .get();
                         for (var res in result.docs) {
-                          print(res.data()['nome']);
 
                           setState(() {
                             listaNome.add(res.data()['nome']);
 
                             galpao.addAll(res.data()['galpaes']);
 
-                            print('dentro da array: ${galpao}' );
                             final dropValue = ValueNotifier('');
                             final dropValue2 = ValueNotifier('');
                             final dropValue3 = ValueNotifier('');
@@ -266,12 +253,9 @@ class _listaUsuariosState extends State<listaUsuarios> {
                             var db = FirebaseFirestore.instance;
                             var UID = FirebaseAuth.instance.currentUser?.uid;
                             db.collection('Users').doc(UID).get().then((event){
-                              print("${event.data()}");
 
                               event.data()?.forEach((key, value) {
 
-                                print(key);
-                                print(value);
 
                                 if(key == 'nome'){
                                   String PorteiroNomee = value;
@@ -279,12 +263,9 @@ class _listaUsuariosState extends State<listaUsuarios> {
                                   var db = FirebaseFirestore.instance;
                                   var UID = FirebaseAuth.instance.currentUser?.uid;
                                   db.collection('Users').doc(UID).get().then((event){
-                                    print("${event.data()}");
 
                                     event.data()?.forEach((key, value) {
 
-                                      print(key);
-                                      print(value);
 
                                       if(key == 'nome'){
 
@@ -313,7 +294,6 @@ class _listaUsuariosState extends State<listaUsuarios> {
                             );
                           });
                         }
-                        print(listaNome);
 
                       }, child: Text(
                         'Selecionar esse motorista',

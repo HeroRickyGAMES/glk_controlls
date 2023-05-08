@@ -60,14 +60,11 @@ class _modalPorteiroState extends State<modalPorteiro> {
     try {
       final result = await Process.run('ping', ['-c', '1', ip]);
       if (result.exitCode == 0) {
-        print('Ping realizado com sucesso para o endereço $ip');
         Status = 'Aguardando Liberação';
       } else {
-        print('Falha no ping para o endereço $ip');
         Status = 'Estacionário';
       }
     } catch (e) {
-      print('Erro ao executar o comando de ping: $e');
     }
   }
 
@@ -106,7 +103,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
         fontSize: tamanhotexto,
       );
 
-      print(lacreounao);
       if(veiculoInterno == true){
 
         //registre todos os valores no db
@@ -166,17 +162,13 @@ class _modalPorteiroState extends State<modalPorteiro> {
           var db = FirebaseFirestore.instance;
           var UID = FirebaseAuth.instance.currentUser?.uid;
           db.collection('Users').doc(UID).get().then((event){
-            print("${event.data()}");
 
             event.data()?.forEach((key, value) async {
 
-              print(key);
-              print(value);
 
               if(key == 'nome'){
                 String PorteiroNome = value;
 
-                print('Porteiro name é$PorteiroNome');
 
                 var UID = FirebaseAuth.instance.currentUser?.uid;
                 var result = await FirebaseFirestore.instance
@@ -213,9 +205,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
           }
           );
         }).catchError((onerror){
-          print('error $onerror');
         }).whenComplete((){
-          print('Feito com sucesso!');
 
         });
       }else{
@@ -278,17 +268,13 @@ class _modalPorteiroState extends State<modalPorteiro> {
           var db = FirebaseFirestore.instance;
           var UID = FirebaseAuth.instance.currentUser?.uid;
           db.collection('Users').doc(UID).get().then((event){
-            print("${event.data()}");
 
             event.data()?.forEach((key, value) async {
 
-              print(key);
-              print(value);
 
               if(key == 'nome'){
                 String PorteiroNome = value;
 
-                print('Porteiro name é$PorteiroNome');
 
                 var UID = FirebaseAuth.instance.currentUser?.uid;
                 var result = await FirebaseFirestore.instance
@@ -325,9 +311,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
           }
           );
         }).catchError((onerror){
-          print('error $onerror');
         }).whenComplete((){
-          print('Feito com sucesso!');
 
         });
       }
@@ -339,14 +323,12 @@ class _modalPorteiroState extends State<modalPorteiro> {
             (response) => response.contains("This is a test!");
 
       if(await ConnectivityUtils.instance.isPhoneConnected()){
-        print('Conectado!');
 
       }else{
         widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
         Navigator.of(context).pop();
         Navigator.pop(context);
 
-        print('Desconectado!');
       }
     }
 
@@ -447,7 +429,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
                           if(VeiculoPlaca!.contains(" ")){
 
                             //Ele vai verificar se o usuario está bloqueado ou não.
-                            print("chegou aqui");
 
                             showDialog(
                               context: context,
@@ -470,13 +451,10 @@ class _modalPorteiroState extends State<modalPorteiro> {
                             for (final docvisit in documentsvist) {
                               final id = docvisit.id;
                               final name = docvisit.get('rg');
-                              print('$id - $name');
 
                               Visitantes.add(name);
 
                             }
-                            print('Visitantes bloqueados no RG $Visitantes');
-                            print('Listagem de usuários concluída com sucesso!');
 
                             List VeiculosBLk = [];
 
@@ -486,7 +464,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
                             for (final docVeiculoBlock in VeiculosBLKK) {
                               final id = docVeiculoBlock.id;
                               final name = docVeiculoBlock.get('nome');
-                              print('$id - $name');
 
                               VeiculosBLk.add(name);
 
@@ -524,7 +501,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                 for (final doc in documents) {
                                   final id = doc.id;
                                   final name = doc.get('nome');
-                                  print('$id - $name');
 
                                   if(doc.get('nome') == empresaSelecionada){
                                     galpaoPrimario = doc.get('galpaoPrimario');
@@ -543,7 +519,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                       final id = docveiculosDeEmpresas.id;
                                       final name = docveiculosDeEmpresas.get('Placa');
                                       final idList = docveiculosDeEmpresas.get('idEmpresa');
-                                      print('$id - $name');
 
                                       veiculosDeEmpresa.add(name);
                                       idEmpresaList.add(idList);
@@ -553,7 +528,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                     if(veiculosDeEmpresa.contains(VeiculoPlaca)){
 
                                       if(idEmpresaList.contains(idEmpresa)){
-                                        print(galpaesEmpresa.values.first);
 
                                         if(galpaesEmpresa.values.first == 0){
                                           Fluttertoast.showToast(
@@ -574,7 +548,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                           //todo subtract
                                           galpaesEmpresa[galpaesEmpresa.keys.first] = galpaesEmpresa[galpaesEmpresa.keys.first] - 1;
 
-                                          print(galpaesEmpresa);
 
                                           FirebaseFirestore.instance.collection('empresa').doc(idEmpresa).update({
                                             'galpaes': galpaesEmpresa
@@ -583,17 +556,13 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                           if(await ConnectivityUtils.instance.isPhoneConnected()){
                                             veiculoInterno == true;
                                             Status = 'Estacionário';
-                                            print(galpaoPrimario);
                                             MandarMT();
 
-                                            print('Conectado!');
 
                                           }else{
                                             veiculoInterno == true;
                                             Status = 'Liberado Saida';
-                                            print(galpaoPrimario);
                                             MandarMT();
-                                            print('Desconectado!');
                                           }
                                         }
                                       }
@@ -613,15 +582,12 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                         if(offlinemode == true){
                                           Status = 'Liberado Entrada';
                                           MandarMT();
-                                          print('Modo Offline Ativo');
                                         }else{
                                           MandarMT();
-                                          print('Conectado!');
                                         }
                                       }else{
                                         Status = 'Liberado Entrada';
                                         MandarMT();
-                                        print('Desconectado!');
                                       }
                                     }
                                   }
@@ -1107,14 +1073,12 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         }));
                     // retorna false para impedir que a navegação volte à tela anterior
 
-                    print('Conectado!');
 
                   }else{
 
                     widget.EmpresasOpc.removeRange(0, widget.EmpresasOpc.length);
                     Navigator.pop(context);
 
-                    print('Desconectado!');
                   }
 
                   return false;

@@ -56,7 +56,6 @@ class _mainPorteiroState extends State<mainPorteiro> {
     if(await ConnectivityUtils.instance.isPhoneConnected()){
 
 
-      print('Conectado!');
 
     }else{
       Fluttertoast.showToast(
@@ -84,7 +83,6 @@ class _mainPorteiroState extends State<mainPorteiro> {
         fontSize: 16,
       );
 
-      print('Desconectado!');
     }
   }
 
@@ -121,7 +119,6 @@ class _mainPorteiroState extends State<mainPorteiro> {
           .collection("empresa")
           .get();
       for (var res in result.docs) {
-        print(res.data()['nome']);
 
         setState(() {
           listaNome.add(res.data()['nome']);
@@ -132,12 +129,9 @@ class _mainPorteiroState extends State<mainPorteiro> {
           var db = FirebaseFirestore.instance;
           var UID = FirebaseAuth.instance.currentUser?.uid;
           db.collection('Users').doc(UID).get().then((event){
-            print("${event.data()}");
 
             event.data()?.forEach((key, value) {
 
-              print(key);
-              print(value);
 
               if(key == 'nome'){
                 String PorteiroNomee = value;
@@ -145,12 +139,9 @@ class _mainPorteiroState extends State<mainPorteiro> {
                 var db = FirebaseFirestore.instance;
                 var UID = FirebaseAuth.instance.currentUser?.uid;
                 db.collection('Users').doc(UID).get().then((event){
-                  print("${event.data()}");
 
                   event.data()?.forEach((key, value) {
 
-                    print(key);
-                    print(value);
 
                     if(key == 'nome'){
 
@@ -169,7 +160,6 @@ class _mainPorteiroState extends State<mainPorteiro> {
           );
         });
       }
-      print(listaNome);
     }
 
     openModalOffline() async {
@@ -558,8 +548,6 @@ class _mainPorteiroState extends State<mainPorteiro> {
                                                 .doc(Entrada)
                                                 .get();
 
-                                            print('aqui');
-                                            print(result.get('localAplicacao1'));
 
                                             //rele 1
                                             if(result.get('localAplicacao1') == "Cancela"){
@@ -567,7 +555,6 @@ class _mainPorteiroState extends State<mainPorteiro> {
 
                                               if(result.get('funcao-rele1').contains('Pulso')){
 
-                                                print(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
 
                                                 rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
                                               }else{
@@ -696,7 +683,6 @@ class _mainPorteiroState extends State<mainPorteiro> {
 
                                                   rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
 
-                                                  print(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
                                                 }else{
                                                   await Future.delayed(const Duration(seconds: 5));
                                                   releFarol03();
@@ -971,7 +957,6 @@ class _mainPorteiroState extends State<mainPorteiro> {
                                                       textColor: Colors.white,
                                                       fontSize: tamanhotexto,
                                                     );
-                                                    print('enviado!');
                                                   });
                                                 } catch (e) {
                                                   Fluttertoast.showToast(
@@ -982,7 +967,6 @@ class _mainPorteiroState extends State<mainPorteiro> {
                                                     textColor: Colors.white,
                                                     fontSize: tamanhotexto,
                                                   );
-                                                  print('Erro! $e');
                                                 }
 
                                               },
@@ -1034,7 +1018,6 @@ class _mainPorteiroState extends State<mainPorteiro> {
                                         MaterialPageRoute(builder: (context){
                                           return anteLogin(logoPath);
                                         }));
-                                    print('Usuário desconectado');
                                   });
 
                                 },

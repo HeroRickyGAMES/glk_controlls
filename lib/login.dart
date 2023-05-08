@@ -132,39 +132,30 @@ class _loginState extends State<login> {
                                 email: emailController.text,
                                 password: passController.text
                             ).then((value) {
-                              print(value);
 
                               var db = FirebaseFirestore.instance;
                               var UID = FirebaseAuth.instance.currentUser?.uid;
                               db.collection('Users').doc(UID).get().then((event){
-                                print("${event.data()}");
 
                                 event.data()?.forEach((key, value) {
 
-                                  print(key);
-                                  print(value);
 
                                   if(value == 'ADM'){
 
                                     var db = FirebaseFirestore.instance;
                                     var UID = FirebaseAuth.instance.currentUser?.uid;
                                     db.collection('Users').doc(UID).get().then((event){
-                                      print("${event.data()}");
 
                                       event.data()?.forEach((key, value) {
 
-                                        print(key);
-                                        print(value);
 
                                         if(key == 'nome'){
                                           String ADMName = value;
 
-                                          print('O ADM é $ADMName');
 
                                           var db = FirebaseFirestore.instance;
                                           var UID = FirebaseAuth.instance.currentUser?.uid;
                                           db.collection('Users').doc(UID).get().then((event){
-                                            print("${event.data()}");
 
                                             Navigator.pop(context);
                                             Navigator.push(context,
@@ -179,27 +170,21 @@ class _loginState extends State<login> {
 
                                     }
                                     );
-                                    print('Ele é um ADM');
                                     //Passar o codigo para mandar a tela
                                   }
 
 
                                   if(value == 'porteiro'){
-                                    print('Ele é um porteiro');
                                     var db = FirebaseFirestore.instance;
                                     var UID = FirebaseAuth.instance.currentUser?.uid;
                                     db.collection('Users').doc(UID).get().then((event){
-                                      print("${event.data()}");
 
                                       event.data()?.forEach((key, value) async {
 
-                                        print(key);
-                                        print(value);
 
                                         if(key == 'nome'){
                                           String PorteiroNome = value;
 
-                                          print('Porteiro name é$PorteiroNome');
 
                                           var UID = FirebaseAuth.instance.currentUser?.uid;
                                           var result = await FirebaseFirestore.instance
@@ -236,29 +221,21 @@ class _loginState extends State<login> {
                                     );
                                   }
                                   if(value == 'operadorEmpresarial'){
-                                    print('Ele é um Operador Empresarial');
 
                                     db.collection('Users').doc(UID).get().then((event){
-                                      print("${event.data()}");
 
                                       event.data()?.forEach((key, value) {
 
-                                        print(key);
-                                        print(value);
 
                                         if(key == 'nome'){
-                                          print('Ele é um Operador Empresarial');
                                           String nome = value;
                                           //Passar o codigo para mandar a tela
                                           var db = FirebaseFirestore.instance;
                                           var UID = FirebaseAuth.instance.currentUser?.uid;
                                           db.collection('Users').doc(UID).get().then((event){
-                                            print("${event.data()}");
 
                                             event.data()?.forEach((key, value) async {
 
-                                              print(key);
-                                              print(value);
 
                                               if(key == 'estaativo'){
                                                 if(value == true){
@@ -278,7 +255,6 @@ class _loginState extends State<login> {
 
                                                 }else{
 
-                                                  print('O está ativo está funcionando!');
 
                                                   AlertDialog alert = AlertDialog(
                                                     title: const Text("Sua conta ainda não está ativa!"),
@@ -314,7 +290,6 @@ class _loginState extends State<login> {
                               );
                             }).catchError((onError){
 
-                              print(onError);
 
                               Fluttertoast.showToast(
                                 msg: onError.toString().replaceFirst("[firebase_auth/wrong-password]", ""),

@@ -277,7 +277,6 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                   }else{
 
                     //Ele vai verificar se o usuario está bloqueado ou não.
-                    print("chegou aqui");
 
                     if(galpao == ''){
                       Fluttertoast.showToast(
@@ -310,7 +309,6 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                           );
                         }else{
                           //Fez uma vez agora ele vai verificar se o motorista também está bloqueado!
-                          print("chegou aqui");
 
                           List Visitantes = [];
 
@@ -320,14 +318,11 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                           for (final docvisit in documentsvist) {
                             final id = docvisit.id;
                             final name = docvisit.get('rg');
-                            print('$id - $name');
 
                             Visitantes.add(name);
 
                           }
 
-                          print('Visitantes bloqueados no RG $Visitantes');
-                          print('Listagem de usuários concluída com sucesso!');
 
                           List VeiculosBLk = [];
 
@@ -337,7 +332,6 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                           for (final docVeiculoBlock in VeiculosBLKK) {
                             final id = docVeiculoBlock.id;
                             final name = docVeiculoBlock.get('nome');
-                            print('$id - $name');
 
                             VeiculosBLk.add(name);
 

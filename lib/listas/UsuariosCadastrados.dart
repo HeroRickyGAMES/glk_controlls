@@ -321,7 +321,6 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                                                   textColor: Colors.white,
                                                                                   fontSize: 16.0,
                                                                                 );
-                                                                                print('enviado!');
                                                                               });
                                                                             } catch (e) {
                                                                               Fluttertoast.showToast(
@@ -332,7 +331,6 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                                                 textColor: Colors.white,
                                                                                 fontSize: 16.0,
                                                                               );
-                                                                              print('Erro! $e');
                                                                             }
                                                                           },
                                                                               child: Text(
@@ -568,7 +566,6 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                                                   textColor: Colors.white,
                                                                                   fontSize: 16.0,
                                                                                 );
-                                                                                print('enviado!');
                                                                               });
                                                                             } catch (e) {
                                                                               Fluttertoast.showToast(
@@ -579,7 +576,6 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                                                 textColor: Colors.white,
                                                                                 fontSize: 16.0,
                                                                               );
-                                                                              print('Erro! $e');
                                                                             }
                                                                           },
                                                                               child: Text(

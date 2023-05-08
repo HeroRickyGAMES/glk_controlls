@@ -182,7 +182,6 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                             textColor: Colors.white,
                             fontSize: tamanhotexto,
                           );
-                          print(lacreounao);
                           if(lacreounao == 'lacre'){
 
                             //registre todos os valores no db
@@ -231,17 +230,13 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                               var db = FirebaseFirestore.instance;
                               var UID = FirebaseAuth.instance.currentUser?.uid;
                               db.collection('Users').doc(UID).get().then((event){
-                                print("${event.data()}");
 
                                 event.data()?.forEach((key, value) async {
 
-                                  print(key);
-                                  print(value);
 
                                   if(key == 'nome'){
                                     String PorteiroNome = value;
 
-                                    print('Porteiro name é$PorteiroNome');
 
                                     var UID = FirebaseAuth.instance.currentUser?.uid;
                                     var result = await FirebaseFirestore.instance
@@ -319,17 +314,13 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                               var db = FirebaseFirestore.instance;
                               var UID = FirebaseAuth.instance.currentUser?.uid;
                               db.collection('Users').doc(UID).get().then((event){
-                                print("${event.data()}");
 
                                 event.data()?.forEach((key, value) async {
 
-                                  print(key);
-                                  print(value);
 
                                   if(key == 'nome'){
                                     String PorteiroNome = value;
 
-                                    print('Porteiro name é$PorteiroNome');
 
                                     var UID = FirebaseAuth.instance.currentUser?.uid;
                                     var result = await FirebaseFirestore.instance
@@ -337,7 +328,6 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                                         .doc(UID)
                                         .get();
 
-                                    print('cheguei aqui!');
 
                                     bool cadastro = result.get('cadastrar');
                                     bool entrada = result.get('entrada');
@@ -388,17 +378,13 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
               var db = FirebaseFirestore.instance;
               var UID = FirebaseAuth.instance.currentUser?.uid;
               db.collection('Users').doc(UID).get().then((event){
-                print("${event.data()}");
 
                 event.data()?.forEach((key, value) async {
 
-                  print(key);
-                  print(value);
 
                   if(key == 'nome'){
                     String PorteiroNome = value;
 
-                    print('Porteiro name é$PorteiroNome');
 
                     var UID = FirebaseAuth.instance.currentUser?.uid;
                     var result = await FirebaseFirestore.instance

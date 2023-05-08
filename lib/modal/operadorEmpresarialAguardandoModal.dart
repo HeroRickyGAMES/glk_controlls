@@ -241,7 +241,6 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
 
                           galpaoSelecionado = escolha.toString();
 
-                          print(galpaoSelecionado);
 
                         },
                         items: widget.Galpoes.keys.map((opcao) => DropdownMenuItem(
@@ -316,11 +315,9 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
 
                     if(widget.Galpoes.containsKey(galpaoSelecionado)){
 
-                      print("Antes da Subtração ${widget.Galpoes.values}");
 
                       widget.Galpoes[galpaoSelecionado] = widget.Galpoes[galpaoSelecionado] - 1;
 
-                      print("Depois da Subtração ${widget.Galpoes.values}");
 
                       if(lacrebool == false){
                         if(entradabool == true){

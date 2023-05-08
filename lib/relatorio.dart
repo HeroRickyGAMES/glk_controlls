@@ -35,7 +35,6 @@ class _relatorioState extends State<relatorio> {
       //aspect = 1.0;
       aspect = 1.0;
 
-      print(aspect);
     }else{
       if(Platform.isAndroid){
 
@@ -78,10 +77,6 @@ class _relatorioState extends State<relatorio> {
           Empresa.add(docveiculosDeEmpresas.get('Empresa'));
           rg.add(docveiculosDeEmpresas.get('RGDoMotorista'));
 
-          print(nome);
-          print(Placa);
-          print(Empresa);
-          print(rg);
         }
         
         if(nome.contains(Pesquisa)){

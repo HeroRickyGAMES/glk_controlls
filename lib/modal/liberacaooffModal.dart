@@ -377,17 +377,13 @@ class _liberacaoOffState extends State<liberacaoOff> {
               var db = FirebaseFirestore.instance;
               var UID = FirebaseAuth.instance.currentUser?.uid;
               db.collection('Users').doc(UID).get().then((event){
-                print("${event.data()}");
 
                 event.data()?.forEach((key, value) async {
 
-                  print(key);
-                  print(value);
 
                   if(key == 'nome'){
                     String PorteiroNome = value;
 
-                    print('Porteiro name é' + PorteiroNome);
 
                     var UID = FirebaseAuth.instance.currentUser?.uid;
                     var result = await FirebaseFirestore.instance

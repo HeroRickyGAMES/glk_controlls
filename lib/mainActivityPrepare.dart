@@ -36,9 +36,48 @@ checkislog(context) async {
       .doc('ServerValues')
       .get();
 
-  if(info.version == (server.get('app-version'))){
 
 
+  if(int.parse(info.version.replaceAll(".", '')) < int.parse((server.get('app-version')).replaceAll(".", ''))){
+    showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text(
+              'Nova atualização!',
+              style: TextStyle(
+                  fontSize: 19
+              ),
+            ),
+            content: Text(
+              'O app lançou uma atualização!\nAtualize agora pelo site!\nA versão instalada em seu dispositivo é a ${info.version}\nMas a mais atualizada é a ${(server.get('app-version'))}',
+              style: const TextStyle(
+                  fontSize: 18
+              ),
+            ),
+            actions: [
+              TextButton(onPressed: () async {
+
+                Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=com.hrs.flutter.glk_controls");
+                if (!await launchUrl(
+                  uri,
+                  mode: LaunchMode.externalApplication,
+                )) {
+                  throw Exception('Could not launch $uri');
+                }
+              }, child: const Text(
+                'Baixar versão mais atualizada',
+                style: TextStyle(
+                    fontSize: 19
+                ),
+              )
+              ),
+            ],
+          );
+        }
+    );
+  }else{
     FirebaseAuth.instance
         .idTokenChanges()
         .listen((User? user) async {
@@ -51,7 +90,6 @@ checkislog(context) async {
 
         String logoPath = resulte.get('imageURL');
 
-        print('User is currently signed out!');
         Navigator.pop(context);
         Navigator.push(context,
             MaterialPageRoute(builder: (context){
@@ -64,34 +102,26 @@ checkislog(context) async {
 
         var db = dbInstance;
         db.collection('Users').doc(UID).get().then((event){
-          print("${event.data()}");
 
           event.data()?.forEach((key, value) {
 
-            print(key);
-            print(value);
 
             if(value == 'ADM'){
 
               var db = dbInstance;
               var UID = FirebaseAuth.instance.currentUser?.uid;
               db.collection('Users').doc(UID).get().then((event){
-                print("${event.data()}");
 
                 event.data()?.forEach((key, value) {
 
-                  print(key);
-                  print(value);
 
                   if(key == 'nome'){
                     String ADMName = value;
 
-                    print('O ADM é ' + ADMName);
 
                     var db = dbInstance;
                     var UID = FirebaseAuth.instance.currentUser?.uid;
                     db.collection('Users').doc(UID).get().then((event){
-                      print("${event.data()}");
 
                       Navigator.pop(context);
                       Navigator.push(context,
@@ -106,7 +136,6 @@ checkislog(context) async {
 
               }
               );
-              print('Ele é um ADM');
               //Passar o codigo para mandar a tela
             }
 
@@ -115,32 +144,24 @@ checkislog(context) async {
               var db = dbInstance;
               var UID = FirebaseAuth.instance.currentUser?.uid;
               db.collection('Users').doc(UID).get().then((event){
-                print("${event.data()}");
 
                 event.data()?.forEach((key, value) {
 
-                  print(key);
-                  print(value);
 
                   if(key == 'nome'){
                     String PorteiroNome = value;
 
-                    print('Porteiro name é' + PorteiroNome);
 
                     var db = dbInstance;
                     var UID = FirebaseAuth.instance.currentUser?.uid;
                     db.collection('Users').doc(UID).get().then((event){
-                      print("${event.data()}");
 
                       event.data()?.forEach((key, value) async {
 
-                        print(key);
-                        print(value);
 
                         if(key == 'estaativo'){
                           if(value == true){
 
-                            print('Porteiro name é' + PorteiroNome);
 
                             var result = await dbInstance
                                 .collection("porteiro")
@@ -170,7 +191,6 @@ checkislog(context) async {
 
                           }else{
 
-                            print('O está ativo está funcionando!');
 
                             AlertDialog alert = AlertDialog(
                               title: const Text("Sua conta ainda não está ativa!"),
@@ -192,82 +212,58 @@ checkislog(context) async {
                               },
                             );
                           }
-
-
                         }
-
                       });
-
                     }
                     );
                   }
-
                 });
-
               }
               );
-              print('Ele é um porteiro');
               //Passar o codigo para mandar a tela
             }
 
             if(value == 'empresa'){
-              print('Ele é uma empresa');
 
               db.collection('Users').doc(UID).get().then((event){
-                print("${event.data()}");
 
                 event.data()?.forEach((key, value) {
 
-                  print(key);
-                  print(value);
 
                   bool relatorio = false;
 
                   if(key == 'nome'){
-                    print('É uma empresa');
                     String nome = value;
                     //Passar o codigo para mandar a tela
                     var db = dbInstance;
                     var UID = FirebaseAuth.instance.currentUser?.uid;
                     db.collection('Users').doc(UID).get().then((event){
-                      print("${event.data()}");
 
                       event.data()?.forEach((key, value) {
 
-                        print(key);
-                        print(value);
 
                         if(key == 'estaativo'){
                           if(value == true){
 
                             var db2 = dbInstance;
                             db2.collection('Users').doc(UID).get().then((event){
-                              print("${event.data()}");
 
                               event.data()?.forEach((key, value) {
 
-                                print(key);
-                                print(value);
 
                                 if(key == 'nome'){
-                                  print('É uma empresa');
                                   String nome = value;
                                   //Passar o codigo para mandar a tela
                                   var db = dbInstance;
                                   var UID = FirebaseAuth.instance.currentUser?.uid;
                                   db.collection('Users').doc(UID).get().then((event){
-                                    print("${event.data()}");
 
                                     event.data()?.forEach((key, value) {
 
-                                      print(key);
-                                      print(value);
 
                                       if(key == 'RelatorioDays'){
 
                                         String dayHj = '${DateTime.now().day}';
-                                        print('Dia do relatiorio são ${value}');
-                                        print('Dia de hoje é ${DateTime.now().day}');
 
                                         if(value.contains(dayHj)){
                                           relatorio = true;
@@ -303,7 +299,6 @@ checkislog(context) async {
                             );
 
                           }else{
-                            print('O está ativo está funcionando!');
 
                             AlertDialog alert = AlertDialog(
                               title: const Text("Sua conta ainda não está ativa!"),
@@ -341,29 +336,21 @@ checkislog(context) async {
               );
             }
             if(value == 'operadorEmpresarial'){
-              print('Ele é um Operador Empresarial');
 
               db.collection('Users').doc(UID).get().then((event){
-                print("${event.data()}");
 
                 event.data()?.forEach((key, value) {
 
-                  print(key);
-                  print(value);
 
                   if(key == 'nome'){
-                    print('Ele é um Operador Empresarial');
                     String nome = value;
                     //Passar o codigo para mandar a tela
                     var db = dbInstance;
                     var UID = FirebaseAuth.instance.currentUser?.uid;
                     db.collection('Users').doc(UID).get().then((event){
-                      print("${event.data()}");
 
                       event.data()?.forEach((key, value) async {
 
-                        print(key);
-                        print(value);
 
                         if(key == 'estaativo'){
                           if(value == true){
@@ -384,7 +371,6 @@ checkislog(context) async {
 
                           }else{
 
-                            print('O está ativo está funcionando!');
 
                             AlertDialog alert = AlertDialog(
                               title: const Text("Sua conta ainda não está ativa!"),
@@ -420,48 +406,6 @@ checkislog(context) async {
         );
       }
     });
-
-  }else{
-    showDialog(
-        barrierDismissible: false,
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text(
-              'Nova atualização!',
-              style: TextStyle(
-                  fontSize: 19
-              ),
-            ),
-            content: Text(
-              'O app lançou uma atualização!\nAtualize agora pelo site!\nA versão instalada em seu dispositivo é a ${info.version}\nMas a mais atualizada é a ${(server.get('app-version'))}',
-              style: const TextStyle(
-                  fontSize: 18
-              ),
-            ),
-            actions: [
-              TextButton(onPressed: () async {
-
-                Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=com.hrs.flutter.glk_controls");
-                if (!await launchUrl(
-                  uri,
-                  mode: LaunchMode.externalApplication,
-                )) {
-                  throw Exception('Could not launch $uri');
-                }
-
-                Navigator.pop(context);
-              }, child: const Text(
-                'Baixar versão mais atualizada',
-                style: TextStyle(
-                    fontSize: 19
-                ),
-              )
-              ),
-            ],
-          );
-        }
-    );
   }
 }
 
@@ -489,7 +433,6 @@ checkislogOFFLine(context) async {
 
       String logoPath = resulte.get('imageURL');
 
-      print('User is currently signed out!');
       Navigator.pop(context);
       Navigator.push(context,
           MaterialPageRoute(builder: (context){
@@ -502,33 +445,22 @@ checkislogOFFLine(context) async {
 
       var db = dbInstance;
       db.collection('Users').doc(UID).get().then((event){
-        print("${event.data()}");
 
         event.data()?.forEach((key, value) {
 
-          print(key);
-          print(value);
 
           if(value == 'porteiro'){
 
-            print('começo!');
 
             var db = dbInstance;
             var UID = FirebaseAuth.instance.currentUser?.uid;
             db.collection('Users').doc(UID).get().then((event){
-              print("${event.data()}");
 
               event.data()?.forEach((key, value) async {
 
-                print(key);
-                print(value);
-                print('está passando para lá');
-                print("${event.data()}");
-
-                print('está passando para cá');
 
 
-                print(UID);
+
 
                 var result = await dbInstance
                     .collection("porteiro")
@@ -553,68 +485,50 @@ checkislogOFFLine(context) async {
 
             }
             );
-            print('Ele é um porteiro');
             //Passar o codigo para mandar a tela
           }
 
           if(value == 'empresa'){
-            print('Ele é uma empresa');
 
             db.collection('Users').doc(UID).get().then((event){
-              print("${event.data()}");
 
               event.data()?.forEach((key, value) {
 
-                print(key);
-                print(value);
 
                 bool relatorio = false;
 
                 if(key == 'nome'){
-                  print('É uma empresa');
                   String nome = value;
                   //Passar o codigo para mandar a tela
                   var db = dbInstance;
                   var UID = FirebaseAuth.instance.currentUser?.uid;
                   db.collection('Users').doc(UID).get().then((event){
-                    print("${event.data()}");
 
                     event.data()?.forEach((key, value) {
 
-                      print(key);
-                      print(value);
 
                       if(key == 'estaativo'){
                         if(value == true){
 
                           var db2 = dbInstance;
                           db2.collection('Users').doc(UID).get().then((event){
-                            print("${event.data()}");
 
                             event.data()?.forEach((key, value) {
 
-                              print(key);
-                              print(value);
 
                               if(key == 'nome'){
-                                print('É uma empresa');
                                 String nome = value;
                                 //Passar o codigo para mandar a tela
                                 var db = dbInstance;
                                 var UID = FirebaseAuth.instance.currentUser?.uid;
                                 db.collection('Users').doc(UID).get().then((event){
-                                  print("${event.data()}");
 
                                   event.data()?.forEach((key, value) {
 
-                                    print(key);
-                                    print(value);
 
                                     if(key == 'RelatorioDays'){
 
                                       String dayHj = '${DateTime.now().day}';
-                                      print('Dia do relatiorio são ${value}');
-                                      print('Dia de hoje é ${DateTime.now().day}');
 
                                       if(value.contains(dayHj)){
                                         relatorio = true;
@@ -650,7 +564,6 @@ checkislogOFFLine(context) async {
                           );
 
                         }else{
-                          print('O está ativo está funcionando!');
 
                           AlertDialog alert = AlertDialog(
                             title: const Text("Sua conta ainda não está ativa!"),
@@ -688,29 +601,21 @@ checkislogOFFLine(context) async {
             );
           }
           if(value == 'operadorEmpresarial'){
-            print('Ele é um Operador Empresarial');
 
             db.collection('Users').doc(UID).get().then((event){
-              print("${event.data()}");
 
               event.data()?.forEach((key, value) {
 
-                print(key);
-                print(value);
 
                 if(key == 'nome'){
-                  print('Ele é um Operador Empresarial');
                   String nome = value;
                   //Passar o codigo para mandar a tela
                   var db = dbInstance;
                   var UID = FirebaseAuth.instance.currentUser?.uid;
                   db.collection('Users').doc(UID).get().then((event){
-                    print("${event.data()}");
 
                     event.data()?.forEach((key, value) async {
 
-                      print(key);
-                      print(value);
 
                       if(key == 'estaativo'){
                         if(value == true){
@@ -730,7 +635,6 @@ checkislogOFFLine(context) async {
 
                         }else{
 
-                          print('O está ativo está funcionando!');
 
                           AlertDialog alert = AlertDialog(
                             title: const Text("Sua conta ainda não está ativa!"),
@@ -772,8 +676,6 @@ class _mainActivityPrepareState extends State<mainActivityPrepare> {
   @override
   Widget build(BuildContext context) {
 
-      print(widget.calloff == 'Ativo');
-      print(widget.calloff == 'NaoAtivo');
     if(widget.calloff == 'Ativo'){
       checkislogOFFLine(context);
     }else{

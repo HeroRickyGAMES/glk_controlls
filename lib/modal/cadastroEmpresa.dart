@@ -408,17 +408,9 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                       fontSize: tamanhotextobtns,
                                                     );
                                                   }else{
-                                                    print(tags);
-                                                    print(galpoesUsados.contains(tags));
-
                                                     for (int i = number; i >= 1; i--) {
-                                                      print(galpoesUsados);
-                                                      print(tags);
-                                                      print(i-1);
-
                                                       galpoesMap.putIfAbsent(tags[i-1], () => int.parse(vagas));
 
-                                                      print("MAP É ${galpoesMap}");
 
                                                       if(galpoesUsados.contains(tags[i-1])){
                                                         Fluttertoast.showToast(
@@ -443,7 +435,6 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
 
                                                           String idd = "${DateTime.now().toString()}" + uuid.v4();
 
-                                                          print("MAP É DEPOIS ${galpoesMap}");
 
                                                           FirebaseFirestore.instance.collection('empresa').doc(idd).set(
                                                               {
@@ -463,8 +454,6 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                             int vagasSubtracao = vagasDisponiveis - int.parse(vagas);
                                                             galpoesUsados.addAll(tags);
 
-                                                            print(galpoesUsados);
-                                                            print(subtracaoGalpao);
 
                                                             FirebaseFirestore.instance.collection('Condominio').doc('condominio').update({
                                                               'galpoes': subtracaoGalpao,

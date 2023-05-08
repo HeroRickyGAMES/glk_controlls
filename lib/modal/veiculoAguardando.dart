@@ -94,7 +94,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
       // Recupere a URL do download da imagem para salvar no banco de dados
       final url = await reference.getDownloadURL();
-      print(url);
       return url;
     }
 
@@ -127,7 +126,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
         widget.imageFile = imageFile;
       });
       trocandoparaverdadeiro();
-      print(imageFile);
     }
 
 
@@ -152,7 +150,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
         widget.imageFile2 = imageFile2;
       });
       trocandoparaverdadeiro2();
-      print(imageFile);
 
     }
     Future<String> _uploadImageToFirebase3(File file, String id) async {
@@ -175,7 +172,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
         widget.imageFile3 = imageFile3;
       });
       trocandoparaverdadeiro3();
-      print(imageFile);
     }
 
     Future<String> _uploadImageToFirebase4(File file, String id) async {
@@ -199,7 +195,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
       });
       trocandoparaverdadeiro4();
-      print(imageFile);
     }
 
 
@@ -221,8 +216,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
           .doc(widget.Entrada)
           .get();
 
-      print('aqui');
-      print(result.get('localAplicacao1'));
 
       //rele 1
       if(result.get('localAplicacao1') == "Cancela"){
@@ -230,7 +223,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
           if(result.get('funcao-rele1').contains('Pulso')){
 
-            print(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
 
             rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
@@ -359,7 +351,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
             rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
 
-            print(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
             await Future.delayed(const Duration(seconds: 5));
             releFarol03();
@@ -967,7 +958,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
                             tags[tagSelecionada] = 'Usado';
 
-                            print(tags[tagSelecionada]);
 
                             FirebaseFirestore.instance.collection('Condominio').doc('condominio').update({
                               'tags': tags
@@ -978,7 +968,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                             Navigator.of(context).pop();
                             Navigator.pop(context);
 
-                            print('Modo Offline Ativo');
                           }else{
                             final imageUrl = await _uploadImageToFirebase(imageFile!, widget.idDocumento);
                             final imageUrl2 = await _uploadImageToFirebase2(imageFile2!, widget.idDocumento);
@@ -1025,7 +1014,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
                               tags[tagSelecionada] = 'Usado';
 
-                              print(tags[tagSelecionada]);
 
                               FirebaseFirestore.instance.collection('Condominio').doc('condominio').update({
                                 'tags': tags
@@ -1037,10 +1025,8 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                               Navigator.pop(context);
                             });
 
-                            print('Conectado!');
 
 
-                            print('Conectado!');
                           }
                         }else{
 
@@ -1061,7 +1047,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
                           tags[tagSelecionada] = 'Usado';
 
-                          print(tags[tagSelecionada]);
 
                           FirebaseFirestore.instance.collection('Condominio').doc('condominio').update({
                             'tags': tags
@@ -1072,7 +1057,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                           Navigator.of(context).pop();
                           Navigator.pop(context);
 
-                          print('Desconectado!');
                         }
                       }
                     }
@@ -1088,7 +1072,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                         fontSize: 16.0,
                       );
                     }else{
-                      print(isTired);
 
                       if(isTired == false){
                         Fluttertoast.showToast(
@@ -1139,7 +1122,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                             try {
                               final result = await Process.run('ping', ['-c', '1', ip]);
                               if (result.exitCode == 0) {
-                                print('Ping realizado com sucesso para o endereço $ip');
 
                                 final imageUrl = await _uploadImageToFirebase(imageFile!, widget.idDocumento);
                                 final imageUrl2 = await _uploadImageToFirebase2(imageFile2!, widget.idDocumento);
@@ -1192,7 +1174,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
                                 tags[tagSelecionada] = 'Usado';
 
-                                print(tags[tagSelecionada]);
 
                                 FirebaseFirestore.instance.collection('Condominio').doc('condominio').update({
                                   'tags': tags
@@ -1212,10 +1193,8 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                                 Navigator.of(context).pop();
                                 Navigator.pop(context);
 
-                                print('Falha no ping para o endereço $ip');
                               }
                             } catch (e) {
-                              print('Erro ao executar o comando de ping: $e');
                             }
                           }
                         }

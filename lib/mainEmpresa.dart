@@ -77,7 +77,6 @@ class _mainEmpresaState extends State<mainEmpresa> {
       //aspect = 1.0;
       aspect = 1.0;
 
-      print(aspect);
     }else{
       if(Platform.isAndroid){
 
@@ -481,7 +480,6 @@ class _mainEmpresaState extends State<mainEmpresa> {
                                                           String Galpao = documents['Galpão'];
                                                           String verificadoPor = documents['verificadoPor'];
                                                           bool interno = documents['interno'];
-                                                          print(formattedDate);
 
                                                           Navigator.push(context,
                                                               MaterialPageRoute(builder: (context){

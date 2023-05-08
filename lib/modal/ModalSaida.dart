@@ -91,8 +91,6 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
           .doc('Rele02')
           .get();
 
-      print('aqui');
-      print(result.get('localAplicacao1'));
 
       //rele 1
       if(result.get('localAplicacao1') == "Cancela"){
@@ -100,7 +98,6 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
         if(result.get('funcao-rele1').contains('Pulso')){
 
-          print(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
 
           rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
         }else{
@@ -229,7 +226,6 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
             rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
 
-            print(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
           }else{
             await Future.delayed(const Duration(seconds: 5));
             releFarol03();
@@ -654,7 +650,6 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
                         tags[widget.tagSelecionada] = 'naoUsado';
 
-                        print(tags[widget.tagSelecionada]);
 
                         FirebaseFirestore.instance.collection('Condominio').doc('condominio').update(
                             {
@@ -678,11 +673,9 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                               (response) => response.contains("This is a test!");
 
                         if(await ConnectivityUtils.instance.isPhoneConnected()){
-                          print('Conectado!');
 
                         }else{
                           Navigator.pop(context);
-                          print('Desconectado!');
                         }
                       }
                       if(lacrebool == true){
@@ -705,7 +698,6 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
 
                           tags[widget.tagSelecionada] = 'naoUsado';
 
-                          print(tags[widget.tagSelecionada]);
 
                           FirebaseFirestore.instance.collection('Condominio').doc('condominio').update(
                               {
@@ -726,11 +718,8 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                                 (response) => response.contains("This is a test!");
 
                           if(await ConnectivityUtils.instance.isPhoneConnected()){
-                            print('Conectado!');
-
                           }else{
                             Navigator.pop(context);
-                            print('Desconectado!');
                           }
                         }
                       }

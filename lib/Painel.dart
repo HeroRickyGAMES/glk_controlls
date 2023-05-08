@@ -129,7 +129,6 @@ class _painelADMState extends State<painelADM> {
                                 .collection("empresa")
                                 .get();
                             result.docs.forEach((res) {
-                              print(res.data()['nome']);
 
                               listaNome.add(res.data()['nome'] + res.data()['id']);
 
