@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:uuid/uuid.dart';
 
 class cadastroVeiculoInterno extends StatefulWidget {
   String idEmpresa;
@@ -109,10 +110,15 @@ class _cadastroVeiculoInternoState extends State<cadastroVeiculoInterno> {
           Center(
               child: ElevatedButton(
                   onPressed: (){
-                    FirebaseFirestore.instance.collection('veiculosDeEmpresa').doc().set({
+
+                    var uuid = const Uuid();
+                    String idd = "${DateTime.now().toString()}${uuid.v4()}";
+
+                    FirebaseFirestore.instance.collection('veiculosDeEmpresa').doc(idd).set({
                       'Placa': placaVeiculo,
                       'tipodeVeiculo': Veiculo,
-                      'idEmpresa': widget.idEmpresa
+                      'idEmpresa': widget.idEmpresa,
+                      'id': idd
                     }).then((value){
                       Navigator.pop(context);
                     });

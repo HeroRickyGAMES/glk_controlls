@@ -247,10 +247,11 @@ class _loginState extends State<login> {
 
                                                   String empresaName = (result.get('empresa'));
                                                   String Email = result.get('email');
+                                                  String idEmpresa = result.get('idEmpresa');
                                                   Navigator.pop(context);
                                                   Navigator.push(context,
                                                       MaterialPageRoute(builder: (context){
-                                                        return operadorEmpresarial(nome, empresaName, Email);
+                                                        return operadorEmpresarial(nome, empresaName, Email, idEmpresa);
                                                       }));
 
                                                 }else{

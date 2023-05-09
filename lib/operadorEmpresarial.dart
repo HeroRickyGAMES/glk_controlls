@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/anteLogin.dart';
 import 'package:glk_controls/listas/meusAgendamentos.dart';
+import 'package:glk_controls/modal/meusVeiculos.dart';
 import 'package:glk_controls/modal/modalCadastroVeiculoInterno.dart';
 import 'package:glk_controls/modal/modalVeiculoAgendamento.dart';
 import 'package:glk_controls/relatorio.dart';
@@ -24,7 +25,8 @@ class operadorEmpresarial extends StatefulWidget {
   final String name;
   final String empresaName;
   String Email;
-  operadorEmpresarial(this.name, this.empresaName, this.Email, {super.key});
+  String idEmpresa;
+  operadorEmpresarial(this.name, this.empresaName, this.Email, this.idEmpresa, {super.key});
 
   @override
   State<operadorEmpresarial> createState() => _operadorEmpresarialState();
@@ -146,7 +148,7 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
 
       Navigator.push(context,
           MaterialPageRoute(builder: (context){
-            return meusAgendamentosActivity(widget.empresaName);
+            return meusAgendamentosActivity(widget.empresaName, widget.empresaName);
           }));
 
     }
@@ -194,6 +196,13 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
             return cadastroVeiculoInterno(idEmpresa);
           }));
     }
+    meusVeiculos(){
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context){
+            return meusVeiculosActivity(widget.empresaName, widget.idEmpresa);
+          }));
+    }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -295,6 +304,20 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                     onPressed: cadastrarVeiculoInterno,
                     child: Text(
                       'Cadastrar veiculo interno',
+                      style: TextStyle(
+                        fontSize: tamanhotexto,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                ),
+                Container(
+                  width: 500,
+                  padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                  child: ElevatedButton(
+                    onPressed: meusVeiculos,
+                    child: Text(
+                      'Meus Veiculos internos',
                       style: TextStyle(
                         fontSize: tamanhotexto,
                         fontWeight: FontWeight.bold,
