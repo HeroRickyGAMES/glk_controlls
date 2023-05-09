@@ -343,9 +343,12 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                                         String formattedDate2 = DataEntrada;
                                                         String formattedDate3 = DatadeAnalise;
 
+                                                        bool LacradoSaida = documents['lacreboolsaida'];
+                                                        String LacrenumSaida = documents['lacrenumSaida'];
+
                                                         Navigator.push(context,
                                                             MaterialPageRoute(builder: (context){
-                                                              return veiculoEntrada(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, formattedDate2, verificadoPor, formattedDate3, interno, lacradoStr);
+                                                              return veiculoEntrada(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, formattedDate2, verificadoPor, formattedDate3, interno, LacrenumSaida, LacradoSaida);
                                                             }));
 
                                                       }
@@ -371,10 +374,12 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                                           String formattedDate = horarioCriacao;
                                                           String formattedDate2 = DataEntrada;
                                                           String formattedDate3 = DatadeAnalise;
+                                                          bool LacradoSaida = documents['lacreboolsaida'];
+                                                          String LacrenumSaida = documents['lacrenumSaida'];
 
                                                           Navigator.push(context,
                                                               MaterialPageRoute(builder: (context){
-                                                                return veiculoEntrada(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, formattedDate2, verificadoPor, formattedDate3, interno, lacradoStr);
+                                                                return veiculoEntrada(lacre, widget.empresaName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, lacradoStr, documents.id, formattedDate2, verificadoPor, formattedDate3, interno, LacrenumSaida, LacradoSaida);
                                                               }));
                                                         }
                                                       }

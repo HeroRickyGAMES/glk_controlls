@@ -335,10 +335,12 @@ class _listaSaidaState extends State<listaSaida> {
                                                       String DatadeAnalise = DatadeAnalisest;
                                                       String DateEntrada = DateEntradast;
                                                       String DataSaida = DataSaidast;
+                                                      String lacrenumSaida = documents['lacrenumSaida'];
+                                                      bool lacreboolsaida = documents['lacreboolsaida'];
 
                                                       Navigator.push(context,
                                                           MaterialPageRoute(builder: (context){
-                                                            return modalSaidaVeiculo(lacreounao, empresaName, liberadopor, horarioCriacao, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, empresaName, Galpao, lacradoStr, idDocumento, DatadeAnalise, verificadoPor, DateEntrada, empresaName, widget.porteiroName, DataSaida, tagSelecionada, widget.Saida);
+                                                            return modalSaidaVeiculo(lacreounao, empresaName, liberadopor, horarioCriacao, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, empresaName, Galpao, lacradoStr, idDocumento, DatadeAnalise, verificadoPor, DateEntrada, empresaName, widget.porteiroName, DataSaida, tagSelecionada, widget.Saida, lacrenumSaida, lacreboolsaida);
                                                           }));
                                                     }
                                                   }else{
@@ -367,10 +369,12 @@ class _listaSaidaState extends State<listaSaida> {
                                                     String DatadeAnalise = DatadeAnalisest;
                                                     String DateEntrada = DateEntradast;
                                                     String DataSaida = DataSaidast;
+                                                    String lacrenumSaida = documents['lacrenumSaida'];
+                                                    bool lacreboolsaida = documents['lacreboolsaida'];
 
                                                     Navigator.push(context,
                                                         MaterialPageRoute(builder: (context){
-                                                          return modalSaidaVeiculo(lacreounao, empresaName, liberadopor, horarioCriacao, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, empresaName, Galpao, lacradoStr, idDocumento, DatadeAnalise, verificadoPor, DateEntrada, empresaName, widget.porteiroName, DataSaida, tagSelecionada, widget.Saida);
+                                                          return modalSaidaVeiculo(lacreounao, empresaName, liberadopor, horarioCriacao, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, empresaName, Galpao, lacradoStr, idDocumento, DatadeAnalise, verificadoPor, DateEntrada, empresaName, widget.porteiroName, DataSaida, tagSelecionada, widget.Saida, lacrenumSaida, lacreboolsaida);
                                                         }));
                                                   }
                                                 },

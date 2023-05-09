@@ -31,6 +31,8 @@ class modalSaidaVeiculo extends StatefulWidget {
   String DataSaida = '';
   String tagSelecionada = '';
   String Saida = '';
+  String numeroLacresaida  = '';
+  bool lacresaida;
 
   modalSaidaVeiculo(
       this.lacreounao,
@@ -53,6 +55,8 @@ class modalSaidaVeiculo extends StatefulWidget {
       this.DataSaida,
       this.tagSelecionada,
       this.Saida,
+      this.numeroLacresaida,
+      this.lacresaida,
       {super.key}
       );
   @override
@@ -583,6 +587,16 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                 ),
               ),
             ),
+            widget.lacresaida? Container(
+              padding: const EdgeInsets.all(16),
+              child:
+              Text(
+                'Lacre de saida: ${widget.numeroLacresaida}',
+                style: TextStyle(
+                    fontSize: tamanhotextobtns
+                ),
+              ),
+            ): const Text(''),
             Container(
               child:
               CheckboxListTile(

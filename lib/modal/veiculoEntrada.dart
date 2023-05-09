@@ -28,6 +28,7 @@ class veiculoEntrada extends StatefulWidget {
   String DatadeAnalise = '';
   String lacreNum = '';
   bool interno;
+  bool LacreSaida;
 
   veiculoEntrada(
       this.lacreounao,
@@ -47,6 +48,7 @@ class veiculoEntrada extends StatefulWidget {
       this.DatadeAnalise,
       this.interno,
       this.lacreNum,
+      this.LacreSaida,
       {super.key}
       );
   @override
@@ -54,8 +56,9 @@ class veiculoEntrada extends StatefulWidget {
 }
 
 class _veiculoEntradaState extends State<veiculoEntrada> {
+  String lacreSt = '';
   bool lacrebool = false;
-  String? lacreSt;
+
   @override
   Widget build(BuildContext context) {
 
@@ -89,6 +92,21 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
         tamanhotextobtns = 18;
 
       }
+    }
+
+    String lacreNameSaida = '';
+
+    if(widget.LacreSaida == true){
+      setState(() {
+        lacreNameSaida = 'Com Lacre';
+      });
+
+    }
+
+    if(widget.LacreSaida == false){
+      setState(() {
+        lacreNameSaida = 'Sem Lacre';
+      });
     }
 
     return Scaffold(
@@ -233,28 +251,43 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                 ),
               ),
             ),
-            RadioListTile(
-              title: const Text(
-                  "Com Lacre"
+            Container(
+              child:
+              CheckboxListTile(
+                title: Text('Com Lacre'),
+                value: widget.LacreSaida,
+                onChanged: (value) {
+                  setState(() {
+                    widget.LacreSaida = value!;
+                  });
+                },
+                activeColor: Colors.blue,
+                checkColor: Colors.white,
+                controlAffinity: ListTileControlAffinity.leading,
               ),
-              value: "lacre",
-              groupValue: widget.lacreounao,
-              onChanged: null,
             ),
-              RadioListTile(
-                title: const Text("Sem Lacre",),
-                value: "naolacrado",
-                groupValue: widget.lacreounao,
-                onChanged: null,
+            Container(
+              child:
+              CheckboxListTile(
+                title: Text('Sem Lacre'),
+                value: !widget.LacreSaida,
+                onChanged: (value) {
+                  setState(() {
+                    widget.LacreSaida = !value!;
+                  });
+                },
+                activeColor: Colors.blue,
+                checkColor: Colors.white,
+                controlAffinity: ListTileControlAffinity.leading,
               ),
-              lacrebool ?
+            ),
+              widget.LacreSaida ?
               Container(
                 padding: const EdgeInsets.all(16),
                 child: TextFormField(
                   controller: _textEditingController,
                   onChanged: (valor){
                     lacreSt = valor;
-                    //Mudou mandou para a String
                   },
                   keyboardType: TextInputType.number,
                   //enableSuggestions: false,
@@ -273,7 +306,6 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
               padding: const EdgeInsets.all(16),
               child: ElevatedButton(
                 onPressed: () async {
-
                   //todo subtract
 
                   var UID = FirebaseAuth.instance.currentUser?.uid;
@@ -293,22 +325,20 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                   if(widget.interno == false){
                     Map galpoes = (resultEmpresa.get('galpaes'));
 
-
                     galpoes[widget.Galpao] = galpoes[widget.Galpao] + 1;
 
                     FirebaseFirestore.instance.collection('empresa').doc(idEmpresa).update({
                       'galpaes': galpoes
                     }).then((value){
-                      if(lacrebool == false){
+                      if(widget.LacreSaida == false){
                         FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                           'DataSaida': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                           'Status': 'Liberado Saida'
                         });
                         Navigator.pop(context);
                       }
-
-                      if(lacrebool == true){
-                        if(lacreSt == null){
+                      if(widget.LacreSaida == true){
+                        if(lacreSt == ''){
                           Fluttertoast.showToast(
                             msg: 'Preencha o numero do lacre!',
                             toastLength: Toast.LENGTH_SHORT,
@@ -320,23 +350,24 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                         }else{
                           FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                             'DataSaida': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
-                            'Status': 'Liberado Saida'
+                            'Status': 'Liberado Saida',
+                            'lacrenumSaida': lacreSt,
+                            'lacreboolsaida': true
                           });
                           Navigator.pop(context);
                         }
                       }
                     });
                   }else{
-                    if(lacrebool == false){
+                    if(widget.LacreSaida == false){
                       FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                         'DataSaida': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                         'Status': 'Liberado Saida'
                       });
                       Navigator.pop(context);
                     }
-
-                    if(lacrebool == true){
-                      if(lacreSt == null){
+                    if(widget.LacreSaida == true){
+                      if(lacreSt == ''){
                         Fluttertoast.showToast(
                           msg: 'Preencha o numero do lacre!',
                           toastLength: Toast.LENGTH_SHORT,
@@ -348,7 +379,9 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                       }else{
                         FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                           'DataSaida': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
-                          'Status': 'Liberado Saida'
+                          'Status': 'Liberado Saida',
+                          'lacrenumSaida': lacreSt,
+                          'lacreboolsaida': true
                         });
                         Navigator.pop(context);
                       }
