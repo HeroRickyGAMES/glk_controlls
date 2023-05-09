@@ -175,7 +175,9 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
         'tag': '',
         'motivo': motivo,
         'interno': false,
-        'agendamento': true
+        'agendamento': true,
+        'lacrenumSaida': '',
+        'lacreboolsaida': false
       }).then((value) async {
         Fluttertoast.showToast(
           msg: 'Enviado com sucesso!',
@@ -328,7 +330,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
 
                           final VeiculosBloqueadosCollection = FirebaseFirestore.instance.collection('VisitantesBloqueados');
                           final snapshot2 = await VeiculosBloqueadosCollection.get();
-                          final VeiculosBLKK = snapshot.docs;
+                          final VeiculosBLKK = snapshot2.docs;
                           for (final docVeiculoBlock in VeiculosBLKK) {
                             final id = docVeiculoBlock.id;
                             final name = docVeiculoBlock.get('nome');

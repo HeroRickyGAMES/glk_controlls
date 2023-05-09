@@ -146,7 +146,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
           'tag': '',
           'motivo': motivo,
           'interno': veiculoInterno,
-          'agendamento': false
+          'agendamento': false,
+          'lacrenumSaida': '',
+          'lacreboolsaida': false
         }).then((value) {
 
           Fluttertoast.showToast(
@@ -252,7 +254,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
           'tag': '',
           'galpaoPrimario': galpaoPrimario,
           'interno': veiculoInterno,
-          'agendamento': false
+          'agendamento': false,
+          'lacrenumSaida': '',
+          'lacreboolsaida': false
         }).then((value) {
 
           Fluttertoast.showToast(

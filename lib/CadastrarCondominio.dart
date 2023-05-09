@@ -87,6 +87,8 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
     TextEditingController galpaoController = TextEditingController(text: widget.galpaost);
     TextEditingController vagasController = TextEditingController(text: widget.vagas);
 
+    double tamanhotexto = 16;
+    double tamanhotextobtns = 18;
 
     final FirebaseStorage storage = FirebaseStorage.instance;
 
@@ -178,6 +180,73 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
           children: [
             Container(
               padding: const EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ElevatedButton(
+                    onPressed: (){
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text(''),
+                            actions: [
+                              TextButton(onPressed: (){
+                                _uploadImage();
+                                Navigator.of(context).pop();
+                              },
+                                child: Image.file(imageFile!,),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('Cancelar'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('Prosseguir'),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: const Text(
+                      'Logo',
+                      style: TextStyle(
+                          fontSize: 16
+                      ),
+                    ),
+                  ),
+                  Image.file(
+                    imageFile2!,
+                    width: 200,
+                    height: 200,
+                  )
+                ],
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                  'Empresa: ',
+                style: TextStyle(
+                  fontSize: tamanhotexto,
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
               child: TextFormField(
                 controller: empresaController,
                 onChanged: (valor){
@@ -192,6 +261,15 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                   hintStyle: TextStyle(
                       fontSize: 16
                   ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                'Endereço: ',
+                style: TextStyle(
+                  fontSize: tamanhotexto,
                 ),
               ),
             ),
@@ -214,6 +292,15 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
             ),
             Container(
               padding: const EdgeInsets.all(16),
+              child: Text(
+                'CEP: ',
+                style: TextStyle(
+                  fontSize: tamanhotexto,
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
               child: TextFormField(
                 controller: cepController,
                 onChanged: (valor){
@@ -226,6 +313,15 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                   hintStyle: TextStyle(
                       fontSize: 16
                   ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                'Cidade: ',
+                style: TextStyle(
+                  fontSize: tamanhotexto,
                 ),
               ),
             ),
@@ -278,7 +374,17 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
             ),
             Container(
               padding: const EdgeInsets.all(16),
+              child: Text(
+                'Quantidade de Galpões: ',
+                style: TextStyle(
+                  fontSize: tamanhotexto,
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
               child: TextFormField(
+                keyboardType: TextInputType.number,
                 controller: galpaoController,
                 onChanged: (valor){
                   galpaost = valor;
@@ -295,7 +401,17 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
             ),
             Container(
               padding: const EdgeInsets.all(16),
+              child: Text(
+                'Quantidade de Vagas: ',
+                style: TextStyle(
+                  fontSize: tamanhotexto,
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
               child: TextFormField(
+                keyboardType: TextInputType.number,
                 controller: vagasController,
                 onChanged: (valor){
                   vagas = valor;
@@ -307,6 +423,15 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                   hintStyle: TextStyle(
                       fontSize: 16
                   ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                'Quantidade de TAGS: ',
+                style: TextStyle(
+                  fontSize: tamanhotexto,
                 ),
               ),
             ),
@@ -327,64 +452,6 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                 ),
               ),
             ),
-            Container(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ElevatedButton(
-                    onPressed: (){
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text(''),
-                            actions: [
-                              TextButton(onPressed: (){
-                                _uploadImage();
-                                Navigator.of(context).pop();
-                              },
-                                child: Image.file(imageFile!,),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('Cancelar'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('Prosseguir'),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    child: const Text(
-                        'Logo',
-                      style: TextStyle(
-                        fontSize: 16
-                      ),
-                    ),
-                  ),
-                Image.file(
-                  imageFile2!,
-                  width: 200,
-                  height: 200,
-                )
-                ],
-              ),
-            ),
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -395,18 +462,17 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                       onPressed: (){
                         Navigator.pop(context);
                       },
-                      child: const Text(
-                          'Cancelar',
-                        style: TextStyle(
-                            fontSize: 16
-                        ),
-                      ),
                     style: ElevatedButton.styleFrom(
                         primary: Colors.red
                     ),
+                      child: Text(
+                          'Cancelar',
+                        style: TextStyle(
+                            fontSize: tamanhotextobtns
+                        ),
+                      ),
                   ),
                 ),
-
                 ElevatedButton(
                     onPressed: () async {
 
@@ -572,10 +638,10 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                       }
                     },
                     child:
-                const Text(
+                Text(
                     'Prosseguir',
                   style: TextStyle(
-                      fontSize: 16
+                      fontSize: tamanhotextobtns
                   ),
                 )
                 )
