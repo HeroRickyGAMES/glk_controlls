@@ -275,19 +275,14 @@ checkislog(context) async {
                                               MaterialPageRoute(builder: (context){
                                                 return mainEmpresa(nome, relatorio);
                                               }));
-
                                         }
-
-
                                       }
                                     });
 
                                   }
                                   );
                                 }
-
                               });
-
                             }
                             );
 
@@ -305,7 +300,6 @@ checkislog(context) async {
                                 ),
                               ],
                             );
-
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
@@ -313,18 +307,12 @@ checkislog(context) async {
                               },
                             );
                           }
-
-
                         }
-
                       });
-
                     }
                     );
                   }
-
                 });
-
               }
               );
             }
@@ -409,7 +397,7 @@ checkislogOFFLine(context) async {
   );
 
   FirebaseFirestore.instance.settings = const Settings(
-    host: '192.168.35.100:8080',
+    host: '192.168.35.175:8080',
     sslEnabled: false,
     persistenceEnabled: false,
   );

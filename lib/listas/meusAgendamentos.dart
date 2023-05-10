@@ -142,8 +142,8 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                                 const Text('Devido algumas váriaveis do aplicativo, o padrão de datas ficou como o padrão gringo (MM/DD/AAAA)')
                                                             ),
                                                             Text(dataAgendataST == ''
-                                                                ? 'Nenhum data selecionada'
-                                                                : 'Data selecionada: $dataAgendataST'),
+                                                                ? 'Nenhum data selecionada para Entrada'
+                                                                : 'Data selecionada para Entrada: $dataAgendataST'),
                                                             ElevatedButton(
                                                               onPressed: () async {
                                                                 final DateTime? picked = await showDatePicker(
@@ -170,11 +170,11 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                                   });
                                                                 }
                                                               },
-                                                              child: const Text('Selecionar data'),
+                                                              child: const Text('Selecionar Data e Horario de Entrada'),
                                                             ),
                                                             Text(dataAgendataSTsaida == ''
-                                                                ? 'Nenhum data selecionada'
-                                                                : 'Data selecionada: $dataAgendataSTsaida'),
+                                                                ? 'Nenhum data selecionada para Saída'
+                                                                : 'Data selecionada para Saída: $dataAgendataSTsaida'),
                                                             ElevatedButton(
                                                               onPressed: () async {
                                                                 final DateTime? picked = await showDatePicker(
@@ -201,7 +201,7 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                                   });
                                                                 }
                                                               },
-                                                              child: const Text('Selecionar data'),
+                                                              child: const Text('Selecionar Data e Horario de Saída'),
                                                             ),
                                                             Container(
                                                                 padding: const EdgeInsets.only(top: 16),
@@ -563,7 +563,6 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                       MaterialPageRoute(builder: (context){
                                                         return modalVeiculoAgendamento(widget.nome, widget.Empresa,dropValue2, dropValue, Galpoes.keys.toList(), galpaoPrimario);
                                                       }));
-
                                                 }
                                               }
                                             }

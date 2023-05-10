@@ -56,16 +56,26 @@ class _modalPorteiroState extends State<modalPorteiro> {
   bool veiculoInterno = false;
 
   Future<void> testPing() async {
-    final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar
 
-    try {
-      final result = await Process.run('ping', ['-c', '1', ip]);
-      if (result.exitCode == 0) {
-        Status = 'Aguardando Liberação';
-      } else {
+    ConnectivityUtils.instance
+      ..serverToPing =
+          "https://raw.githubusercontent.com/HeroRickyGAMES/glk_controlls/master/onlineCheck.txt"
+      ..verifyResponseCallback =
+          (response) => response.contains("estaOnline");
+
+    if(await ConnectivityUtils.instance.isPhoneConnected()){
+
+      final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+      final SharedPreferences prefs = await _prefs;
+      bool? offlinemode =  prefs.getBool('OfflineMode');
+
+      if(offlinemode == true){
         Status = 'Estacionário';
+      }else{
+        Status = 'Aguardando Liberação';
       }
-    } catch (e) {
+    }else{
+      Status = 'Estacionário';
     }
   }
 
