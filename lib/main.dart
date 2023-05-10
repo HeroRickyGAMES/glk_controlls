@@ -50,7 +50,6 @@ calltoprepare(context) async {
           MaterialPageRoute(builder: (context){
             return mainActivityPrepare(calloff);
           }));
-
     }
 
   }else{
