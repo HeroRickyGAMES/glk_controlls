@@ -97,15 +97,12 @@ checkislog(context) async {
             }));
 
       } else {
-
         var UID = FirebaseAuth.instance.currentUser?.uid;
 
         var db = dbInstance;
         db.collection('Users').doc(UID).get().then((event){
 
           event.data()?.forEach((key, value) {
-
-
             if(value == 'ADM'){
 
               var db = dbInstance;
@@ -113,12 +110,8 @@ checkislog(context) async {
               db.collection('Users').doc(UID).get().then((event){
 
                 event.data()?.forEach((key, value) {
-
-
                   if(key == 'nome'){
                     String ADMName = value;
-
-
                     var db = dbInstance;
                     var UID = FirebaseAuth.instance.currentUser?.uid;
                     db.collection('Users').doc(UID).get().then((event){

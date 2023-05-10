@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_widget/connectivity_widget.dart';
+import 'package:enhanced_url_launcher/enhanced_url_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -319,9 +320,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
       ConnectivityUtils.instance
         ..serverToPing =
-            "https://gist.githubusercontent.com/Vanethos/dccc4b4605fc5c5aa4b9153dacc7391c/raw/355ccc0e06d0f84fdbdc83f5b8106065539d9781/gistfile1.txt"
+            "https://raw.githubusercontent.com/HeroRickyGAMES/glk_controlls/master/onlineCheck.txt"
         ..verifyResponseCallback =
-            (response) => response.contains("This is a test!");
+            (response) => response.contains("estaOnline");
 
       if(await ConnectivityUtils.instance.isPhoneConnected()){
 
@@ -570,9 +571,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                     }else{
                                       ConnectivityUtils.instance
                                         ..serverToPing =
-                                            "https://gist.githubusercontent.com/Vanethos/dccc4b4605fc5c5aa4b9153dacc7391c/raw/355ccc0e06d0f84fdbdc83f5b8106065539d9781/gistfile1.txt"
+                                            "https://raw.githubusercontent.com/HeroRickyGAMES/glk_controlls/master/onlineCheck.txt"
                                         ..verifyResponseCallback =
-                                            (response) => response.contains("This is a test!");
+                                            (response) => response.contains("estaOnline");
 
                                       if(await ConnectivityUtils.instance.isPhoneConnected()){
 
@@ -998,6 +999,25 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 ),
               ),
               ElevatedButton(
+                  onPressed: () async {
+                    Uri uri = Uri.parse("https://glkcontrols.com.br/controls/sanca/clgcarmeladutra/entrada/#/");
+                    if (!await launchUrl(
+                    uri,
+                    mode: LaunchMode.externalApplication,
+                    )) {
+                    throw Exception('Could not launch $uri');
+                    }
+                  },
+                  child:
+                  const Text(
+                    'Abrir Painel de Entrada',
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold
+                    ),
+                  )
+              ),
+              ElevatedButton(
               onPressed: uploadInfos,
               child:
               const Text(
@@ -1039,9 +1059,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
                   ConnectivityUtils.instance
                     ..serverToPing =
-                        "https://gist.githubusercontent.com/Vanethos/dccc4b4605fc5c5aa4b9153dacc7391c/raw/355ccc0e06d0f84fdbdc83f5b8106065539d9781/gistfile1.txt"
+                        "https://raw.githubusercontent.com/HeroRickyGAMES/glk_controlls/master/onlineCheck.txt"
                     ..verifyResponseCallback =
-                        (response) => response.contains("This is a test!");
+                        (response) => response.contains("estaOnline");
 
                   if(await ConnectivityUtils.instance.isPhoneConnected()){
 

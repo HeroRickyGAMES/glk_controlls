@@ -26,7 +26,8 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
   String? coletaouentrega = '';
   String? empresaSelecionada = '';
   String? galpao = '';
-
+  String? lacreounao = '';
+  bool lacrebool = false;
   //fields
   String? nomeMotorista = '';
   String? RGMotorista = '';
@@ -152,7 +153,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
         'Telefone': telefone,
         'EmpresadeOrigin': originEmpresa,
         'ColetaOuEntrega': coletaouentrega,
-        'LacreouNao': '',
+        'LacreouNao': lacreounao,
         'QuemAutorizou': widget.nomeUser,
         'Status': 'Liberado Entrada',
         'galpaoPrimario': widget.galpaoPrimario,
@@ -389,7 +390,29 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                                   fontSize: tamanhotexto,
                                 );
                               }else{
-                                MandarMT();
+                                if(lacreounao == ""){
+                                  Fluttertoast.showToast(
+                                    msg: 'Preencha se está com lacre ou sem',
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.black,
+                                    textColor: Colors.white,
+                                    fontSize: tamanhotexto,
+                                  );
+                                }else{
+                                  if(VeiculoPlaca!.length != 8){
+                                    Fluttertoast.showToast(
+                                      msg: 'A placa está escrita errada, faltam caracteres!',
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.black,
+                                      textColor: Colors.white,
+                                      fontSize: tamanhotexto,
+                                    );
+                                  }else{
+                                    MandarMT();
+                                  }
+                                }
                               }
                             }
                           }
@@ -717,6 +740,53 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                     ),
                   ],
                 ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Expanded(
+                    child: RadioListTile(
+                      title: Text(
+                        "Com Lacre",
+                        style: TextStyle(
+                            fontSize: tamanhotexto
+                        ),
+                      ),
+                      value: "lacre",
+                      groupValue: lacreounao,
+                      onChanged: (value){
+                        setState(() {
+                          lacreounao = value.toString();
+
+                          if(value == 'lacre'){
+                            lacrebool = true;
+                          }
+
+                        });
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: RadioListTile(
+                      title: Text(
+                        "Sem Lacre",
+                        style: TextStyle(
+                            fontSize: tamanhotexto
+                        ),
+                      ),
+                      value: "naolacrado",
+                      groupValue: lacreounao,
+                      onChanged: (value){
+                        setState(() {
+                          lacreounao = value.toString();
+                          if(value == 'naolacrado'){
+                            lacrebool = false;
+                          }
+                        });
+                      },
+                    ),
+                  ),
+                ],
               ),
               ElevatedButton(
               onPressed: uploadInfos,
