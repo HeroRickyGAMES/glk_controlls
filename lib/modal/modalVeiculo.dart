@@ -80,9 +80,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
   }
 
   @override
-  void initState() {
-    testPing();
-    // TODO: implement initState com outras verificações de rede
+  void initState() {    // TODO: implement initState com outras verificações de rede
     super.initState();
   }
 
@@ -344,6 +342,186 @@ class _modalPorteiroState extends State<modalPorteiro> {
       }
     }
 
+    restomanda() async {
+
+      if(VeiculoPlaca!.contains(" ")){
+        //Ele vai verificar se o usuario está bloqueado ou não.
+
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return const AlertDialog(
+              title: Text('Aguarde!'),
+              actions: [
+                Center(
+                  child: CircularProgressIndicator(),
+                )
+              ],
+            );
+          },
+        );
+        List Visitantes = [];
+
+        final VisitantesBloqueadosCollection = FirebaseFirestore.instance.collection('VisitantesBloqueados');
+        final snapshot = await VisitantesBloqueadosCollection.get();
+        final documentsvist = snapshot.docs;
+        for (final docvisit in documentsvist) {
+          final id = docvisit.id;
+          final name = docvisit.get('rg');
+
+          Visitantes.add(name);
+
+        }
+
+        List VeiculosBLk = [];
+
+        final VeiculosBloqueadosCollection = FirebaseFirestore.instance.collection('VisitantesBloqueados');
+        final snapshot2 = await VeiculosBloqueadosCollection.get();
+        final VeiculosBLKK = snapshot2.docs;
+        for (final docVeiculoBlock in VeiculosBLKK) {
+          final id = docVeiculoBlock.id;
+          final name = docVeiculoBlock.get('nome');
+
+          VeiculosBLk.add(name);
+
+        }
+
+        if(Visitantes.contains(RGMotorista)){
+          Navigator.of(context).pop();
+          Fluttertoast.showToast(
+            msg: 'Este visitante está bloqueado!',
+            toastLength: Toast.LENGTH_SHORT,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.black,
+            textColor: Colors.white,
+            fontSize: tamanhotexto,
+          );
+        }else{
+          if(VeiculosBLk.contains(VeiculoPlaca)){
+            Navigator.of(context).pop();
+            Fluttertoast.showToast(
+              msg: 'Este visitante está bloqueado!',
+              toastLength: Toast.LENGTH_SHORT,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.black,
+              textColor: Colors.white,
+              fontSize: tamanhotexto,
+            );
+          }else{
+
+            if(veiculoInterno == true){
+              Status = 'Estacionário';
+            }
+
+            final usersCollection = FirebaseFirestore.instance.collection('empresa');
+            final snapshot = await usersCollection.get();
+            final documents = snapshot.docs;
+            for (final doc in documents) {
+
+              if(doc.get('nome') == empresaSelecionada){
+                galpaoPrimario = doc.get('galpaoPrimario');
+                Map galpaesEmpresa = doc.get('galpaes');
+
+                String idEmpresa = doc.get('id');
+
+
+                List veiculosDeEmpresa = [];
+                List idEmpresaList = [];
+
+                final veiculosDeEmpresasCollection = FirebaseFirestore.instance.collection('veiculosDeEmpresa');
+                final snapshot3 = await veiculosDeEmpresasCollection.get();
+                final veiculosDeEmpresas = snapshot3.docs;
+                for (final docveiculosDeEmpresas in veiculosDeEmpresas) {
+                  final id = docveiculosDeEmpresas.id;
+                  final name = docveiculosDeEmpresas.get('Placa');
+                  final idList = docveiculosDeEmpresas.get('idEmpresa');
+
+                  veiculosDeEmpresa.add(name);
+                  idEmpresaList.add(idList);
+
+                }
+
+                if(veiculosDeEmpresa.contains(VeiculoPlaca)){
+
+                  if(idEmpresaList.contains(idEmpresa)){
+
+                    if(galpaesEmpresa.values.first == 0){
+                      Fluttertoast.showToast(
+                        msg: 'Não há mais vagas disponiveis!',
+                        toastLength: Toast.LENGTH_SHORT,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.black,
+                        textColor: Colors.white,
+                        fontSize: tamanhotexto,
+                      );
+                    }else{
+                      ConnectivityUtils.instance
+                        ..serverToPing =
+                            "https://gist.githubusercontent.com/Vanethos/dccc4b4605fc5c5aa4b9153dacc7391c/raw/355ccc0e06d0f84fdbdc83f5b8106065539d9781/gistfile1.txt"
+                        ..verifyResponseCallback =
+                            (response) => response.contains("This is a test!");
+
+                      //todo subtract
+                      galpaesEmpresa[galpaesEmpresa.keys.first] = galpaesEmpresa[galpaesEmpresa.keys.first] - 1;
+
+
+                      FirebaseFirestore.instance.collection('empresa').doc(idEmpresa).update({
+                        'galpaes': galpaesEmpresa
+                      });
+
+                      if(await ConnectivityUtils.instance.isPhoneConnected()){
+      veiculoInterno == true;
+      Status = 'Estacionário';
+      MandarMT();
+
+
+      }else{
+      veiculoInterno == true;
+      Status = 'Liberado Saida';
+      MandarMT();
+      }
+      }
+      }
+      }else{
+      ConnectivityUtils.instance
+      ..serverToPing =
+      "https://raw.githubusercontent.com/HeroRickyGAMES/glk_controlls/master/onlineCheck.txt"
+      ..verifyResponseCallback =
+      (response) => response.contains("estaOnline");
+
+      if(await ConnectivityUtils.instance.isPhoneConnected()){
+
+      final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+      final SharedPreferences prefs = await _prefs;
+      bool? offlinemode =  prefs.getBool('OfflineMode');
+
+      if(offlinemode == true){
+      Status = 'Liberado Entrada';
+      MandarMT();
+      }else{
+      MandarMT();
+      }
+      }else{
+      Status = 'Liberado Entrada';
+      MandarMT();
+      }
+      }
+      }
+      }
+      }
+      }
+      }else{
+      Fluttertoast.showToast(
+      msg: 'A placa está escrita errada!',
+      toastLength: Toast.LENGTH_SHORT,
+      timeInSecForIosWeb: 1,
+      backgroundColor: Colors.black,
+      textColor: Colors.white,
+      fontSize: tamanhotexto,
+      );
+      }
+    }
+
     uploadInfos() async {
       if(nomeMotorista == null){
         Fluttertoast.showToast(
@@ -438,64 +616,39 @@ class _modalPorteiroState extends State<modalPorteiro> {
                             fontSize: tamanhotexto,
                           );
                         }else{
-                          if(VeiculoPlaca!.contains(" ")){
+                          if(telefone!.length != 15){
 
-                            //Ele vai verificar se o usuario está bloqueado ou não.
-
-                            showDialog(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return const AlertDialog(
-                                  title: Text('Aguarde!'),
-                                  actions: [
-                                    Center(
-                                      child: CircularProgressIndicator(),
-                                    )
-                                  ],
-                                );
-                              },
+                            Fluttertoast.showToast(
+                              msg: 'O telefone está escrito errado, faltam caracteres!',
+                              toastLength: Toast.LENGTH_SHORT,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.black,
+                              textColor: Colors.white,
+                              fontSize: tamanhotexto,
                             );
-                            List Visitantes = [];
 
-                            final VisitantesBloqueadosCollection = FirebaseFirestore.instance.collection('VisitantesBloqueados');
-                            final snapshot = await VisitantesBloqueadosCollection.get();
-                            final documentsvist = snapshot.docs;
-                            for (final docvisit in documentsvist) {
-                              final id = docvisit.id;
-                              final name = docvisit.get('rg');
+                          }else{
+                            List RGMotoristas = [];
 
-                              Visitantes.add(name);
+                            final RGMotoristasCollection = FirebaseFirestore.instance.collection('Autorizacoes');
+                            final snapshot5 = await RGMotoristasCollection.get();
+                            final RGMOTORISTADOC = snapshot5.docs;
+                            for (final RGMOTORISTADOC in RGMOTORISTADOC) {
+                              final id = RGMOTORISTADOC.id;
+                              final name = RGMOTORISTADOC.get('RGDoMotorista');
+                              final status = RGMOTORISTADOC.get('Status');
 
-                            }
-
-                            List VeiculosBLk = [];
-
-                            final VeiculosBloqueadosCollection = FirebaseFirestore.instance.collection('VisitantesBloqueados');
-                            final snapshot2 = await VeiculosBloqueadosCollection.get();
-                            final VeiculosBLKK = snapshot.docs;
-                            for (final docVeiculoBlock in VeiculosBLKK) {
-                              final id = docVeiculoBlock.id;
-                              final name = docVeiculoBlock.get('nome');
-
-                              VeiculosBLk.add(name);
+                              RGMotoristas.add("RG $name status $status");
 
                             }
 
-                            if(Visitantes.contains(RGMotorista)){
-                              Navigator.of(context).pop();
-                              Fluttertoast.showToast(
-                                msg: 'Este visitante está bloqueado!',
-                                toastLength: Toast.LENGTH_SHORT,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.black,
-                                textColor: Colors.white,
-                                fontSize: tamanhotexto,
-                              );
+                            if(RGMotoristas.contains("RG ${RGMotorista} status Saída")){
+                              restomanda();
                             }else{
-                              if(VeiculosBLk.contains(VeiculoPlaca)){
-                                Navigator.of(context).pop();
+
+                              if(RGMotoristas.contains("RG ${RGMotorista} status Aguardando Liberação") || RGMotoristas.contains("RG ${RGMotorista} status Aguardando Liberação") || RGMotoristas.contains("RG ${RGMotorista} status Liberado Entrada") || RGMotoristas.contains("RG ${RGMotorista} status Liberado Saida")){
                                 Fluttertoast.showToast(
-                                  msg: 'Este visitante está bloqueado!',
+                                  msg: 'Esse RG já existe na base de dados!',
                                   toastLength: Toast.LENGTH_SHORT,
                                   timeInSecForIosWeb: 1,
                                   backgroundColor: Colors.black,
@@ -503,118 +656,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
                                   fontSize: tamanhotexto,
                                 );
                               }else{
-                                if(veiculoInterno == true){
-                                  Status = 'Estacionário';
-                                }
-
-                                final usersCollection = FirebaseFirestore.instance.collection('empresa');
-                                final snapshot = await usersCollection.get();
-                                final documents = snapshot.docs;
-                                for (final doc in documents) {
-                                  final id = doc.id;
-                                  final name = doc.get('nome');
-
-                                  if(doc.get('nome') == empresaSelecionada){
-                                    galpaoPrimario = doc.get('galpaoPrimario');
-                                    Map galpaesEmpresa = doc.get('galpaes');
-
-                                    String idEmpresa = doc.get('id');
-
-
-                                    List veiculosDeEmpresa = [];
-                                    List idEmpresaList = [];
-
-                                    final veiculosDeEmpresasCollection = FirebaseFirestore.instance.collection('veiculosDeEmpresa');
-                                    final snapshot3 = await veiculosDeEmpresasCollection.get();
-                                    final veiculosDeEmpresas = snapshot3.docs;
-                                    for (final docveiculosDeEmpresas in veiculosDeEmpresas) {
-                                      final id = docveiculosDeEmpresas.id;
-                                      final name = docveiculosDeEmpresas.get('Placa');
-                                      final idList = docveiculosDeEmpresas.get('idEmpresa');
-
-                                      veiculosDeEmpresa.add(name);
-                                      idEmpresaList.add(idList);
-
-                                    }
-
-                                    if(veiculosDeEmpresa.contains(VeiculoPlaca)){
-
-                                      if(idEmpresaList.contains(idEmpresa)){
-
-                                        if(galpaesEmpresa.values.first == 0){
-                                          Fluttertoast.showToast(
-                                            msg: 'Não há mais vagas disponiveis!',
-                                            toastLength: Toast.LENGTH_SHORT,
-                                            timeInSecForIosWeb: 1,
-                                            backgroundColor: Colors.black,
-                                            textColor: Colors.white,
-                                            fontSize: tamanhotexto,
-                                          );
-                                        }else{
-                                          ConnectivityUtils.instance
-                                            ..serverToPing =
-                                                "https://gist.githubusercontent.com/Vanethos/dccc4b4605fc5c5aa4b9153dacc7391c/raw/355ccc0e06d0f84fdbdc83f5b8106065539d9781/gistfile1.txt"
-                                            ..verifyResponseCallback =
-                                                (response) => response.contains("This is a test!");
-
-                                          //todo subtract
-                                          galpaesEmpresa[galpaesEmpresa.keys.first] = galpaesEmpresa[galpaesEmpresa.keys.first] - 1;
-
-
-                                          FirebaseFirestore.instance.collection('empresa').doc(idEmpresa).update({
-                                            'galpaes': galpaesEmpresa
-                                          });
-
-                                          if(await ConnectivityUtils.instance.isPhoneConnected()){
-                                            veiculoInterno == true;
-                                            Status = 'Estacionário';
-                                            MandarMT();
-
-
-                                          }else{
-                                            veiculoInterno == true;
-                                            Status = 'Liberado Saida';
-                                            MandarMT();
-                                          }
-                                        }
-                                      }
-                                    }else{
-                                      ConnectivityUtils.instance
-                                        ..serverToPing =
-                                            "https://raw.githubusercontent.com/HeroRickyGAMES/glk_controlls/master/onlineCheck.txt"
-                                        ..verifyResponseCallback =
-                                            (response) => response.contains("estaOnline");
-
-                                      if(await ConnectivityUtils.instance.isPhoneConnected()){
-
-                                        final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-                                        final SharedPreferences prefs = await _prefs;
-                                        bool? offlinemode =  prefs.getBool('OfflineMode');
-
-                                        if(offlinemode == true){
-                                          Status = 'Liberado Entrada';
-                                          MandarMT();
-                                        }else{
-                                          MandarMT();
-                                        }
-                                      }else{
-                                        Status = 'Liberado Entrada';
-                                        MandarMT();
-                                      }
-                                    }
-                                  }
-                                }
+                                restomanda();
                               }
                             }
-                          }else{
-                            Fluttertoast.showToast(
-                              msg: 'A placa está escrita errada!',
-                              toastLength: Toast.LENGTH_SHORT,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.black,
-                              textColor: Colors.white,
-                              fontSize: tamanhotexto,
-                            );
                           }
                         }
                       }
@@ -626,6 +670,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
           }
         }
       }
+    testPing();
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -728,10 +773,14 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   onChanged: (valor){
 
                     String valorpuro = valor.toUpperCase();
-                    VeiculoPlaca = valorpuro.replaceAllMapped(
-                      RegExp(r'^([a-zA-Z]{3})([0-9a-zA-Z]{4})$'),
-                          (Match m) => '${m[1]} ${m[2]}',
-                    );
+                    if(valorpuro.length == 7){
+                      VeiculoPlaca = valorpuro.replaceAllMapped(
+                        RegExp(r'^([a-zA-Z]{3})([0-9a-zA-Z]{4})$'),
+                            (Match m) => '${m[1]} ${m[2]}',
+                      );
+                      placaveiculointerface.text = VeiculoPlaca!;
+                    }
+
                     //Mudou mandou para a String
                   },
                   decoration: InputDecoration(
@@ -748,22 +797,17 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 child: TextFormField(
                   controller: telefoneinterface,
                   onChanged: (valor){
-                    placaveiculointerface.text = VeiculoPlaca!;
+
                     String valorpuro = valor.toUpperCase();
 
-                    telefone = valorpuro.replaceAllMapped(
-                        RegExp(r'^([0-9]{2})([0-9]{5})([0-9]{4})$'),
-                            (Match m) => '${m[1]} ${m[2]}-${m[3]} '
-                    );
-                    if(VeiculoPlaca!.length != 8){
-                      Fluttertoast.showToast(
-                        msg: 'A placa está escrita errada, faltam caracteres!',
-                        toastLength: Toast.LENGTH_SHORT,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.black,
-                        textColor: Colors.white,
-                        fontSize: tamanhotexto,
+                    if(valorpuro.length == 11){
+
+                      telefone = valorpuro.replaceAllMapped(
+                          RegExp(r'^([0-9]{2})([0-9]{5})([0-9]{4})$'),
+                              (Match m) => '(${m[1]}) ${m[2]}-${m[3]}'
                       );
+
+                      telefoneinterface.text = telefone!;
                     }
 
                     //Mudou mandou para a String
@@ -803,6 +847,18 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   onChanged: (valor){
                     motivo = valor;
                     //Mudou mandou para a String
+
+                    if(telefone!.length < 15){
+                      Fluttertoast.showToast(
+                        msg: 'O telefone está escrito errado, faltam caracteres!',
+                        toastLength: Toast.LENGTH_SHORT,
+                        timeInSecForIosWeb: 1,
+                        backgroundColor: Colors.black,
+                        textColor: Colors.white,
+                        fontSize: tamanhotexto,
+                      );
+                    }
+
                   },
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
