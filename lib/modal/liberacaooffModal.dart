@@ -405,10 +405,12 @@ class _liberacaoOffState extends State<liberacaoOff> {
 
                     String logoPath = resulte.get('imageURL');
 
+                    bool liberacao = result.get('liberacao');
+
                     Navigator.pop(context);
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context){
-                          return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath, Email);
+                          return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath, Email, liberacao);
                         }));
                   }
 
@@ -856,10 +858,12 @@ class _liberacaoOffState extends State<liberacaoOff> {
 
                   String logoPath = resulte.get('imageURL');
 
+                  bool liberacao = result.get('liberacao');
+
                   Navigator.pop(context);
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context){
-                        return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath, Email);
+                        return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath, Email, liberacao);
                       }));
                   // retorna false para impedir que a navegação volte à tela anterior
                   return false;

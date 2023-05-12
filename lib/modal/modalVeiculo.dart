@@ -231,11 +231,12 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     .get();
 
                 String logoPath = resulte.get('imageURL');
+                bool liberacao = result.get('liberacao');
 
                 Navigator.pop(context);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context){
-                      return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath, Email);
+                      return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath, Email, liberacao);
                     }));
               }
             });
@@ -339,10 +340,12 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
                 String logoPath = resulte.get('imageURL');
 
+                bool liberacao = result.get('liberacao');
+
                 Navigator.pop(context);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context){
-                      return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath, Email);
+                      return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath, Email, liberacao);
                     }));
               }
             });
@@ -1092,25 +1095,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 ),
               ),
               ElevatedButton(
-                  onPressed: () async {
-                    Uri uri = Uri.parse("https://glkcontrols.com.br/controls/sanca/clgcarmeladutra/entrada/#/");
-                    if (!await launchUrl(
-                    uri,
-                    mode: LaunchMode.externalApplication,
-                    )) {
-                    throw Exception('Could not launch $uri');
-                    }
-                  },
-                  child:
-                  const Text(
-                    'Abrir Painel de Entrada',
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold
-                    ),
-                  )
-              ),
-              ElevatedButton(
               onPressed: uploadInfos,
               child:
               const Text(
@@ -1179,10 +1163,12 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
                     String logoPath = resulte.get('imageURL');
 
+                    bool liberacao = result.get('liberacao');
+
                     Navigator.pop(context);
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context){
-                          return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath, Email);
+                          return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath, Email, liberacao);
                         }));
                     // retorna false para impedir que a navegação volte à tela anterior
 

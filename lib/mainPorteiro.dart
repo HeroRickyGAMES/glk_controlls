@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_widget/connectivity_widget.dart';
+import 'package:enhanced_url_launcher/enhanced_url_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -34,10 +35,11 @@ class mainPorteiro extends StatefulWidget {
   bool saida;
   bool relatorio;
   bool painel;
+  bool liberacao;
   String Email;
 
   final String PorteiroNome;
-  mainPorteiro(this.PorteiroNome, this.cadastro, this.entrada, this.saida, this.relatorio, this.painel, this.LogoPath, this.Email, {super.key});
+  mainPorteiro(this.PorteiroNome, this.cadastro, this.entrada, this.saida, this.relatorio, this.painel, this.LogoPath, this.Email, this.liberacao, {super.key});
 
   @override
   State<mainPorteiro> createState() => _mainPorteiroState();
@@ -225,9 +227,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
       Navigator.push(context,
           MaterialPageRoute(builder: (context){
             return painelADM(widget.PorteiroNome, logoPath);
-
           }));
-
     }
 
     final mediaQueryData = MediaQuery.of(context);
@@ -265,6 +265,464 @@ class _mainPorteiroState extends State<mainPorteiro> {
 
       }
     }
+
+    abrirPainelDePanico(){
+      String Entrada = "";
+      final dropValue = ValueNotifier('');
+      List ListEntrada =  ["Entrada 01", 'Entrada 02', 'Saida 01', 'Saida 02'];
+      String Senha = '';
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text("Liberação Manual.\nSelecione a Entrada/Saida"),
+            actions: [
+              Container(
+                padding: const EdgeInsets.only(top: 16),
+                child: TextFormField(
+                  onChanged: (valor){
+                    Senha = valor;
+                    //Mudou mandou para a String
+                  },
+                  obscureText: true,
+                  keyboardType: TextInputType.visiblePassword,
+                  decoration: InputDecoration(
+                    border: const OutlineInputBorder(),
+                    hintText: 'Senha',
+
+                    hintStyle: TextStyle(
+                        fontSize: tamanhotexto
+                    ),
+                  ),
+                ),
+              ),
+              Center(
+                  child: ValueListenableBuilder(valueListenable: dropValue, builder: (context, String value, _){
+                    return DropdownButton(
+                      hint: Text(
+                        'Selecione uma entrada *',
+                        style: TextStyle(
+                            fontSize: tamanhotexto
+                        ),
+                      ),
+                      value: (value.isEmpty)? null : value,
+                      onChanged: (escolha) async {
+                        dropValue.value = escolha.toString();
+
+                        setState(() {
+                          if(escolha.toString() == "Entrada 01"){
+                            Entrada = 'Rele01';
+                          }
+
+                          if(escolha.toString() == "Entrada 02"){
+                            Entrada = 'Rele03';
+                          }
+
+                          if(escolha.toString() == "Saida 01"){
+                            Entrada = 'Rele02';
+                          }
+
+                          if(escolha.toString() == "Saida 02"){
+                            Entrada = 'Rele04';
+                          }
+
+                        });
+                      },
+                      items: ListEntrada.map((opcao) => DropdownMenuItem(
+                        value: opcao,
+                        child:
+                        Text(
+                          opcao,
+                          style: TextStyle(
+                              fontSize: tamanhotexto
+                          ),
+                        ),
+                      ),
+                      ).toList(),
+                    );
+                  })
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.red[800]
+                    ),
+                    child: const Text("Cancelar"),
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+
+                      if(Senha == ""){
+                        Fluttertoast.showToast(
+                          msg: 'Preencha a senha!',
+                          toastLength: Toast.LENGTH_SHORT,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Colors.black,
+                          textColor: Colors.white,
+                          fontSize: tamanhotexto,
+                        );
+                      }else{
+                        if(Senha == "glk@12345678\$"){
+
+                          Fluttertoast.showToast(
+                            msg: 'Ligando reles!',
+                            toastLength: Toast.LENGTH_SHORT,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.black,
+                            textColor: Colors.white,
+                            fontSize: tamanhotexto,
+                          );
+
+                          var result = await FirebaseFirestore.instance
+                              .collection("Reles")
+                              .doc(Entrada)
+                              .get();
+
+
+                          //rele 1
+                          if(result.get('localAplicacao1') == "Cancela"){
+                            //Verifica a função dos outros relês
+
+                            if(result.get('funcao-rele1').contains('Pulso')){
+
+
+                              rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                            }else{
+                              releCancelaEntrada();
+                            }
+
+                            if(result.get('localAplicacao2') == 'Fechamento'){
+
+                              if(result.get('funcao-rele2').contains('Pulso')){
+
+                                rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                              }else{
+                                await Future.delayed(const Duration(seconds: 5));
+                                releFechamento02();
+                              }
+
+                            }
+
+                            if(result.get('localAplicacao2') == 'Farol'){
+                              if(result.get('funcao-rele2').contains('Pulso')){
+
+                                rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                              }else{
+                                await Future.delayed(const Duration(seconds: 5));
+                                releFechamento02();
+                              }
+                            }
+
+                            //Verifica a função dos outros relês
+
+                            if(result.get('localAplicacao3') == 'Fechamento'){
+                              if(result.get('funcao-rele3').contains('Pulso')){
+
+                                rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                              }else{
+                                await Future.delayed(const Duration(seconds: 5));
+                                releFarol03();
+                              }
+                            }
+
+                            if(result.get('localAplicacao3') == 'Farol'){
+
+                              if(result.get('funcao-rele3').contains('Pulso')){
+
+                                rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                              }else{
+                                await Future.delayed(const Duration(seconds: 5));
+                                releFarol03();
+                              }
+                            }
+
+                            //Verifica a função dos outros relês
+
+
+                            if(result.get('localAplicacao4') == 'Fechamento'){
+                              if(result.get('funcao-rele4').contains('Pulso')){
+
+                                rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                              }else{
+                                await Future.delayed(const Duration(seconds: 5));
+                                releFarol04();
+                              }
+                            }
+
+                            if(result.get('localAplicacao4') == 'Farol'){
+                              if(result.get('funcao-rele4').contains('Pulso')){
+
+                                rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                              }else{
+                                await Future.delayed(const Duration(seconds: 5));
+                                releFarol04();
+                              }
+                            }
+                          }
+
+                          //rele 2
+
+                          if(result.get('localAplicacao2') == "Cancela"){
+                            if(result.get('funcao-rele2').contains('Pulso')){
+
+                              rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                            }else{
+                              await Future.delayed(const Duration(seconds: 5));
+                              releFarol02();
+                            }
+
+                            if(result.get('localAplicacao1') == 'Fechamento'){
+
+                              if(result.get('funcao-rele1').contains('Pulso')){
+
+                                rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                              }else{
+                                await Future.delayed(const Duration(seconds: 5));
+                                releCancelaEntrada();
+                              }
+
+                            }
+
+                            if(result.get('localAplicacao1') == 'Farol'){
+
+                              if(result.get('funcao-rele1').contains('Pulso')){
+                                rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                              }else{
+                                await Future.delayed(const Duration(seconds: 5));
+                                releCancelaEntrada();
+                              }
+                            }
+
+                            //Verifica a função dos outros relês
+
+                            if(result.get('localAplicacao3') == 'Fechamento'){
+
+                              if(result.get('funcao-rele3').contains('Pulso')){
+
+                                rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                              }else{
+                                await Future.delayed(const Duration(seconds: 5));
+                                releFarol03();
+                              }
+
+                            }
+
+                            if(result.get('localAplicacao3') == 'Farol'){
+
+                              if(result.get('funcao-rele3').contains('Pulso')){
+
+                                rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+
+                              }else{
+                                await Future.delayed(const Duration(seconds: 5));
+                                releFarol03();
+                              }
+                            }
+
+                            //Verifica a função dos outros relês
+
+                            if(result.get('localAplicacao4') == 'Fechamento'){
+                              if(result.get('funcao-rele4').contains('Pulso')){
+
+                                rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                              }else{
+                                await Future.delayed(const Duration(seconds: 5));
+                                releFarol04();
+                              }
+                            }
+
+                            if(result.get('localAplicacao4') == 'Farol'){
+                              if(result.get('funcao-rele4').contains('Pulso')){
+
+                                rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                              }else{
+                                await Future.delayed(const Duration(seconds: 5));
+                                releFarol04();
+                              }
+                            }
+
+                          }
+
+
+                          //Rele3
+
+                          if(result.get('localAplicacao3') == "Cancela"){
+                            if(result.get('localAplicacao1') == 'Fechamento'){
+
+                              if(result.get('funcao-rele1').contains('Pulso')){
+
+                                rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                              }else{
+                                await Future.delayed(const Duration(seconds: 5));
+                                releCancelaEntrada();
+                              }
+
+                            }
+
+                            if(result.get('localAplicacao1') == 'Farol'){
+
+                              if(result.get('funcao-rele1').contains('Pulso')){
+                                rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                              }else{
+                                await Future.delayed(const Duration(seconds: 5));
+                                releCancelaEntrada();
+                              }
+                            }
+
+                            if(result.get('localAplicacao2') == 'Fechamento'){
+
+                              if(result.get('funcao-rele2').contains('Pulso')){
+
+                                rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                              }else{
+                                await Future.delayed(const Duration(seconds: 5));
+                                releFechamento02();
+                              }
+
+                            }
+
+                            if(result.get('localAplicacao2') == 'Farol'){
+                              if(result.get('funcao-rele2').contains('Pulso')){
+
+                                rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                              }else{
+                                await Future.delayed(const Duration(seconds: 5));
+                                releFechamento02();
+                              }
+                            }
+
+                            if(result.get('localAplicacao4') == 'Fechamento'){
+                              if(result.get('funcao-rele4').contains('Pulso')){
+
+                                rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                              }else{
+                                await Future.delayed(const Duration(seconds: 5));
+                                releFarol04();
+                              }
+                            }
+
+                            if(result.get('localAplicacao4') == 'Farol'){
+                              if(result.get('funcao-rele4').contains('Pulso')){
+
+                                rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                              }else{
+                                await Future.delayed(const Duration(seconds: 5));
+                                releFarol04();
+                              }
+                            }
+                          }
+
+                          //rele 4
+
+                          if(result.get('localAplicacao4') == 'Cancela'){
+                            if(result.get('funcao-rele4').contains('Pulso')){
+
+                              rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                            }else{
+                              await Future.delayed(const Duration(seconds: 5));
+                              releFarol04();
+                            }
+
+                            if(result.get('localAplicacao1') == 'Fechamento'){
+
+                              if(result.get('funcao-rele1').contains('Pulso')){
+
+                                rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                              }else{
+                                await Future.delayed(const Duration(seconds: 5));
+                                releCancelaEntrada();
+                              }
+
+                            }
+
+                            if(result.get('localAplicacao1') == 'Farol'){
+
+                              if(result.get('funcao-rele1').contains('Pulso')){
+                                rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                              }else{
+                                await Future.delayed(const Duration(seconds: 5));
+                                releCancelaEntrada();
+                              }
+                            }
+
+                            if(result.get('localAplicacao2') == 'Fechamento'){
+
+                              if(result.get('funcao-rele2').contains('Pulso')){
+
+                                rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                              }else{
+                                await Future.delayed(const Duration(seconds: 5));
+                                releFechamento02();
+                              }
+
+                            }
+
+                            if(result.get('localAplicacao2') == 'Farol'){
+                              if(result.get('funcao-rele2').contains('Pulso')){
+
+                                rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                              }else{
+                                await Future.delayed(const Duration(seconds: 5));
+                                releFechamento02();
+                              }
+                            }
+
+                            if(result.get('localAplicacao3') == 'Fechamento'){
+
+                              if(result.get('funcao-rele3').contains('Pulso')){
+
+                                rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                              }else{
+                                await Future.delayed(const Duration(seconds: 5));
+                                releFarol03();
+                              }
+
+                            }
+
+                            if(result.get('localAplicacao3') == 'Farol'){
+
+                              if(result.get('funcao-rele3').contains('Pulso')){
+
+                                rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+                              }else{
+                                await Future.delayed(const Duration(seconds: 5));
+                                releFarol03();
+                              }
+                            }
+                          }
+                          Navigator.of(context).pop();
+
+                        }else{
+                          Fluttertoast.showToast(
+                            msg: 'Senha invalida',
+                            toastLength: Toast.LENGTH_SHORT,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.black,
+                            textColor: Colors.white,
+                            fontSize: tamanhotexto,
+                          );
+                        }
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                        primary: Colors.green[800]
+                    ),
+                    child: const Text("Prosseguir"),
+                  ),
+                ],
+              ),
+            ],
+          );
+        },
+      );
+    }
+
     
     return Scaffold(
       appBar: AppBar(
@@ -300,6 +758,27 @@ class _mainPorteiroState extends State<mainPorteiro> {
               ),
               Column(
                 children: [
+                  Container(
+                    width: 500,
+                    padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        Uri uri = Uri.parse("https://glkcontrols.com.br/controls/sanca/clgcarmeladutra/entrada/#/");
+                        if (!await launchUrl(
+                        uri,
+                        mode: LaunchMode.externalApplication,
+                        )) {
+                        throw Exception('Could not launch $uri');
+                        }
+                      },
+                      child: Text(
+                        'Abrir Painel de Entrada',
+                        style: TextStyle(
+                            fontSize: tamanhotexto
+                        ),
+                      ),
+                    ),
+                  ),
                   Container(
                     width: 500,
                     padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
@@ -451,463 +930,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                     width: 500,
                     padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                     child: ElevatedButton(
-                      onPressed: () async {
-
-                        String Entrada = "";
-                        final dropValue = ValueNotifier('');
-                        List ListEntrada =  ["Entrada 01", 'Entrada 02', 'Saida 01', 'Saida 02'];
-                        String Senha = '';
-
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                             return AlertDialog(
-                                title: const Text("Liberação Manual.\nSelecione a Entrada/Saida"),
-                                actions: [
-                                  Container(
-                                    padding: const EdgeInsets.only(top: 16),
-                                    child: TextFormField(
-                                      onChanged: (valor){
-                                        Senha = valor;
-                                        //Mudou mandou para a String
-                                      },
-                                      obscureText: true,
-                                      keyboardType: TextInputType.visiblePassword,
-                                      decoration: InputDecoration(
-                                        border: const OutlineInputBorder(),
-                                        hintText: 'Senha',
-
-                                        hintStyle: TextStyle(
-                                            fontSize: tamanhotexto
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Center(
-                                      child: ValueListenableBuilder(valueListenable: dropValue, builder: (context, String value, _){
-                                        return DropdownButton(
-                                          hint: Text(
-                                            'Selecione uma entrada *',
-                                            style: TextStyle(
-                                                fontSize: tamanhotexto
-                                            ),
-                                          ),
-                                          value: (value.isEmpty)? null : value,
-                                          onChanged: (escolha) async {
-                                            dropValue.value = escolha.toString();
-
-                                            setState(() {
-                                              if(escolha.toString() == "Entrada 01"){
-                                                Entrada = 'Rele01';
-                                              }
-
-                                              if(escolha.toString() == "Entrada 02"){
-                                                Entrada = 'Rele03';
-                                              }
-
-                                              if(escolha.toString() == "Saida 01"){
-                                                Entrada = 'Rele02';
-                                              }
-
-                                              if(escolha.toString() == "Saida 02"){
-                                                Entrada = 'Rele04';
-                                              }
-
-                                            });
-                                          },
-                                          items: ListEntrada.map((opcao) => DropdownMenuItem(
-                                            value: opcao,
-                                            child:
-                                            Text(
-                                              opcao,
-                                              style: TextStyle(
-                                                  fontSize: tamanhotexto
-                                              ),
-                                            ),
-                                          ),
-                                          ).toList(),
-                                        );
-                                      })
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    children: [
-                                      ElevatedButton(
-                                        onPressed: () {
-                                          Navigator.of(context).pop();
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                            primary: Colors.red[800]
-                                        ),
-                                        child: const Text("Cancelar"),
-                                      ),
-                                      ElevatedButton(
-                                        onPressed: () async {
-
-                                          if(Senha == ""){
-                                            Fluttertoast.showToast(
-                                              msg: 'Preencha a senha!',
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor: Colors.black,
-                                              textColor: Colors.white,
-                                              fontSize: tamanhotexto,
-                                            );
-                                          }else{
-                                            if(Senha == "glk@12345678\$"){
-
-                                              Fluttertoast.showToast(
-                                                msg: 'Ligando reles!',
-                                                toastLength: Toast.LENGTH_SHORT,
-                                                timeInSecForIosWeb: 1,
-                                                backgroundColor: Colors.black,
-                                                textColor: Colors.white,
-                                                fontSize: tamanhotexto,
-                                              );
-
-                                              var result = await FirebaseFirestore.instance
-                                                  .collection("Reles")
-                                                  .doc(Entrada)
-                                                  .get();
-
-
-                                              //rele 1
-                                              if(result.get('localAplicacao1') == "Cancela"){
-                                                //Verifica a função dos outros relês
-
-                                                if(result.get('funcao-rele1').contains('Pulso')){
-
-
-                                                  rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                }else{
-                                                  releCancelaEntrada();
-                                                }
-
-                                                if(result.get('localAplicacao2') == 'Fechamento'){
-
-                                                  if(result.get('funcao-rele2').contains('Pulso')){
-
-                                                    rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                  }else{
-                                                    await Future.delayed(const Duration(seconds: 5));
-                                                    releFechamento02();
-                                                  }
-
-                                                }
-
-                                                if(result.get('localAplicacao2') == 'Farol'){
-                                                  if(result.get('funcao-rele2').contains('Pulso')){
-
-                                                    rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                  }else{
-                                                    await Future.delayed(const Duration(seconds: 5));
-                                                    releFechamento02();
-                                                  }
-                                                }
-
-                                                //Verifica a função dos outros relês
-
-                                                if(result.get('localAplicacao3') == 'Fechamento'){
-                                                  if(result.get('funcao-rele3').contains('Pulso')){
-
-                                                    rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                  }else{
-                                                    await Future.delayed(const Duration(seconds: 5));
-                                                    releFarol03();
-                                                  }
-                                                }
-
-                                                if(result.get('localAplicacao3') == 'Farol'){
-
-                                                  if(result.get('funcao-rele3').contains('Pulso')){
-
-                                                    rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                  }else{
-                                                    await Future.delayed(const Duration(seconds: 5));
-                                                    releFarol03();
-                                                  }
-                                                }
-
-                                                //Verifica a função dos outros relês
-
-
-                                                if(result.get('localAplicacao4') == 'Fechamento'){
-                                                  if(result.get('funcao-rele4').contains('Pulso')){
-
-                                                    rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                  }else{
-                                                    await Future.delayed(const Duration(seconds: 5));
-                                                    releFarol04();
-                                                  }
-                                                }
-
-                                                if(result.get('localAplicacao4') == 'Farol'){
-                                                  if(result.get('funcao-rele4').contains('Pulso')){
-
-                                                    rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                  }else{
-                                                    await Future.delayed(const Duration(seconds: 5));
-                                                    releFarol04();
-                                                  }
-                                                }
-                                              }
-
-                                              //rele 2
-
-                                              if(result.get('localAplicacao2') == "Cancela"){
-                                                if(result.get('funcao-rele2').contains('Pulso')){
-
-                                                  rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                }else{
-                                                  await Future.delayed(const Duration(seconds: 5));
-                                                  releFarol02();
-                                                }
-
-                                                if(result.get('localAplicacao1') == 'Fechamento'){
-
-                                                  if(result.get('funcao-rele1').contains('Pulso')){
-
-                                                    rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                  }else{
-                                                    await Future.delayed(const Duration(seconds: 5));
-                                                    releCancelaEntrada();
-                                                  }
-
-                                                }
-
-                                                if(result.get('localAplicacao1') == 'Farol'){
-
-                                                  if(result.get('funcao-rele1').contains('Pulso')){
-                                                    rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                  }else{
-                                                    await Future.delayed(const Duration(seconds: 5));
-                                                    releCancelaEntrada();
-                                                  }
-                                                }
-
-                                                //Verifica a função dos outros relês
-
-                                                if(result.get('localAplicacao3') == 'Fechamento'){
-
-                                                  if(result.get('funcao-rele3').contains('Pulso')){
-
-                                                    rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                  }else{
-                                                    await Future.delayed(const Duration(seconds: 5));
-                                                    releFarol03();
-                                                  }
-
-                                                }
-
-                                                if(result.get('localAplicacao3') == 'Farol'){
-
-                                                  if(result.get('funcao-rele3').contains('Pulso')){
-
-                                                    rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-
-                                                  }else{
-                                                    await Future.delayed(const Duration(seconds: 5));
-                                                    releFarol03();
-                                                  }
-                                                }
-
-                                                //Verifica a função dos outros relês
-
-                                                if(result.get('localAplicacao4') == 'Fechamento'){
-                                                  if(result.get('funcao-rele4').contains('Pulso')){
-
-                                                    rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                  }else{
-                                                    await Future.delayed(const Duration(seconds: 5));
-                                                    releFarol04();
-                                                  }
-                                                }
-
-                                                if(result.get('localAplicacao4') == 'Farol'){
-                                                  if(result.get('funcao-rele4').contains('Pulso')){
-
-                                                    rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                  }else{
-                                                    await Future.delayed(const Duration(seconds: 5));
-                                                    releFarol04();
-                                                  }
-                                                }
-
-                                              }
-
-
-                                              //Rele3
-
-                                              if(result.get('localAplicacao3') == "Cancela"){
-                                                if(result.get('localAplicacao1') == 'Fechamento'){
-
-                                                  if(result.get('funcao-rele1').contains('Pulso')){
-
-                                                    rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                  }else{
-                                                    await Future.delayed(const Duration(seconds: 5));
-                                                    releCancelaEntrada();
-                                                  }
-
-                                                }
-
-                                                if(result.get('localAplicacao1') == 'Farol'){
-
-                                                  if(result.get('funcao-rele1').contains('Pulso')){
-                                                    rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                  }else{
-                                                    await Future.delayed(const Duration(seconds: 5));
-                                                    releCancelaEntrada();
-                                                  }
-                                                }
-
-                                                if(result.get('localAplicacao2') == 'Fechamento'){
-
-                                                  if(result.get('funcao-rele2').contains('Pulso')){
-
-                                                    rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                  }else{
-                                                    await Future.delayed(const Duration(seconds: 5));
-                                                    releFechamento02();
-                                                  }
-
-                                                }
-
-                                                if(result.get('localAplicacao2') == 'Farol'){
-                                                  if(result.get('funcao-rele2').contains('Pulso')){
-
-                                                    rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                  }else{
-                                                    await Future.delayed(const Duration(seconds: 5));
-                                                    releFechamento02();
-                                                  }
-                                                }
-
-                                                if(result.get('localAplicacao4') == 'Fechamento'){
-                                                  if(result.get('funcao-rele4').contains('Pulso')){
-
-                                                    rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                  }else{
-                                                    await Future.delayed(const Duration(seconds: 5));
-                                                    releFarol04();
-                                                  }
-                                                }
-
-                                                if(result.get('localAplicacao4') == 'Farol'){
-                                                  if(result.get('funcao-rele4').contains('Pulso')){
-
-                                                    rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                  }else{
-                                                    await Future.delayed(const Duration(seconds: 5));
-                                                    releFarol04();
-                                                  }
-                                                }
-                                              }
-
-                                              //rele 4
-
-                                              if(result.get('localAplicacao4') == 'Cancela'){
-                                                if(result.get('funcao-rele4').contains('Pulso')){
-
-                                                  rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                }else{
-                                                  await Future.delayed(const Duration(seconds: 5));
-                                                  releFarol04();
-                                                }
-
-                                                if(result.get('localAplicacao1') == 'Fechamento'){
-
-                                                  if(result.get('funcao-rele1').contains('Pulso')){
-
-                                                    rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                  }else{
-                                                    await Future.delayed(const Duration(seconds: 5));
-                                                    releCancelaEntrada();
-                                                  }
-
-                                                }
-
-                                                if(result.get('localAplicacao1') == 'Farol'){
-
-                                                  if(result.get('funcao-rele1').contains('Pulso')){
-                                                    rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                  }else{
-                                                    await Future.delayed(const Duration(seconds: 5));
-                                                    releCancelaEntrada();
-                                                  }
-                                                }
-
-                                                if(result.get('localAplicacao2') == 'Fechamento'){
-
-                                                  if(result.get('funcao-rele2').contains('Pulso')){
-
-                                                    rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                  }else{
-                                                    await Future.delayed(const Duration(seconds: 5));
-                                                    releFechamento02();
-                                                  }
-
-                                                }
-
-                                                if(result.get('localAplicacao2') == 'Farol'){
-                                                  if(result.get('funcao-rele2').contains('Pulso')){
-
-                                                    rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                  }else{
-                                                    await Future.delayed(const Duration(seconds: 5));
-                                                    releFechamento02();
-                                                  }
-                                                }
-
-                                                if(result.get('localAplicacao3') == 'Fechamento'){
-
-                                                  if(result.get('funcao-rele3').contains('Pulso')){
-
-                                                    rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                  }else{
-                                                    await Future.delayed(const Duration(seconds: 5));
-                                                    releFarol03();
-                                                  }
-
-                                                }
-
-                                                if(result.get('localAplicacao3') == 'Farol'){
-
-                                                  if(result.get('funcao-rele3').contains('Pulso')){
-
-                                                    rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
-                                                  }else{
-                                                    await Future.delayed(const Duration(seconds: 5));
-                                                    releFarol03();
-                                                  }
-                                                }
-                                              }
-                                              Navigator.of(context).pop();
-
-                                            }else{
-                                              Fluttertoast.showToast(
-                                                msg: 'Senha invalida',
-                                                toastLength: Toast.LENGTH_SHORT,
-                                                timeInSecForIosWeb: 1,
-                                                backgroundColor: Colors.black,
-                                                textColor: Colors.white,
-                                                fontSize: tamanhotexto,
-                                              );
-                                            }
-                                          }
-                                        },
-                                        style: ElevatedButton.styleFrom(
-                                            primary: Colors.green[800]
-                                        ),
-                                        child: const Text("Prosseguir"),
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              );
-                          },
-                        );
-                      },
+                      onPressed: widget.liberacao ?abrirPainelDePanico: null,
                       style: ElevatedButton.styleFrom(
                           primary: Colors.red[800]
                       ),

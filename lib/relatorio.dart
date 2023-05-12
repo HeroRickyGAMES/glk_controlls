@@ -97,28 +97,28 @@ class _relatorioState extends State<relatorio> {
           String oqPesquisar = 'nomeMotorista';
           Navigator.push(context,
               MaterialPageRoute(builder: (context){
-                return pesquisaRelatorio(Pesquisa!, oqPesquisar);
+                return pesquisaRelatorio(Pesquisa, oqPesquisar);
               }));
         }else{
             if(Placa.contains(Pesquisa)){
               String oqPesquisar = 'PlacaVeiculo';
               Navigator.push(context,
                   MaterialPageRoute(builder: (context){
-                    return pesquisaRelatorio(Pesquisa!, oqPesquisar);
+                    return pesquisaRelatorio(Pesquisa, oqPesquisar);
                   }));
             }else{
               if(Empresa.contains(Pesquisa)){
                 String oqPesquisar = 'Empresa';
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context){
-                      return pesquisaRelatorio(Pesquisa!, oqPesquisar);
+                      return pesquisaRelatorio(Pesquisa, oqPesquisar);
                     }));
               }else{
                 if(rg.contains(Pesquisa)){
                   String oqPesquisar = 'RGDoMotorista';
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context){
-                        return pesquisaRelatorio(Pesquisa!, oqPesquisar);
+                        return pesquisaRelatorio(Pesquisa, oqPesquisar);
                       }));
                 }else{
                   Fluttertoast.showToast(

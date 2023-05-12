@@ -318,14 +318,14 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                               child: TextFormField(
                                                                 controller: telefoneinterface,
                                                                 onChanged: (valor){
-                                                                  placaveiculointerface.text = VeiculoPlaca!;
+                                                                  placaveiculointerface.text = VeiculoPlaca;
                                                                   String valorpuro = valor.toUpperCase();
 
                                                                   telefone = valorpuro.replaceAllMapped(
                                                                       RegExp(r'^([0-9]{2})([0-9]{5})([0-9]{4})$'),
                                                                           (Match m) => '${m[1]} ${m[2]}-${m[3]} '
                                                                   );
-                                                                  if(VeiculoPlaca!.length != 8){
+                                                                  if(VeiculoPlaca.length != 8){
                                                                     Fluttertoast.showToast(
                                                                       msg: 'A placa está escrita errada, faltam caracteres!',
                                                                       toastLength: Toast.LENGTH_SHORT,

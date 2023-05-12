@@ -228,10 +228,12 @@ class _loginState extends State<login> {
 
                                           String logoPath = resulte.get('imageURL');
 
+                                          bool liberacao = result.get('liberacao');
+
                                           Navigator.pop(context);
                                           Navigator.push(context,
                                               MaterialPageRoute(builder: (context){
-                                                return mainPorteiro(PorteiroNome, cadastro, entrada, saida, relatorio, painel, logoPath, Email);
+                                                return mainPorteiro(PorteiroNome, cadastro, entrada, saida, relatorio, painel, logoPath, Email, liberacao);
                                               }));
 
                                         }

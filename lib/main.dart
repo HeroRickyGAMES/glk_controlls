@@ -3,6 +3,7 @@ import 'package:connectivity_widget/connectivity_widget.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:glk_controls/mainActivityPrepare.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,6 +12,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 void main() {
   runApp(
     MaterialApp(
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('pt', 'BR'),
+      ],
       theme: ThemeData(
         //brightness: Brightness.dark,
         //useMaterial3: true,

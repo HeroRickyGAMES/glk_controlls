@@ -175,11 +175,12 @@ checkislog(context) async {
                                 .get();
 
                             String logoPath = resulte.get('imageURL');
+                            bool liberacao = result.get('liberacao');
 
                             Navigator.pop(context);
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context){
-                                  return mainPorteiro(PorteiroNome, cadastro, entrada, saida, relatorio, painel, logoPath, Email);
+                                  return mainPorteiro(PorteiroNome, cadastro, entrada, saida, relatorio, painel, logoPath, Email, liberacao);
                                 }));
 
                           }else{
@@ -454,13 +455,14 @@ checkislogOFFLine(context) async {
                 bool saida = result.get('saida');
                 bool relatorio = result.get('relatorio');
                 bool painel = result.get('painel');
+                bool liberacao = result.get('liberacao');
                 String PorteiroNome = result.get('nome');
                 String Email = result.get('email');
 
                 Navigator.pop(context);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context){
-                      return mainPorteiro(PorteiroNome, cadastro, entrada, saida, relatorio, painel, '', Email);
+                      return mainPorteiro(PorteiroNome, cadastro, entrada, saida, relatorio, painel, '', Email, liberacao);
                     }));
 
               });

@@ -352,6 +352,7 @@ class _operadorInternoState extends State<operadorInterno> {
                                     'saida': saidabool,
                                     'tipoConta': 'porteiro',
                                     'estaativo': true,
+                                    'liberacao': liberacao,
                                     'id': userCredential.user?.uid,
                                   }
                               );
@@ -368,6 +369,7 @@ class _operadorInternoState extends State<operadorInterno> {
                                     'saida': saidabool,
                                     'tipoConta': 'porteiro',
                                     'estaativo': true,
+                                    'liberacao': liberacao,
                                     'id': userCredential.user?.uid
                                   }
                               ).then((value) {

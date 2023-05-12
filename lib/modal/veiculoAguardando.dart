@@ -1156,7 +1156,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                             );
                           }else{
                             if(widget.semSaida == true){
-                              Status = 'Saída';
+                              Status = 'Saida';
                             }else{
                               Status = 'Estacionário';
                             }
