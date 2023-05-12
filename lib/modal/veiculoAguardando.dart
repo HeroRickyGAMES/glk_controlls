@@ -1156,11 +1156,10 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                             );
                           }else{
                             if(widget.semSaida == true){
-                              Status = 'Saida';
+                              Status = 'Saida"';
                             }else{
                               Status = 'Estacionário';
                             }
-
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
