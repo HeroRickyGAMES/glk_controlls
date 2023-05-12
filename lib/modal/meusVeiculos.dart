@@ -34,17 +34,40 @@ class _meusVeiculosActivityState extends State<meusVeiculosActivity> {
   @override
   Widget build(BuildContext context) {
 
+    final mediaQueryData = MediaQuery.of(context);
+    final screenWidth = mediaQueryData.size.width;
+    final screenHeight = mediaQueryData.size.height;
+    final textScaleFactor = mediaQueryData.textScaleFactor;
+    final dpi = mediaQueryData.devicePixelRatio;
+
+    final textHeight = screenHeight * 0.05;
+    final textWidth = screenWidth * 0.8;
+
+    final textSize = (textHeight / dpi / 2) * textScaleFactor;
+
+    String idDocumento;
+
     double tamanhotexto = 20;
+    double tamanhotextomin = 16;
     double tamanhotextobtns = 16;
+    double aspect = 1.0;
+
+    Map Galpoes = { };
+    List GalpoesList = [ ];
 
     if(kIsWeb){
-      tamanhotexto = 25;
-      tamanhotextobtns = 34;
+      tamanhotexto = textSize;
+      tamanhotextobtns = textSize;
+      tamanhotextomin = 16;
+      //aspect = 1.0;
+      aspect = 1.0;
+
     }else{
       if(Platform.isAndroid){
 
         tamanhotexto = 16;
         tamanhotextobtns = 18;
+        aspect = 0.8;
 
       }
     }

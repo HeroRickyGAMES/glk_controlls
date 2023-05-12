@@ -47,15 +47,15 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
   TimeOfDay selectedTime2 = TimeOfDay.now();
 
   List VeiculoOPC = [
+    'Carreta',
     'Caminhão',
     'Caminhonete',
-    'Carro de passeio',
     'Moto',
-    'Carreta'
+    'Carro de Passeio'
   ];
 
   String motivo = '';
-
+  bool semSaida = false;
   @override
   Widget build(BuildContext context) {
 
@@ -110,22 +110,52 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
       }
     }
 
+    final mediaQueryData = MediaQuery.of(context);
+    final screenWidth = mediaQueryData.size.width;
+    final screenHeight = mediaQueryData.size.height;
+    final textScaleFactor = mediaQueryData.textScaleFactor;
+    final dpi = mediaQueryData.devicePixelRatio;
+
+    final textHeight = screenHeight * 0.05;
+    final textWidth = screenWidth * 0.8;
+
+    final textSize = (textHeight / dpi / 2) * textScaleFactor;
+
+    String idDocumento;
+
     double tamanhotexto = 20;
+    double tamanhotextomin = 16;
     double tamanhotextobtns = 16;
+    double aspect = 1.0;
+
+    Map Galpoes = { };
+    List GalpoesList = [ ];
 
     if(kIsWeb){
-      tamanhotexto = 25;
-      tamanhotextobtns = 34;
+      tamanhotexto = textSize;
+      tamanhotextobtns = textSize;
+      tamanhotextomin = 16;
+      //aspect = 1.0;
+      aspect = 1.0;
+
     }else{
       if(Platform.isAndroid){
 
         tamanhotexto = 16;
         tamanhotextobtns = 18;
+        aspect = 0.8;
 
       }
     }
     
     MandarMT(){
+
+      if(dataAgendataSTsaida == ''){
+        semSaida = true;
+      }else{
+        semSaida = false;
+      }
+
       Fluttertoast.showToast(
         msg: 'Enviando informações para o servidor...',
         toastLength: Toast.LENGTH_SHORT,
@@ -164,7 +194,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
         'uriImage3': '',
         'uriImage4': '',
         'lacrenum': '',
-        'verificadoPor': 'Estacionário',
+        'verificadoPor': '',
         'Empresa': widget.NomeEmpresa,
         'DataDeAnalise': '',
         'DataEntradaEmpresa': DateFormat('MM-dd-yyyy HH:mm:ss').format(dataAgendada).replaceAll('-', '/'),
@@ -178,7 +208,9 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
         'interno': false,
         'agendamento': true,
         'lacrenumSaida': '',
-        'lacreboolsaida': false
+        'lacreboolsaida': false,
+        'EntradaInt': int.parse(DateFormat('MM-dd-yyyy HH:mm:ss').format(dataAgendada).replaceAll('-', '/').replaceAll('/', '').replaceAll(":", "").replaceAll(" ", "")),
+        'semSaida': semSaida
       }).then((value) async {
         Fluttertoast.showToast(
           msg: 'Enviado com sucesso!',
@@ -213,6 +245,116 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
           Navigator.pop(context);
         });
       });
+    }
+
+    resto() async {
+
+      //Fez uma vez agora ele vai verificar se o motorista também está bloqueado!
+
+      List Visitantes = [];
+
+      final VisitantesBloqueadosCollection = FirebaseFirestore.instance.collection('VisitantesBloqueados');
+      final snapshot = await VisitantesBloqueadosCollection.get();
+      final documentsvist = snapshot.docs;
+      for (final docvisit in documentsvist) {
+        final id = docvisit.id;
+        final name = docvisit.get('rg');
+
+        Visitantes.add(name);
+
+      }
+
+
+      List VeiculosBLk = [];
+
+      final VeiculosBloqueadosCollection = FirebaseFirestore.instance.collection('VisitantesBloqueados');
+      final snapshot2 = await VeiculosBloqueadosCollection.get();
+      final VeiculosBLKK = snapshot2.docs;
+      for (final docVeiculoBlock in VeiculosBLKK) {
+        final id = docVeiculoBlock.id;
+        final name = docVeiculoBlock.get('nome');
+
+        VeiculosBLk.add(name);
+
+      }
+
+      if(Visitantes.contains(RGMotorista)){
+        Navigator.of(context).pop();
+        Fluttertoast.showToast(
+          msg: 'Este visitante está bloqueado!',
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: tamanhotexto,
+        );
+      }else{
+        if(VeiculosBLk.contains(VeiculoPlaca)){
+          Navigator.of(context).pop();
+          Fluttertoast.showToast(
+            msg: 'Este visitante está bloqueado!',
+            toastLength: Toast.LENGTH_SHORT,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.black,
+            textColor: Colors.white,
+            fontSize: tamanhotexto,
+          );
+        }else{
+
+          var UID = FirebaseAuth.instance.currentUser?.uid;
+          var result = await FirebaseFirestore.instance
+              .collection("operadorEmpresarial")
+              .doc(UID)
+              .get();
+
+          String idEmpresa = (result.get('idEmpresa'));
+
+          var resultEmpresa = await FirebaseFirestore.instance
+              .collection("empresa")
+              .doc(idEmpresa)
+              .get();
+
+          Map galpoes = (resultEmpresa.get('galpaes'));
+
+
+          galpoes[galpao];
+          if(galpoes[galpao] == 0){
+            Fluttertoast.showToast(
+              msg: 'Não existe mais vagas nesse galpão, tente outro galpão!',
+              toastLength: Toast.LENGTH_SHORT,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.black,
+              textColor: Colors.white,
+              fontSize: tamanhotexto,
+            );
+          }else{
+            if(lacreounao == ""){
+              Fluttertoast.showToast(
+                msg: 'Preencha se está com lacre ou sem',
+                toastLength: Toast.LENGTH_SHORT,
+                timeInSecForIosWeb: 1,
+                backgroundColor: Colors.black,
+                textColor: Colors.white,
+                fontSize: tamanhotexto,
+              );
+            }else{
+              if(VeiculoPlaca!.length != 8){
+                Fluttertoast.showToast(
+                  msg: 'A placa está escrita errada, faltam caracteres!',
+                  toastLength: Toast.LENGTH_SHORT,
+                  timeInSecForIosWeb: 1,
+                  backgroundColor: Colors.black,
+                  textColor: Colors.white,
+                  fontSize: tamanhotexto,
+                );
+              }else{
+
+                MandarMT();
+              }
+            }
+          }
+        }
+      }
     }
 
     uploadInfos() async {
@@ -301,49 +443,24 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                           fontSize: tamanhotexto,
                         );
                       }else{
-                        if(dataAgendataSTsaida == ''){
-                          Fluttertoast.showToast(
-                            msg: 'Selecione uma data para agendamento para saida!',
-                            toastLength: Toast.LENGTH_SHORT,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.black,
-                            textColor: Colors.white,
-                            fontSize: tamanhotexto,
-                          );
+
+                        List RGMotoristas = [];
+
+                        final RGMotoristasCollection = FirebaseFirestore.instance.collection('Autorizacoes');
+                        final snapshot5 = await RGMotoristasCollection.get();
+                        final RGMOTORISTADOC = snapshot5.docs;
+                        for (final RGMOTORISTADOC in RGMOTORISTADOC) {
+                          final id = RGMOTORISTADOC.id;
+                          final name = RGMOTORISTADOC.get('RGDoMotorista');
+                          final status = RGMOTORISTADOC.get('Status');
+                          RGMotoristas.add("RG $name status $status");
+                        }
+                        if(RGMotoristas.contains("RG ${RGMotorista} status Saída")){
+                          resto();
                         }else{
-                          //Fez uma vez agora ele vai verificar se o motorista também está bloqueado!
-
-                          List Visitantes = [];
-
-                          final VisitantesBloqueadosCollection = FirebaseFirestore.instance.collection('VisitantesBloqueados');
-                          final snapshot = await VisitantesBloqueadosCollection.get();
-                          final documentsvist = snapshot.docs;
-                          for (final docvisit in documentsvist) {
-                            final id = docvisit.id;
-                            final name = docvisit.get('rg');
-
-                            Visitantes.add(name);
-
-                          }
-
-
-                          List VeiculosBLk = [];
-
-                          final VeiculosBloqueadosCollection = FirebaseFirestore.instance.collection('VisitantesBloqueados');
-                          final snapshot2 = await VeiculosBloqueadosCollection.get();
-                          final VeiculosBLKK = snapshot2.docs;
-                          for (final docVeiculoBlock in VeiculosBLKK) {
-                            final id = docVeiculoBlock.id;
-                            final name = docVeiculoBlock.get('nome');
-
-                            VeiculosBLk.add(name);
-
-                          }
-
-                          if(Visitantes.contains(RGMotorista)){
-                            Navigator.of(context).pop();
+                          if(RGMotoristas.contains("RG ${RGMotorista} status Aguardando Liberação") || RGMotoristas.contains("RG ${RGMotorista} status Aguardando Liberação") || RGMotoristas.contains("RG ${RGMotorista} status Liberado Entrada") || RGMotoristas.contains("RG ${RGMotorista} status Liberado Saida")){
                             Fluttertoast.showToast(
-                              msg: 'Este visitante está bloqueado!',
+                              msg: 'Esse RG já existe na base de dados!',
                               toastLength: Toast.LENGTH_SHORT,
                               timeInSecForIosWeb: 1,
                               backgroundColor: Colors.black,
@@ -351,70 +468,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                               fontSize: tamanhotexto,
                             );
                           }else{
-                            if(VeiculosBLk.contains(VeiculoPlaca)){
-                              Navigator.of(context).pop();
-                              Fluttertoast.showToast(
-                                msg: 'Este visitante está bloqueado!',
-                                toastLength: Toast.LENGTH_SHORT,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.black,
-                                textColor: Colors.white,
-                                fontSize: tamanhotexto,
-                              );
-                            }else{
-
-                              var UID = FirebaseAuth.instance.currentUser?.uid;
-                              var result = await FirebaseFirestore.instance
-                                  .collection("operadorEmpresarial")
-                                  .doc(UID)
-                                  .get();
-
-                              String idEmpresa = (result.get('idEmpresa'));
-
-                              var resultEmpresa = await FirebaseFirestore.instance
-                                  .collection("empresa")
-                                  .doc(idEmpresa)
-                                  .get();
-
-                              Map galpoes = (resultEmpresa.get('galpaes'));
-
-
-                              galpoes[galpao];
-                              if(galpoes[galpao] == 0){
-                                Fluttertoast.showToast(
-                                  msg: 'Não existe mais vagas nesse galpão, tente outro galpão!',
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  timeInSecForIosWeb: 1,
-                                  backgroundColor: Colors.black,
-                                  textColor: Colors.white,
-                                  fontSize: tamanhotexto,
-                                );
-                              }else{
-                                if(lacreounao == ""){
-                                  Fluttertoast.showToast(
-                                    msg: 'Preencha se está com lacre ou sem',
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    timeInSecForIosWeb: 1,
-                                    backgroundColor: Colors.black,
-                                    textColor: Colors.white,
-                                    fontSize: tamanhotexto,
-                                  );
-                                }else{
-                                  if(VeiculoPlaca!.length != 8){
-                                    Fluttertoast.showToast(
-                                      msg: 'A placa está escrita errada, faltam caracteres!',
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      timeInSecForIosWeb: 1,
-                                      backgroundColor: Colors.black,
-                                      textColor: Colors.white,
-                                      fontSize: tamanhotexto,
-                                    );
-                                  }else{
-                                    MandarMT();
-                                  }
-                                }
-                              }
-                            }
+                            resto();
                           }
                         }
                       }

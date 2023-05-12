@@ -30,26 +30,44 @@ class _listEntradaState extends State<listEntrada> {
   @override
   Widget build(BuildContext context) {
     String holderPlaca = '';
-
-    double tamanhotexto = 20;
-    double tamanhotextomin = 16;
-    double tamanhotextobtns = 16;
-    double aspect = 1.5;
     List listaNome = [];
     List galpao = [ ];
     String pass = '';
 
+    final mediaQueryData = MediaQuery.of(context);
+    final screenWidth = mediaQueryData.size.width;
+    final screenHeight = mediaQueryData.size.height;
+    final textScaleFactor = mediaQueryData.textScaleFactor;
+    final dpi = mediaQueryData.devicePixelRatio;
+
+    final textHeight = screenHeight * 0.05;
+    final textWidth = screenWidth * 0.8;
+
+    final textSize = (textHeight / dpi / 2) * textScaleFactor;
+
+    String idDocumento;
+
+    double tamanhotexto = 20;
+    double tamanhotextomin = 16;
+    double tamanhotextobtns = 16;
+    double aspect = 1.0;
+
+    Map Galpoes = { };
+    List GalpoesList = [ ];
+
     if(kIsWeb){
-      tamanhotexto = 25;
+      tamanhotexto = textSize;
+      tamanhotextobtns = textSize;
       tamanhotextomin = 16;
-      tamanhotextobtns = 34;
-      aspect = 1.3;
+      //aspect = 1.0;
+      aspect = 1.0;
+
     }else{
       if(Platform.isAndroid){
 
         tamanhotexto = 16;
         tamanhotextobtns = 18;
-        aspect =  1.3;
+        aspect = 0.8;
 
       }
     }
@@ -382,6 +400,7 @@ class _listEntradaState extends State<listEntrada> {
                                                         String EmpresadeOrigin = documents['EmpresadeOrigin'];
                                                         String Galpao = documents['galpaoPrimario'];
                                                         String verificadoPor = documents['verificadoPor'];
+                                                        String RGMotorista = documents['RGDoMotorista'];
                                                         String formattedDate2 = '';
 
                                                         if(documents['PlacaVeiculo'].contains('(AG)')){
@@ -427,7 +446,7 @@ class _listEntradaState extends State<listEntrada> {
                                                             Map tags = (result.get('tags'));
                                                             List tagsDisponiveis = [];
 
-
+                                                            bool semSaida = documents['semSaida'];
 
                                                             tags.removeWhere((key, value) => value == 'Usado');
                                                             tagsDisponiveis.addAll(tags.keys);
@@ -436,7 +455,7 @@ class _listEntradaState extends State<listEntrada> {
 
                                                             Navigator.push(context,
                                                                 MaterialPageRoute(builder: (context){
-                                                                  return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2, tagsDisponiveis, widget.Entrada);
+                                                                  return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2, tagsDisponiveis, widget.Entrada, RGMotorista, semSaida);
                                                                 }));
 
                                                           }
@@ -471,6 +490,7 @@ class _listEntradaState extends State<listEntrada> {
                                                           final file4 = File('${tempDir.path}/imagem.jpg');
                                                           await file4.writeAsBytes(compressedImage);
 
+                                                          String RGMotorista = documents['RGDoMotorista'];
 
                                                           var result = await FirebaseFirestore.instance
                                                               .collection("Condominio")
@@ -484,11 +504,11 @@ class _listEntradaState extends State<listEntrada> {
                                                           tagsDisponiveis.addAll(tags.keys.toList());
 
                                                           tagsDisponiveis.sort();
-
+                                                          bool semSaida = documents['semSaida'];
 
                                                           Navigator.push(context,
                                                               MaterialPageRoute(builder: (context){
-                                                                return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2, tagsDisponiveis, widget.Entrada);
+                                                                return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2, tagsDisponiveis, widget.Entrada, RGMotorista, semSaida);
                                                               }));
                                                         }
                                                       }

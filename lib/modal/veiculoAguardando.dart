@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_widget/connectivity_widget.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
@@ -33,6 +34,8 @@ class veiculoAguardando extends StatefulWidget {
   List tagList;
   String DataAnaliseEmpresa;
   String Entrada;
+  String RG;
+  bool semSaida;
 
   veiculoAguardando(
       this.lacreounao,
@@ -54,6 +57,8 @@ class veiculoAguardando extends StatefulWidget {
       this.DataAnaliseEmpresa,
       this.tagList,
       this.Entrada,
+      this.RG,
+      this.semSaida,
       {super.key}
       );
   @override
@@ -66,7 +71,15 @@ bool isTired2 = false;
 bool isTired3 = false;
 bool isTired4 = false;
 
+String Status = "";
+
 class _veiculoAguardandoState extends State<veiculoAguardando> {
+
+  String lacreSt = '';
+  bool lacrebool = false;
+  String tagSelecionada = '';
+  final dropValue = ValueNotifier('');
+
   @override
   Widget build(BuildContext context) {
     File? imageFile = widget.imageFile;
@@ -74,11 +87,43 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
     File? imageFile3 = widget.imageFile3;
     File? imageFile4 = widget.imageFile4;
 
-    bool lacrebool = false;
-    String? lacreSt;
-    String? tagSelecionada = '';
+    final mediaQueryData = MediaQuery.of(context);
+    final screenWidth = mediaQueryData.size.width;
+    final screenHeight = mediaQueryData.size.height;
+    final textScaleFactor = mediaQueryData.textScaleFactor;
+    final dpi = mediaQueryData.devicePixelRatio;
 
-    final dropValue = ValueNotifier('');
+    final textHeight = screenHeight * 0.05;
+    final textWidth = screenWidth * 0.8;
+
+    final textSize = (textHeight / dpi / 2) * textScaleFactor;
+
+    String idDocumento;
+
+    double tamanhotexto = 20;
+    double tamanhotextomin = 16;
+    double tamanhotextobtns = 16;
+    double aspect = 1.0;
+
+    Map Galpoes = { };
+    List GalpoesList = [ ];
+
+    if(kIsWeb){
+      tamanhotexto = textSize;
+      tamanhotextobtns = textSize;
+      tamanhotextomin = 16;
+      //aspect = 1.0;
+      aspect = 1.0;
+
+    }else{
+      if(Platform.isAndroid){
+
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
+        aspect = 0.8;
+
+      }
+    }
 
     Future<File?> _getImageFromCamera() async {
       final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
@@ -531,14 +576,15 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
     }
 
     String _textoPredefinido = widget.lacradoStr;
-    lacreSt = widget.lacradoStr;
+
+    final devicePixelRatio = MediaQuery.of(context).devicePixelRatio;
 
     TextEditingController _textEditingController = TextEditingController(text: _textoPredefinido);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green[700],
         centerTitle: true,
-        title: const Text(
+        title: Text(
           'GLK Controls - Liberação de Veiculos',
         ),
       ),
@@ -547,57 +593,45 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
+            SizedBox(
               height: 50,
               width: double.infinity,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'Data: ${widget.horarioCriacao}' ,
-                    style: const TextStyle(
-                        fontSize: 16
-                    ),
-                  ),
-                  Text(
-                    ' - Portaria - ' + widget.liberadopor,
-                    style: const TextStyle(
-                        fontSize: 16
+                    'Data: ${widget.horarioCriacao} - Portaria - ${widget.liberadopor}' ,
+                    style: TextStyle(
+                        fontSize: textSize
                     ),
                   ),
                 ],
-              ),
+              )
             ),
-            Container(
+            SizedBox(
               height: 50,
               width: double.infinity,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    'Data: ${widget.DataAnaliseEmpresa}' ,
-                    style: const TextStyle(
-                        fontSize: 16
-                    ),
-                  ),
-                  Text(
-                    ' - Empresa - ' + widget.Empresadestino,
-                    style: const TextStyle(
-                        fontSize: 16
+                    'Data: ${widget.DataAnaliseEmpresa} - Empresa - ${widget.Empresadestino}' ,
+                    style: TextStyle(
+                        fontSize: textSize
                     ),
                   ),
                 ],
-              ),
+              )
             ),
             Container(
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                'Nome: ' + widget.nomeMotorista,
-                style: const TextStyle(
-                    fontSize: 16
+                'Nome: ${widget.nomeMotorista}',
+                style: TextStyle(
+                    fontSize: textSize
                 ),
               ),
             ),
@@ -605,9 +639,9 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                'Veiculo: ' + widget.Veiculo,
-                style: const TextStyle(
-                    fontSize: 16
+                'RG: ${widget.RG}',
+                style: TextStyle(
+                    fontSize: textSize
                 ),
               ),
             ),
@@ -615,9 +649,9 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                'Placa: ' + widget.PlacaVeiculo,
-                style: const TextStyle(
-                    fontSize: 16
+                'Veiculo: ${widget.Veiculo}',
+                style: TextStyle(
+                    fontSize: textSize
                 ),
               ),
             ),
@@ -625,9 +659,9 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                'Empresa de destino: ' + widget.Empresadestino,
-                style: const TextStyle(
-                    fontSize: 16
+                'Placa: ${widget.PlacaVeiculo}',
+                style: TextStyle(
+                    fontSize: textSize
                 ),
               ),
             ),
@@ -635,9 +669,9 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                'Empresa de origem: ' + widget.EmpresadeOrigin,
-                style: const TextStyle(
-                    fontSize: 16
+                'Empresa de destino: ${widget.Empresadestino}',
+                style: TextStyle(
+                    fontSize: textSize
                 ),
               ),
             ),
@@ -645,14 +679,24 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
               padding: const EdgeInsets.all(16),
               child:
               Text(
-                'Setor: ' + widget.Galpao,
-                style: const TextStyle(
-                    fontSize: 16
+                'Empresa de origem: ${widget.EmpresadeOrigin}',
+                style: TextStyle(
+                    fontSize: textSize
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child:
+              Text(
+                'Setor: ${widget.Galpao}',
+                style: TextStyle(
+                    fontSize: textSize
                 ),
               ),
             ),
             RadioListTile(
-              title: const Text(
+              title: Text(
                   "Com Lacre"
               ),
               value: "lacre",
@@ -668,7 +712,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
               },
             ),
             RadioListTile(
-              title: const Text("Sem Lacre",),
+              title: Text("Sem Lacre",),
               value: "naolacrado",
               groupValue: widget.lacreounao,
               onChanged: (value){
@@ -684,7 +728,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
             Container(
               padding: const EdgeInsets.all(16),
               child: TextFormField(
-                controller: _textEditingController,
                 onChanged: (valor){
                   lacreSt = valor;
                   //Mudou mandou para a String
@@ -692,163 +735,171 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                 keyboardType: TextInputType.number,
                 //enableSuggestions: false,
                 //autocorrect: false,
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
+                decoration: InputDecoration(
+                  border: const OutlineInputBorder(),
                   hintText: 'Numero do lacre *',
                   hintStyle: TextStyle(
-                      fontSize: 16
+                      fontSize: textSize
                   ),
                 ),
               ),
             )
-                :const Text(''),
+                :Text(''),
               Container(
                 padding: const EdgeInsets.only(top: 16),
-                child: const Text(
+                child: Text(
                   'Adicione a foto no icone abaixo',
                   style: TextStyle(
-                      fontSize: 16
+                      fontSize: textSize
                   ),
                 ),
               ),
-            Container(
+            SizedBox(
               height: 300,
               width: 700,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(4),
-                    alignment: Alignment.center,
-                    child:
-                    ElevatedButton(
-                      onPressed: _uploadImage,
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent
-                      ),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      alignment: Alignment.center,
                       child:
-                      Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(4),
-                            child: const Text(
-                              'Motorista *',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.black
+                      ElevatedButton(
+                        onPressed: _uploadImage,
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.transparent
+                        ),
+                        child:
+                        Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(4),
+                              child: Text(
+                                'Motorista *',
+                                style: TextStyle(
+                                  fontSize: textSize,
+                                  color: Colors.black
+                                ),
                               ),
                             ),
-                          ),
-                          Image.file(
-                            imageFile!,
-                            height: 265,
-                            width: 200,
-                          ),
-                        ],
+                            Image.file(
+                              imageFile!,
+                              height: 265,
+                              width: 200,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(4),
-                    alignment: Alignment.center,
-                    child:
-                    ElevatedButton(
-                      onPressed: _uploadImage2,
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent
-                      ),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      alignment: Alignment.center,
                       child:
-                      Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(4),
-                            child: const Text(
-                              'Placa 1*',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black
+                      ElevatedButton(
+                        onPressed: _uploadImage2,
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.transparent
+                        ),
+                        child:
+                        Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(4),
+                              child: Text(
+                                'Placa 1*',
+                                style: TextStyle(
+                                    fontSize: textSize,
+                                    color: Colors.black
+                                ),
                               ),
                             ),
-                          ),
-                          Image.file(
-                            imageFile2!,
-                            height: 265,
-                            width: 200,
-                          ),
-                        ],
+                            Image.file(
+                              imageFile2!,
+                              height: 265,
+                              width: 200,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
             ),
-            Container(
+            SizedBox(
               height: 300,
               width: 700,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(4),
-                    alignment: Alignment.center,
-                    child:
-                    ElevatedButton(
-                      onPressed: _uploadImage3,
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent
-                      ),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      alignment: Alignment.center,
                       child:
-                      Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(4),
-                            child: const Text(
-                              'Placa 2 ',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black
+                      ElevatedButton(
+                        onPressed: _uploadImage3,
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.transparent
+                        ),
+                        child:
+                        Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(4),
+                              child: Text(
+                                'Placa 2 ',
+                                style: TextStyle(
+                                    fontSize: textSize,
+                                    color: Colors.black
+                                ),
                               ),
                             ),
-                          ),
-                          Image.file(
-                            imageFile3!,
-                            height: 265,
-                            width: 200,
-                          ),
-                        ],
+                            Image.file(
+                              imageFile3!,
+                              height: 265,
+                              width: 200,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                  Container(
-                    padding: const EdgeInsets.all(4),
-                    alignment: Alignment.center,
-                    child:
-                    ElevatedButton(
-                      onPressed: _uploadImage4,
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent
-                      ),
+                  Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      alignment: Alignment.center,
                       child:
-                      Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(4),
-                            child: const Text(
-                              'Placa 3',
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: Colors.black
+                      ElevatedButton(
+                        onPressed: _uploadImage4,
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.transparent
+                        ),
+                        child:
+                        Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(4),
+                              child: Text(
+                                'Placa 3',
+                                style: TextStyle(
+                                    fontSize: textSize,
+                                    color: Colors.black
+                                ),
                               ),
                             ),
-                          ),
-                          Image.file(
-                            imageFile4!,
-                            height: 265,
-                            width: 200,
-                          ),
-                        ],
+                            Image.file(
+                              imageFile4!,
+                              height: 265,
+                              width: 200,
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -858,15 +909,15 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
             Center(
                 child: ValueListenableBuilder(valueListenable: dropValue, builder: (context, String value, _){
                   return DropdownButton(
-                    hint: const Text(
+                    hint: Text(
                       'Selecione uma TAG.VC - ID *',
                       style: TextStyle(
-                          fontSize: 16
+                          fontSize: textSize
                       ),
                     ),
                     value: (value.isEmpty)? null : value,
                     onChanged: (escolha) async {
-                     dropValue.value = escolha.toString();
+                      dropValue.value = escolha.toString();
 
                       tagSelecionada = escolha.toString();
 
@@ -876,8 +927,8 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                       child:
                       Text(
                         opcao,
-                        style: const TextStyle(
-                            fontSize: 16
+                        style: TextStyle(
+                            fontSize: textSize
                         ),
                       ),
                     ),
@@ -897,7 +948,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                         timeInSecForIosWeb: 1,
                         backgroundColor: Colors.black,
                         textColor: Colors.white,
-                        fontSize: 16.0,
+                        fontSize: textSize,
                       );
                     }else{
                       if(tagSelecionada == ''){
@@ -907,7 +958,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                           timeInSecForIosWeb: 1,
                           backgroundColor: Colors.black,
                           textColor: Colors.white,
-                          fontSize: 16.0,
+                          fontSize: textSize,
                         );
                       }else{
                         showDialog(
@@ -1002,7 +1053,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                                 timeInSecForIosWeb: 1,
                                 backgroundColor: Colors.black,
                                 textColor: Colors.white,
-                                fontSize: 16.0,
+                                fontSize: textSize,
                               );
 
                               var result = await FirebaseFirestore.instance
@@ -1062,14 +1113,14 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                     }
                   }
                   if(lacrebool == true){
-                    if(lacreSt == null){
+                    if(lacreSt == ''){
                       Fluttertoast.showToast(
                         msg: 'Preencha o numero do lacre!',
                         toastLength: Toast.LENGTH_SHORT,
                         timeInSecForIosWeb: 1,
                         backgroundColor: Colors.black,
                         textColor: Colors.white,
-                        fontSize: 16.0,
+                        fontSize: textSize,
                       );
                     }else{
 
@@ -1080,7 +1131,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                           timeInSecForIosWeb: 1,
                           backgroundColor: Colors.black,
                           textColor: Colors.white,
-                          fontSize: 16.0,
+                          fontSize: textSize,
                         );
                       }else{
 
@@ -1091,7 +1142,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                             timeInSecForIosWeb: 1,
                             backgroundColor: Colors.black,
                             textColor: Colors.white,
-                            fontSize: 16.0,
+                            fontSize: textSize,
                           );
                         }else{
                           if(tagSelecionada == ''){
@@ -1101,9 +1152,15 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                               timeInSecForIosWeb: 1,
                               backgroundColor: Colors.black,
                               textColor: Colors.white,
-                              fontSize: 16.0,
+                              fontSize: textSize,
                             );
                           }else{
+                            if(widget.semSaida == true){
+                              Status = 'Saída';
+                            }else{
+                              Status = 'Estacionário';
+                            }
+
                             showDialog(
                               context: context,
                               builder: (BuildContext context) {
@@ -1145,7 +1202,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                                   'uriImage2': imageUrl2,
                                   'uriImage3': imageUrl3,
                                   'uriImage4': imageUrl4,
-                                  'Status': 'Estacionário',
+                                  'Status': Status,
                                   'DataDeAnalise': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
                                   'tag': tagSelecionada,
                                 }).then((value) {
@@ -1156,7 +1213,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                                     timeInSecForIosWeb: 1,
                                     backgroundColor: Colors.black,
                                     textColor: Colors.white,
-                                    fontSize: 16.0,
+                                    fontSize: textSize,
                                   );
                                   //Fazer as regras do Rele
                                   callToVerifyReles();
@@ -1183,7 +1240,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                                 FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                                   'verificadoPor': widget.empresaName,
                                   'LacreouNao': 'lacre',
-                                  'Status': 'Estacionário',
+                                  'Status': Status,
                                   'tag': tagSelecionada,
                                   'DataDeAnalise': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
 
@@ -1202,10 +1259,10 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                     }
                   }
                 },
-                child: const Text(
+                child: Text(
                   'Prosseguir',
                   style: TextStyle(
-                      fontSize: 16
+                      fontSize: textSize
                   ),
                 ),
               ),
@@ -1229,9 +1286,9 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                       padding: const EdgeInsets.all(16),
                       child:
                       Text(
-                        'Operador: ' + widget.empresaName,
-                        style: const TextStyle(
-                            fontSize: 16
+                        'Operador: ${widget.empresaName}',
+                        style: TextStyle(
+                            fontSize: textSize
                         ),
                       ),
                     ),

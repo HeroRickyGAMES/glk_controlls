@@ -79,17 +79,40 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
 
     TextEditingController _textEditingController = TextEditingController(text: _textoPredefinido);
 
+    final mediaQueryData = MediaQuery.of(context);
+    final screenWidth = mediaQueryData.size.width;
+    final screenHeight = mediaQueryData.size.height;
+    final textScaleFactor = mediaQueryData.textScaleFactor;
+    final dpi = mediaQueryData.devicePixelRatio;
+
+    final textHeight = screenHeight * 0.05;
+    final textWidth = screenWidth * 0.8;
+
+    final textSize = (textHeight / dpi / 2) * textScaleFactor;
+
+    String idDocumento;
+
     double tamanhotexto = 20;
+    double tamanhotextomin = 16;
     double tamanhotextobtns = 16;
+    double aspect = 1.0;
+
+    Map Galpoes = { };
+    List GalpoesList = [ ];
 
     if(kIsWeb){
-      tamanhotexto = 25;
-      tamanhotextobtns = 34;
+      tamanhotexto = textSize;
+      tamanhotextobtns = textSize;
+      tamanhotextomin = 16;
+      //aspect = 1.0;
+      aspect = 1.0;
+
     }else{
       if(Platform.isAndroid){
 
         tamanhotexto = 16;
         tamanhotextobtns = 18;
+        aspect = 0.8;
 
       }
     }
@@ -128,18 +151,12 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
             Container(
               height: 50,
               width: double.infinity,
-              child: Row(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Data: ${widget.horarioCriacao}' ,
-                    style: TextStyle(
-                        fontSize: tamanhotexto
-                    ),
-                  ),
-                  Text(
-                    ' - Portaria - ${widget.liberadopor}',
+                    'Data: ${widget.horarioCriacao} - Portaria - ${widget.liberadopor}' ,
                     style: TextStyle(
                         fontSize: tamanhotexto
                     ),
@@ -150,18 +167,12 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
             Container(
               height: 50,
               width: double.infinity,
-              child: Row(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Data: ${widget.DateEntrada}' ,
-                    style: TextStyle(
-                        fontSize: tamanhotexto
-                    ),
-                  ),
-                  Text(
-                    ' - Analise na Empresa - ${widget.empresaName}',
+                    'Data: ${widget.DateEntrada} - Analise na Empresa - ${widget.empresaName}' ,
                     style: TextStyle(
                         fontSize: tamanhotexto
                     ),
@@ -172,18 +183,12 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
             Container(
               height: 50,
               width: double.infinity,
-              child: Row(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'Data: ${widget.DatadeAnalise}' ,
-                    style: TextStyle(
-                        fontSize: tamanhotexto
-                    ),
-                  ),
-                  Text(
-                    ' - Entrada - ${widget.verificadoPor}',
+                    'Data: ${widget.DatadeAnalise} - Entrada - ${widget.verificadoPor}' ,
                     style: TextStyle(
                         fontSize: tamanhotexto
                     ),

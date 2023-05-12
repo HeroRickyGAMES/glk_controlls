@@ -30,6 +30,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
   String? lacreounao = '';
   String? empresaSelecionada;
   String galpaoPrimario = '';
+
   //fields
   String? nomeMotorista;
   String? RGMotorista;
@@ -38,17 +39,17 @@ class _modalPorteiroState extends State<modalPorteiro> {
   String motivo = '';
   String DataEntradaEmpresa = '';
   String? VeiculoPlaca;
-  String? originEmpresa;
+  String? originEmpresa = '';
   TextEditingController nameMotoristaAllcaps = TextEditingController();
   TextEditingController placaveiculointerface = TextEditingController();
   TextEditingController telefoneinterface = TextEditingController();
   bool lacrebool = false;
   List VeiculoOPC = [
+    'Carreta',
     'Caminhão',
     'Caminhonete',
-    'Carro de passeio',
     'Moto',
-    'Carreta'
+    'Carro de Passeio'
   ];
 
   String Status = '';
@@ -87,17 +88,40 @@ class _modalPorteiroState extends State<modalPorteiro> {
   @override
   Widget build(BuildContext context) {
 
+    final mediaQueryData = MediaQuery.of(context);
+    final screenWidth = mediaQueryData.size.width;
+    final screenHeight = mediaQueryData.size.height;
+    final textScaleFactor = mediaQueryData.textScaleFactor;
+    final dpi = mediaQueryData.devicePixelRatio;
+
+    final textHeight = screenHeight * 0.05;
+    final textWidth = screenWidth * 0.8;
+
+    final textSize = (textHeight / dpi / 2) * textScaleFactor;
+
+    String idDocumento;
+
     double tamanhotexto = 20;
+    double tamanhotextomin = 16;
     double tamanhotextobtns = 16;
+    double aspect = 1.0;
+
+    Map Galpoes = { };
+    List GalpoesList = [ ];
 
     if(kIsWeb){
-      tamanhotexto = 25;
-      tamanhotextobtns = 34;
+      tamanhotexto = textSize;
+      tamanhotextobtns = textSize;
+      tamanhotextomin = 16;
+      //aspect = 1.0;
+      aspect = 1.0;
+
     }else{
       if(Platform.isAndroid){
 
         tamanhotexto = 16;
         tamanhotextobtns = 18;
+        aspect = 0.8;
 
       }
     }
@@ -157,7 +181,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
           'interno': veiculoInterno,
           'agendamento': false,
           'lacrenumSaida': '',
-          'lacreboolsaida': false
+          'lacreboolsaida': false,
+          'EntradaInt': int.parse(DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/').replaceAll('/', '').replaceAll(":", "").replaceAll(" ", "")),
+          'semSaida': false
         }).then((value) {
 
           Fluttertoast.showToast(
@@ -262,7 +288,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
           'interno': veiculoInterno,
           'agendamento': false,
           'lacrenumSaida': '',
-          'lacreboolsaida': false
+          'lacreboolsaida': false,
+          'EntradaInt': int.parse(DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/').replaceAll('/', '').replaceAll(":", "").replaceAll(" ", "")),
+          'semSaida': false
         }).then((value) {
 
           Fluttertoast.showToast(
@@ -495,31 +523,31 @@ class _modalPorteiroState extends State<modalPorteiro> {
       final SharedPreferences prefs = await _prefs;
       bool? offlinemode =  prefs.getBool('OfflineMode');
 
-      if(offlinemode == true){
-      Status = 'Liberado Entrada';
-      MandarMT();
-      }else{
-      MandarMT();
-      }
-      }else{
-      Status = 'Liberado Entrada';
-      MandarMT();
-      }
-      }
-      }
-      }
-      }
-      }
-      }else{
-      Fluttertoast.showToast(
-      msg: 'A placa está escrita errada!',
-      toastLength: Toast.LENGTH_SHORT,
-      timeInSecForIosWeb: 1,
-      backgroundColor: Colors.black,
-      textColor: Colors.white,
-      fontSize: tamanhotexto,
-      );
-      }
+          if(offlinemode == true){
+          Status = 'Liberado Entrada';
+          MandarMT();
+          }else{
+          MandarMT();
+          }
+          }else{
+          Status = 'Liberado Entrada';
+          MandarMT();
+          }
+          }
+          }
+          }
+          }
+          }
+          }else{
+          Fluttertoast.showToast(
+          msg: 'A placa está escrita errada!',
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: tamanhotexto,
+          );
+          }
     }
 
     uploadInfos() async {
@@ -645,7 +673,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
                             if(RGMotoristas.contains("RG ${RGMotorista} status Saída")){
                               restomanda();
                             }else{
-
                               if(RGMotoristas.contains("RG ${RGMotorista} status Aguardando Liberação") || RGMotoristas.contains("RG ${RGMotorista} status Aguardando Liberação") || RGMotoristas.contains("RG ${RGMotorista} status Liberado Entrada") || RGMotoristas.contains("RG ${RGMotorista} status Liberado Saida")){
                                 Fluttertoast.showToast(
                                   msg: 'Esse RG já existe na base de dados!',
