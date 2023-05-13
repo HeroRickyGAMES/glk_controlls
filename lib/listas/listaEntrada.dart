@@ -521,8 +521,6 @@ class _listEntradaState extends State<listEntrada> {
 
                                                             List<String> numerosOrdenados = numerosInt.map((e) => e.toString()).toList();
 
-                                                            print(numerosOrdenados);
-
                                                             bool semSaida = documents['semSaida'];
 
                                                             Navigator.push(context,
