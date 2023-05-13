@@ -82,6 +82,9 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
   @override
   Widget build(BuildContext context) {
+    String lacrereject = '';
+    String AutorizoEntrada = 'Autorizo Entrada st';
+
     File? imageFile = widget.imageFile;
     File? imageFile2 = widget.imageFile2;
     File? imageFile3 = widget.imageFile3;
@@ -124,6 +127,22 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
       }
     }
+
+    if(widget.lacreounao == 'lacre'){
+      setState(() {
+        AutorizoEntrada = 'Autorizo Entrada com lacre';
+        lacrereject = 'com lacre';
+      });
+    }
+
+    if(widget.lacreounao == 'naolacrado'){
+      setState(() {
+        AutorizoEntrada = 'Autorizo Entrada sem lacre';
+        lacrereject = 'sem lacre';
+      });
+    }
+
+
 
     Future<File?> _getImageFromCamera() async {
       final pickedFile = await ImagePicker().pickImage(source: ImageSource.camera);
@@ -584,7 +603,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
       appBar: AppBar(
         backgroundColor: Colors.green[700],
         centerTitle: true,
-        title: Text(
+        title: const Text(
           'GLK Controls - Liberação de Veiculos',
         ),
       ),
@@ -697,32 +716,17 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
             ),
             RadioListTile(
               title: Text(
-                  "Com Lacre"
+                  AutorizoEntrada
               ),
               value: "lacre",
               groupValue: widget.lacreounao,
-              onChanged: (value){
-                setState(() {
-                  widget.lacreounao = value.toString();
-
-                  if(value == 'lacre'){
-                    lacrebool = true;
-                  }
-                });
-              },
+              onChanged: null,
             ),
             RadioListTile(
-              title: Text("Sem Lacre",),
+              title: const Text("Sem Lacre",),
               value: "naolacrado",
               groupValue: widget.lacreounao,
-              onChanged: (value){
-                setState(() {
-                  widget.lacreounao = value.toString();
-                  if(value == 'naolacrado'){
-                    lacrebool = false;
-                  }
-                });
-              },
+              onChanged: null,
             ),
             lacrebool ?
             Container(
@@ -744,7 +748,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                 ),
               ),
             )
-                :Text(''),
+                :const Text(''),
               Container(
                 padding: const EdgeInsets.only(top: 16),
                 child: Text(

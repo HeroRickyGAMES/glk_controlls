@@ -62,6 +62,24 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
   @override
   Widget build(BuildContext context) {
 
+    String lacrereject = '';
+    String AutorizoEntrada = 'Autorizo Entrada st';
+
+
+    if(widget.lacreounao == 'lacre'){
+      setState(() {
+        AutorizoEntrada = 'Autorizo Saída com lacre';
+        lacrereject = 'Autorizo saída ';
+      });
+    }
+
+    if(widget.lacreounao == 'naolacrado'){
+      setState(() {
+        AutorizoEntrada = 'Autorizo Entrada sem lacre';
+        lacrereject = 'Autorizo saída ';
+      });
+    }
+
     if(widget.lacreounao == 'lacre'){
 
       lacrebool = true;
@@ -259,7 +277,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
             Container(
               child:
               CheckboxListTile(
-                title: Text('Com Lacre'),
+                title: Text(AutorizoEntrada),
                 value: widget.LacreSaida,
                 onChanged: (value) {
                   setState(() {
@@ -274,7 +292,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
             Container(
               child:
               CheckboxListTile(
-                title: Text('Sem Lacre'),
+                title: Text('$lacrereject Sem Lacre'),
                 value: !widget.LacreSaida,
                 onChanged: (value) {
                   setState(() {

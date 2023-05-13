@@ -30,9 +30,6 @@ class _listEntradaState extends State<listEntrada> {
   @override
   Widget build(BuildContext context) {
     String holderPlaca = '';
-    List listaNome = [];
-    List galpao = [ ];
-    String pass = '';
 
     final mediaQueryData = MediaQuery.of(context);
     final screenWidth = mediaQueryData.size.width;
@@ -55,6 +52,7 @@ class _listEntradaState extends State<listEntrada> {
     Map Galpoes = { };
     List GalpoesList = [ ];
 
+
     if(kIsWeb){
       tamanhotexto = textSize;
       tamanhotextobtns = textSize;
@@ -70,68 +68,6 @@ class _listEntradaState extends State<listEntrada> {
         aspect = 0.8;
 
       }
-    }
-
-    openModalOffline() async {
-
-      var result = await FirebaseFirestore.instance
-          .collection("empresa")
-          .get();
-      result.docs.forEach((res) {
-
-        setState(() {
-          listaNome.add(res.data()['nome']);
-
-          galpao.addAll(res.data()['galpaes']);
-
-          final dropValue = ValueNotifier('');
-          final dropValue2 = ValueNotifier('');
-          final dropValue3 = ValueNotifier('');
-
-          var db = FirebaseFirestore.instance;
-          var UID = FirebaseAuth.instance.currentUser?.uid;
-          db.collection('Users').doc(UID).get().then((event){
-
-            event.data()?.forEach((key, value) {
-
-
-              if(key == 'nome'){
-                String PorteiroNomee = value;
-
-                var db = FirebaseFirestore.instance;
-                var UID = FirebaseAuth.instance.currentUser?.uid;
-                db.collection('Users').doc(UID).get().then((event){
-
-                  event.data()?.forEach((key, value) {
-
-
-                    if(key == 'nome'){
-
-                      Navigator.pop(context);
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context){
-                            return liberacaoOff(listaNome, dropValue, PorteiroNomee, '',dropValue2, galpao, dropValue3);
-
-                          }));
-
-                    }
-
-                  });
-
-                }
-                );
-
-              }
-
-            });
-
-          }
-          );
-
-
-        });
-
-      });
     }
 
     return Scaffold(
@@ -451,11 +387,15 @@ class _listEntradaState extends State<listEntrada> {
                                                             tags.removeWhere((key, value) => value == 'Usado');
                                                             tagsDisponiveis.addAll(tags.keys);
 
-                                                            tagsDisponiveis.sort();
+                                                            List<int> numerosInt = tags.keys.toList().map((e) => int.parse(e)).toList();
+
+                                                            numerosInt.sort();
+
+                                                            List<String> numerosOrdenados = numerosInt.map((e) => e.toString()).toList();
 
                                                             Navigator.push(context,
                                                                 MaterialPageRoute(builder: (context){
-                                                                  return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2, tagsDisponiveis, widget.Entrada, RGMotorista, semSaida);
+                                                                  return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2, numerosOrdenados, widget.Entrada, RGMotorista, semSaida);
                                                                 }));
 
                                                           }
