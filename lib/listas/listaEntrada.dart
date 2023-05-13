@@ -472,44 +472,64 @@ class _listEntradaState extends State<listEntrada> {
 
                                                           final Uint8List uint8List = imageData.buffer.asUint8List();
 
-                                                          final compressedImage = await FlutterImageCompress.compressWithList(
-                                                            uint8List,
-                                                            quality: 85, // ajuste a qualidade da imagem conforme necessário
-                                                          );
+                                                          if(kIsWeb){
+                                                            Fluttertoast.showToast(
+                                                              msg: 'Essa função não está disponivel para a versão web do app, por favor, tente com a versão mobile do App!',
+                                                              toastLength: Toast.LENGTH_LONG,
+                                                              timeInSecForIosWeb: 5,
+                                                              backgroundColor: Colors.black,
+                                                              textColor: Colors.white,
+                                                              fontSize: 16.0,
+                                                            );
+                                                          }else{
+                                                            final compressedImage = await FlutterImageCompress.compressWithList(
+                                                              uint8List,
+                                                              quality: 85, // ajuste a qualidade da imagem conforme necessário
+                                                            );
 
-                                                          final tempDir = await getTemporaryDirectory();
-                                                          final file = File('${tempDir.path}/imagem.jpg');
-                                                          await file.writeAsBytes(compressedImage);
+                                                            final tempDir = await getTemporaryDirectory();
+                                                            final file = File('${tempDir.path}/imagem.jpg');
+                                                            await file.writeAsBytes(compressedImage);
 
-                                                          final file2 = File('${tempDir.path}/imagem.jpg');
-                                                          await file2.writeAsBytes(compressedImage);
+                                                            final file2 = File('${tempDir.path}/imagem.jpg');
+                                                            await file2.writeAsBytes(compressedImage);
 
-                                                          final file3 = File('${tempDir.path}/imagem.jpg');
-                                                          await file3.writeAsBytes(compressedImage);
+                                                            final file3 = File('${tempDir.path}/imagem.jpg');
+                                                            await file3.writeAsBytes(compressedImage);
 
-                                                          final file4 = File('${tempDir.path}/imagem.jpg');
-                                                          await file4.writeAsBytes(compressedImage);
+                                                            final file4 = File('${tempDir.path}/imagem.jpg');
+                                                            await file4.writeAsBytes(compressedImage);
 
-                                                          String RGMotorista = documents['RGDoMotorista'];
+                                                            String RGMotorista = documents['RGDoMotorista'];
 
-                                                          var result = await FirebaseFirestore.instance
-                                                              .collection("Condominio")
-                                                              .doc('condominio')
-                                                              .get();
+                                                            var result = await FirebaseFirestore.instance
+                                                                .collection("Condominio")
+                                                                .doc('condominio')
+                                                                .get();
 
-                                                          Map tags = (result.get('tags'));
-                                                          List tagsDisponiveis = [];
+                                                            Map tags = (result.get('tags'));
 
-                                                          tags.removeWhere((key, value) => value == 'Usado');
-                                                          tagsDisponiveis.addAll(tags.keys.toList());
+                                                            List tagsDisponiveis = [];
 
-                                                          tagsDisponiveis.sort();
-                                                          bool semSaida = documents['semSaida'];
+                                                            tags.removeWhere((key, value) => value == 'Usado');
 
-                                                          Navigator.push(context,
-                                                              MaterialPageRoute(builder: (context){
-                                                                return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2, tagsDisponiveis, widget.Entrada, RGMotorista, semSaida);
-                                                              }));
+                                                            tagsDisponiveis.addAll(tags.keys.toList());
+
+                                                            List<int> numerosInt = tags.keys.toList().map((e) => int.parse(e)).toList();
+
+                                                            numerosInt.sort();
+
+                                                            List<String> numerosOrdenados = numerosInt.map((e) => e.toString()).toList();
+
+                                                            print(numerosOrdenados);
+
+                                                            bool semSaida = documents['semSaida'];
+
+                                                            Navigator.push(context,
+                                                                MaterialPageRoute(builder: (context){
+                                                                  return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2, numerosOrdenados, widget.Entrada, RGMotorista, semSaida);
+                                                                }));
+                                                          }
                                                         }
                                                       }
                                                     },

@@ -66,6 +66,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
   bool entradabool = false;
   bool regeitado = false;
   String galpaoSelecionado = '';
+  String lacrereject = '';
   final dropValue = ValueNotifier('');
 
   bool empresaPikada = false;
@@ -114,12 +115,14 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
     if(widget.lacreounao == 'lacre'){
       setState(() {
         AutorizoEntrada = 'Autorizo Entrada com lacre';
+        lacrereject = 'com lacre';
       });
     }
 
     if(widget.lacreounao == 'naolacrado'){
       setState(() {
         AutorizoEntrada = 'Autorizo Entrada sem lacre';
+        lacrereject = 'sem lacre';
       });
     }
 
@@ -295,7 +298,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
             Container(
               child:
               CheckboxListTile(
-                title: Text('Rejeito a Entrada'),
+                title: Text('Rejeito a Entrada $lacrereject'),
                 value: regeitado,
                 onChanged: (value) {
                   setState(() {
