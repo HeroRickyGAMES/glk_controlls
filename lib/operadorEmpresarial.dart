@@ -119,9 +119,11 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
   }
 
   Widget build(BuildContext context) {
-    String idDocumento;
 
-    String holderPlaca = '';
+    double tamanhotexto = 20;
+    double tamanhotextomin = 16;
+    double tamanhotextobtns = 16;
+    double aspect = 1.0;
 
     final mediaQueryData = MediaQuery.of(context);
     final screenWidth = mediaQueryData.size.width;
@@ -133,14 +135,8 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
     final textWidth = screenWidth * 0.8;
 
     final textSize = (textHeight / dpi / 2) * textScaleFactor;
-
-    double tamanhotexto = 20;
-    double tamanhotextomin = 16;
-    double tamanhotextobtns = 16;
-    double aspect = 1.0;
-
-    Map Galpoes = { };
-    List GalpoesList = [ ];
+    final textSizeandroid = (textWidth / dpi / 15) * textScaleFactor;
+    final textSizeandroidbtn = (textWidth / dpi / 13) * textScaleFactor;
 
     if(kIsWeb){
       tamanhotexto = textSize;
@@ -152,8 +148,8 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
     }else{
       if(Platform.isAndroid){
 
-        tamanhotexto = 16;
-        tamanhotextobtns = 18;
+        tamanhotexto = textSizeandroid;
+        tamanhotextobtns = textSizeandroidbtn;
         aspect = 0.8;
 
       }
@@ -262,7 +258,7 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                         child: Text(
                             'Liberações',
                           style: TextStyle(
-                              fontSize: tamanhotexto,
+                              fontSize: tamanhotextobtns,
                               fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -279,7 +275,7 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                       child: Text(
                         'Agendamento',
                         style: TextStyle(
-                          fontSize: tamanhotexto,
+                          fontSize: tamanhotextobtns,
                           color: Colors.black,
                           fontWeight: FontWeight.bold,
                         ),
@@ -294,7 +290,7 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                       child: Text(
                         'Meus agendamentos',
                         style: TextStyle(
-                          fontSize: tamanhotexto,
+                          fontSize: tamanhotextobtns,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -307,7 +303,7 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                       child: Text(
                         'Relatórios',
                         style: TextStyle(
-                          fontSize: tamanhotexto,
+                          fontSize: tamanhotextobtns,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -321,7 +317,7 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                       child: Text(
                         'Cadastrar veiculo interno',
                         style: TextStyle(
-                          fontSize: tamanhotexto,
+                          fontSize: tamanhotextobtns,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -335,7 +331,7 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                       child: Text(
                         'Meus Veiculos internos',
                         style: TextStyle(
-                          fontSize: tamanhotexto,
+                          fontSize: tamanhotextobtns,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -498,11 +494,15 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                       Container(
                         padding: const EdgeInsets.all(16),
                         child:
-                        Text(
-                          'Operador: ${widget.name}',
-                          style: TextStyle(
-                              fontSize: tamanhotexto
-                          ),
+                        Column(
+                          children: [
+                            Text(
+                              'Operador: ${widget.name}',
+                              style: TextStyle(
+                                  fontSize: tamanhotexto
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],

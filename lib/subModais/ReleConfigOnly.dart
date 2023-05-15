@@ -83,6 +83,11 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
   Widget build(BuildContext context) {
 
 
+    double tamanhotexto = 20;
+    double tamanhotextomin = 16;
+    double tamanhotextobtns = 16;
+    double aspect = 1.0;
+
     final mediaQueryData = MediaQuery.of(context);
     final screenWidth = mediaQueryData.size.width;
     final screenHeight = mediaQueryData.size.height;
@@ -93,14 +98,8 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
     final textWidth = screenWidth * 0.8;
 
     final textSize = (textHeight / dpi / 2) * textScaleFactor;
-
-    double tamanhotexto = 20;
-    double tamanhotextomin = 16;
-    double tamanhotextobtns = 16;
-    double aspect = 1.0;
-
-    Map Galpoes = { };
-    List GalpoesList = [ ];
+    final textSizeandroid = (textWidth / dpi / 15) * textScaleFactor;
+    final textSizeandroidbtn = (textWidth / dpi / 13) * textScaleFactor;
 
     if(kIsWeb){
       tamanhotexto = textSize;
@@ -112,8 +111,8 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
     }else{
       if(Platform.isAndroid){
 
-        tamanhotexto = 16;
-        tamanhotextobtns = 18;
+        tamanhotexto = textSizeandroid;
+        tamanhotextobtns = textSizeandroidbtn;
         aspect = 0.8;
 
       }
@@ -130,7 +129,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('Configuração do Relê'),
+        title: const Text('Configuração do Relê'),
       ),
       body: Container(
         padding: const EdgeInsets.all(16),
@@ -197,10 +196,10 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                     children: [
                       Container(
                         padding: const EdgeInsets.all(16),
-                        child: Text(
+                        child: const Text(
                           "Rele 01:",
                           style: TextStyle(
-                              fontSize: tamanhotexto,
+                              fontSize: 10,
                           ),
                         ),
                       ),
@@ -210,7 +209,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                               hint: Text(
                                 'Local *',
                                 style: TextStyle(
-                                    fontSize: tamanhotexto
+                                    fontSize: 10
                                 ),
                               ),
                               value: (value.isEmpty)? null : value,
@@ -226,7 +225,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                 Text(
                                   opcao,
                                   style: TextStyle(
-                                      fontSize: tamanhotexto
+                                      fontSize: 10
                                   ),
                                 ),
                               ),
@@ -237,7 +236,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                       Text(
                           "Função: " + rele1fuc1,
                         style: TextStyle(
-                            fontSize: tamanhotexto
+                            fontSize: 10
                         ),
                       ),
                       Center(
@@ -246,7 +245,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                               hint: Text(
                                 'Selecione a função *',
                                 style: TextStyle(
-                                    fontSize: tamanhotexto
+                                    fontSize: 10
                                 ),
                               ),
                               value: (value.isEmpty)? null : value,
@@ -280,7 +279,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                         child: Text(
                           "Rele 02:",
                           style: TextStyle(
-                            fontSize: tamanhotexto,
+                            fontSize: 10,
                           ),
                         ),
                       ),
@@ -290,7 +289,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                               hint: Text(
                                 'Local *',
                                 style: TextStyle(
-                                    fontSize: tamanhotexto
+                                    fontSize: 10
                                 ),
                               ),
                               value: (value.isEmpty)? null : value,
@@ -306,7 +305,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                 Text(
                                   opcao,
                                   style: TextStyle(
-                                      fontSize: tamanhotexto
+                                      fontSize: 10
                                   ),
                                 ),
                               ),
@@ -317,7 +316,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                       Text(
                         "Função: " + rele2fuc1,
                         style: TextStyle(
-                            fontSize: tamanhotexto
+                            fontSize: 10
                         ),
                       ),
                       Center(
@@ -326,7 +325,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                               hint: Text(
                                 'Selecione a função *',
                                 style: TextStyle(
-                                    fontSize: tamanhotexto
+                                    fontSize: 10
                                 ),
                               ),
                               value: (value.isEmpty)? null : value,
@@ -360,7 +359,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                         child: Text(
                           "Rele 03:",
                           style: TextStyle(
-                            fontSize: tamanhotexto,
+                            fontSize: 10,
                           ),
                         ),
                       ),
@@ -370,7 +369,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                               hint: Text(
                                 'Local *',
                                 style: TextStyle(
-                                    fontSize: tamanhotexto
+                                    fontSize: 10
                                 ),
                               ),
                               value: (value.isEmpty)? null : value,
@@ -386,7 +385,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                 Text(
                                   opcao,
                                   style: TextStyle(
-                                      fontSize: tamanhotexto
+                                      fontSize: 10
                                   ),
                                 ),
                               ),
@@ -397,7 +396,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                       Text(
                         "Função: " + rele4fuc2,
                         style: TextStyle(
-                            fontSize: tamanhotexto
+                            fontSize: 10
                         ),
                       ),
                       Center(
@@ -406,7 +405,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                               hint: Text(
                                 'Selecione a função *',
                                 style: TextStyle(
-                                    fontSize: tamanhotexto
+                                    fontSize: 10
                                 ),
                               ),
                               value: (value.isEmpty)? null : value,
@@ -440,7 +439,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                         child: Text(
                           "Rele 04:",
                           style: TextStyle(
-                            fontSize: tamanhotexto,
+                            fontSize: 10,
                           ),
                         ),
                       ),
@@ -450,7 +449,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                               hint: Text(
                                 'Local *',
                                 style: TextStyle(
-                                    fontSize: tamanhotexto
+                                    fontSize: 10
                                 ),
                               ),
                               value: (value.isEmpty)? null : value,
@@ -466,7 +465,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                                 Text(
                                   opcao,
                                   style: TextStyle(
-                                      fontSize: tamanhotexto
+                                      fontSize: 10
                                   ),
                                 ),
                               ),
@@ -477,7 +476,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                       Text(
                         "Função: " + rele3fuc2,
                         style: TextStyle(
-                            fontSize: tamanhotexto
+                            fontSize: 10
                         ),
                       ),
                       Center(
@@ -486,7 +485,7 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                               hint: Text(
                                 'Selecione a função *',
                                 style: TextStyle(
-                                    fontSize: tamanhotexto
+                                    fontSize: 10
                                 ),
                               ),
                               value: (value.isEmpty)? null : value,

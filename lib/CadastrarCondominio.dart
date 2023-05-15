@@ -27,7 +27,6 @@ class CadastroCondominio extends StatefulWidget {
 
 class _CadastroCondominioState extends State<CadastroCondominio> {
 
-
   String empresa = '';
   String endereco = '';
   String cep = '';
@@ -87,10 +86,33 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
     TextEditingController galpaoController = TextEditingController(text: widget.galpaost);
     TextEditingController vagasController = TextEditingController(text: widget.vagas);
 
-    double tamanhotexto = 16;
-    double tamanhotextobtns = 18;
-
     final FirebaseStorage storage = FirebaseStorage.instance;
+
+
+    double tamanhotexto = 20;
+    double tamanhotextomin = 16;
+    double tamanhotextobtns = 16;
+    double aspect = 1.0;
+
+    final mediaQueryData = MediaQuery.of(context);
+    final screenWidth = mediaQueryData.size.width;
+    final screenHeight = mediaQueryData.size.height;
+    final textScaleFactor = mediaQueryData.textScaleFactor;
+    final dpi = mediaQueryData.devicePixelRatio;
+
+    final textHeight = screenHeight * 0.05;
+    final textWidth = screenWidth * 0.8;
+
+    final textSizeandroid = (textWidth / dpi / 15) * textScaleFactor;
+    final textSizeandroidbtn = (textWidth / dpi / 13) * textScaleFactor;
+
+    if(Platform.isAndroid){
+
+      tamanhotexto = textSizeandroid;
+      tamanhotextobtns = textSizeandroidbtn;
+      aspect = 0.8;
+
+    }
 
     Future<File?> _getImageFromCamera() async {
       final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);

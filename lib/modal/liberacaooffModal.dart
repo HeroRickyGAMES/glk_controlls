@@ -823,11 +823,15 @@ class _liberacaoOffState extends State<liberacaoOff> {
                   Container(
                     padding: const EdgeInsets.all(16),
                     child:
-                    Text(
-                      'Operador: ' + widget.nomeUser,
-                      style: const TextStyle(
-                          fontSize: 16
-                      ),
+                    Column(
+                      children: [
+                        Text(
+                          'Operador: ' + widget.nomeUser,
+                          style: const TextStyle(
+                              fontSize: 16
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

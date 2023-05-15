@@ -41,6 +41,11 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
   @override
   Widget build(BuildContext context) {
 
+    double tamanhotexto = 20;
+    double tamanhotextomin = 16;
+    double tamanhotextobtns = 16;
+    double aspect = 1.0;
+
     final mediaQueryData = MediaQuery.of(context);
     final screenWidth = mediaQueryData.size.width;
     final screenHeight = mediaQueryData.size.height;
@@ -51,16 +56,8 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
     final textWidth = screenWidth * 0.8;
 
     final textSize = (textHeight / dpi / 2) * textScaleFactor;
-
-    String idDocumento;
-
-    double tamanhotexto = 20;
-    double tamanhotextomin = 16;
-    double tamanhotextobtns = 16;
-    double aspect = 1.0;
-
-    Map Galpoes = { };
-    List GalpoesList = [ ];
+    final textSizeandroid = (textWidth / dpi / 15) * textScaleFactor;
+    final textSizeandroidbtn = (textWidth / dpi / 13) * textScaleFactor;
 
     if(kIsWeb){
       tamanhotexto = textSize;
@@ -72,8 +69,8 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
     }else{
       if(Platform.isAndroid){
 
-        tamanhotexto = 16;
-        tamanhotextobtns = 18;
+        tamanhotexto = textSizeandroid;
+        tamanhotextobtns = textSizeandroidbtn;
         aspect = 0.8;
 
       }
@@ -844,11 +841,15 @@ class _modalVeiculofillState extends State<modalVeiculofill> {
                   Container(
                     padding: const EdgeInsets.all(16),
                     child:
-                    Text(
-                      'Operador: ${widget.nomeUser}',
-                      style: TextStyle(
-                          fontSize: tamanhotexto
-                      ),
+                    Column(
+                      children: [
+                        Text(
+                          'Operador: ${widget.nomeUser}',
+                          style: TextStyle(
+                              fontSize: tamanhotexto
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

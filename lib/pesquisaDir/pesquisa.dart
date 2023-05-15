@@ -20,6 +20,11 @@ class _pesquisaState extends State<pesquisa> {
   Widget build(BuildContext context) {
     String idDocumento;
 
+    double tamanhotexto = 20;
+    double tamanhotextomin = 16;
+    double tamanhotextobtns = 16;
+    double aspect = 1.0;
+
     final mediaQueryData = MediaQuery.of(context);
     final screenWidth = mediaQueryData.size.width;
     final screenHeight = mediaQueryData.size.height;
@@ -30,14 +35,8 @@ class _pesquisaState extends State<pesquisa> {
     final textWidth = screenWidth * 0.8;
 
     final textSize = (textHeight / dpi / 2) * textScaleFactor;
-
-    double tamanhotexto = 20;
-    double tamanhotextomin = 16;
-    double tamanhotextobtns = 16;
-    double aspect = 1.0;
-
-    Map Galpoes = { };
-    List GalpoesList = [ ];
+    final textSizeandroid = (textWidth / dpi / 15) * textScaleFactor;
+    final textSizeandroidbtn = (textWidth / dpi / 13) * textScaleFactor;
 
     if(kIsWeb){
       tamanhotexto = textSize;
@@ -49,8 +48,8 @@ class _pesquisaState extends State<pesquisa> {
     }else{
       if(Platform.isAndroid){
 
-        tamanhotexto = 16;
-        tamanhotextobtns = 18;
+        tamanhotexto = textSizeandroid;
+        tamanhotextobtns = textSizeandroidbtn;
         aspect = 0.8;
 
       }
@@ -171,7 +170,6 @@ class _pesquisaState extends State<pesquisa> {
                         );
                       }
                   ),
-
                 ],
               ),
             )

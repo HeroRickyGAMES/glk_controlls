@@ -27,16 +27,6 @@ class liberacoesOperadorEmpresarial extends StatefulWidget {
 class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpresarial> {
 
   Widget build(BuildContext context) {
-    final mediaQueryData = MediaQuery.of(context);
-    final screenWidth = mediaQueryData.size.width;
-    final screenHeight = mediaQueryData.size.height;
-    final textScaleFactor = mediaQueryData.textScaleFactor;
-    final dpi = mediaQueryData.devicePixelRatio;
-
-    final textHeight = screenHeight * 0.05;
-    final textWidth = screenWidth * 0.8;
-
-    final textSize = (textHeight / dpi / 2) * textScaleFactor;
 
     String idDocumento;
 
@@ -50,6 +40,19 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
     Map Galpoes = { };
     List GalpoesList = [ ];
 
+    final mediaQueryData = MediaQuery.of(context);
+    final screenWidth = mediaQueryData.size.width;
+    final screenHeight = mediaQueryData.size.height;
+    final textScaleFactor = mediaQueryData.textScaleFactor;
+    final dpi = mediaQueryData.devicePixelRatio;
+
+    final textHeight = screenHeight * 0.05;
+    final textWidth = screenWidth * 0.8;
+
+    final textSize = (textHeight / dpi / 2) * textScaleFactor;
+    final textSizeandroid = (textWidth / dpi / 15) * textScaleFactor;
+    final textSizeandroidbtn = (textWidth / dpi / 13) * textScaleFactor;
+
     if(kIsWeb){
       tamanhotexto = textSize;
       tamanhotextobtns = textSize;
@@ -60,12 +63,13 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
     }else{
       if(Platform.isAndroid){
 
-        tamanhotexto = 16;
-        tamanhotextobtns = 18;
+        tamanhotexto = textSizeandroid;
+        tamanhotextobtns = textSizeandroidbtn;
         aspect = 0.8;
 
       }
     }
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -139,7 +143,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                               timeInSecForIosWeb: 1,
                               backgroundColor: Colors.black,
                               textColor: Colors.white,
-                              fontSize: tamanhotextomin,
+                              fontSize: tamanhotexto,
                             );
 
                           }else{
@@ -204,7 +208,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                         child: Text(
                           'Pesquisar',
                           style: TextStyle(
-                              fontSize: tamanhotexto,
+                              fontSize: tamanhotextobtns,
                               fontWeight: FontWeight.bold
                           ),
                         ),
@@ -501,11 +505,15 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                 Container(
                   padding: const EdgeInsets.all(16),
                   child:
-                  Text(
-                    'Operador: ' + widget.name,
-                    style: TextStyle(
-                        fontSize: tamanhotexto
-                    ),
+                  Column(
+                    children: [
+                      Text(
+                        'Operador: ' + widget.name,
+                        style: TextStyle(
+                            fontSize: tamanhotexto
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

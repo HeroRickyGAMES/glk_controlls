@@ -26,6 +26,11 @@ class _loginState extends State<login> {
   @override
   Widget build(BuildContext context) {
 
+    double tamanhotexto = 20;
+    double tamanhotextomin = 16;
+    double tamanhotextobtns = 16;
+    double aspect = 1.0;
+
     final mediaQueryData = MediaQuery.of(context);
     final screenWidth = mediaQueryData.size.width;
     final screenHeight = mediaQueryData.size.height;
@@ -36,14 +41,8 @@ class _loginState extends State<login> {
     final textWidth = screenWidth * 0.8;
 
     final textSize = (textHeight / dpi / 2) * textScaleFactor;
-
-    double tamanhotexto = 20;
-    double tamanhotextomin = 16;
-    double tamanhotextobtns = 16;
-    double aspect = 1.0;
-
-    Map Galpoes = { };
-    List GalpoesList = [ ];
+    final textSizeandroid = (textWidth / dpi / 15) * textScaleFactor;
+    final textSizeandroidbtn = (textWidth / dpi / 13) * textScaleFactor;
 
     if(kIsWeb){
       tamanhotexto = textSize;
@@ -55,8 +54,8 @@ class _loginState extends State<login> {
     }else{
       if(Platform.isAndroid){
 
-        tamanhotexto = 16;
-        tamanhotextobtns = 18;
+        tamanhotexto = textSizeandroid;
+        tamanhotextobtns = textSizeandroidbtn;
         aspect = 0.8;
 
       }
@@ -69,292 +68,296 @@ class _loginState extends State<login> {
               'GLK Controls - Login'
           ),
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
+        body: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Container(
-                    width: 180,
-                    height: 180,
-                    padding: const EdgeInsets.all(16),
-                    child:
-                    Image.asset(
-                      'assets/icon.png',
-                      fit: BoxFit.contain,
-                    )
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                Center(
-                    child:
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
                     Container(
-                      padding: const EdgeInsets.all(16),
-                      child: TextField(
-                        controller: emailController,
-                        decoration: InputDecoration(
-                          border: const OutlineInputBorder(),
-                          hintText: 'Email',
-                          hintStyle: TextStyle(
-                              fontSize: tamanhotexto
+                        width: 180,
+                        height: 180,
+                        padding: const EdgeInsets.all(16),
+                        child:
+                        Image.asset(
+                          'assets/icon.png',
+                          fit: BoxFit.contain,
+                        )
+                    ),
+                  ],
+                ),
+                Column(
+                  children: [
+                    Center(
+                        child:
+                        Container(
+                          padding: const EdgeInsets.all(16),
+                          child: TextField(
+                            controller: emailController,
+                            decoration: InputDecoration(
+                              border: const OutlineInputBorder(),
+                              hintText: 'Email',
+                              hintStyle: TextStyle(
+                                  fontSize: tamanhotexto
+                              ),
+                            ),
+                          ),
+                        ),
+                    ),
+                    Center(
+                      child: Container(
+                        padding: const EdgeInsets.all(16),
+                        child: TextField(
+                          controller: passController,
+                          keyboardType: TextInputType.visiblePassword,
+                          obscureText: visivel,
+                          enableSuggestions: false,
+                          autocorrect: false,
+                          decoration: InputDecoration(
+                            border: const OutlineInputBorder(),
+                            hintText: 'Senha',
+                            hintStyle: TextStyle(
+                                fontSize: tamanhotexto
+                            ),
                           ),
                         ),
                       ),
                     ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.remove_red_eye),
+                          onPressed: () {
+                             setState(() {
+                               visivel = !visivel;
+                             });
+                          },
+                        )
+                      ],
+                    ),
+                  ],
                 ),
                 Center(
                   child: Container(
                     padding: const EdgeInsets.all(16),
-                    child: TextField(
-                      controller: passController,
-                      keyboardType: TextInputType.visiblePassword,
-                      obscureText: visivel,
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      decoration: InputDecoration(
-                        border: const OutlineInputBorder(),
-                        hintText: 'Senha',
-                        hintStyle: TextStyle(
-                            fontSize: tamanhotexto
+                    child:
+                        ElevatedButton(
+                          onPressed: (){
+                            if(emailController.text != ''){
+                              if(passController.text != ''){
+
+                                FirebaseAuth.instance.signInWithEmailAndPassword(
+                                    email: emailController.text,
+                                    password: passController.text
+                                ).then((value) {
+
+                                  var db = FirebaseFirestore.instance;
+                                  var UID = FirebaseAuth.instance.currentUser?.uid;
+                                  db.collection('Users').doc(UID).get().then((event){
+
+                                    event.data()?.forEach((key, value) {
+
+
+                                      if(value == 'ADM'){
+
+                                        var db = FirebaseFirestore.instance;
+                                        var UID = FirebaseAuth.instance.currentUser?.uid;
+                                        db.collection('Users').doc(UID).get().then((event){
+
+                                          event.data()?.forEach((key, value) {
+
+
+                                            if(key == 'nome'){
+                                              String ADMName = value;
+
+
+                                              var db = FirebaseFirestore.instance;
+                                              var UID = FirebaseAuth.instance.currentUser?.uid;
+                                              db.collection('Users').doc(UID).get().then((event){
+
+                                                Navigator.pop(context);
+                                                Navigator.push(context,
+                                                    MaterialPageRoute(builder: (context){
+                                                      return setorADM(ADMName);
+                                                    }));
+                                              }
+                                              );
+                                            }
+
+                                          });
+
+                                        }
+                                        );
+                                        //Passar o codigo para mandar a tela
+                                      }
+
+
+                                      if(value == 'porteiro'){
+                                        var db = FirebaseFirestore.instance;
+                                        var UID = FirebaseAuth.instance.currentUser?.uid;
+                                        db.collection('Users').doc(UID).get().then((event){
+
+                                          event.data()?.forEach((key, value) async {
+
+
+                                            if(key == 'nome'){
+                                              String PorteiroNome = value;
+
+
+                                              var UID = FirebaseAuth.instance.currentUser?.uid;
+                                              var result = await FirebaseFirestore.instance
+                                                  .collection("porteiro")
+                                                  .doc(UID)
+                                                  .get();
+
+                                              bool cadastro = result.get('cadastrar');
+                                              bool entrada = result.get('entrada');
+                                              bool saida = result.get('saida');
+                                              bool relatorio = result.get('relatorio');
+                                              bool painel = result.get('painel');
+                                              String Email = result.get('email');
+
+
+                                              var resulte = await FirebaseFirestore.instance
+                                                  .collection("Condominio")
+                                                  .doc('condominio')
+                                                  .get();
+
+                                              String logoPath = resulte.get('imageURL');
+
+                                              bool liberacao = result.get('liberacao');
+
+                                              Navigator.pop(context);
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(builder: (context){
+                                                    return mainPorteiro(PorteiroNome, cadastro, entrada, saida, relatorio, painel, logoPath, Email, liberacao);
+                                                  }));
+
+                                            }
+
+                                          });
+
+                                        }
+                                        );
+                                      }
+                                      if(value == 'operadorEmpresarial'){
+
+                                        db.collection('Users').doc(UID).get().then((event){
+
+                                          event.data()?.forEach((key, value) {
+
+
+                                            if(key == 'nome'){
+                                              String nome = value;
+                                              //Passar o codigo para mandar a tela
+                                              var db = FirebaseFirestore.instance;
+                                              var UID = FirebaseAuth.instance.currentUser?.uid;
+                                              db.collection('Users').doc(UID).get().then((event){
+
+                                                event.data()?.forEach((key, value) async {
+
+
+                                                  if(key == 'estaativo'){
+                                                    if(value == true){
+
+                                                      var result = await FirebaseFirestore.instance
+                                                          .collection("operadorEmpresarial")
+                                                          .doc(UID)
+                                                          .get();
+
+                                                      String empresaName = (result.get('empresa'));
+                                                      String Email = result.get('email');
+                                                      String idEmpresa = result.get('idEmpresa');
+                                                      Navigator.pop(context);
+                                                      Navigator.push(context,
+                                                          MaterialPageRoute(builder: (context){
+                                                            return operadorEmpresarial(nome, empresaName, Email, idEmpresa);
+                                                          }));
+
+                                                    }else{
+
+
+                                                      AlertDialog alert = AlertDialog(
+                                                        title: const Text("Sua conta ainda não está ativa!"),
+                                                        content: const Text("A sua conta não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
+                                                        actions: [
+                                                          TextButton(
+                                                              onPressed: (){
+                                                                SystemNavigator.pop();
+                                                              },
+                                                              child: const Text('Ok')
+                                                          ),
+                                                        ],
+                                                      );
+
+                                                      showDialog(
+                                                        context: context,
+                                                        builder: (BuildContext context) {
+                                                          return alert;
+                                                        },
+                                                      );
+                                                    }
+                                                  }
+                                                });
+                                              }
+                                              );
+                                            }
+                                          });
+                                        }
+                                        );
+                                      }
+                                    });
+                                  }
+                                  );
+                                }).catchError((onError){
+
+
+                                  Fluttertoast.showToast(
+                                    msg: onError.toString().replaceFirst("[firebase_auth/wrong-password]", ""),
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    timeInSecForIosWeb: 1,
+                                    backgroundColor: Colors.black,
+                                    textColor: Colors.white,
+                                    fontSize: tamanhotexto,
+                                  );
+                                });
+
+                              }else{
+                              }
+                            }else{
+                            }
+                          },
+                          child: Text(
+                            'Login',
+                            style: TextStyle(
+                                fontSize: tamanhotexto
+                            ),
+                          ),
                         ),
-                      ),
                     ),
                   ),
-                ),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    IconButton(
-                      icon: const Icon(Icons.remove_red_eye),
-                      onPressed: () {
-                         setState(() {
-                           visivel = !visivel;
-                         });
-                      },
-                    )
+                    Container(
+                        width: 180,
+                        height: 180,
+                        padding: const EdgeInsets.all(16),
+                        child:
+                        Image.asset(
+                          'assets/sanca.png',
+                          fit: BoxFit.contain,
+                        )
+                    ),
                   ],
                 ),
               ],
             ),
-            Center(
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                child:
-                    ElevatedButton(
-                      onPressed: (){
-                        if(emailController.text != ''){
-                          if(passController.text != ''){
-
-                            FirebaseAuth.instance.signInWithEmailAndPassword(
-                                email: emailController.text,
-                                password: passController.text
-                            ).then((value) {
-
-                              var db = FirebaseFirestore.instance;
-                              var UID = FirebaseAuth.instance.currentUser?.uid;
-                              db.collection('Users').doc(UID).get().then((event){
-
-                                event.data()?.forEach((key, value) {
-
-
-                                  if(value == 'ADM'){
-
-                                    var db = FirebaseFirestore.instance;
-                                    var UID = FirebaseAuth.instance.currentUser?.uid;
-                                    db.collection('Users').doc(UID).get().then((event){
-
-                                      event.data()?.forEach((key, value) {
-
-
-                                        if(key == 'nome'){
-                                          String ADMName = value;
-
-
-                                          var db = FirebaseFirestore.instance;
-                                          var UID = FirebaseAuth.instance.currentUser?.uid;
-                                          db.collection('Users').doc(UID).get().then((event){
-
-                                            Navigator.pop(context);
-                                            Navigator.push(context,
-                                                MaterialPageRoute(builder: (context){
-                                                  return setorADM(ADMName);
-                                                }));
-                                          }
-                                          );
-                                        }
-
-                                      });
-
-                                    }
-                                    );
-                                    //Passar o codigo para mandar a tela
-                                  }
-
-
-                                  if(value == 'porteiro'){
-                                    var db = FirebaseFirestore.instance;
-                                    var UID = FirebaseAuth.instance.currentUser?.uid;
-                                    db.collection('Users').doc(UID).get().then((event){
-
-                                      event.data()?.forEach((key, value) async {
-
-
-                                        if(key == 'nome'){
-                                          String PorteiroNome = value;
-
-
-                                          var UID = FirebaseAuth.instance.currentUser?.uid;
-                                          var result = await FirebaseFirestore.instance
-                                              .collection("porteiro")
-                                              .doc(UID)
-                                              .get();
-
-                                          bool cadastro = result.get('cadastrar');
-                                          bool entrada = result.get('entrada');
-                                          bool saida = result.get('saida');
-                                          bool relatorio = result.get('relatorio');
-                                          bool painel = result.get('painel');
-                                          String Email = result.get('email');
-
-
-                                          var resulte = await FirebaseFirestore.instance
-                                              .collection("Condominio")
-                                              .doc('condominio')
-                                              .get();
-
-                                          String logoPath = resulte.get('imageURL');
-
-                                          bool liberacao = result.get('liberacao');
-
-                                          Navigator.pop(context);
-                                          Navigator.push(context,
-                                              MaterialPageRoute(builder: (context){
-                                                return mainPorteiro(PorteiroNome, cadastro, entrada, saida, relatorio, painel, logoPath, Email, liberacao);
-                                              }));
-
-                                        }
-
-                                      });
-
-                                    }
-                                    );
-                                  }
-                                  if(value == 'operadorEmpresarial'){
-
-                                    db.collection('Users').doc(UID).get().then((event){
-
-                                      event.data()?.forEach((key, value) {
-
-
-                                        if(key == 'nome'){
-                                          String nome = value;
-                                          //Passar o codigo para mandar a tela
-                                          var db = FirebaseFirestore.instance;
-                                          var UID = FirebaseAuth.instance.currentUser?.uid;
-                                          db.collection('Users').doc(UID).get().then((event){
-
-                                            event.data()?.forEach((key, value) async {
-
-
-                                              if(key == 'estaativo'){
-                                                if(value == true){
-
-                                                  var result = await FirebaseFirestore.instance
-                                                      .collection("operadorEmpresarial")
-                                                      .doc(UID)
-                                                      .get();
-
-                                                  String empresaName = (result.get('empresa'));
-                                                  String Email = result.get('email');
-                                                  String idEmpresa = result.get('idEmpresa');
-                                                  Navigator.pop(context);
-                                                  Navigator.push(context,
-                                                      MaterialPageRoute(builder: (context){
-                                                        return operadorEmpresarial(nome, empresaName, Email, idEmpresa);
-                                                      }));
-
-                                                }else{
-
-
-                                                  AlertDialog alert = AlertDialog(
-                                                    title: const Text("Sua conta ainda não está ativa!"),
-                                                    content: const Text("A sua conta não está ativa no momento, por favor, aguarde até que sua conta seja ativa pelo adiministrador!"),
-                                                    actions: [
-                                                      TextButton(
-                                                          onPressed: (){
-                                                            SystemNavigator.pop();
-                                                          },
-                                                          child: const Text('Ok')
-                                                      ),
-                                                    ],
-                                                  );
-
-                                                  showDialog(
-                                                    context: context,
-                                                    builder: (BuildContext context) {
-                                                      return alert;
-                                                    },
-                                                  );
-                                                }
-                                              }
-                                            });
-                                          }
-                                          );
-                                        }
-                                      });
-                                    }
-                                    );
-                                  }
-                                });
-                              }
-                              );
-                            }).catchError((onError){
-
-
-                              Fluttertoast.showToast(
-                                msg: onError.toString().replaceFirst("[firebase_auth/wrong-password]", ""),
-                                toastLength: Toast.LENGTH_SHORT,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.black,
-                                textColor: Colors.white,
-                                fontSize: tamanhotexto,
-                              );
-                            });
-
-                          }else{
-                          }
-                        }else{
-                        }
-                      },
-                      child: Text(
-                        'Login',
-                        style: TextStyle(
-                            fontSize: tamanhotexto
-                        ),
-                      ),
-                    ),
-                ),
-              ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                    width: 180,
-                    height: 180,
-                    padding: const EdgeInsets.all(16),
-                    child:
-                    Image.asset(
-                      'assets/sanca.png',
-                      fit: BoxFit.contain,
-                    )
-                ),
-              ],
-            ),
-          ],
+          ),
         ),
     );
   }
