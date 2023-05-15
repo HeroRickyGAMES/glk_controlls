@@ -763,7 +763,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                     padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                     child: ElevatedButton(
                       onPressed: () async {
-                        Uri uri = Uri.parse("https://glkcontrols.com.br/controls/sanca/clgcarmeladutra/entrada/#/");
+                        Uri uri = Uri.parse("https://glkcontrols.com.br/controls/sanca/clgcarmeladutra/geral");
                         if (!await launchUrl(
                         uri,
                         mode: LaunchMode.externalApplication,
@@ -772,7 +772,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                         }
                       },
                       child: Text(
-                        'Abrir Painel de Entrada',
+                        'Status de liberação',
                         style: TextStyle(
                             fontSize: tamanhotexto
                         ),

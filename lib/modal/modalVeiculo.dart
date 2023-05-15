@@ -54,6 +54,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
   String Status = '';
 
+  bool naoachado = true;
   bool veiculoInterno = false;
 
   Future<void> testPing() async {
@@ -220,10 +221,13 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 bool painel = result.get('painel');
                 String Email = result.get('email');
 
-                FirebaseFirestore.instance.collection('Motoristas').doc().set({
-                  'nomeMotorista': nomeMotorista,
-                  'RGDoMotorista': RGMotorista,
-                });
+                if(naoachado == true){
+                  FirebaseFirestore.instance.collection('Motoristas').doc().set({
+                    'nomeMotorista': nomeMotorista,
+                    'RGDoMotorista': RGMotorista,
+                  });
+                }
+
 
                 var resulte = await FirebaseFirestore.instance
                     .collection("Condominio")
@@ -328,10 +332,12 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 bool painel = result.get('painel');
                 String Email = result.get('email');
 
-                FirebaseFirestore.instance.collection('Motoristas').doc().set({
-                  'nomeMotorista': nomeMotorista,
-                  'RGDoMotorista': RGMotorista,
-                });
+                if(naoachado == true){
+                  FirebaseFirestore.instance.collection('Motoristas').doc().set({
+                    'nomeMotorista': nomeMotorista,
+                    'RGDoMotorista': RGMotorista,
+                  });
+                }
 
                 var resulte = await FirebaseFirestore.instance
                     .collection("Condominio")
@@ -500,56 +506,56 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         'galpaes': galpaesEmpresa
                       });
 
-                      if(await ConnectivityUtils.instance.isPhoneConnected()){
-      veiculoInterno == true;
-      Status = 'Estacionário';
-      MandarMT();
+                              if(await ConnectivityUtils.instance.isPhoneConnected()){
+                        veiculoInterno == true;
+                        Status = 'Estacionário';
+                        MandarMT();
 
 
-      }else{
-      veiculoInterno == true;
-      Status = 'Liberado Saida';
-      MandarMT();
-      }
-      }
-      }
-      }else{
-      ConnectivityUtils.instance
-      ..serverToPing =
-      "https://raw.githubusercontent.com/HeroRickyGAMES/glk_controlls/master/onlineCheck.txt"
-      ..verifyResponseCallback =
-      (response) => response.contains("estaOnline");
+                        }else{
+                        veiculoInterno == true;
+                        Status = 'Liberado Saida';
+                        MandarMT();
+                        }
+                      }
+                  }
+                }else{
+                ConnectivityUtils.instance
+                ..serverToPing =
+                "https://raw.githubusercontent.com/HeroRickyGAMES/glk_controlls/master/onlineCheck.txt"
+                ..verifyResponseCallback =
+                (response) => response.contains("estaOnline");
 
-      if(await ConnectivityUtils.instance.isPhoneConnected()){
+                if(await ConnectivityUtils.instance.isPhoneConnected()){
 
-      final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-      final SharedPreferences prefs = await _prefs;
-      bool? offlinemode =  prefs.getBool('OfflineMode');
+                final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+                final SharedPreferences prefs = await _prefs;
+                bool? offlinemode =  prefs.getBool('OfflineMode');
 
-          if(offlinemode == true){
-          Status = 'Liberado Entrada';
-          MandarMT();
-          }else{
-          MandarMT();
-          }
-          }else{
-          Status = 'Liberado Entrada';
-          MandarMT();
-          }
-          }
-          }
-          }
-          }
-          }
-          }else{
-          Fluttertoast.showToast(
-          msg: 'A placa está escrita errada!',
-          toastLength: Toast.LENGTH_SHORT,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.black,
-          textColor: Colors.white,
-          fontSize: tamanhotexto,
-          );
+                      if(offlinemode == true){
+                      Status = 'Liberado Entrada';
+                      MandarMT();
+                        }else{
+                        MandarMT();
+                        }
+                      }else{
+                      Status = 'Liberado Entrada';
+                      MandarMT();
+                      }
+                    }
+                   }
+                   }
+                  }
+                 }
+              }else{
+              Fluttertoast.showToast(
+              msg: 'A placa está escrita errada!',
+              toastLength: Toast.LENGTH_SHORT,
+              timeInSecForIosWeb: 1,
+              backgroundColor: Colors.black,
+              textColor: Colors.white,
+              fontSize: tamanhotexto,
+             );
           }
     }
 
@@ -673,10 +679,10 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
                             }
 
-                            if(RGMotoristas.contains("RG ${RGMotorista} status Saída")){
+                            if(RGMotoristas.contains("RG $RGMotorista status Saída")){
                               restomanda();
                             }else{
-                              if(RGMotoristas.contains("RG ${RGMotorista} status Aguardando Liberação") || RGMotoristas.contains("RG ${RGMotorista} status Aguardando Liberação") || RGMotoristas.contains("RG ${RGMotorista} status Liberado Entrada") || RGMotoristas.contains("RG ${RGMotorista} status Liberado Saida")){
+                              if(RGMotoristas.contains("RG $RGMotorista status Aguardando Liberação") || RGMotoristas.contains("RG $RGMotorista status Aguardando Liberação") || RGMotoristas.contains("RG $RGMotorista status Liberado Entrada") || RGMotoristas.contains("RG $RGMotorista status Liberado Saida")){
                                 Fluttertoast.showToast(
                                   msg: 'Esse RG já existe na base de dados!',
                                   toastLength: Toast.LENGTH_SHORT,
@@ -739,9 +745,44 @@ class _modalPorteiroState extends State<modalPorteiro> {
               Container(
                 padding: const EdgeInsets.only(top: 16),
                 child: TextFormField(
-                  onChanged: (valor){
+                  onChanged: (valor) async {
                     RGMotorista = valor;
-                    nameMotoristaAllcaps.text = nomeMotorista!;
+
+                    if(nomeMotorista == null){
+
+                    }else{
+                      nameMotoristaAllcaps.text = nomeMotorista!;
+                    }
+
+                    if(valor.length == 7){
+
+                      List rgs = [];
+                      List nomes = [];
+
+                      final rgCollection = FirebaseFirestore.instance.collection('Motoristas');
+                      final snapshot2 = await rgCollection.get();
+                      final rgss = snapshot2.docs;
+                      for (final docVeiculoBlock in rgss) {
+
+                        final name = docVeiculoBlock.get('RGDoMotorista');
+                        final names = docVeiculoBlock.get('nomeMotorista');
+
+                        rgs.add("RG: $name Nome: $names");
+                        nomes.add(names);
+                      }
+
+
+                      for (String item in nomes) {
+
+                        if(rgs.contains("RG: $valor Nome: $item")){
+
+                          nameMotoristaAllcaps.text = item;
+                          nomeMotorista = item;
+                          naoachado = false;
+
+                        }
+                      }
+                    }
                     //Mudou mandou para a String
                   },
                   keyboardType: TextInputType.number,
