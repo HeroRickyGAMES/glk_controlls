@@ -1091,7 +1091,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         Expanded(
                           child: RadioListTile(
                             title: Text(
-                                "Com Lacre",
+                                "Com Lacre divergente",
                               style: TextStyle(
                                   fontSize: tamanhotexto
                               ),

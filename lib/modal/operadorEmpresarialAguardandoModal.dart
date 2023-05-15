@@ -114,7 +114,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
 
     if(widget.lacreounao == 'lacre'){
       setState(() {
-        AutorizoEntrada = 'Autorizo Entrada com lacre';
+        AutorizoEntrada = 'Autorizo Entrada com lacre divergente';
         lacrereject = 'com lacre';
       });
     }

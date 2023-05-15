@@ -797,7 +797,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                   Expanded(
                     child: RadioListTile(
                       title: Text(
-                        "Com Lacre",
+                        "Com Lacre divergente",
                         style: TextStyle(
                             fontSize: tamanhotexto
                         ),

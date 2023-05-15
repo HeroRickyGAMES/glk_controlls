@@ -139,7 +139,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
 
     if(widget.LacreSaida == true){
       setState(() {
-        lacreNameSaida = 'Com Lacre';
+        lacreNameSaida = 'Com Lacre divergente';
       });
 
     }
@@ -277,7 +277,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
             Container(
               child:
               CheckboxListTile(
-                title: Text(AutorizoEntrada),
+                title: Text("Autorizo saída com lacre divergente"),
                 value: widget.LacreSaida,
                 onChanged: (value) {
                   setState(() {
@@ -292,7 +292,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
             Container(
               child:
               CheckboxListTile(
-                title: Text('$lacrereject Sem Lacre'),
+                title: Text('$lacrereject sem lacre divergente'),
                 value: !widget.LacreSaida,
                 onChanged: (value) {
                   setState(() {

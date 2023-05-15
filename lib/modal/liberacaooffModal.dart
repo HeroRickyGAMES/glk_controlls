@@ -736,7 +736,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                     ),
                     RadioListTile(
                       title: const Text(
-                        "Com Lacre",
+                        "Com Lacre divergente",
                         style: TextStyle(
                             fontSize: 16
                         ),
