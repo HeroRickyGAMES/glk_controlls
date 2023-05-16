@@ -116,39 +116,37 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-              Container(
-                padding: EdgeInsets.all(16),
-                child: Text(
-                    "Nome",
-                  style: TextStyle(
-                      fontSize: tamanhotexto
+                Expanded(
+                  flex: 1,
+                child: Container(
+                  child: Text(
+                      "Nome",
+                    style: TextStyle(
+                        fontSize: tamanhotexto
+                    ),
                   ),
                 ),
               ),
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  child: Text(
-                    "Empresa",
-                    style: TextStyle(
-                        fontSize: tamanhotexto
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                    child: Text(
+                      "Empresa",
+                      style: TextStyle(
+                          fontSize: tamanhotexto
+                      ),
                     ),
                   ),
                 ),
-                Container(
-                  padding: EdgeInsets.all(16),
-                  child: Text(
-                    "Status",
-                    style: TextStyle(
-                        fontSize: tamanhotexto
-                    ),
-                  ),
-                ),
-                Container(
-                  padding: EdgeInsets.all(16),
-                  child: Text(
-                    "",
-                    style: TextStyle(
-                        fontSize: tamanhotexto
+                Expanded(
+                  flex: 2,
+                  child: Container(
+                    padding: const EdgeInsets.all(16),
+                    child: Text(
+                      "Status",
+                      style: TextStyle(
+                          fontSize: tamanhotexto
+                      ),
                     ),
                   ),
                 ),
@@ -187,8 +185,9 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                             children: [
                               SizedBox(
                                 width: 60,
-                                height: 20,
-                                child: Text(documents['nome'],
+                                height: 22,
+                                child: Text(
+                                  documents['nome'],
                                 style: TextStyle(
                                     fontSize: tamanhotexto
                                   ),
@@ -265,8 +264,8 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                               );
 
                                             },
-                                            child: Row(
-                                              children: const [
+                                            child: const Row(
+                                              children: [
                                                 Icon(Icons.delete),
                                               ],
                                             ),
@@ -386,8 +385,8 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                   },
                                                 );
                                               },
-                                              child: Row(
-                                                children: const [
+                                              child: const Row(
+                                                children: [
                                                   Icon(Icons.remove_red_eye),
                                                 ],
                                               )
@@ -434,107 +433,62 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                           padding: const EdgeInsets.all(16),
                           width: double.infinity,
                           child:
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                width: 60,
-                                height: 20,
-                                child: Text(documentos['nome'],
-                                  style: TextStyle(
-                                      fontSize: tamanhotexto
+                          Expanded(
+                            flex: 1,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width: 60,
+                                  height: 22,
+                                  child: Center(
+                                    child: Text(
+                                      documentos['nome'],
+                                      style: TextStyle(
+                                          fontSize: tamanhotexto
+                                      ),
+                                    ),
                                   ),
                                 ),
-                              ),
-                              Text(documentos['empresa'],
-                                style: TextStyle(
-                                    fontSize: tamanhotexto
+                                Expanded(
+                                  flex: 1,
+                                  child: SizedBox(
+                                    height: 22,
+                                    child: Text(
+                                      documentos['empresa'],
+                                      style: TextStyle(
+                                          fontSize: tamanhotexto
+                                      ),
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              Row(
-                                children: [
-                                  Text('Empresa',
+                                Expanded(
+                                  flex: 1,
+                                  child: Text('Empresa',
                                     style: TextStyle(
                                         fontSize: tamanhotexto
                                     ),
                                   ),
-                                  Container(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        ElevatedButton(
-                                            onPressed: (){
-                                              showDialog(
-                                                context: context,
-                                                builder: (BuildContext context) {
-                                                  return AlertDialog(
-                                                    title: Text(documentos['nome']),
-                                                    actions: [
-                                                      Center(
-                                                        child: Text(
-                                                          'Deseja Excluir?',
-                                                          style: TextStyle(
-                                                              fontSize: tamanhotextobtns
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      Row(
-                                                        mainAxisAlignment: MainAxisAlignment.end,
-                                                        children: [
-                                                          TextButton(onPressed: (){
-                                                            Navigator.of(context).pop();
-                                                          },
-                                                              child: Text(
-                                                                'Cancelar',
-                                                                style: TextStyle(
-                                                                    fontSize: tamanhotextobtns
-                                                                ),
-                                                              )
-                                                          ),
-                                                          TextButton(onPressed: () async {
-                                                            FirebaseFirestore.instance
-                                                                .collection('operadorEmpresarial')
-                                                                .doc(documentos['id'])
-                                                                .delete().then((value){
-                                                              Navigator.of(context).pop();
-                                                            });
-                                                          },
-                                                              child: Text(
-                                                                'Prosseguir',
-                                                                style: TextStyle(
-                                                                    fontSize: tamanhotextobtns
-                                                                ),
-                                                              )
-                                                          )
-                                                        ],
-                                                      )
-                                                    ],
-                                                  );
-                                                },
-                                              );
-
-                                            },
-                                            child: Row(
-                                              children: const [
-                                                Icon(Icons.delete),
-                                              ],
-                                            ),
-                                        ),
-                                        Container(
-                                          padding: const EdgeInsets.only(left: 16),
-                                          child: ElevatedButton(
-                                              onPressed: () async {
+                                ),
+                                Row(
+                                  children: [
+                                    Container(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          TextButton(
+                                              onPressed: (){
                                                 showDialog(
                                                   context: context,
                                                   builder: (BuildContext context) {
                                                     return AlertDialog(
-                                                      title: Text('Usuario: ${documentos['nome']}'),
+                                                      title: Text(documentos['nome']),
                                                       actions: [
                                                         Center(
                                                           child: Text(
-                                                            'Informações do Usuario: \n Email: ${documentos['email']}',
+                                                            'Deseja Excluir?',
                                                             style: TextStyle(
                                                                 fontSize: tamanhotextobtns
                                                             ),
@@ -554,77 +508,15 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                                 )
                                                             ),
                                                             TextButton(onPressed: () async {
-                                                              Navigator.of(context).pop();
-                                                              showDialog(
-                                                                context: context,
-                                                                builder: (BuildContext context) {
-                                                                  return AlertDialog(
-                                                                    title: const Text('Tem certeza que deseja resetar essa senha?'),
-                                                                    actions: [
-                                                                      Center(
-                                                                        child: Container(
-                                                                          padding: const EdgeInsets.all(16),
-                                                                          child: Text(
-                                                                            'Depois de fazer essa ação, enviaremos um email para a conta cadastrada',
-                                                                            style: TextStyle(
-                                                                                fontSize: tamanhotextobtns
-                                                                            ),
-                                                                          ),
-                                                                        ),
-                                                                      ),
-                                                                      Row(
-                                                                        mainAxisAlignment: MainAxisAlignment.end,
-                                                                        children: [
-                                                                          TextButton(onPressed: (){
-                                                                            Navigator.of(context).pop();
-                                                                          },
-                                                                              child: Text(
-                                                                                'Cancelar',
-                                                                                style: TextStyle(
-                                                                                    fontSize: tamanhotextobtns
-                                                                                ),
-                                                                              )
-                                                                          ),
-                                                                          TextButton(onPressed: () async {
-                                                                            try {
-                                                                              await FirebaseAuth.instance.sendPasswordResetEmail(email: documentos['email']).then((value){
-                                                                                Fluttertoast.showToast(
-                                                                                  msg: 'Enviado, verifique o email para resetar a senha!',
-                                                                                  toastLength: Toast.LENGTH_SHORT,
-                                                                                  timeInSecForIosWeb: 1,
-                                                                                  backgroundColor: Colors.black,
-                                                                                  textColor: Colors.white,
-                                                                                  fontSize: 16.0,
-                                                                                );
-                                                                              });
-                                                                            } catch (e) {
-                                                                              Fluttertoast.showToast(
-                                                                                msg: 'Ocorreu um erro $e!',
-                                                                                toastLength: Toast.LENGTH_SHORT,
-                                                                                timeInSecForIosWeb: 1,
-                                                                                backgroundColor: Colors.black,
-                                                                                textColor: Colors.white,
-                                                                                fontSize: 16.0,
-                                                                              );
-                                                                            }
-                                                                          },
-                                                                              child: Text(
-                                                                                'Resetar Senha',
-                                                                                style: TextStyle(
-                                                                                    fontSize: tamanhotextobtns
-                                                                                ),
-                                                                              )
-                                                                          )
-                                                                        ],
-                                                                      )
-                                                                    ],
-                                                                  );
-                                                                },
-                                                              );
-
+                                                              FirebaseFirestore.instance
+                                                                  .collection('operadorEmpresarial')
+                                                                  .doc(documentos['id'])
+                                                                  .delete().then((value){
+                                                                Navigator.of(context).pop();
+                                                              });
                                                             },
                                                                 child: Text(
-                                                                  'Resetar Senha',
+                                                                  'Prosseguir',
                                                                   style: TextStyle(
                                                                       fontSize: tamanhotextobtns
                                                                   ),
@@ -636,20 +528,134 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                     );
                                                   },
                                                 );
+
                                               },
-                                              child: Row(
-                                                children: const [
-                                                  Icon(Icons.remove_red_eye),
-                                                ],
-                                              )
+                                              child: Icon(Icons.delete),
                                           ),
-                                        ),
-                                      ],
+                                          Container(
+                                            child: TextButton(
+                                                onPressed: () async {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext context) {
+                                                      return AlertDialog(
+                                                        title: Text('Usuario: ${documentos['nome']}'),
+                                                        actions: [
+                                                          Center(
+                                                            child: Text(
+                                                              'Informações do Usuario: \n Email: ${documentos['email']}',
+                                                              style: TextStyle(
+                                                                  fontSize: tamanhotextobtns
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment: MainAxisAlignment.end,
+                                                            children: [
+                                                              TextButton(onPressed: (){
+                                                                Navigator.of(context).pop();
+                                                              },
+                                                                  child: Text(
+                                                                    'Cancelar',
+                                                                    style: TextStyle(
+                                                                        fontSize: tamanhotextobtns
+                                                                    ),
+                                                                  )
+                                                              ),
+                                                              TextButton(onPressed: () async {
+                                                                Navigator.of(context).pop();
+                                                                showDialog(
+                                                                  context: context,
+                                                                  builder: (BuildContext context) {
+                                                                    return AlertDialog(
+                                                                      title: const Text('Tem certeza que deseja resetar essa senha?'),
+                                                                      actions: [
+                                                                        Center(
+                                                                          child: Container(
+                                                                            padding: const EdgeInsets.all(16),
+                                                                            child: Text(
+                                                                              'Depois de fazer essa ação, enviaremos um email para a conta cadastrada',
+                                                                              style: TextStyle(
+                                                                                  fontSize: tamanhotextobtns
+                                                                              ),
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                        Row(
+                                                                          mainAxisAlignment: MainAxisAlignment.end,
+                                                                          children: [
+                                                                            TextButton(onPressed: (){
+                                                                              Navigator.of(context).pop();
+                                                                            },
+                                                                                child: Text(
+                                                                                  'Cancelar',
+                                                                                  style: TextStyle(
+                                                                                      fontSize: tamanhotextobtns
+                                                                                  ),
+                                                                                )
+                                                                            ),
+                                                                            TextButton(onPressed: () async {
+                                                                              try {
+                                                                                await FirebaseAuth.instance.sendPasswordResetEmail(email: documentos['email']).then((value){
+                                                                                  Fluttertoast.showToast(
+                                                                                    msg: 'Enviado, verifique o email para resetar a senha!',
+                                                                                    toastLength: Toast.LENGTH_SHORT,
+                                                                                    timeInSecForIosWeb: 1,
+                                                                                    backgroundColor: Colors.black,
+                                                                                    textColor: Colors.white,
+                                                                                    fontSize: 16.0,
+                                                                                  );
+                                                                                });
+                                                                              } catch (e) {
+                                                                                Fluttertoast.showToast(
+                                                                                  msg: 'Ocorreu um erro $e!',
+                                                                                  toastLength: Toast.LENGTH_SHORT,
+                                                                                  timeInSecForIosWeb: 1,
+                                                                                  backgroundColor: Colors.black,
+                                                                                  textColor: Colors.white,
+                                                                                  fontSize: 16.0,
+                                                                                );
+                                                                              }
+                                                                            },
+                                                                                child: Text(
+                                                                                  'Resetar Senha',
+                                                                                  style: TextStyle(
+                                                                                      fontSize: tamanhotextobtns
+                                                                                  ),
+                                                                                )
+                                                                            )
+                                                                          ],
+                                                                        )
+                                                                      ],
+                                                                    );
+                                                                  },
+                                                                );
+
+                                                              },
+                                                                  child: Text(
+                                                                    'Resetar Senha',
+                                                                    style: TextStyle(
+                                                                        fontSize: tamanhotextobtns
+                                                                    ),
+                                                                  )
+                                                              )
+                                                            ],
+                                                          )
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
+                                                },
+                                                child: Icon(Icons.remove_red_eye)
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                  ],
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       );

@@ -59,6 +59,7 @@ dependencies:
   shared_preferences: ^2.1.0
   package_info_plus: ^4.0.0
   enhanced_url_launcher: ^6.1.11
+  flutter_screenutil: ^5.8.1
 
 
 dev_dependencies:

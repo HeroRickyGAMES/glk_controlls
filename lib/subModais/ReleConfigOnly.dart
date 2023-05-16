@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class ReleConfigOnly extends StatefulWidget {
@@ -82,6 +83,9 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
   @override
   Widget build(BuildContext context) {
 
+    ScreenUtil.init(context,);
+
+    ScreenUtil().orientation;
 
     double tamanhotexto = 20;
     double tamanhotextomin = 16;
@@ -194,320 +198,368 @@ class _ReleConfigOnlyState extends State<ReleConfigOnly> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        child: const Text(
-                          "Rele 01:",
-                          style: TextStyle(
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          padding: const EdgeInsets.all(16),
+                          child: const Text(
+                            "Rele 01:",
+                            style: TextStyle(
+                                fontSize: 10,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Center(
+                            child: ValueListenableBuilder(valueListenable: widget.dropValue2, builder: (context, String value, _){
+                              return DropdownButton(
+                                hint: const Text(
+                                  'Local *',
+                                  style: TextStyle(
+                                      fontSize: 10
+                                  ),
+                                ),
+                                value: (value.isEmpty)? null : value,
+                                onChanged: (escolha) async {
+                                  widget.dropValue2.value = escolha.toString();
+
+                                  Local = escolha.toString();
+
+                                },
+                                items: listLocal.map((opcao) => DropdownMenuItem(
+                                  value: opcao,
+                                  child:
+                                  Text(
+                                    opcao,
+                                    style: const TextStyle(
+                                        fontSize: 10
+                                    ),
+                                  ),
+                                ),
+                                ).toList(),
+                              );
+                            })
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Text(
+                            "Função: $rele1fuc1",
+                          style: const TextStyle(
+                              fontSize: 10
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Center(
+                            child: ValueListenableBuilder(valueListenable: widget.dropValue, builder: (context, String value, _){
+                              return DropdownButton(
+                                hint: const Text(
+                                  'Selecione a função *',
+                                  style: TextStyle(
+                                      fontSize: 10
+                                  ),
+                                ),
+                                value: (value.isEmpty)? null : value,
+                                onChanged: (escolha) async {
+                                  widget.dropValue.value = escolha.toString();
+
+                                  rele1fuc1 = escolha.toString();
+
+                                },
+                                items: func.map((opcao) => DropdownMenuItem(
+                                  value: opcao,
+                                  child:
+                                  Text(
+                                    opcao,
+                                    style: TextStyle(
+                                        fontSize: tamanhotexto
+                                    ),
+                                  ),
+                                ),
+                                ).toList(),
+                              );
+                            })
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          padding: const EdgeInsets.all(16),
+                          child: const Text(
+                            "Rele 02:",
+                            style: TextStyle(
                               fontSize: 10,
+                            ),
                           ),
                         ),
                       ),
-                      Center(
-                          child: ValueListenableBuilder(valueListenable: widget.dropValue2, builder: (context, String value, _){
-                            return DropdownButton(
-                              hint: Text(
-                                'Local *',
-                                style: TextStyle(
-                                    fontSize: 10
-                                ),
-                              ),
-                              value: (value.isEmpty)? null : value,
-                              onChanged: (escolha) async {
-                                widget.dropValue2.value = escolha.toString();
-
-                                Local = escolha.toString();
-
-                              },
-                              items: listLocal.map((opcao) => DropdownMenuItem(
-                                value: opcao,
-                                child:
-                                Text(
-                                  opcao,
+                      Expanded(
+                        flex: 1,
+                        child: Center(
+                            child: ValueListenableBuilder(valueListenable: widget.dropValue3, builder: (context, String value, _){
+                              return DropdownButton(
+                                hint: const Text(
+                                  'Local *',
                                   style: TextStyle(
                                       fontSize: 10
                                   ),
                                 ),
-                              ),
-                              ).toList(),
-                            );
-                          })
-                      ),
-                      Text(
-                          "Função: " + rele1fuc1,
-                        style: TextStyle(
-                            fontSize: 10
-                        ),
-                      ),
-                      Center(
-                          child: ValueListenableBuilder(valueListenable: widget.dropValue, builder: (context, String value, _){
-                            return DropdownButton(
-                              hint: Text(
-                                'Selecione a função *',
-                                style: TextStyle(
-                                    fontSize: 10
-                                ),
-                              ),
-                              value: (value.isEmpty)? null : value,
-                              onChanged: (escolha) async {
-                                widget.dropValue.value = escolha.toString();
+                                value: (value.isEmpty)? null : value,
+                                onChanged: (escolha) async {
+                                  widget.dropValue3.value = escolha.toString();
 
-                                rele1fuc1 = escolha.toString();
+                                  Local2 = escolha.toString();
 
-                              },
-                              items: func.map((opcao) => DropdownMenuItem(
-                                value: opcao,
-                                child:
-                                Text(
-                                  opcao,
-                                  style: TextStyle(
-                                      fontSize: tamanhotexto
+                                },
+                                items: listLocal.map((opcao) => DropdownMenuItem(
+                                  value: opcao,
+                                  child:
+                                  Text(
+                                    opcao,
+                                    style: const TextStyle(
+                                        fontSize: 10
+                                    ),
                                   ),
                                 ),
-                              ),
-                              ).toList(),
-                            );
-                          })
+                                ).toList(),
+                              );
+                            })
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Text(
+                          "Função: $rele2fuc1",
+                          style: const TextStyle(
+                              fontSize: 10
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Center(
+                            child: ValueListenableBuilder(valueListenable: widget.dropValue4, builder: (context, String value, _){
+                              return DropdownButton(
+                                hint: const Text(
+                                  'Selecione a função *',
+                                  style: TextStyle(
+                                      fontSize: 10
+                                  ),
+                                ),
+                                value: (value.isEmpty)? null : value,
+                                onChanged: (escolha) async {
+                                  widget.dropValue4.value = escolha.toString();
+
+                                  rele2fuc1 = escolha.toString();
+
+                                },
+                                items: func.map((opcao) => DropdownMenuItem(
+                                  value: opcao,
+                                  child:
+                                  Text(
+                                    opcao,
+                                    style: TextStyle(
+                                        fontSize: tamanhotexto
+                                    ),
+                                  ),
+                                ),
+                                ).toList(),
+                              );
+                            })
+                        ),
                       ),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        child: Text(
-                          "Rele 02:",
-                          style: TextStyle(
-                            fontSize: 10,
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          padding: const EdgeInsets.all(16),
+                          child: const Text(
+                            "Rele 03:",
+                            style: TextStyle(
+                              fontSize: 10,
+                            ),
                           ),
                         ),
                       ),
-                      Center(
-                          child: ValueListenableBuilder(valueListenable: widget.dropValue3, builder: (context, String value, _){
-                            return DropdownButton(
-                              hint: Text(
-                                'Local *',
-                                style: TextStyle(
-                                    fontSize: 10
-                                ),
-                              ),
-                              value: (value.isEmpty)? null : value,
-                              onChanged: (escolha) async {
-                                widget.dropValue3.value = escolha.toString();
-
-                                Local2 = escolha.toString();
-
-                              },
-                              items: listLocal.map((opcao) => DropdownMenuItem(
-                                value: opcao,
-                                child:
-                                Text(
-                                  opcao,
+                      Expanded(
+                        flex: 1,
+                        child: Center(
+                            child: ValueListenableBuilder(valueListenable: widget.dropValue5, builder: (context, String value, _){
+                              return DropdownButton(
+                                hint: const Text(
+                                  'Local *',
                                   style: TextStyle(
                                       fontSize: 10
                                   ),
                                 ),
-                              ),
-                              ).toList(),
-                            );
-                          })
-                      ),
-                      Text(
-                        "Função: " + rele2fuc1,
-                        style: TextStyle(
-                            fontSize: 10
-                        ),
-                      ),
-                      Center(
-                          child: ValueListenableBuilder(valueListenable: widget.dropValue4, builder: (context, String value, _){
-                            return DropdownButton(
-                              hint: Text(
-                                'Selecione a função *',
-                                style: TextStyle(
-                                    fontSize: 10
-                                ),
-                              ),
-                              value: (value.isEmpty)? null : value,
-                              onChanged: (escolha) async {
-                                widget.dropValue4.value = escolha.toString();
+                                value: (value.isEmpty)? null : value,
+                                onChanged: (escolha) async {
+                                  widget.dropValue5.value = escolha.toString();
 
-                                rele2fuc1 = escolha.toString();
+                                  Local3 = escolha.toString();
 
-                              },
-                              items: func.map((opcao) => DropdownMenuItem(
-                                value: opcao,
-                                child:
-                                Text(
-                                  opcao,
-                                  style: TextStyle(
-                                      fontSize: tamanhotexto
+                                },
+                                items: listLocal.map((opcao) => DropdownMenuItem(
+                                  value: opcao,
+                                  child:
+                                  Text(
+                                    opcao,
+                                    style: const TextStyle(
+                                        fontSize: 10
+                                    ),
                                   ),
                                 ),
-                              ),
-                              ).toList(),
-                            );
-                          })
+                                ).toList(),
+                              );
+                            })
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Text(
+                          "Função: $rele4fuc2",
+                          style: const TextStyle(
+                              fontSize: 10
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Center(
+                            child: ValueListenableBuilder(valueListenable: widget.dropValue6, builder: (context, String value, _){
+                              return DropdownButton(
+                                hint: const Text(
+                                  'Selecione a função *',
+                                  style: TextStyle(
+                                      fontSize: 10
+                                  ),
+                                ),
+                                value: (value.isEmpty)? null : value,
+                                onChanged: (escolha) async {
+                                  widget.dropValue6.value = escolha.toString();
+
+                                  rele4fuc2 = escolha.toString();
+
+                                },
+                                items: func.map((opcao) => DropdownMenuItem(
+                                  value: opcao,
+                                  child:
+                                  Text(
+                                    opcao,
+                                    style: TextStyle(
+                                        fontSize: tamanhotexto
+                                    ),
+                                  ),
+                                ),
+                                ).toList(),
+                              );
+                            })
+                        ),
                       ),
                     ],
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        child: Text(
-                          "Rele 03:",
-                          style: TextStyle(
-                            fontSize: 10,
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          padding: const EdgeInsets.all(16),
+                          child: const Text(
+                            "Rele 04:",
+                            style: TextStyle(
+                              fontSize: 10,
+                            ),
                           ),
                         ),
                       ),
-                      Center(
-                          child: ValueListenableBuilder(valueListenable: widget.dropValue5, builder: (context, String value, _){
-                            return DropdownButton(
-                              hint: Text(
-                                'Local *',
-                                style: TextStyle(
-                                    fontSize: 10
-                                ),
-                              ),
-                              value: (value.isEmpty)? null : value,
-                              onChanged: (escolha) async {
-                                widget.dropValue5.value = escolha.toString();
-
-                                Local3 = escolha.toString();
-
-                              },
-                              items: listLocal.map((opcao) => DropdownMenuItem(
-                                value: opcao,
-                                child:
-                                Text(
-                                  opcao,
+                      Expanded(
+                        flex: 1,
+                        child: Center(
+                            child: ValueListenableBuilder(valueListenable: widget.dropValue8, builder: (context, String value, _){
+                              return DropdownButton(
+                                hint: const Text(
+                                  'Local *',
                                   style: TextStyle(
                                       fontSize: 10
                                   ),
                                 ),
-                              ),
-                              ).toList(),
-                            );
-                          })
-                      ),
-                      Text(
-                        "Função: " + rele4fuc2,
-                        style: TextStyle(
-                            fontSize: 10
-                        ),
-                      ),
-                      Center(
-                          child: ValueListenableBuilder(valueListenable: widget.dropValue6, builder: (context, String value, _){
-                            return DropdownButton(
-                              hint: Text(
-                                'Selecione a função *',
-                                style: TextStyle(
-                                    fontSize: 10
-                                ),
-                              ),
-                              value: (value.isEmpty)? null : value,
-                              onChanged: (escolha) async {
-                                widget.dropValue6.value = escolha.toString();
+                                value: (value.isEmpty)? null : value,
+                                onChanged: (escolha) async {
+                                  widget.dropValue8.value = escolha.toString();
 
-                                rele4fuc2 = escolha.toString();
+                                  Local4 = escolha.toString();
 
-                              },
-                              items: func.map((opcao) => DropdownMenuItem(
-                                value: opcao,
-                                child:
-                                Text(
-                                  opcao,
-                                  style: TextStyle(
-                                      fontSize: tamanhotexto
+                                },
+                                items: listLocal.map((opcao) => DropdownMenuItem(
+                                  value: opcao,
+                                  child:
+                                  Text(
+                                    opcao,
+                                    style: const TextStyle(
+                                        fontSize: 10
+                                    ),
                                   ),
                                 ),
-                              ),
-                              ).toList(),
-                            );
-                          })
+                                ).toList(),
+                              );
+                            })
+                        ),
                       ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(16),
+                      Expanded(
+                        flex: 1,
                         child: Text(
-                          "Rele 04:",
-                          style: TextStyle(
-                            fontSize: 10,
+                          "Função: $rele3fuc2",
+                          style: const TextStyle(
+                              fontSize: 10
                           ),
                         ),
                       ),
-                      Center(
-                          child: ValueListenableBuilder(valueListenable: widget.dropValue8, builder: (context, String value, _){
-                            return DropdownButton(
-                              hint: Text(
-                                'Local *',
-                                style: TextStyle(
-                                    fontSize: 10
-                                ),
-                              ),
-                              value: (value.isEmpty)? null : value,
-                              onChanged: (escolha) async {
-                                widget.dropValue8.value = escolha.toString();
-
-                                Local4 = escolha.toString();
-
-                              },
-                              items: listLocal.map((opcao) => DropdownMenuItem(
-                                value: opcao,
-                                child:
-                                Text(
-                                  opcao,
+                      Expanded(
+                        flex: 1,
+                        child: Center(
+                            child: ValueListenableBuilder(valueListenable: widget.dropValue7, builder: (context, String value, _){
+                              return DropdownButton(
+                                hint: const Text(
+                                  'Selecione a função *',
                                   style: TextStyle(
                                       fontSize: 10
                                   ),
                                 ),
-                              ),
-                              ).toList(),
-                            );
-                          })
-                      ),
-                      Text(
-                        "Função: " + rele3fuc2,
-                        style: TextStyle(
-                            fontSize: 10
-                        ),
-                      ),
-                      Center(
-                          child: ValueListenableBuilder(valueListenable: widget.dropValue7, builder: (context, String value, _){
-                            return DropdownButton(
-                              hint: Text(
-                                'Selecione a função *',
-                                style: TextStyle(
-                                    fontSize: 10
-                                ),
-                              ),
-                              value: (value.isEmpty)? null : value,
-                              onChanged: (escolha) async {
-                                widget.dropValue7.value = escolha.toString();
+                                value: (value.isEmpty)? null : value,
+                                onChanged: (escolha) async {
+                                  widget.dropValue7.value = escolha.toString();
 
-                                rele3fuc2 = escolha.toString();
+                                  rele3fuc2 = escolha.toString();
 
-                              },
-                              items: func.map((opcao) => DropdownMenuItem(
-                                value: opcao,
-                                child:
-                                Text(
-                                  opcao,
-                                  style: TextStyle(
-                                      fontSize: tamanhotexto
+                                },
+                                items: func.map((opcao) => DropdownMenuItem(
+                                  value: opcao,
+                                  child:
+                                  Text(
+                                    opcao,
+                                    style: TextStyle(
+                                        fontSize: tamanhotexto
+                                    ),
                                   ),
                                 ),
-                              ),
-                              ).toList(),
-                            );
-                          })
+                                ).toList(),
+                              );
+                            })
+                        ),
                       ),
                     ],
                   ),

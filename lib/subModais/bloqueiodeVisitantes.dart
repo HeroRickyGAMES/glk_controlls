@@ -158,124 +158,136 @@ class _bloqueioDeVisitantesState extends State<bloqueioDeVisitantes> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                Text(
-                                  documents['nome'],
-                                  style: TextStyle(
-                                      fontSize: tamanhotexto
-                                  ),
-                                ),
-                                Text(
-                                  documents['rg'],
-                                  style: TextStyle(
-                                      fontSize: tamanhotexto
-                                  ),
-                                ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      documents['dataDoBloqueio'].replaceAll('-', '/'),
-                                      style: TextStyle(
-                                          fontSize: tamanhotexto
-                                      ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    documents['nome'],
+                                    style: TextStyle(
+                                        fontSize: tamanhotexto
                                     ),
-                                    TextButton(
-                                      onPressed: (){
-                                        showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              icon:  Column(
-                                                mainAxisAlignment: MainAxisAlignment.end,
-                                                crossAxisAlignment: CrossAxisAlignment.end,
-                                                children: [
-                                                  const Icon(Icons.zoom_out_sharp),
-                                                ],
-                                              ),
-                                              title: Column(
-                                                children: [
-                                                  const Text('Bloqueio'),
-                                                  Container(
-                                                    padding: const EdgeInsets.all(16),
-                                                    child: Column(
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                                      mainAxisAlignment: MainAxisAlignment.start,
-                                                      children: [
-                                                        Text('Nome:'  + documents['nome']),
-                                                        Text('Data do Bloqueio:'  + documents['dataDoBloqueio'].replaceAll('-', '/'),),
-                                                        Container(
-                                                            padding: const EdgeInsets.all(16),
-                                                            child: Text('Motivo: \n'  + documents['Motivo']
-                                                            )
-                                                        )
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              actions: [
-                                                Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceAround ,
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    documents['rg'],
+                                    style: TextStyle(
+                                        fontSize: tamanhotexto
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Text(
+                                    documents['dataDoBloqueio'].replaceAll('-', '/'),
+                                    style: TextStyle(
+                                        fontSize: tamanhotexto
+                                    ),
+                                  ),
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: Row(
+                                    children: [
+                                      TextButton(
+                                        onPressed: (){
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                icon:  Column(
+                                                  mainAxisAlignment: MainAxisAlignment.end,
+                                                  crossAxisAlignment: CrossAxisAlignment.end,
                                                   children: [
-                                                    ElevatedButton(onPressed: (){
-
-                                                      Navigator.of(context).pop();
-
-                                                    },
-                                                      style: ElevatedButton.styleFrom(
-                                                          primary: Colors.red
-                                                      ), child: Text(
-                                                      'Voltar',
-                                                      style: TextStyle(
-                                                          fontSize: tamanhotexto
+                                                    const Icon(Icons.zoom_out_sharp),
+                                                  ],
+                                                ),
+                                                title: Column(
+                                                  children: [
+                                                    const Text('Bloqueio'),
+                                                    Container(
+                                                      padding: const EdgeInsets.all(16),
+                                                      child: Column(
+                                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                                        mainAxisAlignment: MainAxisAlignment.start,
+                                                        children: [
+                                                          Text('Nome:'  + documents['nome']),
+                                                          Text('Data do Bloqueio:'  + documents['dataDoBloqueio'].replaceAll('-', '/'),),
+                                                          Container(
+                                                              padding: const EdgeInsets.all(16),
+                                                              child: Text('Motivo: \n'  + documents['Motivo']
+                                                              )
+                                                          )
+                                                        ],
                                                       ),
-                                                    ),
-                                                    ),
-                                                    ElevatedButton(onPressed: (){
-
-                                                      Navigator.of(context).pop();
-
-                                                      Navigator.push(context,
-                                                          MaterialPageRoute(builder: (context){
-                                                            return generatePDF3(documents['nome'], documents['rg'], documents['Motivo'], documents['dataDoBloqueio'].replaceAll('-', '/'));
-                                                          }));
-
-                                                    },
-                                                      style: ElevatedButton.styleFrom(
-                                                          primary: Colors.blue
-                                                      ), child: Text(
-                                                      'Imprimir',
-                                                      style: TextStyle(
-                                                          fontSize: tamanhotexto
-                                                      ),
-                                                    ),
                                                     ),
                                                   ],
-                                                )
-                                              ],
-                                            );
-                                          },
-                                        );
-                                      },
-                                      child:
-                                      const Icon(Icons.zoom_out_sharp),
-                                    ),
-                                    TextButton(
-                                      onPressed: (){
-                                        FirebaseFirestore.instance.collection('VisitantesBloqueados').doc(documents['id']).delete().then((value){
-                                          Fluttertoast.showToast(
-                                              msg: 'Deletado!',
-                                              toastLength: Toast.LENGTH_SHORT,
-                                              gravity: ToastGravity.CENTER,
-                                              timeInSecForIosWeb: 1,
-                                              backgroundColor: Colors.grey[600],
-                                              textColor: Colors.white,
-                                              fontSize: tamanhotexto
+                                                ),
+                                                actions: [
+                                                  Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceAround ,
+                                                    children: [
+                                                      ElevatedButton(onPressed: (){
+
+                                                        Navigator.of(context).pop();
+
+                                                      },
+                                                        style: ElevatedButton.styleFrom(
+                                                            primary: Colors.red
+                                                        ), child: Text(
+                                                        'Voltar',
+                                                        style: TextStyle(
+                                                            fontSize: tamanhotexto
+                                                        ),
+                                                      ),
+                                                      ),
+                                                      ElevatedButton(onPressed: (){
+
+                                                        Navigator.of(context).pop();
+
+                                                        Navigator.push(context,
+                                                            MaterialPageRoute(builder: (context){
+                                                              return generatePDF3(documents['nome'], documents['rg'], documents['Motivo'], documents['dataDoBloqueio'].replaceAll('-', '/'));
+                                                            }));
+
+                                                      },
+                                                        style: ElevatedButton.styleFrom(
+                                                            primary: Colors.blue
+                                                        ), child: Text(
+                                                        'Imprimir',
+                                                        style: TextStyle(
+                                                            fontSize: tamanhotexto
+                                                        ),
+                                                      ),
+                                                      ),
+                                                    ],
+                                                  )
+                                                ],
+                                              );
+                                            },
                                           );
-                                        });
-                                      },
-                                      child: const Icon(Icons.delete),
-                                    ),
-                                  ],
+                                        },
+                                        child:
+                                        const Icon(Icons.zoom_out_sharp),
+                                      ),
+                                      TextButton(
+                                        onPressed: (){
+                                          FirebaseFirestore.instance.collection('VisitantesBloqueados').doc(documents['id']).delete().then((value){
+                                            Fluttertoast.showToast(
+                                                msg: 'Deletado!',
+                                                toastLength: Toast.LENGTH_SHORT,
+                                                gravity: ToastGravity.CENTER,
+                                                timeInSecForIosWeb: 1,
+                                                backgroundColor: Colors.grey[600],
+                                                textColor: Colors.white,
+                                                fontSize: tamanhotexto
+                                            );
+                                          });
+                                        },
+                                        child: const Icon(Icons.delete),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ],
                             ),
