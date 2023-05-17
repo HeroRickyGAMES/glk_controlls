@@ -42,11 +42,6 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
   Widget build(BuildContext context) {
 
 
-    double tamanhotexto = 20;
-    double tamanhotextomin = 16;
-    double tamanhotextobtns = 16;
-    double aspect = 1.0;
-
     final mediaQueryData = MediaQuery.of(context);
     final screenWidth = mediaQueryData.size.width;
     final screenHeight = mediaQueryData.size.height;
@@ -57,8 +52,16 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
     final textWidth = screenWidth * 0.8;
 
     final textSize = (textHeight / dpi / 2) * textScaleFactor;
-    final textSizeandroid = (textWidth / dpi / 15) * textScaleFactor;
-    final textSizeandroidbtn = (textWidth / dpi / 13) * textScaleFactor;
+
+    String idDocumento;
+
+    double tamanhotexto = 20;
+    double tamanhotextomin = 16;
+    double tamanhotextobtns = 16;
+    double aspect = 1.0;
+
+    Map Galpoes = { };
+    List GalpoesList = [ ];
 
     if(kIsWeb){
       tamanhotexto = textSize;
@@ -70,66 +73,74 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
     }else{
       if(Platform.isAndroid){
 
-        tamanhotexto = textSizeandroid;
-        tamanhotextobtns = textSizeandroidbtn;
+        tamanhotexto = 16;
+        tamanhotextobtns = 18;
         aspect = 0.8;
 
       }
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text('Usuarios Cadastrados'),
-      ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              padding: const EdgeInsets.all(16),
-              child: CheckboxListTile(
-                title: Text(
-                  OperadorTipe,
-                  style: TextStyle(
-                      fontSize: tamanhotextobtns
-                  ),
-                ),
-                value: interno,
-                onChanged: (bool? value) {
-                  setState(() {
-                    interno = value!;
+    return LayoutBuilder(builder: (context, constrains){
+      double wid = 60;
+      if(constrains.maxWidth < 600){
+        wid = 60;
+      }else {
+        if(constrains.maxWidth > 600){
+          wid = 150;
+        }
+      }
 
-                    if(interno == true){
-                      setState(() {
-                        OperadorTipe = 'Operador Interno';
-                      });
-                    }else{
-                      setState(() {
-                        OperadorTipe = 'Operador de Empresa';
-                      });
-                    }
 
-                  });
-                },
-              ),
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  flex: 1,
-                child: Container(
-                  child: Text(
-                      "Nome",
+      return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: const Text('Usuarios Cadastrados'),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(16),
+                child: CheckboxListTile(
+                  title: Text(
+                    OperadorTipe,
                     style: TextStyle(
-                        fontSize: tamanhotexto
+                        fontSize: tamanhotextobtns
                     ),
                   ),
+                  value: interno,
+                  onChanged: (bool? value) {
+                    setState(() {
+                      interno = value!;
+
+                      if(interno == true){
+                        setState(() {
+                          OperadorTipe = 'Operador Interno';
+                        });
+                      }else{
+                        setState(() {
+                          OperadorTipe = 'Operador de Empresa';
+                        });
+                      }
+
+                    });
+                  },
                 ),
               ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    child: Text(
+                      "Nome",
+                      style: TextStyle(
+                          fontSize: tamanhotexto
+                      ),
+                    ),
+                  ),
+                  Container(
+                    padding: const EdgeInsets.all(16),
                     child: Text(
                       "Empresa",
                       style: TextStyle(
@@ -137,10 +148,7 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: Container(
+                  Container(
                     padding: const EdgeInsets.all(16),
                     child: Text(
                       "Status",
@@ -149,69 +157,75 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                       ),
                     ),
                   ),
-                ),
-              ],
-            ),
-            if (interno == true) SizedBox(
-              height: 700,
-              child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('porteiro')
-                    .snapshots(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (!snapshot.hasData) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  return ListView(
-                    children: snapshot.data!.docs.map((documents) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.black,
-                              width: 1.0,
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    child: Text(
+                      "",
+                      style: TextStyle(
+                          fontSize: tamanhotexto
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              if (interno == true) SizedBox(
+                height: 700,
+                child: StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('porteiro')
+                      .snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    return ListView(
+                      children: snapshot.data!.docs.map((documents) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 1.0,
+                              ),
+                              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                             ),
-                            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                          ),
-                          padding: const EdgeInsets.all(16),
-                          width: double.infinity,
-                          child:
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                width: 60,
-                                height: 22,
-                                child: Text(
-                                  documents['nome'],
-                                style: TextStyle(
-                                    fontSize: tamanhotexto
-                                  ),
-                                ),
-                              ),
-                              Text('SLG Sanca',
-                                style: TextStyle(
-                                    fontSize: tamanhotexto
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  Text('Interno',
+                            padding: const EdgeInsets.all(16),
+                            width: double.infinity,
+                            child:
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width: wid,
+                                  child: Text(documents['nome'],
                                     style: TextStyle(
-                                        fontSize: tamanhotexto
+                                        fontSize: 16
                                     ),
                                   ),
-                                  Container(
-                                    padding: const EdgeInsets.all(10.0),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      children: [
-                                        ElevatedButton(
+                                ),
+                                Text('SLG Sanca',
+                                  style: TextStyle(
+                                      fontSize: 16
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Text('Interno',
+                                      style: TextStyle(
+                                          fontSize: 16
+                                      ),
+                                    ),
+                                    Container(
+                                      padding: const EdgeInsets.all(10.0),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          ElevatedButton(
                                             onPressed: () async {
 
                                               showDialog(
@@ -269,271 +283,258 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                 Icon(Icons.delete),
                                               ],
                                             ),
-                                        ),
-                                        Container(
-                                          padding: const EdgeInsets.only(left: 16),
-                                          child: ElevatedButton(
-                                              onPressed: () async {
-                                                showDialog(
-                                                  context: context,
-                                                  builder: (BuildContext context) {
-                                                    return AlertDialog(
-                                                      title: Text('Usuario: ${documents['nome']}'),
-                                                      actions: [
-                                                        Center(
-                                                          child: Text(
-                                                            'Informações do Usuario: \n Email: ${documents['email']}',
-                                                            style: TextStyle(
-                                                                fontSize: tamanhotextobtns
+                                          ),
+                                          Container(
+                                            padding: const EdgeInsets.only(left: 16),
+                                            child: ElevatedButton(
+                                                onPressed: () async {
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (BuildContext context) {
+                                                      return AlertDialog(
+                                                        title: Text('Usuario: ${documents['nome']}'),
+                                                        actions: [
+                                                          Center(
+                                                            child: Text(
+                                                              'Informações do Usuario: \n Email: ${documents['email']}',
+                                                              style: TextStyle(
+                                                                  fontSize: tamanhotextobtns
+                                                              ),
                                                             ),
                                                           ),
-                                                        ),
-                                                        Row(
-                                                          mainAxisAlignment: MainAxisAlignment.end,
-                                                          children: [
-                                                            TextButton(onPressed: (){
-                                                              Navigator.of(context).pop();
-                                                            },
-                                                                child: Text(
-                                                                  'Cancelar',
-                                                                  style: TextStyle(
-                                                                      fontSize: tamanhotextobtns
-                                                                  ),
-                                                                )
-                                                            ),
-                                                            TextButton(onPressed: () async {
-                                                              Navigator.of(context).pop();
-                                                              showDialog(
-                                                                context: context,
-                                                                builder: (BuildContext context) {
-                                                                  return AlertDialog(
-                                                                    title: const Text('Tem certeza que deseja resetar essa senha?'),
-                                                                    actions: [
-                                                                      Center(
-                                                                        child: Container(
-                                                                          padding: const EdgeInsets.all(16),
-                                                                          child: Text(
-                                                                            'Depois de fazer essa ação, enviaremos um email para a conta cadastrada',
-                                                                            style: TextStyle(
-                                                                                fontSize: tamanhotextobtns
+                                                          Row(
+                                                            mainAxisAlignment: MainAxisAlignment.end,
+                                                            children: [
+                                                              TextButton(onPressed: (){
+                                                                Navigator.of(context).pop();
+                                                              },
+                                                                  child: Text(
+                                                                    'Cancelar',
+                                                                    style: TextStyle(
+                                                                        fontSize: tamanhotextobtns
+                                                                    ),
+                                                                  )
+                                                              ),
+                                                              TextButton(onPressed: () async {
+                                                                Navigator.of(context).pop();
+                                                                showDialog(
+                                                                  context: context,
+                                                                  builder: (BuildContext context) {
+                                                                    return AlertDialog(
+                                                                      title: const Text('Tem certeza que deseja resetar essa senha?'),
+                                                                      actions: [
+                                                                        Center(
+                                                                          child: Container(
+                                                                            padding: const EdgeInsets.all(16),
+                                                                            child: Text(
+                                                                              'Depois de fazer essa ação, enviaremos um email para a conta cadastrada',
+                                                                              style: TextStyle(
+                                                                                  fontSize: tamanhotextobtns
+                                                                              ),
                                                                             ),
                                                                           ),
                                                                         ),
-                                                                      ),
-                                                                      Row(
-                                                                        mainAxisAlignment: MainAxisAlignment.end,
-                                                                        children: [
-                                                                          TextButton(onPressed: (){
-                                                                            Navigator.of(context).pop();
-                                                                          },
-                                                                              child: Text(
-                                                                                'Cancelar',
-                                                                                style: TextStyle(
-                                                                                    fontSize: tamanhotextobtns
-                                                                                ),
-                                                                              )
-                                                                          ),
-                                                                          TextButton(onPressed: () async {
-                                                                            try {
-                                                                              await FirebaseAuth.instance.sendPasswordResetEmail(email: documents['email']).then((value){
+                                                                        Row(
+                                                                          mainAxisAlignment: MainAxisAlignment.end,
+                                                                          children: [
+                                                                            TextButton(onPressed: (){
+                                                                              Navigator.of(context).pop();
+                                                                            },
+                                                                                child: Text(
+                                                                                  'Cancelar',
+                                                                                  style: TextStyle(
+                                                                                      fontSize: tamanhotextobtns
+                                                                                  ),
+                                                                                )
+                                                                            ),
+                                                                            TextButton(onPressed: () async {
+                                                                              try {
+                                                                                await FirebaseAuth.instance.sendPasswordResetEmail(email: documents['email']).then((value){
+                                                                                  Fluttertoast.showToast(
+                                                                                    msg: 'Enviado, verifique o email para resetar a senha!',
+                                                                                    toastLength: Toast.LENGTH_SHORT,
+                                                                                    timeInSecForIosWeb: 1,
+                                                                                    backgroundColor: Colors.black,
+                                                                                    textColor: Colors.white,
+                                                                                    fontSize: 16.0,
+                                                                                  );
+                                                                                });
+                                                                              } catch (e) {
                                                                                 Fluttertoast.showToast(
-                                                                                  msg: 'Enviado, verifique o email para resetar a senha!',
+                                                                                  msg: 'Ocorreu um erro $e!',
                                                                                   toastLength: Toast.LENGTH_SHORT,
                                                                                   timeInSecForIosWeb: 1,
                                                                                   backgroundColor: Colors.black,
                                                                                   textColor: Colors.white,
                                                                                   fontSize: 16.0,
                                                                                 );
-                                                                              });
-                                                                            } catch (e) {
-                                                                              Fluttertoast.showToast(
-                                                                                msg: 'Ocorreu um erro $e!',
-                                                                                toastLength: Toast.LENGTH_SHORT,
-                                                                                timeInSecForIosWeb: 1,
-                                                                                backgroundColor: Colors.black,
-                                                                                textColor: Colors.white,
-                                                                                fontSize: 16.0,
-                                                                              );
-                                                                            }
-                                                                          },
-                                                                              child: Text(
-                                                                                'Resetar Senha',
-                                                                                style: TextStyle(
-                                                                                    fontSize: tamanhotextobtns
-                                                                                ),
-                                                                              )
-                                                                          )
-                                                                        ],
-                                                                      )
-                                                                    ],
-                                                                  );
-                                                                },
-                                                              );
+                                                                              }
+                                                                            },
+                                                                                child: Text(
+                                                                                  'Resetar Senha',
+                                                                                  style: TextStyle(
+                                                                                      fontSize: tamanhotextobtns
+                                                                                  ),
+                                                                                )
+                                                                            )
+                                                                          ],
+                                                                        )
+                                                                      ],
+                                                                    );
+                                                                  },
+                                                                );
 
-                                                            },
-                                                                child: Text(
-                                                                  'Resetar Senha',
-                                                                  style: TextStyle(
-                                                                      fontSize: tamanhotextobtns
-                                                                  ),
-                                                                )
-                                                            )
-                                                          ],
-                                                        )
-                                                      ],
-                                                    );
-                                                  },
-                                                );
-                                              },
-                                              child: const Row(
-                                                children: [
-                                                  Icon(Icons.remove_red_eye),
-                                                ],
-                                              )
+                                                              },
+                                                                  child: Text(
+                                                                    'Resetar Senha',
+                                                                    style: TextStyle(
+                                                                        fontSize: tamanhotextobtns
+                                                                    ),
+                                                                  )
+                                                              )
+                                                            ],
+                                                          )
+                                                        ],
+                                                      );
+                                                    },
+                                                  );
+                                                },
+                                                child: const Row(
+                                                  children: [
+                                                    Icon(Icons.remove_red_eye),
+                                                  ],
+                                                )
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
-                    }).toList(),
-                  );
-                },
-              ),
-            ) else SizedBox(
-              height: 800,
-              child: StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('operadorEmpresarial')
-                    .snapshots(),
-                builder: (BuildContext context,
-                    AsyncSnapshot<QuerySnapshot> snapshot) {
-                  if (!snapshot.hasData) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
-                  }
-                  return ListView(
-                    children: snapshot.data!.docs.map((documentos) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.black,
-                              width: 1.0,
+                                  ],
+                                ),
+                              ],
                             ),
-                            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                           ),
-                          padding: const EdgeInsets.all(16),
-                          width: double.infinity,
-                          child:
-                          Expanded(
-                            flex: 1,
-                            child: Row(
+                        );
+                      }).toList(),
+                    );
+                  },
+                ),
+              ) else SizedBox(
+                height: 800,
+                child: StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection('operadorEmpresarial')
+                      .snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    return ListView(
+                      children: snapshot.data!.docs.map((documentos) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 1.0,
+                              ),
+                              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                            ),
+                            padding: const EdgeInsets.all(16),
+                            width: double.infinity,
+                            child:
+                            Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 SizedBox(
-                                  width: 60,
-                                  height: 22,
-                                  child: Center(
-                                    child: Text(
-                                      documentos['nome'],
-                                      style: TextStyle(
-                                          fontSize: tamanhotexto
-                                      ),
+                                  width: wid,
+                                  child: Text(documentos['nome'],
+                                    style: const TextStyle(
+                                        fontSize: 16
                                     ),
                                   ),
                                 ),
-                                Expanded(
-                                  flex: 1,
-                                  child: SizedBox(
-                                    height: 22,
-                                    child: Text(
-                                      documentos['empresa'],
-                                      style: TextStyle(
-                                          fontSize: tamanhotexto
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  flex: 1,
-                                  child: Text('Empresa',
-                                    style: TextStyle(
-                                        fontSize: tamanhotexto
-                                    ),
+                                Text(documentos['empresa'],
+                                  style: const TextStyle(
                                   ),
                                 ),
                                 Row(
                                   children: [
+                                    const Text('Empresa',
+                                      style: TextStyle(
+                                      ),
+                                    ),
                                     Container(
-                                      padding: const EdgeInsets.all(5.0),
+                                      padding: const EdgeInsets.all(10.0),
                                       child: Row(
                                         crossAxisAlignment: CrossAxisAlignment.center,
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
-                                          TextButton(
-                                              onPressed: (){
-                                                showDialog(
-                                                  context: context,
-                                                  builder: (BuildContext context) {
-                                                    return AlertDialog(
-                                                      title: Text(documentos['nome']),
-                                                      actions: [
-                                                        Center(
-                                                          child: Text(
-                                                            'Deseja Excluir?',
-                                                            style: TextStyle(
-                                                                fontSize: tamanhotextobtns
-                                                            ),
+                                          ElevatedButton(
+                                            onPressed: (){
+                                              showDialog(
+                                                context: context,
+                                                builder: (BuildContext context) {
+                                                  return AlertDialog(
+                                                    title: Text(documentos['nome']),
+                                                    actions: [
+                                                      Center(
+                                                        child: Text(
+                                                          'Deseja Excluir?',
+                                                          style: TextStyle(
+                                                              fontSize: tamanhotextobtns
                                                           ),
                                                         ),
-                                                        Row(
-                                                          mainAxisAlignment: MainAxisAlignment.end,
-                                                          children: [
-                                                            TextButton(onPressed: (){
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment: MainAxisAlignment.end,
+                                                        children: [
+                                                          TextButton(onPressed: (){
+                                                            Navigator.of(context).pop();
+                                                          },
+                                                              child: Text(
+                                                                'Cancelar',
+                                                                style: TextStyle(
+                                                                    fontSize: tamanhotextobtns
+                                                                ),
+                                                              )
+                                                          ),
+                                                          TextButton(onPressed: () async {
+                                                            FirebaseFirestore.instance
+                                                                .collection('operadorEmpresarial')
+                                                                .doc(documentos['id'])
+                                                                .delete().then((value){
                                                               Navigator.of(context).pop();
-                                                            },
-                                                                child: Text(
-                                                                  'Cancelar',
-                                                                  style: TextStyle(
-                                                                      fontSize: tamanhotextobtns
-                                                                  ),
-                                                                )
-                                                            ),
-                                                            TextButton(onPressed: () async {
-                                                              FirebaseFirestore.instance
-                                                                  .collection('operadorEmpresarial')
-                                                                  .doc(documentos['id'])
-                                                                  .delete().then((value){
-                                                                Navigator.of(context).pop();
-                                                              });
-                                                            },
-                                                                child: Text(
-                                                                  'Prosseguir',
-                                                                  style: TextStyle(
-                                                                      fontSize: tamanhotextobtns
-                                                                  ),
-                                                                )
-                                                            )
-                                                          ],
-                                                        )
-                                                      ],
-                                                    );
-                                                  },
-                                                );
+                                                            });
+                                                          },
+                                                              child: Text(
+                                                                'Prosseguir',
+                                                                style: TextStyle(
+                                                                    fontSize: tamanhotextobtns
+                                                                ),
+                                                              )
+                                                          )
+                                                        ],
+                                                      )
+                                                    ],
+                                                  );
+                                                },
+                                              );
 
-                                              },
-                                              child: Icon(Icons.delete),
+                                            },
+                                            child: const Row(
+                                              children: [
+                                                Icon(Icons.delete),
+                                              ],
+                                            ),
                                           ),
                                           Container(
-                                            child: TextButton(
+                                            padding: const EdgeInsets.only(left: 16),
+                                            child: ElevatedButton(
                                                 onPressed: () async {
                                                   showDialog(
                                                     context: context,
@@ -646,7 +647,11 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                                     },
                                                   );
                                                 },
-                                                child: Icon(Icons.remove_red_eye)
+                                                child: const Row(
+                                                  children: [
+                                                    Icon(Icons.remove_red_eye),
+                                                  ],
+                                                )
                                             ),
                                           ),
                                         ],
@@ -657,44 +662,45 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                               ],
                             ),
                           ),
-                        ),
-                      );
-                    }).toList(),
-                  );
-                },
+                        );
+                      }).toList(),
+                    );
+                  },
+                ),
               ),
-            ),
-            Container(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                    width: 180,
-                    height: 180,
-                    padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
-                    child:
-                    Image.network(
-                      widget.LogoPath,
-                      fit: BoxFit.contain,
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
-                    child:
-                    Text(
-                      'ADM : ' + widget.ADMName,
-                      style: const TextStyle(
-                          fontSize: 16
+              Container(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 180,
+                      height: 180,
+                      padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                      child:
+                      Image.network(
+                        widget.LogoPath,
+                        fit: BoxFit.contain,
                       ),
                     ),
-                  ),
-                ],
+                    Container(
+                      padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                      child:
+                      Text(
+                        'ADM : ' + widget.ADMName,
+                        style: const TextStyle(
+                            fontSize: 16
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
-    );
+      );
+
+    });
   }
 }

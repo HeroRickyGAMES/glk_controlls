@@ -50,17 +50,15 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
     final textWidth = screenWidth * 0.8;
 
     final textSize = (textHeight / dpi / 2) * textScaleFactor;
-    final Aspect = (textHeight / dpi / 25) * textScaleFactor;
     final textSizeandroid = (textWidth / dpi / 15) * textScaleFactor;
     final textSizeandroidbtn = (textWidth / dpi / 13) * textScaleFactor;
-
 
     if(kIsWeb){
       tamanhotexto = textSize;
       tamanhotextobtns = textSize;
       tamanhotextomin = 16;
       //aspect = 1.0;
-      aspect = Aspect;
+      aspect = 1.0;
 
     }else{
       if(Platform.isAndroid){
@@ -247,7 +245,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                   crossAxisCount: orientation == Orientation.portrait ? 2 : 4,
                                   mainAxisSpacing: 10,
                                   crossAxisSpacing: 10,
-                                  childAspectRatio: orientation == Orientation.portrait ? 1.0 : 1.0,
+                                  childAspectRatio: orientation == Orientation.portrait ? 1.0 : 0.7,
                                   children:
                                   snapshot.data!.docs.map((documents) {
 
@@ -461,18 +459,15 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                                   )
                                               ),
                                               Center(
-                                                child: Expanded(
-                                                  flex: 1,
-                                                  child: Container(
-                                                    padding: const EdgeInsets.all(16),
-                                                    child: Text(
-                                                      'Status: \n' +
-                                                          documents['Status'],
-                                                      style: TextStyle(
-                                                          fontSize: tamanhotexto,
-                                                          fontWeight: FontWeight.bold,
-                                                          color: textColor
-                                                      ),
+                                                child: Container(
+                                                  padding: const EdgeInsets.all(16),
+                                                  child: Text(
+                                                    'Status: \n' +
+                                                        documents['Status'],
+                                                    style: TextStyle(
+                                                        fontSize: tamanhotexto,
+                                                        fontWeight: FontWeight.bold,
+                                                        color: textColor
                                                     ),
                                                   ),
                                                 ),

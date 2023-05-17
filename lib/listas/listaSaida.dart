@@ -243,7 +243,7 @@ class _listaSaidaState extends State<listaSaida> {
                                   crossAxisCount: orientation == Orientation.portrait ? 2 : 4,
                                   mainAxisSpacing: 10,
                                   crossAxisSpacing: 10,
-                                  childAspectRatio: orientation == Orientation.portrait ? 1.0 : 1.0,
+                                  childAspectRatio: orientation == Orientation.portrait ? 1.0 : 0.7,
                                   children:
                                   snapshot.data!.docs.map((documents) {
 
@@ -403,18 +403,15 @@ class _listaSaidaState extends State<listaSaida> {
                                                 )
                                             ),
                                             Center(
-                                              child: Expanded(
-                                                flex: 1,
-                                                child: Container(
-                                                  padding: const EdgeInsets.all(16),
-                                                  child: Text(
-                                                    'Status: \n' +
-                                                        documents['Status'],
-                                                    style: TextStyle(
-                                                        fontSize: tamanhotexto,
-                                                        fontWeight: FontWeight.bold,
-                                                        color: textColor
-                                                    ),
+                                              child: Container(
+                                                padding: const EdgeInsets.all(16),
+                                                child: Text(
+                                                  'Status: \n' +
+                                                      documents['Status'],
+                                                  style: TextStyle(
+                                                      fontSize: tamanhotexto,
+                                                      fontWeight: FontWeight.bold,
+                                                      color: textColor
                                                   ),
                                                 ),
                                               ),
