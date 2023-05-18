@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:glk_controls/relatorioGen/relatorioGenerate.dart';
 import 'package:intl/intl.dart';
+
 //Programado por HeroRickyGames
 
 class pesquisaRelatorio extends StatefulWidget {
@@ -47,7 +48,6 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
 
     }else{
       if(Platform.isAndroid){
-
         tamanhotexto = textSizeandroid;
         tamanhotextobtns = textSizeandroidbtn;
         aspect = 0.8;
@@ -75,7 +75,6 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
                       stream: FirebaseFirestore
                           .instance
                           .collection('Autorizacoes')
-                          .where('Status', isEqualTo: 'Liberado Entrada')
                           .where('EntradaInt', isGreaterThan: int.parse(DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/').replaceAll('/', '').replaceAll(":", "").replaceAll(" ", "")) - 01000000000000)
                           //.orderBy("Status", descending: true)
                           .snapshots(),

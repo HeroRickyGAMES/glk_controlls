@@ -26,7 +26,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
   String? coletaouentrega = '';
   String? empresaSelecionada = '';
   String? galpao = '';
-  String? lacreounao = '';
+  String? lacreounao = 'naolacrado';
   bool lacrebool = false;
   //fields
   String? nomeMotorista = '';
@@ -325,9 +325,9 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
               fontSize: tamanhotexto,
             );
           }else{
-            if(lacreounao == ""){
+            if(VeiculoPlaca!.length != 8){
               Fluttertoast.showToast(
-                msg: 'Preencha se está com lacre ou sem',
+                msg: 'A placa está escrita errada, faltam caracteres!',
                 toastLength: Toast.LENGTH_SHORT,
                 timeInSecForIosWeb: 1,
                 backgroundColor: Colors.black,
@@ -335,19 +335,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                 fontSize: tamanhotexto,
               );
             }else{
-              if(VeiculoPlaca!.length != 8){
-                Fluttertoast.showToast(
-                  msg: 'A placa está escrita errada, faltam caracteres!',
-                  toastLength: Toast.LENGTH_SHORT,
-                  timeInSecForIosWeb: 1,
-                  backgroundColor: Colors.black,
-                  textColor: Colors.white,
-                  fontSize: tamanhotexto,
-                );
-              }else{
-
-                MandarMT();
-              }
+              MandarMT();
             }
           }
         }
@@ -680,7 +668,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                   autocorrect: false,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
-                    hintText: 'Telefone',
+                    hintText: 'Telefone (DDD)',
                     hintStyle: TextStyle(
                         fontSize: tamanhotexto
                     ),
@@ -788,50 +776,34 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                   ],
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Expanded(
-                    child: RadioListTile(
-                      title: Text(
-                        "Com Lacre divergente",
-                        style: TextStyle(
-                            fontSize: tamanhotexto
-                        ),
+                  CheckboxListTile(
+                    title: Text(
+                      'Com Lacre divergente',
+                      style: TextStyle(
+                        fontSize: tamanhotexto,
                       ),
-                      value: "lacre",
-                      groupValue: lacreounao,
-                      onChanged: (value){
-                        setState(() {
-                          lacreounao = value.toString();
-
-                          if(value == 'lacre'){
-                            lacrebool = true;
-                          }
-
-                        });
-                      },
                     ),
-                  ),
-                  Expanded(
-                    child: RadioListTile(
-                      title: Text(
-                        "Sem Lacre",
-                        style: TextStyle(
-                            fontSize: tamanhotexto
-                        ),
-                      ),
-                      value: "naolacrado",
-                      groupValue: lacreounao,
-                      onChanged: (value){
-                        setState(() {
-                          lacreounao = value.toString();
-                          if(value == 'naolacrado'){
+                    value: lacrebool,
+                    onChanged: (value) {
+                      setState(() {
+                        String lacre = 'lacre';
+
+                        if(value == true){
+                          lacrebool = true;
+                        }else{
+                          if(value == false){
                             lacrebool = false;
                           }
-                        });
-                      },
-                    ),
+                        }
+                      });
+                    },
+                    activeColor: Colors.blue,
+                    checkColor: Colors.white,
+                    controlAffinity: ListTileControlAffinity.leading,
                   ),
                 ],
               ),

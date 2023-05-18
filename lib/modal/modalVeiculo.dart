@@ -872,7 +872,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   autocorrect: false,
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
-                    hintText: 'Telefone',
+                    hintText: 'Telefone (DDD)',
                     hintStyle: TextStyle(
                         fontSize: tamanhotexto
                     ),
@@ -1086,7 +1086,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         Expanded(
                           child: RadioListTile(
                             title: Text(
-                              "Sem Lacre",
+                              "Monitorado",
                               style: TextStyle(
                                   fontSize: tamanhotexto
                               ),

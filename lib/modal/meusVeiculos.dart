@@ -58,7 +58,6 @@ class _meusVeiculosActivityState extends State<meusVeiculosActivity> {
       tamanhotextomin = 16;
       //aspect = 1.0;
       aspect = 1.0;
-
     }else{
       if(Platform.isAndroid){
 

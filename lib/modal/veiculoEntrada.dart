@@ -152,7 +152,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
         backgroundColor: Colors.yellow,
         centerTitle: true,
         title: const Text(
-            'GLK Controls - Entrada',
+            'GLK Controls - Autorizar Saída',
           style: TextStyle(
             color: Colors.black
           ),
@@ -163,7 +163,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Container(
+            SizedBox(
               height: 50,
               width: double.infinity,
               child: Column(
@@ -179,7 +179,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                 ],
               ),
             ),
-            Container(
+            SizedBox(
               height: 50,
               width: double.infinity,
               child: Column(
@@ -195,7 +195,7 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
                 ],
               ),
             ),
-            Container(
+            SizedBox(
               height: 50,
               width: double.infinity,
               child: Column(
@@ -274,11 +274,11 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
             Container(
               child:
               CheckboxListTile(
-                title: Text("Autorizo saída com lacre divergente"),
-                value: widget.LacreSaida,
+                title: Text(lacrereject),
+                value: !widget.LacreSaida,
                 onChanged: (value) {
                   setState(() {
-                    widget.LacreSaida = value!;
+                    widget.LacreSaida = !value!;
                   });
                 },
                 activeColor: Colors.blue,
@@ -289,11 +289,11 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
             Container(
               child:
               CheckboxListTile(
-                title: Text('$lacrereject sem lacre divergente'),
-                value: !widget.LacreSaida,
+                title: Text("$lacrereject com lacre"),
+                value: widget.LacreSaida,
                 onChanged: (value) {
                   setState(() {
-                    widget.LacreSaida = !value!;
+                    widget.LacreSaida = value!;
                   });
                 },
                 activeColor: Colors.blue,

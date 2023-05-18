@@ -1151,7 +1151,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                         }else{
                           if(isTired3 == false){
                             Fluttertoast.showToast(
-                              msg: 'Tire do lacre!',
+                              msg: 'Tire a foto do lacre!',
                               toastLength: Toast.LENGTH_SHORT,
                               timeInSecForIosWeb: 1,
                               backgroundColor: Colors.black,

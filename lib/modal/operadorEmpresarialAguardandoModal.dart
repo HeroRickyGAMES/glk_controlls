@@ -142,7 +142,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
       appBar: AppBar(
         backgroundColor: Colors.yellow,
         centerTitle: true,
-        title: Text(
+        title: const Text(
             'GLK Controls - Liberação de Veiculo',
           style: TextStyle(
               color: Colors.black
@@ -278,7 +278,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
             Container(
               child:
               CheckboxListTile(
-                title: Text(AutorizoEntrada),
+                title: const Text('Autorizo Entrada'),
                 value: entradabool,
                 onChanged: (value) {
                   setState(() {
@@ -294,7 +294,7 @@ class _operadorEmpresarialAguardandoState extends State<operadorEmpresarialAguar
             Container(
               child:
               CheckboxListTile(
-                title: Text('Rejeito a Entrada $lacrereject'),
+                title: const Text('Rejeito a Entrada'),
                 value: regeitado,
                 onChanged: (value) {
                   setState(() {
