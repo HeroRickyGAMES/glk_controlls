@@ -157,7 +157,7 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                         child: Column(
                                                           children: [
                                                             Container(
-                                                                padding: EdgeInsets.all(8),
+                                                                padding: const EdgeInsets.all(8),
                                                                 child:
                                                                 const Text('Devido algumas váriaveis do aplicativo, o padrão de datas ficou como o padrão gringo (MM/DD/AAAA)')
                                                             ),
@@ -241,7 +241,7 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                                 enableSuggestions: false,
                                                                 autocorrect: false,
                                                                 decoration: InputDecoration(
-                                                                  border: OutlineInputBorder(),
+                                                                  border: const OutlineInputBorder(),
                                                                   hintText: 'Nome completo do motorista *',
                                                                   hintStyle: TextStyle(
                                                                       fontSize: tamanhotexto
@@ -268,7 +268,7 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                                 enableSuggestions: false,
                                                                 autocorrect: false,
                                                                 decoration: InputDecoration(
-                                                                  border: OutlineInputBorder(),
+                                                                  border: const OutlineInputBorder(),
                                                                   hintText: 'RG do motorista * ',
                                                                   hintStyle: TextStyle(
                                                                       fontSize: tamanhotexto
@@ -289,14 +289,19 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                                 onChanged: (valor){
 
                                                                   String valorpuro = valor.toUpperCase();
-                                                                  VeiculoPlaca = '${valorpuro.replaceAllMapped(
-                                                                    RegExp(r'^([a-zA-Z]{3})([0-9a-zA-Z]{4})$'),
-                                                                        (Match m) => '${m[1]} ${m[2]}',
-                                                                  )}(AG)';
+                                                                  if(valorpuro.length == 7){
+                                                                    VeiculoPlaca = '${
+                                                                        valorpuro.replaceAllMapped(
+                                                                          RegExp(r'^([a-zA-Z]{3})([0-9a-zA-Z]{4})$'),
+                                                                              (Match m) => '${m[1]} ${m[2]}',
+                                                                        )
+                                                                    }(AG)';
+                                                                    placaveiculointerface.text = VeiculoPlaca!;
+                                                                  }
                                                                   //Mudou mandou para a String
                                                                 },
                                                                 decoration: InputDecoration(
-                                                                  border: OutlineInputBorder(),
+                                                                  border: const OutlineInputBorder(),
                                                                   hintText: 'Placa do Veiculo * ',
                                                                   hintStyle: TextStyle(
                                                                       fontSize: tamanhotexto
@@ -307,7 +312,7 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                             Container(
                                                                 padding: const EdgeInsets.only(top: 16),
                                                                 child: const Text(
-                                                                    'Telefone: '
+                                                                    'Telefone (DDD): '
                                                                 )
                                                             ),
                                                             Container(
@@ -315,31 +320,24 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                               child: TextFormField(
                                                                 controller: telefoneinterface,
                                                                 onChanged: (valor){
-                                                                  placaveiculointerface.text = VeiculoPlaca;
                                                                   String valorpuro = valor.toUpperCase();
 
-                                                                  telefone = valorpuro.replaceAllMapped(
-                                                                      RegExp(r'^([0-9]{2})([0-9]{5})([0-9]{4})$'),
-                                                                          (Match m) => '${m[1]} ${m[2]}-${m[3]} '
-                                                                  );
-                                                                  if(VeiculoPlaca.length != 8){
-                                                                    Fluttertoast.showToast(
-                                                                      msg: 'A placa está escrita errada, faltam caracteres!',
-                                                                      toastLength: Toast.LENGTH_SHORT,
-                                                                      timeInSecForIosWeb: 1,
-                                                                      backgroundColor: Colors.black,
-                                                                      textColor: Colors.white,
-                                                                      fontSize: tamanhotexto,
+                                                                  if(valorpuro.length == 11){
+
+                                                                    telefone = valorpuro.replaceAllMapped(
+                                                                        RegExp(r'^([0-9]{2})([0-9]{5})([0-9]{4})$'),
+                                                                            (Match m) => '(${m[1]}) ${m[2]}-${m[3]}'
                                                                     );
+
+                                                                    telefoneinterface.text = telefone;
                                                                   }
-                                                                  //Mudou mandou para a String
                                                                 },
                                                                 keyboardType: TextInputType.number,
                                                                 enableSuggestions: false,
                                                                 autocorrect: false,
                                                                 decoration: InputDecoration(
-                                                                  border: OutlineInputBorder(),
-                                                                  hintText: 'Telefone',
+                                                                  border: const OutlineInputBorder(),
+                                                                  hintText: 'Telefone (DDD)',
                                                                   hintStyle: TextStyle(
                                                                       fontSize: tamanhotexto
                                                                   ),
@@ -357,12 +355,11 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                               child: TextFormField(
                                                                 onChanged: (valor){
                                                                   originEmpresa = valor;
-                                                                  telefoneinterface.text = telefone;
                                                                   //Mudou mandou para a String
                                                                 },
                                                                 controller: originEmpresaController,
                                                                 decoration: InputDecoration(
-                                                                  border: OutlineInputBorder(),
+                                                                  border: const OutlineInputBorder(),
                                                                   hintText: 'Empresa de Origem',
                                                                   hintStyle: TextStyle(
                                                                       fontSize: tamanhotexto
@@ -387,7 +384,7 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                                   ),
                                                                 ),
                                                                 Container(
-                                                                  padding: EdgeInsets.only(top: 16),
+                                                                  padding: const EdgeInsets.only(top: 16),
                                                                   child: ElevatedButton(
                                                                     onPressed: (){
 
@@ -510,7 +507,7 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
               ),
             ),
             Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [

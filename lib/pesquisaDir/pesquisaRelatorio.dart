@@ -56,7 +56,6 @@ class _pesquisaRelatorioState extends State<pesquisaRelatorio> {
     }
 
     DateTime dataAtual = DateTime.now();
-    DateTime dataDe30DiasAtras = dataAtual.subtract(const Duration(days: 30));
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

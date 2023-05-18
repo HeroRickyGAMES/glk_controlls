@@ -202,19 +202,19 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
                                 SizedBox(
                                   width: wid,
                                   child: Text(documents['nome'],
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 16
                                     ),
                                   ),
                                 ),
-                                Text('SLG Sanca',
+                                const Text('SLG Sanca',
                                   style: TextStyle(
                                       fontSize: 16
                                   ),
                                 ),
                                 Row(
                                   children: [
-                                    Text('Interno',
+                                    const Text('Interno',
                                       style: TextStyle(
                                           fontSize: 16
                                       ),
