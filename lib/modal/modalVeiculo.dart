@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:connectivity_widget/connectivity_widget.dart';
-import 'package:enhanced_url_launcher/enhanced_url_launcher.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +26,7 @@ class modalPorteiro extends StatefulWidget {
 }
 class _modalPorteiroState extends State<modalPorteiro> {
   String? coletaouentrega;
-  String? lacreounao = '';
+  String? lacreounao = 'naolacrado';
   String? empresaSelecionada;
   String galpaoPrimario = '';
 
@@ -44,6 +43,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
   TextEditingController placaveiculointerface = TextEditingController();
   TextEditingController telefoneinterface = TextEditingController();
   bool lacrebool = false;
+  bool lacrebool2 = false;
   List VeiculoOPC = [
     'Carreta',
     'Caminhão',
@@ -629,9 +629,10 @@ class _modalPorteiroState extends State<modalPorteiro> {
                       );
                     }else{
 
-                      if(lacreounao == ""){
+
+                      if(VeiculoPlaca!.length != 8){
                         Fluttertoast.showToast(
-                          msg: 'Preencha se está com lacre ou sem',
+                          msg: 'A placa está escrita errada, faltam caracteres!',
                           toastLength: Toast.LENGTH_SHORT,
                           timeInSecForIosWeb: 1,
                           backgroundColor: Colors.black,
@@ -639,46 +640,34 @@ class _modalPorteiroState extends State<modalPorteiro> {
                           fontSize: tamanhotexto,
                         );
                       }else{
+                        List RGMotoristas = [];
 
-                        if(VeiculoPlaca!.length != 8){
-                          Fluttertoast.showToast(
-                            msg: 'A placa está escrita errada, faltam caracteres!',
-                            toastLength: Toast.LENGTH_SHORT,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.black,
-                            textColor: Colors.white,
-                            fontSize: tamanhotexto,
-                          );
+                        final RGMotoristasCollection = FirebaseFirestore.instance.collection('Autorizacoes');
+                        final snapshot5 = await RGMotoristasCollection.get();
+                        final RGMOTORISTADOC = snapshot5.docs;
+                        for (final RGMOTORISTADOC in RGMOTORISTADOC) {
+                          final id = RGMOTORISTADOC.id;
+                          final name = RGMOTORISTADOC.get('RGDoMotorista');
+                          final status = RGMOTORISTADOC.get('Status');
+
+                          RGMotoristas.add("RG $name status $status");
+
+                        }
+
+                        if(RGMotoristas.contains("RG $RGMotorista status Saída")){
+                          restomanda();
                         }else{
-                          List RGMotoristas = [];
-
-                          final RGMotoristasCollection = FirebaseFirestore.instance.collection('Autorizacoes');
-                          final snapshot5 = await RGMotoristasCollection.get();
-                          final RGMOTORISTADOC = snapshot5.docs;
-                          for (final RGMOTORISTADOC in RGMOTORISTADOC) {
-                            final id = RGMOTORISTADOC.id;
-                            final name = RGMOTORISTADOC.get('RGDoMotorista');
-                            final status = RGMOTORISTADOC.get('Status');
-
-                            RGMotoristas.add("RG $name status $status");
-
-                          }
-
-                          if(RGMotoristas.contains("RG $RGMotorista status Saída")){
-                            restomanda();
+                          if(RGMotoristas.contains("RG $RGMotorista status Aguardando Liberação") || RGMotoristas.contains("RG $RGMotorista status Aguardando Liberação") || RGMotoristas.contains("RG $RGMotorista status Liberado Entrada") || RGMotoristas.contains("RG $RGMotorista status Liberado Saida")){
+                            Fluttertoast.showToast(
+                              msg: 'Esse RG já existe na base de dados!',
+                              toastLength: Toast.LENGTH_SHORT,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.black,
+                              textColor: Colors.white,
+                              fontSize: tamanhotexto,
+                            );
                           }else{
-                            if(RGMotoristas.contains("RG $RGMotorista status Aguardando Liberação") || RGMotoristas.contains("RG $RGMotorista status Aguardando Liberação") || RGMotoristas.contains("RG $RGMotorista status Liberado Entrada") || RGMotoristas.contains("RG $RGMotorista status Liberado Saida")){
-                              Fluttertoast.showToast(
-                                msg: 'Esse RG já existe na base de dados!',
-                                toastLength: Toast.LENGTH_SHORT,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.black,
-                                textColor: Colors.white,
-                                fontSize: tamanhotexto,
-                              );
-                            }else{
-                              restomanda();
-                            }
+                            restomanda();
                           }
                         }
                       }
@@ -1054,59 +1043,59 @@ class _modalPorteiroState extends State<modalPorteiro> {
                   ],
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Expanded(
-                          child: RadioListTile(
-                            title: Text(
-                                "Com Lacre divergente",
-                              style: TextStyle(
-                                  fontSize: tamanhotexto
-                              ),
-                            ),
-                            value: "lacre",
-                            groupValue: lacreounao,
-                            onChanged: (value){
-                              setState(() {
-                                lacreounao = value.toString();
-
-                                if(value == 'lacre'){
-                                  lacrebool = true;
-                                }
-
-                              });
-                            },
-                          ),
-                        ),
-                        Expanded(
-                          child: RadioListTile(
-                            title: Text(
-                              "Monitorado",
-                              style: TextStyle(
-                                  fontSize: tamanhotexto
-                              ),
-                            ),
-                            value: "naolacrado",
-                            groupValue: lacreounao,
-                            onChanged: (value){
-                              setState(() {
-                                lacreounao = value.toString();
-                                if(value == 'naolacrado'){
-                                  lacrebool = false;
-                                }
-                              });
-                            },
-                          ),
-                        ),
-                      ],
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CheckboxListTile(
+                    title: Text(
+                      'Com Lacre divergente',
+                      style: TextStyle(
+                        fontSize: tamanhotexto,
+                      ),
                     ),
-                  ],
-                ),
+                    value: lacrebool,
+                    onChanged: (value) {
+                      setState(() {
+                        lacreounao = 'lacre';
+
+                        if(value == true){
+                          lacrebool = true;
+                          lacrebool2 = false;
+                        }
+
+                      });
+                    },
+                    activeColor: Colors.blue,
+                    checkColor: Colors.white,
+                    controlAffinity: ListTileControlAffinity.leading,
+                  ),
+                  CheckboxListTile(
+                    title: Text(
+                      'Monitorado',
+                      style: TextStyle(
+                        fontSize: tamanhotexto,
+                      ),
+                    ),
+                    value: lacrebool2,
+                    onChanged: (value) {
+                      setState(() {
+                        lacreounao = 'naolacrado';
+
+                        lacrebool2 = value!;
+
+                        if(value == true){
+                          lacrebool = false;
+
+                        }
+
+                      });
+                    },
+                    activeColor: Colors.blue,
+                    checkColor: Colors.white,
+                    controlAffinity: ListTileControlAffinity.leading,
+                  ),
+                ],
               ),
               ElevatedButton(
               onPressed: uploadInfos,

@@ -66,14 +66,16 @@ class veiculoAguardando extends StatefulWidget {
 }
 final FirebaseStorage storage = FirebaseStorage.instance;
 
-bool isTired = false;
-bool isTired2 = false;
-bool isTired3 = false;
-bool isTired4 = false;
+
 
 String Status = "";
 
 class _veiculoAguardandoState extends State<veiculoAguardando> {
+
+  bool isTired = false;
+  bool isTired2 = false;
+  bool isTired3 = false;
+  bool isTired4 = false;
 
   String lacreSt = '';
   bool lacrebool = false;
@@ -725,13 +727,31 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
               ),
               value: "lacre",
               groupValue: widget.lacreounao,
-              onChanged: null,
+              onChanged: (value){
+                setState(() {
+                  widget.lacreounao = 'lacre';
+
+                  if(value == true){
+                    lacrebool = true;
+                  }
+
+                });
+              },
             ),
             RadioListTile(
-              title: const Text("Sem Lacre",),
+              title: const Text("Monitorado",),
               value: "naolacrado",
               groupValue: widget.lacreounao,
-              onChanged: null,
+              onChanged: (value){
+                setState(() {
+                  widget.lacreounao = 'naolacrado';
+
+                  if(value == false){
+                    lacrebool = false;
+                  }
+
+                });
+              },
             ),
             lacrebool ?
             Container(
@@ -960,9 +980,9 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                         fontSize: textSize,
                       );
                     }else{
-                      if(tagSelecionada == ''){
+                      if(isTired2 == false){
                         Fluttertoast.showToast(
-                          msg: 'Selecione uma tag disponivel!',
+                          msg: 'Tire da placa do veiculo!',
                           toastLength: Toast.LENGTH_SHORT,
                           timeInSecForIosWeb: 1,
                           backgroundColor: Colors.black,
@@ -970,36 +990,131 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                           fontSize: textSize,
                         );
                       }else{
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return const AlertDialog(
-                              title: Text('Aguarde!'),
-                              actions: [
-                                Center(
-                                  child: CircularProgressIndicator(),
-                                )
-                              ],
-                            );
-                          },
-                        );
+                        if(tagSelecionada == ''){
+                          Fluttertoast.showToast(
+                            msg: 'Selecione uma tag disponivel!',
+                            toastLength: Toast.LENGTH_SHORT,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.black,
+                            textColor: Colors.white,
+                            fontSize: textSize,
+                          );
+                        }else{
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return const AlertDialog(
+                                title: Text('Aguarde!'),
+                                actions: [
+                                  Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                ],
+                              );
+                            },
+                          );
 
-                        final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar
+                          final String ip = 'google.com'; // substitua pelo endereço IP que deseja testar
 
 
-                        ConnectivityUtils.instance
-                          ..serverToPing =
-                              "https://gist.githubusercontent.com/Vanethos/dccc4b4605fc5c5aa4b9153dacc7391c/raw/355ccc0e06d0f84fdbdc83f5b8106065539d9781/gistfile1.txt"
-                          ..verifyResponseCallback =
-                              (response) => response.contains("This is a test!");
+                          ConnectivityUtils.instance
+                            ..serverToPing =
+                                "https://gist.githubusercontent.com/Vanethos/dccc4b4605fc5c5aa4b9153dacc7391c/raw/355ccc0e06d0f84fdbdc83f5b8106065539d9781/gistfile1.txt"
+                            ..verifyResponseCallback =
+                                (response) => response.contains("This is a test!");
 
-                        if(await ConnectivityUtils.instance.isPhoneConnected()){
+                          if(await ConnectivityUtils.instance.isPhoneConnected()){
 
-                          final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
-                          final SharedPreferences prefs = await _prefs;
-                          bool? offlinemode =  prefs.getBool('OfflineMode');
+                            final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
+                            final SharedPreferences prefs = await _prefs;
+                            bool? offlinemode =  prefs.getBool('OfflineMode');
 
-                          if(offlinemode == true){
+                            if(offlinemode == true){
+
+                              FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                                'verificadoPor': widget.empresaName,
+                                'LacreouNao': 'naolacrado',
+                                'DataDeAnalise': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
+                                'tag': tagSelecionada,
+                                'Status': 'Liberado Saida',
+                              });
+
+                              var result = await FirebaseFirestore.instance
+                                  .collection("Condominio")
+                                  .doc('condominio')
+                                  .get();
+
+                              Map tags = (result.get('tags'));
+
+                              tags[tagSelecionada] = 'Usado';
+
+
+                              FirebaseFirestore.instance.collection('Condominio').doc('condominio').update({
+                                'tags': tags
+                              });
+
+                              //Fazer as regras do Rele
+                              callToVerifyReles();
+                              Navigator.of(context).pop();
+                              Navigator.pop(context);
+
+                            }else{
+                              final imageUrl = await _uploadImageToFirebase(imageFile!, widget.idDocumento);
+                              final imageUrl2 = await _uploadImageToFirebase2(imageFile2!, widget.idDocumento);
+                              String imageUrl3 = '';
+                              String imageUrl4 = '';
+
+
+                              if(imageFile3 != ''){
+                                imageUrl3 = await _uploadImageToFirebase3(imageFile3!, widget.idDocumento);
+                              }
+
+                              if(imageFile4 != ''){
+                                imageUrl4 = await _uploadImageToFirebase4(imageFile4!, widget.idDocumento);
+                              }
+
+                              FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
+                                'verificadoPor': widget.empresaName,
+                                'lacrenum': lacreSt,
+                                'LacreouNao': 'naolacrado',
+                                'DataDeAnalise': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
+                                'uriImage': imageUrl,
+                                'uriImage2': imageUrl2,
+                                'uriImage3': imageUrl3,
+                                'uriImage4': imageUrl4,
+                                'Status': 'Estacionário',
+                                'tag': tagSelecionada
+                              }).then((value) async {
+                                Fluttertoast.showToast(
+                                  msg: 'Dados atualizados!',
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.black,
+                                  textColor: Colors.white,
+                                  fontSize: textSize,
+                                );
+
+                                var result = await FirebaseFirestore.instance
+                                    .collection("Condominio")
+                                    .doc('condominio')
+                                    .get();
+
+                                Map tags = (result.get('tags'));
+
+                                tags[tagSelecionada] = 'Usado';
+
+
+                                FirebaseFirestore.instance.collection('Condominio').doc('condominio').update({
+                                  'tags': tags
+                                });
+
+                                //Fazer as regras do Rele
+                                callToVerifyReles();
+                                Navigator.of(context).pop();
+                                Navigator.pop(context);
+                              });
+                            }
+                          }else{
 
                             FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
                               'verificadoPor': widget.empresaName,
@@ -1028,91 +1143,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                             Navigator.of(context).pop();
                             Navigator.pop(context);
 
-                          }else{
-                            final imageUrl = await _uploadImageToFirebase(imageFile!, widget.idDocumento);
-                            final imageUrl2 = await _uploadImageToFirebase2(imageFile2!, widget.idDocumento);
-                            String imageUrl3 = '';
-                            String imageUrl4 = '';
-
-
-                            if(imageFile3 != ''){
-                              imageUrl3 = await _uploadImageToFirebase3(imageFile3!, widget.idDocumento);
-                            }
-
-                            if(imageFile4 != ''){
-                              imageUrl4 = await _uploadImageToFirebase4(imageFile4!, widget.idDocumento);
-                            }
-
-                            FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                              'verificadoPor': widget.empresaName,
-                              'lacrenum': lacreSt,
-                              'LacreouNao': 'naolacrado',
-                              'DataDeAnalise': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
-                              'uriImage': imageUrl,
-                              'uriImage2': imageUrl2,
-                              'uriImage3': imageUrl3,
-                              'uriImage4': imageUrl4,
-                              'Status': 'Estacionário',
-                              'tag': tagSelecionada
-                            }).then((value) async {
-                              Fluttertoast.showToast(
-                                msg: 'Dados atualizados!',
-                                toastLength: Toast.LENGTH_SHORT,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.black,
-                                textColor: Colors.white,
-                                fontSize: textSize,
-                              );
-
-                              var result = await FirebaseFirestore.instance
-                                  .collection("Condominio")
-                                  .doc('condominio')
-                                  .get();
-
-                              Map tags = (result.get('tags'));
-
-                              tags[tagSelecionada] = 'Usado';
-
-
-                              FirebaseFirestore.instance.collection('Condominio').doc('condominio').update({
-                                'tags': tags
-                              });
-
-                              //Fazer as regras do Rele
-                              callToVerifyReles();
-                              Navigator.of(context).pop();
-                              Navigator.pop(context);
-                            });
                           }
-                        }else{
-
-                          FirebaseFirestore.instance.collection('Autorizacoes').doc(widget.idDocumento).update({
-                            'verificadoPor': widget.empresaName,
-                            'LacreouNao': 'naolacrado',
-                            'DataDeAnalise': DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/'),
-                            'tag': tagSelecionada,
-                            'Status': 'Liberado Saida',
-                          });
-
-                          var result = await FirebaseFirestore.instance
-                              .collection("Condominio")
-                              .doc('condominio')
-                              .get();
-
-                          Map tags = (result.get('tags'));
-
-                          tags[tagSelecionada] = 'Usado';
-
-
-                          FirebaseFirestore.instance.collection('Condominio').doc('condominio').update({
-                            'tags': tags
-                          });
-
-                          //Fazer as regras do Rele
-                          callToVerifyReles();
-                          Navigator.of(context).pop();
-                          Navigator.pop(context);
-
                         }
                       }
                     }
@@ -1128,7 +1159,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                         fontSize: textSize,
                       );
                     }else{
-
                       if(isTired == false){
                         Fluttertoast.showToast(
                           msg: 'Tire a foto do motorista!',
