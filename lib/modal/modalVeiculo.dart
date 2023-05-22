@@ -666,7 +666,6 @@ class _modalPorteiroState extends State<modalPorteiro> {
                           restomanda();
                         }else{
                           if(RGMotoristas.contains("RG $RGMotorista status Aguardando Liberação") || RGMotoristas.contains("RG $RGMotorista status Aguardando Liberação") || RGMotoristas.contains("RG $RGMotorista status Liberado Entrada") || RGMotoristas.contains("RG $RGMotorista status Liberado Saida")){
-                            print('Chegou aqui');
                             Fluttertoast.showToast(
                               msg: 'Esse RG já existe na base de dados!',
                               toastLength: Toast.LENGTH_SHORT,
