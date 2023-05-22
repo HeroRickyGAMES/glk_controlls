@@ -320,19 +320,37 @@ class _relatorioGenerateState extends State<relatorioGenerate> {
                 ),
               ),
             ),
-            RadioListTile(
-              title: const Text(
-                  "Com Lacre"
-              ),
-              value: "lacre",
-              groupValue: widget.lacreounao,
-              onChanged: null,
-            ),
-            RadioListTile(
-              title: const Text("Sem Lacre",),
-              value: "naolacrado",
-              groupValue: widget.lacreounao,
-              onChanged: null,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CheckboxListTile(
+                  title: Text(
+                    'Com Lacre divergente',
+                    style: TextStyle(
+                      fontSize: tamanhotexto,
+                    ),
+                  ),
+                  value: lacrebool,
+                  onChanged: null,
+                  activeColor: Colors.blue,
+                  checkColor: Colors.white,
+                  controlAffinity: ListTileControlAffinity.leading,
+                ),
+                CheckboxListTile(
+                  title: Text(
+                    'Monitorado',
+                    style: TextStyle(
+                      fontSize: tamanhotexto,
+                    ),
+                  ),
+                  value: !lacrebool,
+                  onChanged: null,
+                  activeColor: Colors.blue,
+                  checkColor: Colors.white,
+                  controlAffinity: ListTileControlAffinity.leading,
+                ),
+              ],
             ),
             lacrebool ?
             Container(

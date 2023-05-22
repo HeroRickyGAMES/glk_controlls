@@ -61,7 +61,6 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
 
   @override
   Widget build(BuildContext context) {
-
     String lacrereject = '';
     String AutorizoEntrada = 'Autorizo Entrada st';
 

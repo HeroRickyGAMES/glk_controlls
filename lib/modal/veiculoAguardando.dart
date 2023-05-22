@@ -88,7 +88,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
     String AutorizoEntrada = 'Autorizo Entrada st';
     bool lacreSelect = false;
     String lacrefoto = 'Placa 2';
-
+    bool lacrebool2 = false;
     Map Galpoes = { };
     List GalpoesList = [ ];
 
@@ -721,37 +721,59 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                 ),
               ),
             ),
-            RadioListTile(
-              title: const Text(
-                  "Com lacre divergente"
-              ),
-              value: "lacre",
-              groupValue: widget.lacreounao,
-              onChanged: (value){
-                setState(() {
-                  widget.lacreounao = 'lacre';
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                CheckboxListTile(
+                  title: Text(
+                    'Com Lacre divergente',
+                    style: TextStyle(
+                      fontSize: tamanhotexto,
+                    ),
+                  ),
+                  value: lacrebool,
+                  onChanged: (value) {
+                    setState(() {
+                      widget.lacreounao = 'lacre';
 
-                  if(value == true){
-                    lacrebool = true;
-                  }
+                      if(value == true){
+                        lacrebool = true;
+                        lacrebool2 = false;
+                      }
 
-                });
-              },
-            ),
-            RadioListTile(
-              title: const Text("Monitorado",),
-              value: "naolacrado",
-              groupValue: widget.lacreounao,
-              onChanged: (value){
-                setState(() {
-                  widget.lacreounao = 'naolacrado';
+                    });
+                  },
+                  activeColor: Colors.blue,
+                  checkColor: Colors.white,
+                  controlAffinity: ListTileControlAffinity.leading,
+                ),
+                CheckboxListTile(
+                  title: Text(
+                    'Monitorado',
+                    style: TextStyle(
+                      fontSize: tamanhotexto,
+                    ),
+                  ),
+                  value: lacrebool2,
+                  onChanged: (value) {
+                    setState(() {
+                      widget.lacreounao = 'naolacrado';
 
-                  if(value == false){
-                    lacrebool = false;
-                  }
+                      lacrebool2 = value!;
 
-                });
-              },
+                      if(value == true){
+                        lacrebool = false;
+
+                      }
+
+                    });
+                  },
+                  activeColor: Colors.blue,
+                  checkColor: Colors.white,
+                  controlAffinity: ListTileControlAffinity.leading,
+                ),
+              ],
             ),
             lacrebool ?
             Container(
