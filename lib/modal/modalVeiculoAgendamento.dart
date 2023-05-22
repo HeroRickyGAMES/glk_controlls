@@ -53,6 +53,8 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
     'Moto',
     'Carro de Passeio'
   ];
+  bool lacrebool2 = false;
+  bool lacreboolLigado = false;
 
   String motivo = '';
   bool semSaida = false;
@@ -207,7 +209,8 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
         'lacrenumSaida': '',
         'lacreboolsaida': false,
         'EntradaInt': int.parse(DateFormat('MM-dd-yyyy HH:mm:ss').format(dataAgendada).replaceAll('-', '/').replaceAll('/', '').replaceAll(":", "").replaceAll(" ", "")),
-        'semSaida': semSaida
+        'semSaida': semSaida,
+        'lacreboolLigado': lacreboolLigado,
       }).then((value) async {
         Fluttertoast.showToast(
           msg: 'Enviado com sucesso!',
@@ -790,13 +793,17 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                     value: lacrebool,
                     onChanged: (value) {
                       setState(() {
-                        String lacre = 'lacre';
+                        lacreounao = 'lacre';
 
                         if(value == true){
                           lacrebool = true;
+                          lacrebool2 = false;
+                          lacreboolLigado = false;
                         }else{
                           if(value == false){
                             lacrebool = false;
+                            lacrebool2 = true;
+                            lacreboolLigado = true;
                           }
                         }
                       });

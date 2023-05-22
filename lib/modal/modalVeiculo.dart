@@ -44,6 +44,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
   TextEditingController telefoneinterface = TextEditingController();
   bool lacrebool = false;
   bool lacrebool2 = false;
+  bool lacreboolLigado = false;
   List VeiculoOPC = [
     'Carreta',
     'Caminhão',
@@ -181,7 +182,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
           'lacrenumSaida': '',
           'lacreboolsaida': false,
           'EntradaInt': int.parse(DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/').replaceAll('/', '').replaceAll(":", "").replaceAll(" ", "")),
-          'semSaida': false
+          'semSaida': false,
+          'lacreboolLigado': lacreboolLigado,
         }).then((value) {
 
           Fluttertoast.showToast(
@@ -292,7 +294,8 @@ class _modalPorteiroState extends State<modalPorteiro> {
           'lacrenumSaida': '',
           'lacreboolsaida': false,
           'EntradaInt': int.parse(DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/').replaceAll('/', '').replaceAll(":", "").replaceAll(" ", "")),
-          'semSaida': false
+          'semSaida': false,
+          'lacreboolLigado': lacreboolLigado,
         }).then((value) {
 
           Fluttertoast.showToast(
@@ -1062,6 +1065,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         if(value == true){
                           lacrebool = true;
                           lacrebool2 = false;
+                          lacreboolLigado = false;
                         }
 
                       });
@@ -1086,7 +1090,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
 
                         if(value == true){
                           lacrebool = false;
-
+                          lacreboolLigado = true;
                         }
 
                       });

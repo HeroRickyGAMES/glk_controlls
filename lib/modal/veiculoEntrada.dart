@@ -56,8 +56,8 @@ class veiculoEntrada extends StatefulWidget {
 }
 
 class _veiculoEntradaState extends State<veiculoEntrada> {
-  String lacreSt = '';
   bool lacrebool = false;
+  String lacreSt = '';
 
   @override
   Widget build(BuildContext context) {
@@ -90,11 +90,6 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
       lacrebool = false;
 
     }
-
-    String _textoPredefinido = widget.lacradoStr;
-    lacreSt = widget.lacradoStr;
-
-    TextEditingController _textEditingController = TextEditingController(text: _textoPredefinido);
 
     double tamanhotexto = 20;
     double tamanhotextomin = 16;
@@ -304,9 +299,10 @@ class _veiculoEntradaState extends State<veiculoEntrada> {
               Container(
                 padding: const EdgeInsets.all(16),
                 child: TextFormField(
-                  controller: _textEditingController,
                   onChanged: (valor){
-                    lacreSt = valor;
+                    setState(() {
+                      lacreSt = valor;
+                    });
                   },
                   keyboardType: TextInputType.number,
                   //enableSuggestions: false,

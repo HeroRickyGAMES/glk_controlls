@@ -36,6 +36,7 @@ class veiculoAguardando extends StatefulWidget {
   String Entrada;
   String RG;
   bool semSaida;
+  bool lacreboolLigado;
 
   veiculoAguardando(
       this.lacreounao,
@@ -59,6 +60,7 @@ class veiculoAguardando extends StatefulWidget {
       this.Entrada,
       this.RG,
       this.semSaida,
+      this.lacreboolLigado,
       {super.key}
       );
   @override
@@ -76,6 +78,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
   bool isTired2 = false;
   bool isTired3 = false;
   bool isTired4 = false;
+  bool lacrebool2 = false;
 
   String lacreSt = '';
   bool lacrebool = false;
@@ -88,7 +91,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
     String AutorizoEntrada = 'Autorizo Entrada st';
     bool lacreSelect = false;
     String lacrefoto = 'Placa 2';
-    bool lacrebool2 = false;
     Map Galpoes = { };
     List GalpoesList = [ ];
 
@@ -278,6 +280,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
     if(widget.lacreounao == 'naolacrado'){
 
       lacrebool = false;
+      lacrebool2 = true;
 
     }
 
@@ -735,11 +738,22 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                   value: lacrebool,
                   onChanged: (value) {
                     setState(() {
-                      widget.lacreounao = 'lacre';
 
                       if(value == true){
                         lacrebool = true;
-                        lacrebool2 = false;
+                        widget.lacreounao = 'lacre';
+
+                        if(lacrebool2 == true){
+                          lacrebool2 = false;
+                        }
+                      }
+                      if(value == false){
+                        lacrebool = false;
+                        widget.lacreounao = 'naolacrado';
+
+                        if(lacrebool2 == true){
+                          lacrebool2 = false;
+                        }
                       }
 
                     });
@@ -748,7 +762,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                   checkColor: Colors.white,
                   controlAffinity: ListTileControlAffinity.leading,
                 ),
-                CheckboxListTile(
+                widget.lacreboolLigado == true ? CheckboxListTile(
                   title: Text(
                     'Monitorado',
                     style: TextStyle(
@@ -764,7 +778,6 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
 
                       if(value == true){
                         lacrebool = false;
-
                       }
 
                     });
@@ -772,7 +785,7 @@ class _veiculoAguardandoState extends State<veiculoAguardando> {
                   activeColor: Colors.blue,
                   checkColor: Colors.white,
                   controlAffinity: ListTileControlAffinity.leading,
-                ),
+                ):const Text(''),
               ],
             ),
             lacrebool ?

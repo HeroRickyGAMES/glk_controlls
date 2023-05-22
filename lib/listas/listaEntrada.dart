@@ -337,6 +337,7 @@ class _listEntradaState extends State<listEntrada> {
                                                         String Galpao = documents['galpaoPrimario'];
                                                         String verificadoPor = documents['verificadoPor'];
                                                         String RGMotorista = documents['RGDoMotorista'];
+                                                        bool lacreboolLigado = documents['lacreboolLigado'];
                                                         String formattedDate2 = '';
 
                                                         if(documents['PlacaVeiculo'].contains('(AG)')){
@@ -395,7 +396,7 @@ class _listEntradaState extends State<listEntrada> {
 
                                                             Navigator.push(context,
                                                                 MaterialPageRoute(builder: (context){
-                                                                  return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2, numerosOrdenados, widget.Entrada, RGMotorista, semSaida);
+                                                                  return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2, numerosOrdenados, widget.Entrada, RGMotorista, semSaida, lacreboolLigado);
                                                                 }));
 
                                                           }
@@ -465,7 +466,7 @@ class _listEntradaState extends State<listEntrada> {
 
                                                             Navigator.push(context,
                                                                 MaterialPageRoute(builder: (context){
-                                                                  return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2, numerosOrdenados, widget.Entrada, RGMotorista, semSaida);
+                                                                  return veiculoAguardando(lacre, widget.porteiroName, liberadopor, formattedDate, nomeMotorista, Veiculo, PlacaVeiculo, Empresadestino, EmpresadeOrigin, Galpao, '', documents.id, file, file2, file3, file4, formattedDate2, numerosOrdenados, widget.Entrada, RGMotorista, semSaida, lacreboolLigado);
                                                                 }));
                                                           }
                                                         }
