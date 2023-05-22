@@ -583,6 +583,16 @@ class _modalSaidaVeiculoState extends State<modalSaidaVeiculo> {
                 ),
               ),
             ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child:
+              Text(
+                'Número da tag: ${widget.tagSelecionada}',
+                style: TextStyle(
+                    fontSize: tamanhotextobtns
+                ),
+              ),
+            ),
             widget.lacresaida? Container(
               padding: const EdgeInsets.all(16),
               child:

@@ -649,18 +649,24 @@ class _modalPorteiroState extends State<modalPorteiro> {
                         final snapshot5 = await RGMotoristasCollection.get();
                         final RGMOTORISTADOC = snapshot5.docs;
                         for (final RGMOTORISTADOC in RGMOTORISTADOC) {
-                          final id = RGMOTORISTADOC.id;
-                          final name = RGMOTORISTADOC.get('RGDoMotorista');
-                          final status = RGMOTORISTADOC.get('Status');
 
-                          RGMotoristas.add("RG $name status $status");
+                          final placas = RGMOTORISTADOC.get('PlacaVeiculo');
 
+                          if(!placas.contains('(AG)')){
+                            final id = RGMOTORISTADOC.id;
+                            final name = RGMOTORISTADOC.get('RGDoMotorista');
+                            final status = RGMOTORISTADOC.get('Status');
+
+
+                            RGMotoristas.add("RG $name status $status");
+                          }
                         }
 
                         if(RGMotoristas.contains("RG $RGMotorista status Saída")){
                           restomanda();
                         }else{
                           if(RGMotoristas.contains("RG $RGMotorista status Aguardando Liberação") || RGMotoristas.contains("RG $RGMotorista status Aguardando Liberação") || RGMotoristas.contains("RG $RGMotorista status Liberado Entrada") || RGMotoristas.contains("RG $RGMotorista status Liberado Saida")){
+                            print('Chegou aqui');
                             Fluttertoast.showToast(
                               msg: 'Esse RG já existe na base de dados!',
                               toastLength: Toast.LENGTH_SHORT,
