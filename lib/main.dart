@@ -80,12 +80,8 @@ class loginScreen extends StatefulWidget {
 
 class _loginScreenState extends State<loginScreen> {
 
-
-
-  final emailController = TextEditingController();
-  final passController = TextEditingController();
-
-
+  String introPath = '';
+  bool telagrande = false;
   @override
   Widget build(BuildContext context) {
     if(kIsWeb){
@@ -95,19 +91,38 @@ class _loginScreenState extends State<loginScreen> {
           ));
     }
 
-    Timer(const Duration(seconds: 8), () {
+    Timer(const Duration(seconds: 10), () {
 
       calltoprepare(context);
     });
-    return Scaffold(
-      body: Center(
-        child: Image.asset(
-            'assets/glkcontrols-init.gif',
-          fit: BoxFit.fill,
-          width: 700,
-          height: double.infinity,
-        ),
-      ),
-   );
+    return LayoutBuilder(builder: (context, constrain){
+
+          if(constrain.maxWidth < 600){
+            introPath = 'assets/glkcontrols-init.gif';
+            telagrande = false;
+          }
+          if(constrain.maxWidth > 600){
+            introPath = 'assets/introtelagrande.gif';
+            telagrande = true;
+          }
+
+        return Scaffold(
+          body: Center(
+            child: telagrande == true? Image.asset(
+              introPath,
+              fit: BoxFit.fill,
+              width: double.infinity,
+              height: double.infinity,
+            ):
+            Image.asset(
+              introPath,
+              fit: BoxFit.fill,
+              width: double.infinity,
+              height: double.infinity,
+            )
+          ),
+        );
+    });
+
   }
 }
