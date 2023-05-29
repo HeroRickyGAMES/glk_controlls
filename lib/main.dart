@@ -23,7 +23,6 @@ void main() {
       theme: ThemeData(
         //brightness: Brightness.dark,
         //useMaterial3: true,
-        //primaryColor: Colors.white,
       ),
       home: const loginScreen(),
     ),

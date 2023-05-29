@@ -105,7 +105,7 @@ class _listaUsuariosState extends State<listaUsuarios> {
                   ),
                   child: Column(
                     children: [
-                      Container(
+                      SizedBox(
                         width: double.infinity,
                         height: 50,
                         child: Center(
@@ -116,7 +116,7 @@ class _listaUsuariosState extends State<listaUsuarios> {
                             )
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         width: double.infinity,
                         height: 50,
                         child: Center(
@@ -230,7 +230,7 @@ class _listaUsuariosState extends State<listaUsuarios> {
                   ),
                   child: Column(
                     children: [
-                      Container(
+                      SizedBox(
                         width: double.infinity,
                         height: 50,
                         child: Center(
@@ -241,7 +241,7 @@ class _listaUsuariosState extends State<listaUsuarios> {
                             )
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         width: double.infinity,
                         height: 50,
                         child: Center(
@@ -253,7 +253,6 @@ class _listaUsuariosState extends State<listaUsuarios> {
                         ),
                       ),
                       ElevatedButton(onPressed: () async {
-
                         //todo novo cadastro
 
                         var result = await FirebaseFirestore.instance

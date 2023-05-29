@@ -441,10 +441,6 @@ checkislogOFFLine(context) async {
 
               event.data()?.forEach((key, value) async {
 
-
-
-
-
                 var result = await dbInstance
                     .collection("porteiro")
                     .doc(UID)
