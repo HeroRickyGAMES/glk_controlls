@@ -408,9 +408,10 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                             fontSize: tamanhotextobtns,
                                           );
                                         }else{
-                                          if(telNum == ''){
+
+                                          if(vagasInterno == ''){
                                             Fluttertoast.showToast(
-                                              msg: 'Preencha o telefone!',
+                                              msg: 'Preencha as vagas dos internos!',
                                               toastLength: Toast.LENGTH_SHORT,
                                               timeInSecForIosWeb: 1,
                                               backgroundColor: Colors.black,
@@ -418,9 +419,9 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                               fontSize: tamanhotextobtns,
                                             );
                                           }else{
-                                            if(vagasInterno == ''){
+                                            if(vagasMoto == ''){
                                               Fluttertoast.showToast(
-                                                msg: 'Preencha as vagas dos internos!',
+                                                msg: 'Preencha as vagas de motos!',
                                                 toastLength: Toast.LENGTH_SHORT,
                                                 timeInSecForIosWeb: 1,
                                                 backgroundColor: Colors.black,
@@ -428,9 +429,9 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                 fontSize: tamanhotextobtns,
                                               );
                                             }else{
-                                              if(vagasMoto == ''){
+                                              if(vagas == ''){
                                                 Fluttertoast.showToast(
-                                                  msg: 'Preencha as vagas de motos!',
+                                                  msg: 'Preencha as vagas de cargas!',
                                                   toastLength: Toast.LENGTH_SHORT,
                                                   timeInSecForIosWeb: 1,
                                                   backgroundColor: Colors.black,
@@ -438,9 +439,9 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                   fontSize: tamanhotextobtns,
                                                 );
                                               }else{
-                                                if(vagas == ''){
+                                                if(galpaoPikadoPrincipal == ''){
                                                   Fluttertoast.showToast(
-                                                    msg: 'Preencha as vagas de cargas!',
+                                                    msg: 'Selecione o galpão de recepção!',
                                                     toastLength: Toast.LENGTH_SHORT,
                                                     timeInSecForIosWeb: 1,
                                                     backgroundColor: Colors.black,
@@ -448,9 +449,21 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                     fontSize: tamanhotextobtns,
                                                   );
                                                 }else{
-                                                  if(galpaoPikadoPrincipal == ''){
+                                                  var result = await FirebaseFirestore.instance
+                                                      .collection("Condominio")
+                                                      .doc('condominio')
+                                                      .get();
+
+                                                  List galpoesUsados = result.get('galpoesUsados');
+                                                  int galpoesDisponiveis = result.get('galpoes');
+                                                  int vagasDisponiveis = result.get('vagas');
+                                                  double vagasInternoDisponiveis = result.get('VagasPrestadores');
+                                                  int vagasMotoDisponiveis = result.get('VagasMotos');
+                                                  int number = tags.length;
+
+                                                  if(galpoesDisponiveis == 0){
                                                     Fluttertoast.showToast(
-                                                      msg: 'Selecione o galpão de recepção!',
+                                                      msg: 'Não há galpões Disponiveis!',
                                                       toastLength: Toast.LENGTH_SHORT,
                                                       timeInSecForIosWeb: 1,
                                                       backgroundColor: Colors.black,
@@ -458,21 +471,9 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                       fontSize: tamanhotextobtns,
                                                     );
                                                   }else{
-                                                    var result = await FirebaseFirestore.instance
-                                                        .collection("Condominio")
-                                                        .doc('condominio')
-                                                        .get();
-
-                                                    List galpoesUsados = result.get('galpoesUsados');
-                                                    int galpoesDisponiveis = result.get('galpoes');
-                                                    int vagasDisponiveis = result.get('vagas');
-                                                    int vagasInternoDisponiveis = result.get('VagasPrestadores');
-                                                    int vagasMotoDisponiveis = result.get('vagasMoto');
-                                                    int number = tags.length;
-
-                                                    if(galpoesDisponiveis == 0){
+                                                    if(galpoesDisponiveis < tags.length){
                                                       Fluttertoast.showToast(
-                                                        msg: 'Não há galpões Disponiveis!',
+                                                        msg: 'A quantidade de galpões escolhida por você é menor que as Disponiveis!',
                                                         toastLength: Toast.LENGTH_SHORT,
                                                         timeInSecForIosWeb: 1,
                                                         backgroundColor: Colors.black,
@@ -480,89 +481,83 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                         fontSize: tamanhotextobtns,
                                                       );
                                                     }else{
-                                                      if(galpoesDisponiveis < tags.length){
-                                                        Fluttertoast.showToast(
-                                                          msg: 'A quantidade de galpões escolhida por você é menor que as Disponiveis!',
-                                                          toastLength: Toast.LENGTH_SHORT,
-                                                          timeInSecForIosWeb: 1,
-                                                          backgroundColor: Colors.black,
-                                                          textColor: Colors.white,
-                                                          fontSize: tamanhotextobtns,
-                                                        );
-                                                      }else{
-                                                        for (int i = number; i >= 1; i--) {
-                                                          galpoesMap.putIfAbsent(tags[i-1], () => int.parse(vagas));
+                                                      for (int i = number; i >= 1; i--) {
+                                                        galpoesMap.putIfAbsent(tags[i-1], () => int.parse(vagas));
 
 
-                                                          if(galpoesUsados.contains(tags[i-1])){
+                                                        if(galpoesUsados.contains(tags[i-1])){
+                                                          Fluttertoast.showToast(
+                                                            msg: 'Os Galpões Selecionados já estão sendo usados por outra empresa!',
+                                                            toastLength: Toast.LENGTH_SHORT,
+                                                            timeInSecForIosWeb: 1,
+                                                            backgroundColor: Colors.black,
+                                                            textColor: Colors.white,
+                                                            fontSize: tamanhotextobtns,
+                                                          );
+                                                        }else{
+                                                          if(i == tags.length){
                                                             Fluttertoast.showToast(
-                                                              msg: 'Os Galpões Selecionados já estão sendo usados por outra empresa!',
+                                                              msg: 'Cadastrando empresa...',
                                                               toastLength: Toast.LENGTH_SHORT,
                                                               timeInSecForIosWeb: 1,
                                                               backgroundColor: Colors.black,
                                                               textColor: Colors.white,
                                                               fontSize: tamanhotextobtns,
                                                             );
-                                                          }else{
-                                                            if(i == tags.length){
-                                                              Fluttertoast.showToast(
-                                                                msg: 'Cadastrando empresa...',
-                                                                toastLength: Toast.LENGTH_SHORT,
-                                                                timeInSecForIosWeb: 1,
-                                                                backgroundColor: Colors.black,
-                                                                textColor: Colors.white,
-                                                                fontSize: tamanhotextobtns,
-                                                              );
-                                                              var uuid = const Uuid();
+                                                            var uuid = const Uuid();
 
-                                                              String idd = "${DateTime.now().toString()}" + uuid.v4();
+                                                            String idd = "${DateTime.now().toString()}" + uuid.v4();
 
 
-                                                              FirebaseFirestore.instance.collection('empresa').doc(idd).set(
-                                                                  {
-                                                                    'nome': empresaName,
-                                                                    'galpaes': galpoesMap,
-                                                                    'NameResponsavel': respName,
-                                                                    'Telefone': telNum,
-                                                                    'tipoConta': 'empresa',
-                                                                    'id': idd,
-                                                                    'galpaoPrimario': galpaoPikadoPrincipal,
-                                                                    'vagas': vagas,
-                                                                    'vagasInterno': vagasInterno,
-                                                                    'vagasMoto': vagasMoto,
-                                                                  }
-                                                              ).then((value) {
+                                                            FirebaseFirestore.instance.collection('empresa').doc(idd).set(
+                                                                {
+                                                                  'nome': empresaName,
+                                                                  'galpaes': galpoesMap,
+                                                                  'NameResponsavel': respName,
+                                                                  'Telefone': telNum,
+                                                                  'tipoConta': 'empresa',
+                                                                  'id': idd,
+                                                                  'galpaoPrimario': galpaoPikadoPrincipal,
+                                                                  'vagas': vagas,
+                                                                  'vagasInterno': double.parse(vagasInterno),
+                                                                  'vagasMoto': int.parse(vagasMoto),
+                                                                }
+                                                            ).then((value) {
 
-                                                                int galpaoPass = tags.length;
-                                                                int subtracaoGalpao = galpoesDisponiveis - galpaoPass;
-                                                                int vagasSubtracao = vagasDisponiveis - int.parse(vagas);
-                                                                galpoesUsados.addAll(tags);
+                                                              int galpaoPass = tags.length;
+                                                              int subtracaoGalpao = galpoesDisponiveis - galpaoPass;
+                                                              int vagasSubtracao = vagasDisponiveis - int.parse(vagas);
+                                                              double vagasSubtracaoInterno = vagasInternoDisponiveis - int.parse(vagasInterno);
+                                                              int vagasSubtracaoMoto = vagasMotoDisponiveis - int.parse(vagasMoto);
+                                                              galpoesUsados.addAll(tags);
 
+
+                                                              FirebaseFirestore.instance.collection('Condominio').doc('condominio').update({
+                                                                'galpoes': subtracaoGalpao,
+                                                                'galpoesUsados': galpoesUsados,
+                                                                'vagas': vagasSubtracao,
+                                                                'VagasMotos': vagasSubtracaoInterno,
+                                                                'VagasPrestadores': double.parse("$vagasSubtracaoMoto"),
+                                                              }).then((value){
+                                                                Fluttertoast.showToast(
+                                                                  msg: 'Empresa cadastrada com sucesso!',
+                                                                  toastLength: Toast.LENGTH_SHORT,
+                                                                  timeInSecForIosWeb: 1,
+                                                                  backgroundColor: Colors.black,
+                                                                  textColor: Colors.white,
+                                                                  fontSize: tamanhotextobtns,
+                                                                );
+                                                                galpoesUsados.addAll(gpLs);
 
                                                                 FirebaseFirestore.instance.collection('Condominio').doc('condominio').update({
-                                                                  'galpoes': subtracaoGalpao,
                                                                   'galpoesUsados': galpoesUsados,
-                                                                  'vagas': vagasSubtracao
-                                                                }).then((value){
-                                                                  Fluttertoast.showToast(
-                                                                    msg: 'Empresa cadastrada com sucesso!',
-                                                                    toastLength: Toast.LENGTH_SHORT,
-                                                                    timeInSecForIosWeb: 1,
-                                                                    backgroundColor: Colors.black,
-                                                                    textColor: Colors.white,
-                                                                    fontSize: tamanhotextobtns,
-                                                                  );
-                                                                  galpoesUsados.addAll(gpLs);
-
-                                                                  FirebaseFirestore.instance.collection('Condominio').doc('condominio').update({
-                                                                    'galpoesUsados': galpoesUsados,
-                                                                  }).then((value) {
-                                                                    tags.clear();
-                                                                    Navigator.pop(context);
-                                                                  });
+                                                                }).then((value) {
+                                                                  gpLs.clear();
+                                                                  tags.clear();
+                                                                  Navigator.pop(context);
                                                                 });
                                                               });
-                                                            }
+                                                            });
                                                           }
                                                         }
                                                       }
@@ -640,6 +635,14 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                   ),
                 ],
               ),
+            ),
+            WillPopScope(
+              onWillPop: () async {
+                gpLs.clear();
+                tags.clear();
+                Navigator.pop(context);
+                return false;
+              }, child: const Text(''),
             ),
           ],
         ),
