@@ -22,7 +22,8 @@ class CadastroCondominio extends StatefulWidget {
   String vagasInternas = '';
   String vagasMoto = '';
   String emailADM = '';
-  CadastroCondominio(this.dropValue, this.imageFile, this.imageFile2, this.empresa, this.endereco, this.cep, this.cidade, this.estadoSelecionado, this.galpaost, this.vagas, this.tags, this.vagasInternas, this.vagasMoto, this.emailADM, {super.key});
+  String EstadoSelecionado = '';
+  CadastroCondominio(this.dropValue, this.imageFile, this.imageFile2, this.empresa, this.endereco, this.cep, this.cidade, this.estadoSelecionado, this.galpaost, this.vagas, this.tags, this.vagasInternas, this.vagasMoto, this.emailADM, this.EstadoSelecionado, {super.key});
 
   @override
   State<CadastroCondominio> createState() => _CadastroCondominioState();
@@ -356,7 +357,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                           fontSize: 16
                       ),
                     ),
-                    value: (value.isEmpty)? null : value,
+                    value: (value.isEmpty) ? widget.EstadoSelecionado : value,
                     onChanged: (escolha) async {
                       setState(() {
                         widget.dropValue.value = escolha.toString();
