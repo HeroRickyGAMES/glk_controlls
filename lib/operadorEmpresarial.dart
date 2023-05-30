@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:glk_controls/ModuloPrestador/Empresa/prestadorEmpresaMain.dart';
 import 'package:glk_controls/anteLogin.dart';
 import 'package:glk_controls/listas/meusAgendamentos.dart';
 import 'package:glk_controls/modal/meusVeiculos.dart';
@@ -213,6 +214,12 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
             return meusVeiculosActivity(widget.empresaName, widget.idEmpresa);
           }));
     }
+    acessoInterno(){
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context){
+            return PrestadorEmpresaMain(widget.empresaName, widget.idEmpresa);
+          }));
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -330,6 +337,20 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                       onPressed: meusVeiculos,
                       child: Text(
                         'Meus Veiculos internos',
+                        style: TextStyle(
+                          fontSize: tamanhotextobtns,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 500,
+                    padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                    child: ElevatedButton(
+                      onPressed: acessoInterno,
+                      child: Text(
+                        'Acesso Interno',
                         style: TextStyle(
                           fontSize: tamanhotextobtns,
                           fontWeight: FontWeight.bold,
