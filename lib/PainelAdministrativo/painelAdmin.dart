@@ -138,13 +138,15 @@ class _painelAdminState extends State<painelAdmin> {
                       String estado = result.get('estado');
                       String galpao = '${result.get('galpoes')}';
                       String vagas = '${result.get('vagas')}';
-                      String tags = '${result.get('tags')}';
+                      String tags = '${result.get('tags').length}';
+                      String vagasInternas = '${result.get('VagasPrestadores')}';
+                      String vagasMoto = '${result.get('VagasMotos')}';
 
                       Navigator.of(context).pop();
 
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context){
-                            return CadastroCondominio(dropValue, file, file2, empresaName, endereco, cep, cidade, estado, galpao, vagas, tags);
+                            return CadastroCondominio(dropValue, file, file2, empresaName, endereco, cep, cidade, estado, galpao, vagas, tags, vagasInternas, vagasMoto);
                           }));
 
                     }

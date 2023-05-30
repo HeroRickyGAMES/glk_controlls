@@ -19,7 +19,9 @@ class CadastroCondominio extends StatefulWidget {
   String galpaost = '';
   String vagas = '';
   String tags = '';
-  CadastroCondominio(this.dropValue, this.imageFile, this.imageFile2, this.empresa, this.endereco, this.cep, this.cidade, this.estadoSelecionado, this.galpaost, this.vagas, this.tags, {super.key});
+  String vagasInternas = '';
+  String vagasMoto = '';
+  CadastroCondominio(this.dropValue, this.imageFile, this.imageFile2, this.empresa, this.endereco, this.cep, this.cidade, this.estadoSelecionado, this.galpaost, this.vagas, this.tags, this.vagasInternas, this.vagasMoto, {super.key});
 
   @override
   State<CadastroCondominio> createState() => _CadastroCondominioState();
@@ -34,6 +36,9 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
   String estadoSelecionado = '';
   String galpaost = '';
   String vagas = '';
+  String vagasInternas = '';
+  String vagasMoto = '';
+  String tagsNum = '';
   int tags = 0;
   bool tirado = false;
 
@@ -78,6 +83,9 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
     cidade = widget.cidade;
     galpaost = widget.galpaost;
     vagas = widget.vagas;
+    vagasMoto = widget.vagasMoto;
+    vagasInternas = widget.vagasInternas;
+    tags = int.parse(widget.tags);
 
     TextEditingController empresaController = TextEditingController(text: widget.empresa);
     TextEditingController enderecoController = TextEditingController(text: widget.endereco);
@@ -85,6 +93,9 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
     TextEditingController cidadeController = TextEditingController(text: widget.cidade);
     TextEditingController galpaoController = TextEditingController(text: widget.galpaost);
     TextEditingController vagasController = TextEditingController(text: widget.vagas);
+    TextEditingController vagasInternasController = TextEditingController(text: widget.vagasInternas);
+    TextEditingController vagasMotoController = TextEditingController(text: widget.vagasMoto);
+    TextEditingController tagsNumbers = TextEditingController(text: widget.tags);
 
     final FirebaseStorage storage = FirebaseStorage.instance;
 
@@ -200,64 +211,6 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ElevatedButton(
-                    onPressed: (){
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: const Text(''),
-                            actions: [
-                              TextButton(onPressed: (){
-                                _uploadImage();
-                                Navigator.of(context).pop();
-                              },
-                                child: Image.file(imageFile!,),
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('Cancelar'),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: const Text('Prosseguir'),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    },
-                    child: const Text(
-                      'Logo',
-                      style: TextStyle(
-                          fontSize: 16
-                      ),
-                    ),
-                  ),
-                  Image.file(
-                    imageFile2!,
-                    width: 200,
-                    height: 200,
-                  )
-                ],
-              ),
-            ),
             Container(
               padding: const EdgeInsets.all(16),
               child: Text(
@@ -424,7 +377,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
             Container(
               padding: const EdgeInsets.all(16),
               child: Text(
-                'Quantidade de Vagas: ',
+                'Vagas Cargas: ',
                 style: TextStyle(
                   fontSize: tamanhotexto,
                 ),
@@ -441,7 +394,61 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                 },
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Quantidade de Vagas *',
+                  hintText: 'Vagas Cargas *',
+                  hintStyle: TextStyle(
+                      fontSize: 16
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                'Vagas motos: ',
+                style: TextStyle(
+                  fontSize: tamanhotexto,
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: TextFormField(
+                keyboardType: TextInputType.number,
+                controller: vagasMotoController,
+                onChanged: (valor){
+                  vagasMoto = valor;
+                  //Mudou mandou para a String
+                },
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Vagas Motos *',
+                  hintStyle: TextStyle(
+                      fontSize: 16
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                'Vagas Internas: ',
+                style: TextStyle(
+                  fontSize: tamanhotexto,
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: TextFormField(
+                keyboardType: TextInputType.number,
+                controller: vagasInternasController,
+                onChanged: (valor){
+                  vagasInternas = valor;
+                  //Mudou mandou para a String
+                },
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Vagas Internas *',
                   hintStyle: TextStyle(
                       fontSize: 16
                   ),
@@ -464,6 +471,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                   tags = int.parse(valor);
                   //Mudou mandou para a String
                 },
+                controller: tagsNumbers,
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
@@ -472,6 +480,64 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                       fontSize: 16
                   ),
                 ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ElevatedButton(
+                    onPressed: (){
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: const Text(''),
+                            actions: [
+                              TextButton(onPressed: (){
+                                _uploadImage();
+                                Navigator.of(context).pop();
+                              },
+                                child: Image.file(imageFile!,),
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('Cancelar'),
+                                  ),
+                                  TextButton(
+                                    onPressed: () {
+
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: const Text('Prosseguir'),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: const Text(
+                      'Logo',
+                      style: TextStyle(
+                          fontSize: 16
+                      ),
+                    ),
+                  ),
+                  Image.file(
+                    imageFile2!,
+                    width: 200,
+                    height: 200,
+                  )
+                ],
               ),
             ),
             Row(
@@ -575,9 +641,9 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                                         fontSize: 16.0
                                     );
                                   }else{
-                                    if(tags == 0){
+                                    if(vagasInternas == ''){
                                       Fluttertoast.showToast(
-                                          msg: 'Preencha o campo de tags disponiveis',
+                                          msg: 'Digite as vagas internas!',
                                           toastLength: Toast.LENGTH_LONG,
                                           gravity: ToastGravity.CENTER,
                                           timeInSecForIosWeb: 1,
@@ -586,9 +652,9 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                                           fontSize: 16.0
                                       );
                                     }else{
-                                      if(tirado == false){
+                                      if(vagasMoto == ''){
                                         Fluttertoast.showToast(
-                                            msg: 'Coloque um logo!',
+                                            msg: 'Digite as vagas de Motos!',
                                             toastLength: Toast.LENGTH_LONG,
                                             gravity: ToastGravity.CENTER,
                                             timeInSecForIosWeb: 1,
@@ -597,56 +663,80 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                                             fontSize: 16.0
                                         );
                                       }else{
-                                        //todo para o db firebase
-                                        String idd = 'condominio';
-
-                                        showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return const AlertDialog(
-                                              title: Text('Aguarde!'),
-                                              actions: [
-                                                Center(
-                                                  child: CircularProgressIndicator(),
-                                                )
-                                              ],
+                                        if(tags == 0){
+                                          Fluttertoast.showToast(
+                                              msg: 'Preencha o campo de tags disponiveis',
+                                              toastLength: Toast.LENGTH_LONG,
+                                              gravity: ToastGravity.CENTER,
+                                              timeInSecForIosWeb: 1,
+                                              backgroundColor: Colors.grey[600],
+                                              textColor: Colors.white,
+                                              fontSize: 16.0
+                                          );
+                                        }else{
+                                          if(tirado == false){
+                                            Fluttertoast.showToast(
+                                                msg: 'Coloque um logo!',
+                                                toastLength: Toast.LENGTH_LONG,
+                                                gravity: ToastGravity.CENTER,
+                                                timeInSecForIosWeb: 1,
+                                                backgroundColor: Colors.grey[600],
+                                                textColor: Colors.white,
+                                                fontSize: 16.0
                                             );
-                                          },
-                                        );
+                                          }else{
+                                            //todo para o db firebase
+                                            String idd = 'condominio';
 
-                                        final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
-                                        Map<String, String> tagsDisp = {};
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return const AlertDialog(
+                                                  title: Text('Aguarde!'),
+                                                  actions: [
+                                                    Center(
+                                                      child: CircularProgressIndicator(),
+                                                    )
+                                                  ],
+                                                );
+                                              },
+                                            );
 
-                                        int number = tags;
+                                            final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
+                                            Map<String, String> tagsDisp = {};
 
-                                        for (int i = number; i >= 1; i--) {
-                                          tagsDisp.addAll({ '$i': 'naoUsado'});
+                                            int number = tags;
 
-                                          if(tagsDisp.length == number){
-                                            FirebaseFirestore.instance.collection('Condominio').doc(idd).update({
-                                              'Empresa': empresa,
-                                              'Endereço': endereco,
-                                              'cep': cep,
-                                              'cidade': cidade,
-                                              'estado': estadoSelecionado,
-                                              'galpoes': int.parse(galpaost),
-                                              'vagas': int.parse(vagas),
-                                              'tags': tagsDisp,
-                                              'imageURL': imageUrl,
-                                              'maxGalpoes': int.parse(galpaost),
-                                            }).then((value){
-                                              Navigator.of(context).pop();
-                                              Navigator.pop(context);
-                                              Fluttertoast.showToast(
-                                                  msg: 'Dados enviados com sucesso!',
-                                                  toastLength: Toast.LENGTH_LONG,
-                                                  gravity: ToastGravity.CENTER,
-                                                  timeInSecForIosWeb: 1,
-                                                  backgroundColor: Colors.grey[600],
-                                                  textColor: Colors.white,
-                                                  fontSize: 16.0
-                                              );
-                                            });
+                                            for (int i = number; i >= 1; i--) {
+                                              tagsDisp.addAll({ '$i': 'naoUsado'});
+
+                                              if(tagsDisp.length == number){
+                                                FirebaseFirestore.instance.collection('Condominio').doc(idd).update({
+                                                  'Empresa': empresa,
+                                                  'Endereço': endereco,
+                                                  'cep': cep,
+                                                  'cidade': cidade,
+                                                  'estado': estadoSelecionado,
+                                                  'galpoes': int.parse(galpaost),
+                                                  'vagas': int.parse(vagas),
+                                                  'tags': tagsDisp,
+                                                  'imageURL': imageUrl,
+                                                  'maxGalpoes': int.parse(galpaost),
+                                                }).then((value){
+                                                  Navigator.of(context).pop();
+                                                  Navigator.pop(context);
+                                                  Fluttertoast.showToast(
+                                                      msg: 'Dados enviados com sucesso!',
+                                                      toastLength: Toast.LENGTH_LONG,
+                                                      gravity: ToastGravity.CENTER,
+                                                      timeInSecForIosWeb: 1,
+                                                      backgroundColor: Colors.grey[600],
+                                                      textColor: Colors.white,
+                                                      fontSize: 16.0
+                                                  );
+                                                });
+                                              }
+                                            }
                                           }
                                         }
                                       }

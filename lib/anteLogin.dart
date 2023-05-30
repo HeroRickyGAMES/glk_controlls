@@ -7,6 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/login.dart';
 import 'package:glk_controls/PainelAdministrativo/painelAdmin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 class anteLogin extends StatefulWidget {
   String logoCondominio;
   anteLogin(this.logoCondominio, {Key? key}) : super(key: key);
@@ -193,11 +194,9 @@ class _anteLoginState extends State<anteLogin> {
 
                                     }else{
                                       if(User == 'GRUPOLK'){
-
                                         if(pass == 'GLK@12345678\$'){
 
                                           Navigator.of(context).pop();
-
                                           Navigator.pop(context);
                                           Navigator.push(context,
                                               MaterialPageRoute(builder: (context){
@@ -205,6 +204,7 @@ class _anteLoginState extends State<anteLogin> {
                                               }));
 
                                         }else{
+
                                           Fluttertoast.showToast(
                                               msg: 'Senha invalida!',
                                               toastLength: Toast.LENGTH_SHORT,
@@ -214,9 +214,11 @@ class _anteLoginState extends State<anteLogin> {
                                               textColor: Colors.white,
                                               fontSize: tamanhotexto
                                           );
+
                                         }
 
                                       }else{
+
                                         Fluttertoast.showToast(
                                             msg: 'Usuario invalido!',
                                             toastLength: Toast.LENGTH_SHORT,
@@ -226,6 +228,7 @@ class _anteLoginState extends State<anteLogin> {
                                             textColor: Colors.white,
                                             fontSize: tamanhotexto
                                         );
+
                                       }
                                     }
                                   }
