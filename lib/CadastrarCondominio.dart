@@ -93,18 +93,18 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
     File? imageFile = widget.imageFile;
     File? imageFile2 = widget.imageFile2;
 
-    empresa = widget.empresa;
-    endereco = widget.endereco;
-    cep = widget.cep;
-    cidade = widget.cidade;
-    galpaost = widget.galpaost;
-    vagas = widget.vagas;
-    vagasMoto = widget.vagasMoto;
-    vagasInternas = widget.vagasInternas;
-    emailADM = widget.emailADM;
-    tags = int.parse(widget.tags);
-
     if(start == false){
+      empresa = widget.empresa;
+      endereco = widget.endereco;
+      cep = widget.cep;
+      cidade = widget.cidade;
+      galpaost = widget.galpaost;
+      vagas = widget.vagas;
+      vagasMoto = widget.vagasMoto;
+      vagasInternas = widget.vagasInternas;
+      emailADM = widget.emailADM;
+      tags = int.parse(widget.tags);
+      estadoSelecionado = widget.EstadoSelecionado;
       empresaController = TextEditingController(text: empresa);
       enderecoController = TextEditingController(text: endereco);
       cepController = TextEditingController(text: cep);
