@@ -21,7 +21,8 @@ class CadastroCondominio extends StatefulWidget {
   String tags = '';
   String vagasInternas = '';
   String vagasMoto = '';
-  CadastroCondominio(this.dropValue, this.imageFile, this.imageFile2, this.empresa, this.endereco, this.cep, this.cidade, this.estadoSelecionado, this.galpaost, this.vagas, this.tags, this.vagasInternas, this.vagasMoto, {super.key});
+  String emailADM = '';
+  CadastroCondominio(this.dropValue, this.imageFile, this.imageFile2, this.empresa, this.endereco, this.cep, this.cidade, this.estadoSelecionado, this.galpaost, this.vagas, this.tags, this.vagasInternas, this.vagasMoto, this.emailADM, {super.key});
 
   @override
   State<CadastroCondominio> createState() => _CadastroCondominioState();
@@ -29,6 +30,8 @@ class CadastroCondominio extends StatefulWidget {
 
 class _CadastroCondominioState extends State<CadastroCondominio> {
 
+  bool start = false;
+  
   String empresa = '';
   String endereco = '';
   String cep = '';
@@ -39,6 +42,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
   String vagasInternas = '';
   String vagasMoto = '';
   String tagsNum = '';
+  String emailADM = '';
   int tags = 0;
   bool tirado = false;
 
@@ -72,6 +76,17 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
     'Tocantins',
   ];
 
+  TextEditingController empresaController = TextEditingController();
+  TextEditingController enderecoController = TextEditingController();
+  TextEditingController cepController = TextEditingController();
+  TextEditingController cidadeController = TextEditingController();
+  TextEditingController galpaoController = TextEditingController();
+  TextEditingController vagasController = TextEditingController();
+  TextEditingController vagasInternasController = TextEditingController();
+  TextEditingController vagasMotoController = TextEditingController();
+  TextEditingController tagsNumbers = TextEditingController();
+  TextEditingController emailADMController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     File? imageFile = widget.imageFile;
@@ -85,20 +100,29 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
     vagas = widget.vagas;
     vagasMoto = widget.vagasMoto;
     vagasInternas = widget.vagasInternas;
+    emailADM = widget.emailADM;
     tags = int.parse(widget.tags);
 
-    TextEditingController empresaController = TextEditingController(text: widget.empresa);
-    TextEditingController enderecoController = TextEditingController(text: widget.endereco);
-    TextEditingController cepController = TextEditingController(text: widget.cep);
-    TextEditingController cidadeController = TextEditingController(text: widget.cidade);
-    TextEditingController galpaoController = TextEditingController(text: widget.galpaost);
-    TextEditingController vagasController = TextEditingController(text: widget.vagas);
-    TextEditingController vagasInternasController = TextEditingController(text: widget.vagasInternas);
-    TextEditingController vagasMotoController = TextEditingController(text: widget.vagasMoto);
-    TextEditingController tagsNumbers = TextEditingController(text: widget.tags);
+    if(start == false){
+      empresaController = TextEditingController(text: empresa);
+      enderecoController = TextEditingController(text: endereco);
+      cepController = TextEditingController(text: cep);
+      cidadeController = TextEditingController(text: cidade);
+      galpaoController = TextEditingController(text: galpaost);
+      vagasController = TextEditingController(text: vagas);
+      vagasInternasController = TextEditingController(text: vagasInternas);
+      vagasMotoController = TextEditingController(text: vagasMoto);
+      tagsNumbers = TextEditingController(text: '$tags');
+      emailADMController = TextEditingController(text: emailADM);
+    }
+    
+    
 
     final FirebaseStorage storage = FirebaseStorage.instance;
 
+    setState(() {
+      start = true;
+    });
 
     double tamanhotexto = 20;
     double tamanhotextomin = 16;
@@ -253,7 +277,9 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
               child: TextFormField(
                 controller: enderecoController,
                 onChanged: (valor){
-                  endereco = valor;
+                  setState(() {
+                    endereco = valor;
+                  });
                   //Mudou mandou para a String
                 },
                 decoration: const InputDecoration(
@@ -279,7 +305,9 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
               child: TextFormField(
                 controller: cepController,
                 onChanged: (valor){
-                  cep = valor;
+                  setState(() {
+                    cep = valor;
+                  });
                   //Mudou mandou para a String
                 },
                 decoration: const InputDecoration(
@@ -305,7 +333,9 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
               child: TextFormField(
                 controller: cidadeController,
                 onChanged: (valor){
-                  cidade = valor;
+                  setState(() {
+                    cidade = valor;
+                  });
                   //Mudou mandou para a String
                 },
                 decoration: const InputDecoration(
@@ -328,10 +358,11 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                     ),
                     value: (value.isEmpty)? null : value,
                     onChanged: (escolha) async {
-                      widget.dropValue.value = escolha.toString();
+                      setState(() {
+                        widget.dropValue.value = escolha.toString();
 
-                      estadoSelecionado = escolha.toString();
-
+                        estadoSelecionado = escolha.toString();
+                      });
                     },
                     items: EmpresasOpc.map((opcao) => DropdownMenuItem(
                       value: opcao,
@@ -362,12 +393,43 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                 keyboardType: TextInputType.number,
                 controller: galpaoController,
                 onChanged: (valor){
-                  galpaost = valor;
+                  setState(() {
+                    galpaost = valor;
+                  });
                   //Mudou mandou para a String
                 },
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   hintText: 'Quantidade de Galpões *',
+                  hintStyle: TextStyle(
+                      fontSize: 16
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                'Email ADM: ',
+                style: TextStyle(
+                  fontSize: tamanhotexto,
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: TextFormField(
+                keyboardType: TextInputType.emailAddress,
+                controller: emailADMController,
+                onChanged: (valor){
+                  setState(() {
+                    emailADM = valor;
+                  });
+                  //Mudou mandou para a String
+                },
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'Email ADM *',
                   hintStyle: TextStyle(
                       fontSize: 16
                   ),
@@ -389,7 +451,9 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                 keyboardType: TextInputType.number,
                 controller: vagasController,
                 onChanged: (valor){
-                  vagas = valor;
+                  setState(() {
+                    vagas = valor;
+                  });
                   //Mudou mandou para a String
                 },
                 decoration: const InputDecoration(
@@ -416,7 +480,9 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                 keyboardType: TextInputType.number,
                 controller: vagasMotoController,
                 onChanged: (valor){
-                  vagasMoto = valor;
+                  setState(() {
+                    vagasMoto = valor;
+                  });
                   //Mudou mandou para a String
                 },
                 decoration: const InputDecoration(
@@ -443,7 +509,12 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                 keyboardType: TextInputType.number,
                 controller: vagasInternasController,
                 onChanged: (valor){
-                  vagasInternas = valor;
+                  setState(() {
+                    widget.vagasInternas = valor;
+                    vagasInternas = valor;
+                  });
+
+
                   //Mudou mandou para a String
                 },
                 decoration: const InputDecoration(
@@ -468,7 +539,9 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
               padding: const EdgeInsets.all(16),
               child: TextFormField(
                 onChanged: (valor){
-                  tags = int.parse(valor);
+                  setState(() {
+                    tags = int.parse(valor);
+                  });
                   //Mudou mandou para a String
                 },
                 controller: tagsNumbers,
@@ -630,9 +703,9 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                                       fontSize: 16.0
                                   );
                                 }else{
-                                  if(vagas == ''){
+                                  if(emailADM == ''){
                                     Fluttertoast.showToast(
-                                        msg: 'Preencha o campo de vagas',
+                                        msg: 'Preencha o Email do ADM',
                                         toastLength: Toast.LENGTH_LONG,
                                         gravity: ToastGravity.CENTER,
                                         timeInSecForIosWeb: 1,
@@ -641,9 +714,9 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                                         fontSize: 16.0
                                     );
                                   }else{
-                                    if(vagasInternas == ''){
+                                    if(vagas == ''){
                                       Fluttertoast.showToast(
-                                          msg: 'Digite as vagas internas!',
+                                          msg: 'Preencha o campo de vagas cagas',
                                           toastLength: Toast.LENGTH_LONG,
                                           gravity: ToastGravity.CENTER,
                                           timeInSecForIosWeb: 1,
@@ -652,9 +725,9 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                                           fontSize: 16.0
                                       );
                                     }else{
-                                      if(vagasMoto == ''){
+                                      if(vagasInternas == ''){
                                         Fluttertoast.showToast(
-                                            msg: 'Digite as vagas de Motos!',
+                                            msg: 'Digite as vagas internas!',
                                             toastLength: Toast.LENGTH_LONG,
                                             gravity: ToastGravity.CENTER,
                                             timeInSecForIosWeb: 1,
@@ -663,9 +736,9 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                                             fontSize: 16.0
                                         );
                                       }else{
-                                        if(tags == 0){
+                                        if(vagasMoto == ''){
                                           Fluttertoast.showToast(
-                                              msg: 'Preencha o campo de tags disponiveis',
+                                              msg: 'Digite as vagas de Motos!',
                                               toastLength: Toast.LENGTH_LONG,
                                               gravity: ToastGravity.CENTER,
                                               timeInSecForIosWeb: 1,
@@ -674,9 +747,9 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                                               fontSize: 16.0
                                           );
                                         }else{
-                                          if(tirado == false){
+                                          if(tags == 0){
                                             Fluttertoast.showToast(
-                                                msg: 'Coloque um logo!',
+                                                msg: 'Preencha o campo de tags disponiveis',
                                                 toastLength: Toast.LENGTH_LONG,
                                                 gravity: ToastGravity.CENTER,
                                                 timeInSecForIosWeb: 1,
@@ -685,56 +758,71 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                                                 fontSize: 16.0
                                             );
                                           }else{
-                                            //todo para o db firebase
-                                            String idd = 'condominio';
+                                            if(tirado == false){
+                                              Fluttertoast.showToast(
+                                                  msg: 'Coloque um logo!',
+                                                  toastLength: Toast.LENGTH_LONG,
+                                                  gravity: ToastGravity.CENTER,
+                                                  timeInSecForIosWeb: 1,
+                                                  backgroundColor: Colors.grey[600],
+                                                  textColor: Colors.white,
+                                                  fontSize: 16.0
+                                              );
+                                            }else{
+                                              //todo para o db firebase
+                                              String idd = 'condominio';
 
-                                            showDialog(
-                                              context: context,
-                                              builder: (BuildContext context) {
-                                                return const AlertDialog(
-                                                  title: Text('Aguarde!'),
-                                                  actions: [
-                                                    Center(
-                                                      child: CircularProgressIndicator(),
-                                                    )
-                                                  ],
-                                                );
-                                              },
-                                            );
-
-                                            final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
-                                            Map<String, String> tagsDisp = {};
-
-                                            int number = tags;
-
-                                            for (int i = number; i >= 1; i--) {
-                                              tagsDisp.addAll({ '$i': 'naoUsado'});
-
-                                              if(tagsDisp.length == number){
-                                                FirebaseFirestore.instance.collection('Condominio').doc(idd).update({
-                                                  'Empresa': empresa,
-                                                  'Endereço': endereco,
-                                                  'cep': cep,
-                                                  'cidade': cidade,
-                                                  'estado': estadoSelecionado,
-                                                  'galpoes': int.parse(galpaost),
-                                                  'vagas': int.parse(vagas),
-                                                  'tags': tagsDisp,
-                                                  'imageURL': imageUrl,
-                                                  'maxGalpoes': int.parse(galpaost),
-                                                }).then((value){
-                                                  Navigator.of(context).pop();
-                                                  Navigator.pop(context);
-                                                  Fluttertoast.showToast(
-                                                      msg: 'Dados enviados com sucesso!',
-                                                      toastLength: Toast.LENGTH_LONG,
-                                                      gravity: ToastGravity.CENTER,
-                                                      timeInSecForIosWeb: 1,
-                                                      backgroundColor: Colors.grey[600],
-                                                      textColor: Colors.white,
-                                                      fontSize: 16.0
+                                              showDialog(
+                                                context: context,
+                                                builder: (BuildContext context) {
+                                                  return const AlertDialog(
+                                                    title: Text('Aguarde!'),
+                                                    actions: [
+                                                      Center(
+                                                        child: CircularProgressIndicator(),
+                                                      )
+                                                    ],
                                                   );
-                                                });
+                                                },
+                                              );
+
+                                              final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
+                                              Map<String, String> tagsDisp = {};
+
+                                              int number = tags;
+
+                                              for (int i = number; i >= 1; i--) {
+                                                tagsDisp.addAll({ '$i': 'naoUsado'});
+
+                                                if(tagsDisp.length == number){
+                                                  FirebaseFirestore.instance.collection('Condominio').doc(idd).update({
+                                                    'Empresa': empresa,
+                                                    'Endereço': endereco,
+                                                    'cep': cep,
+                                                    'cidade': cidade,
+                                                    'estado': estadoSelecionado,
+                                                    'galpoes': int.parse(galpaost),
+                                                    'vagas': int.parse(vagas),
+                                                    'tags': tagsDisp,
+                                                    'imageURL': imageUrl,
+                                                    'maxGalpoes': int.parse(galpaost),
+                                                    'VagasPrestadores': double.parse(vagasInternas),
+                                                    'VagasMotos': int.parse(vagasMoto),
+                                                    'emailADM': emailADM,
+                                                  }).then((value){
+                                                    Navigator.of(context).pop();
+                                                    Navigator.pop(context);
+                                                    Fluttertoast.showToast(
+                                                        msg: 'Dados enviados com sucesso!',
+                                                        toastLength: Toast.LENGTH_LONG,
+                                                        gravity: ToastGravity.CENTER,
+                                                        timeInSecForIosWeb: 1,
+                                                        backgroundColor: Colors.grey[600],
+                                                        textColor: Colors.white,
+                                                        fontSize: 16.0
+                                                    );
+                                                  });
+                                                }
                                               }
                                             }
                                           }
