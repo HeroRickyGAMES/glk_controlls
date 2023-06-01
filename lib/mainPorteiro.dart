@@ -994,9 +994,17 @@ class _mainPorteiroState extends State<mainPorteiro> {
                                                   try {
                                                     await FirebaseAuth.instance.sendPasswordResetEmail(email: widget.Email).then((value){
                                                       Fluttertoast.showToast(
-                                                        msg: 'Enviado, verifique o email para resetar a senha!',
-                                                        toastLength: Toast.LENGTH_SHORT,
-                                                        timeInSecForIosWeb: 1,
+                                                        msg: 'Enviado, verifique o email para resetar a senha, as vezes esse email!',
+                                                        toastLength: Toast.LENGTH_LONG,
+                                                        timeInSecForIosWeb: 5,
+                                                        backgroundColor: Colors.black,
+                                                        textColor: Colors.white,
+                                                        fontSize: tamanhotexto,
+                                                      );
+                                                      Fluttertoast.showToast(
+                                                        msg: 'Pode ir para a aba de spam!',
+                                                        toastLength: Toast.LENGTH_LONG,
+                                                        timeInSecForIosWeb: 5,
                                                         backgroundColor: Colors.black,
                                                         textColor: Colors.white,
                                                         fontSize: tamanhotexto,

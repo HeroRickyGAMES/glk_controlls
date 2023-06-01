@@ -408,9 +408,6 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                       fontSize: tamanhotexto,
                     );
                   }else{
-
-                    //Ele vai verificar se o usuario está bloqueado ou não.
-
                     if(galpao == ''){
                       Fluttertoast.showToast(
                         msg: 'Selecione um galpão!',
@@ -431,7 +428,19 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                           fontSize: tamanhotexto,
                         );
                       }else{
-                        resto();
+
+                        if(RGMotorista!.length != 8){
+                          Fluttertoast.showToast(
+                            msg: 'O RG está escrito errado, faltam alguns caracteres!',
+                            toastLength: Toast.LENGTH_SHORT,
+                            timeInSecForIosWeb: 1,
+                            backgroundColor: Colors.black,
+                            textColor: Colors.white,
+                            fontSize: tamanhotexto,
+                          );
+                        }else{
+                          resto();
+                        }
                       }
                     }
                   }

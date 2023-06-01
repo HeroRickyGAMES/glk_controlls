@@ -632,10 +632,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
                       );
                     }else{
 
-
-                      if(VeiculoPlaca!.length != 8){
+                      if(RGMotorista!.length != 8){
                         Fluttertoast.showToast(
-                          msg: 'A placa está escrita errada, faltam caracteres!',
+                          msg: 'O RG está escrito errado, faltam alguns caracteres!',
                           toastLength: Toast.LENGTH_SHORT,
                           timeInSecForIosWeb: 1,
                           backgroundColor: Colors.black,
@@ -735,7 +734,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                       nameMotoristaAllcaps.text = nomeMotorista!;
                     }
 
-                    if(valor.length == 7){
+                    if(valor.length == 8){
 
                       List rgs = [];
                       List nomes = [];

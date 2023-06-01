@@ -1,27 +1,47 @@
 import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:glk_controls/ModuloPrestador/geral/Modals/recuperarInfos.dart';
+import 'package:glk_controls/ModuloPrestador/geral/Modals/cadastrarVeiculoPrestador.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:uuid/uuid.dart';
-import 'package:intl/intl.dart';
 
-class CadastroDoOperador extends StatefulWidget {
+class RecuperarInfos extends StatefulWidget {
   String EmpresaNome = '';
   String EmpresaID = '';
   File? imageFile;
-  CadastroDoOperador(this.EmpresaNome, this.EmpresaID, this.imageFile,{Key? key}) : super(key: key);
+  String Nome = '';
+  String RG = '';
+  String Telefone = '';
+  String idd = '';
+  bool PreenchidoTipoVeiculo;
+  bool PreenchidoPermissao;
+  bool carroOuMoto;
+  bool moto;
+  bool carroEmoto;
+  bool VagaComum;
+  bool VagaMoto;
+  bool VagaDiretoria;
+  bool PreenchidoBloqueado;
+  bool Liberado;
+  bool bloqueadoBool;
+  bool isTired;
+  bool poscadastro;
+
+  RecuperarInfos(this.EmpresaNome, this.EmpresaID, this.imageFile,this.Nome, this.RG, this.Telefone, this.idd, this.PreenchidoTipoVeiculo, this.PreenchidoPermissao, this.carroOuMoto, this.moto, this.carroEmoto, this.VagaComum, this.VagaMoto, this.VagaDiretoria, this.PreenchidoBloqueado, this.Liberado, this.bloqueadoBool, this.isTired, this.poscadastro , {Key? key}) : super(key: key);
 
   @override
-  State<CadastroDoOperador> createState() => _CadastroDoOperadorState();
+  State<RecuperarInfos> createState() => _RecuperarInfosState();
 }
 
-class _CadastroDoOperadorState extends State<CadastroDoOperador> {
+class _RecuperarInfosState extends State<RecuperarInfos> {
 
+  bool initialized = false;
   TextEditingController nameAllcaps = TextEditingController();
+  TextEditingController RGController = TextEditingController();
+  TextEditingController TelefoneController = TextEditingController();
   String nome = '';
   String RG = '';
   String telefone = '';
@@ -46,11 +66,36 @@ class _CadastroDoOperadorState extends State<CadastroDoOperador> {
   @override
   Widget build(BuildContext context) {
 
+    if(initialized == false){
+      nameAllcaps = TextEditingController(text: widget.Nome);
+      RGController = TextEditingController(text: widget.RG);
+      TelefoneController = TextEditingController(text: widget.Telefone);
+      nome = widget.Nome;
+      RG = widget.RG;
+      telefone = widget.Telefone;
+      PreenchidoTipoVeiculo = widget.PreenchidoTipoVeiculo;
+      PreenchidoPermissao = widget.PreenchidoPermissao;
+      carroOuMoto = widget.carroOuMoto;
+      moto = widget.moto;
+      carroEmoto = widget.carroEmoto;
+
+      VagaComum = widget.VagaComum;
+      VagaMoto = widget.VagaMoto;
+      VagaDiretoria = widget.VagaDiretoria;
+
+      PreenchidoBloqueado = widget.PreenchidoBloqueado;
+      Liberado = widget.Liberado;
+      bloqueadoBool = widget.bloqueadoBool;
+
+      isTired = widget.isTired;
+    }
+
     double tamanhotexto = 20;
     double tamanhotextomin = 16;
     double tamanhotextobtns = 16;
     double aspect = 1.0;
     File? imageFile = widget.imageFile;
+
     final mediaQueryData = MediaQuery.of(context);
     final screenWidth = mediaQueryData.size.width;
     final screenHeight = mediaQueryData.size.height;
@@ -97,22 +142,6 @@ class _CadastroDoOperadorState extends State<CadastroDoOperador> {
       // Recupere a URL do download da imagem para salvar no banco de dados
       final url = await reference.getDownloadURL();
       return url;
-    }
-
-    trocandoparaverdadeiro(){
-      setState(() {
-        isTired = true;
-      });
-    }
-
-    Future<void> _uploadImage() async {
-      imageFile = await _getImageFromCamera();
-      setState(() {
-
-        imageFile = imageFile;
-        widget.imageFile = imageFile;
-      });
-      trocandoparaverdadeiro();
     }
 
     salvarmt() async {
@@ -176,95 +205,39 @@ class _CadastroDoOperadorState extends State<CadastroDoOperador> {
                     fontSize: tamanhotexto,
                   );
                 }else{
-
-                  if(RG.length != 8){
-                    Fluttertoast.showToast(
-                      msg: 'O RG está escrito errado, faltam caracteres!',
-                      toastLength: Toast.LENGTH_SHORT,
-                      timeInSecForIosWeb: 1,
-                      backgroundColor: Colors.black,
-                      textColor: Colors.white,
-                      fontSize: tamanhotexto,
-                    );
-                  }else{
-                    List RGMotoristas = [];
-
-                    final RGMotoristasCollection = FirebaseFirestore.instance.collection('Prestadores');
-                    final snapshot5 = await RGMotoristasCollection.get();
-                    final RGMOTORISTADOC = snapshot5.docs;
-                    for (final RGMOTORISTADOC in RGMOTORISTADOC) {
-
-                      final rg = RGMOTORISTADOC.get('RG');
-
-                      RGMotoristas.add(rg);
-                    }
-                    if(RGMotoristas.contains(RG)){
-                      Fluttertoast.showToast(
-                        msg: 'Parece que esse RG já existe no sistema!!',
-                        toastLength: Toast.LENGTH_SHORT,
-                        timeInSecForIosWeb: 1,
-                        backgroundColor: Colors.black,
-                        textColor: Colors.white,
-                        fontSize: tamanhotexto,
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return const AlertDialog(
+                        title: Text('Aguarde!'),
+                        actions: [
+                          Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        ],
                       );
-                    }else{
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return const AlertDialog(
-                            title: Text('Aguarde!'),
-                            actions: [
-                              Center(
-                                child: CircularProgressIndicator(),
-                              )
-                            ],
-                          );
-                        },
-                      );
+                    },
+                  );
+                  final imageUrl = await _uploadImageToFirebase(imageFile!, widget.idd);
 
-                      var result = await FirebaseFirestore.instance
-                          .collection("Condominio")
-                          .doc('condominio')
-                          .get();
-
-
-
-
-                      var dateTime= DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
-
-                      var uuid = const Uuid();
-
-                      String idd = "${DateTime.now().toString()}${uuid.v4()}";
-
-                      final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
-
-                      FirebaseFirestore.instance.collection('Prestadores').doc(idd).set({
-                        'nome': nome,
-                        'RG': RG,
-                        'Telefone': telefone,
-                        'carro': carroOuMoto,
-                        'moto': moto,
-                        'carroEmoto': carroEmoto,
-                        'vagaComum': VagaComum,
-                        'vagaMoto': VagaMoto,
-                        'VagaDiretoria': VagaDiretoria,
-                        'Liberado': Liberado,
-                        'urlImage': imageUrl,
-                        'Empresa': widget.EmpresaNome,
-                        'EmpresaID': widget.EmpresaID,
-                        'id': idd
-                      }).then((value) async {
-
-
-                        Navigator.of(context).pop();
-                        Navigator.pop(context);
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context){
-                              return RecuperarInfos(widget.EmpresaNome, widget.EmpresaID, widget.imageFile, nome, RG, telefone, idd, PreenchidoTipoVeiculo, PreenchidoPermissao, carroOuMoto, moto, carroEmoto, VagaComum, VagaMoto, VagaDiretoria, PreenchidoBloqueado, Liberado, bloqueadoBool, isTired, true);
-                            }));
-                      });
-                    }
-                  }
+                  FirebaseFirestore.instance.collection('Prestadores').doc(widget.idd).update({
+                    'nome': nome,
+                    'RG': RG,
+                    'Telefone': telefone,
+                    'carro': carroOuMoto,
+                    'moto': moto,
+                    'carroEmoto': carroEmoto,
+                    'vagaComum': VagaComum,
+                    'vagaMoto': VagaMoto,
+                    'VagaDiretoria': VagaDiretoria,
+                    'Liberado': Liberado,
+                    'urlImage': imageUrl,
+                    'Empresa': widget.EmpresaNome,
+                    'EmpresaID': widget.EmpresaID,
+                  }).then((value){
+                    Navigator.of(context).pop();
+                    Navigator.pop(context);
+                  });
                 }
               }
             }
@@ -272,6 +245,54 @@ class _CadastroDoOperadorState extends State<CadastroDoOperador> {
         }
       }
     }
+
+    trocandoparaverdadeiro(){
+      setState(() {
+        isTired = true;
+      });
+    }
+
+    Future<void> _uploadImage() async {
+      imageFile = await _getImageFromCamera();
+      setState(() {
+
+        imageFile = imageFile;
+        widget.imageFile = imageFile;
+      });
+      trocandoparaverdadeiro();
+    }
+
+    started() async {
+      await Future.delayed(const Duration(seconds: 2));
+      if(widget.poscadastro == true){
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('Cadastro feito com sucesso! / Foi adicionado um botão!'),
+              actions: [
+                Center(
+                  child: Column(
+                    children: [
+                      const Text('O botão Cadastrar Veiculos foi liberado!'),
+                      TextButton(onPressed: (){
+                        Navigator.of(context).pop();
+                      }, child: const Text('Prosseguir'))
+                    ],
+                  ),
+                )
+              ],
+            );
+          },
+        );
+      }
+    }
+    if(initialized == false){
+      started();
+    }
+
+
+    initialized = true;
 
     return Scaffold(
       appBar: AppBar(
@@ -394,6 +415,7 @@ class _CadastroDoOperadorState extends State<CadastroDoOperador> {
               Container(
                 padding: const EdgeInsets.all(16),
                 child: TextFormField(
+                  controller: RGController,
                   onChanged: (valor){
                     RG = valor;
                     //Mudou mandou para a String
@@ -413,7 +435,7 @@ class _CadastroDoOperadorState extends State<CadastroDoOperador> {
               Container(
                 padding: const EdgeInsets.all(16),
                 child: Text(
-                    'Empresa: ${widget.EmpresaNome}',
+                  'Empresa: ${widget.EmpresaNome}',
                   style: TextStyle(
                     fontSize: tamanhotexto,
                   ),
@@ -422,6 +444,7 @@ class _CadastroDoOperadorState extends State<CadastroDoOperador> {
               Container(
                 padding: const EdgeInsets.all(16),
                 child: TextFormField(
+                  controller: TelefoneController,
                   onChanged: (valor){
                     telefone = valor;
                     //Mudou mandou para a String
@@ -439,14 +462,14 @@ class _CadastroDoOperadorState extends State<CadastroDoOperador> {
                 ),
               ),
               Container(
-                padding: const EdgeInsets.all(16),
-                child: Text(
-                  'Tipo de veiculo:',
-                  style: TextStyle(
-                      fontSize: tamanhotexto,
-                      fontWeight: FontWeight.bold
-                  ),
-                )
+                  padding: const EdgeInsets.all(16),
+                  child: Text(
+                    'Tipo de veiculo:',
+                    style: TextStyle(
+                        fontSize: tamanhotexto,
+                        fontWeight: FontWeight.bold
+                    ),
+                  )
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -665,14 +688,16 @@ class _CadastroDoOperadorState extends State<CadastroDoOperador> {
                             fontSize: tamanhotexto,
                           ),
                         ),
-                          value: bloqueadoBool,
+                        value: bloqueadoBool,
                         onChanged: (value) {
                           setState(() {
+
                             if(value == true){
                               bloqueadoBool = true;
                               PreenchidoBloqueado = true;
                               Liberado = false;
                             }
+
                           });
                         },
                         activeColor: Colors.blue,
@@ -682,6 +707,157 @@ class _CadastroDoOperadorState extends State<CadastroDoOperador> {
                     ),
                   ],
                 ),
+              ),
+              Container(
+                  padding: const EdgeInsets.all(16),
+                  child: Text(
+                    'Veiculos Liberado:',
+                    style: TextStyle(
+                        fontSize: tamanhotexto,
+                        fontWeight: FontWeight.bold
+                    ),
+                  )
+              ),
+              Container(
+                  padding: const EdgeInsets.all(16),
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('VeiculosdePrestadores')
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return SizedBox(
+                        height: 250,
+                        width: double.infinity,
+                        child: ListView(
+                          children: snapshot.data!.docs.map((documents) {
+                            print(documents['PlacaVeiculo']);
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: SizedBox(
+                                      height: 50,
+                                      width: double.infinity,
+                                      child: Text(
+                                          'Veiculo;',
+                                        style: TextStyle(
+                                          fontSize: tamanhotexto,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(
+                                      height: 50,
+                                      width: double.infinity,
+                                      child: Text(
+                                        '${documents['Marca']}-',
+                                        style: TextStyle(
+                                          fontSize: tamanhotexto,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(
+                                      height: 50,
+                                      width: double.infinity,
+                                      child: Text(
+                                        '${documents['Modelo']}-',
+                                        style: TextStyle(
+                                          fontSize: tamanhotexto,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(
+                                      height: 50,
+                                      width: double.infinity,
+                                      child: Text(
+                                        '${documents['cor']}-',
+                                        style: TextStyle(
+                                          fontSize: tamanhotexto,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(
+                                      height: 50,
+                                      width: double.infinity,
+                                      child: Text(
+                                        '${documents['PlacaVeiculo']}-',
+                                        style: TextStyle(
+                                          fontSize: tamanhotexto,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(
+                                      height: 50,
+                                      width: double.infinity,
+                                      child: Text(
+                                        '${documents['TipoDeVeiculo']}-',
+                                        style: TextStyle(
+                                          fontSize: tamanhotexto,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(
+                                      height: 50,
+                                      width: double.infinity,
+                                      child: TextButton(onPressed: (){
+
+                                      }, child: const Icon(Icons.edit),
+                                      )
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(
+                                        height: 50,
+                                        width: double.infinity,
+                                        child: TextButton(onPressed: (){
+
+                                        }, child: const Icon(Icons.delete),
+                                        )
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      );
+                    },
+                  ),
+              ),
+              Container(
+                  padding: const EdgeInsets.all(16),
+                  child: ElevatedButton(
+                      onPressed: (){
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context){
+                              return CadastrarPrestador(widget.EmpresaNome, widget.EmpresaID, widget.idd, nome, carroEmoto, carroOuMoto);
+                            }));
+                      },
+                      child: Text(
+                          'Cadastrar Veiculos',
+                        style: TextStyle(
+                          fontSize: tamanhotextobtns,
+                        ),
+                      )
+                  )
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
