@@ -8,6 +8,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:glk_controls/ModuloPrestador/geral/CadastroDoColabotador.dart';
 import 'package:glk_controls/ModuloPrestador/geral/pesquisa/pesquisa.dart';
+import 'package:glk_controls/ModuloPrestador/listas/listasDeInternos.dart';
 import 'package:glk_controls/anteLogin.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -90,6 +91,13 @@ class _PrestadorEmpresaMainState extends State<PrestadorEmpresaMain> {
           }));
     }
 
+    listaInternos(){
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context){
+            return listasdeInternos(widget.Empresa, widget.IDEmpresa);
+          }));
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -143,7 +151,7 @@ class _PrestadorEmpresaMainState extends State<PrestadorEmpresaMain> {
                 width: 500,
                 padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                 child: ElevatedButton(
-                  onPressed: null,
+                  onPressed: listaInternos,
                   child: Text(
                     'Lista de Internos',
                     style: TextStyle(
