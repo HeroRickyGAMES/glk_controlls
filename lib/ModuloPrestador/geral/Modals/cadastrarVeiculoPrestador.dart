@@ -385,13 +385,14 @@ class _CadastrarPrestadorState extends State<CadastrarPrestador> {
                                       for (final VEICULODOC in VEICULOSDOCS) {
 
                                         final placas = VEICULODOC.get('PlacaVeiculo');
+                                        final idPertence = VEICULODOC.get('idPertence');
 
-                                        veiculosPlacas.add(placas);
+                                        veiculosPlacas.add('$placas $idPertence');
                                       }
                                       
-                                      if(veiculosPlacas.contains(VeiculoPlaca)){
+                                      if(veiculosPlacas.contains('$VeiculoPlaca ${widget.idPrestador}')){
                                         Fluttertoast.showToast(
-                                          msg: 'Um Veiculo com a mesma placa já existe no sistema!',
+                                          msg: 'Um Veiculo com a mesma placa já existe no cadastro desse interno!',
                                           toastLength: Toast.LENGTH_SHORT,
                                           timeInSecForIosWeb: 1,
                                           backgroundColor: Colors.black,
