@@ -6,8 +6,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/ModuloPrestador/geral/CadastroDoColabotador.dart';
+import 'package:glk_controls/ModuloPrestador/geral/pesquisa/pesquisa.dart';
 import 'package:glk_controls/anteLogin.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -83,6 +83,12 @@ class _PrestadorEmpresaMainState extends State<PrestadorEmpresaMain> {
             }));
       }
     }
+    pesquisa() async {
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context){
+            return pesquisaPrestador(widget.Empresa, widget.IDEmpresa);
+          }));
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -123,7 +129,7 @@ class _PrestadorEmpresaMainState extends State<PrestadorEmpresaMain> {
                 width: 500,
                 padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                 child: ElevatedButton(
-                  onPressed: null,
+                  onPressed: pesquisa,
                   child: Text(
                     'Pesquisar Cadastro',
                     style: TextStyle(
