@@ -222,14 +222,6 @@ class _CadastroDoOperadorState extends State<CadastroDoOperador> {
                         },
                       );
 
-                      var result = await FirebaseFirestore.instance
-                          .collection("Condominio")
-                          .doc('condominio')
-                          .get();
-
-
-
-
                       var dateTime= DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
 
                       var uuid = const Uuid();
@@ -255,6 +247,22 @@ class _CadastroDoOperadorState extends State<CadastroDoOperador> {
                         'id': idd
                       }).then((value) async {
 
+                        //MandarEmails
+                        var result = await FirebaseFirestore.instance
+                            .collection("Condominio")
+                            .doc('condominio')
+                            .get();
+
+                        String emailADM = result.get('emailADM');
+
+                        FirebaseFirestore.instance.collection('mail').doc().set({
+                          'message': {
+                            'subject': 'Um novo interno foi cadastrado!',
+                            'text': 'O interno com o nome $nome, e RG $RG foi cadastrado com sucesso!'
+                          },
+                          'to': emailADM,
+                        });
+                        //end of sender
 
                         Navigator.of(context).pop();
                         Navigator.pop(context);

@@ -723,6 +723,8 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                   child: StreamBuilder(
                     stream: FirebaseFirestore.instance
                         .collection('VeiculosdePrestadores')
+                        .where('idPertence', isEqualTo: widget.idd)
+                        //.where('Liberado', isEqualTo: true)
                         .snapshots(),
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -736,7 +738,6 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                         width: double.infinity,
                         child: ListView(
                           children: snapshot.data!.docs.map((documents) {
-                            print(documents['PlacaVeiculo']);
                             return Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Row(
