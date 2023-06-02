@@ -179,7 +179,6 @@ class _PrestadorEmpresaMainState extends State<PrestadorEmpresaMain> {
                                             return anteLogin(logoPath);
                                           }));
                                     });
-
                                   },
                                   style: ElevatedButton.styleFrom(
                                       primary: Colors.grey

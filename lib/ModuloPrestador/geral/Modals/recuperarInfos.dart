@@ -269,15 +269,31 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text('Cadastro feito com sucesso! / Foi adicionado um botão!'),
+              title: Text(
+                  'Cadastro feito com sucesso! / Foi adicionado um botão!',
+                style: TextStyle(
+                    fontSize: tamanhotextobtns
+                ),
+              ),
               actions: [
                 Center(
                   child: Column(
                     children: [
-                      const Text('O botão Cadastrar Veiculos foi liberado!'),
+                      Text(
+                          'O botão Cadastrar Veiculos foi liberado!',
+                        style: TextStyle(
+                            fontSize: tamanhotexto
+                        ),
+                      ),
                       TextButton(onPressed: (){
                         Navigator.of(context).pop();
-                      }, child: const Text('Prosseguir'))
+                      }, child: Text(
+                          'Prosseguir',
+                        style: TextStyle(
+                            fontSize: tamanhotexto
+                        ),
+                      ),
+                      )
                     ],
                   ),
                 )
@@ -486,7 +502,6 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                       value: carroOuMoto,
                       onChanged: (value) {
                         setState(() {
-
                           if(value == true){
                             PreenchidoTipoVeiculo = true;
                             moto = false;
@@ -605,14 +620,12 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                         value: VagaMoto,
                         onChanged: (value) {
                           setState(() {
-
                             if(value == true){
                               PreenchidoPermissao = true;
                               VagaMoto = true;
                               VagaComum = false;
                               VagaDiretoria = false;
                             }
-
                           });
                         },
                         activeColor: Colors.blue,
@@ -631,14 +644,12 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                         value: VagaDiretoria,
                         onChanged: (value) {
                           setState(() {
-
                             if(value == true){
                               PreenchidoPermissao = true;
                               VagaMoto = false;
                               VagaComum = false;
                               VagaDiretoria = true;
                             }
-
                           });
                         },
                         activeColor: Colors.blue,
@@ -666,13 +677,11 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                         value: Liberado,
                         onChanged: (value) {
                           setState(() {
-
                             if(value == true){
                               bloqueadoBool = false;
                               PreenchidoBloqueado = true;
                               Liberado = true;
                             }
-
                           });
                         },
                         activeColor: Colors.blue,
@@ -691,13 +700,11 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                         value: bloqueadoBool,
                         onChanged: (value) {
                           setState(() {
-
                             if(value == true){
                               bloqueadoBool = true;
                               PreenchidoBloqueado = true;
                               Liberado = false;
                             }
-
                           });
                         },
                         activeColor: Colors.blue,
@@ -829,7 +836,69 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                                         height: 50,
                                         width: double.infinity,
                                         child: TextButton(onPressed: (){
-
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: Text(
+                                                    'Atenção!',
+                                                  style: TextStyle(
+                                                      fontSize: tamanhotextobtns
+                                                  ),
+                                                ),
+                                                actions: [
+                                                  Center(
+                                                    child: Column(
+                                                      children: [
+                                                        Text(
+                                                            'Tem certeza que deseja cancelar esse veiculo?\nOs dados não poderão ser recuperados pós deletação!',
+                                                          style: TextStyle(
+                                                            fontSize: tamanhotexto
+                                                          ),
+                                                        ),
+                                                        Row(
+                                                          children: [
+                                                            Expanded(
+                                                              child: TextButton(onPressed: (){
+                                                                Navigator.of(context).pop();
+                                                              }, child: Text(
+                                                                  'Cancelar',
+                                                                style: TextStyle(
+                                                                    fontSize: tamanhotexto
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            Expanded(
+                                                              child: TextButton(onPressed: (){
+                                                                FirebaseFirestore.instance.collection('VeiculosdePrestadores').doc(documents['id']).delete().whenComplete((){
+                                                                  Fluttertoast.showToast(
+                                                                    msg: 'O veiculo selecionado foi deletado!',
+                                                                    toastLength: Toast.LENGTH_SHORT,
+                                                                    timeInSecForIosWeb: 1,
+                                                                    backgroundColor: Colors.black,
+                                                                    textColor: Colors.white,
+                                                                    fontSize: tamanhotexto,
+                                                                  );
+                                                                  Navigator.of(context).pop();
+                                                                });
+                                                              }, child: Text(
+                                                                  'Prosseguir',
+                                                                style: TextStyle(
+                                                                    fontSize: tamanhotexto
+                                                                 ),
+                                                                ),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ],
+                                                    ),
+                                                  )
+                                                ],
+                                              );
+                                            },
+                                          );
                                         }, child: const Icon(Icons.delete),
                                         )
                                     ),

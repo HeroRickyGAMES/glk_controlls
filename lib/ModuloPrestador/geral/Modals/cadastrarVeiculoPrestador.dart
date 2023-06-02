@@ -315,7 +315,7 @@ class _CadastrarPrestadorState extends State<CadastrarPrestador> {
                   Expanded(
                     child: Container(
                         padding: const EdgeInsets.all(16),
-                        child: ElevatedButton(onPressed: (){
+                        child: ElevatedButton(onPressed: () async {
                           if(marca == ''){
                             Fluttertoast.showToast(
                               msg: 'Preencha a marca!',
@@ -376,34 +376,55 @@ class _CadastrarPrestadorState extends State<CadastrarPrestador> {
                                         fontSize: tamanhotexto,
                                       );
                                     }else{
-                                      var dateTime = DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
 
-                                      var uuid = const Uuid();
+                                      List veiculosPlacas = [];
 
-                                      String idd = "${DateTime.now().toString()}${uuid.v4()}";
+                                      final VeiculosCollections = FirebaseFirestore.instance.collection('VeiculosdePrestadores');
+                                      final snapshot5 = await VeiculosCollections.get();
+                                      final VEICULOSDOCS = snapshot5.docs;
+                                      for (final VEICULODOC in VEICULOSDOCS) {
 
-                                      String ComumData = "${DateTime.now().toString()}";
+                                        final placas = VEICULODOC.get('PlacaVeiculo');
 
-                                      FirebaseFirestore.instance.collection('VeiculosdePrestadores').doc(idd).set({
-                                        'PlacaVeiculo': VeiculoPlaca,
-                                        'idPertence': widget.idPrestador,
-                                        'Modelo': modelo,
-                                        'Marca': marca,
-                                        'cor': cor,
-                                        'TipoDeVeiculo': Veiculo,
-                                        'DataCriada': ComumData,
-                                        'DataCriadaCode': dateTime,
-                                        'Liberado': liberado
-                                      }).whenComplete((){
-                                        Navigator.pop(context);
-                                      });
+                                        veiculosPlacas.add(placas);
+                                      }
+                                      
+                                      if(veiculosPlacas.contains(VeiculoPlaca)){
+                                        Fluttertoast.showToast(
+                                          msg: 'Um Veiculo com a mesma placa já existe no sistema!',
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          timeInSecForIosWeb: 1,
+                                          backgroundColor: Colors.black,
+                                          textColor: Colors.white,
+                                          fontSize: tamanhotexto,
+                                        );
+                                      }else{
+
+                                        var dateTime = DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
+                                        var uuid = const Uuid();
+                                        String idd = "${DateTime.now().toString()}${uuid.v4()}";
+                                        String ComumData = "${DateTime.now().toString()}";
+                                        FirebaseFirestore.instance.collection('VeiculosdePrestadores').doc(idd).set({
+                                          'PlacaVeiculo': VeiculoPlaca,
+                                          'idPertence': widget.idPrestador,
+                                          'Modelo': modelo,
+                                          'Marca': marca,
+                                          'cor': cor,
+                                          'TipoDeVeiculo': Veiculo,
+                                          'DataCriada': ComumData,
+                                          'DataCriadaCode': dateTime,
+                                          'Liberado': liberado,
+                                          'id': idd,
+                                        }).whenComplete((){
+                                          Navigator.pop(context);
+                                        });
+                                      }
                                     }
                                   }
                                 }
                               }
                             }
                           }
-
                         },style: ElevatedButton.styleFrom(
                             primary: Colors.green[800]
                         ), child: Text(
