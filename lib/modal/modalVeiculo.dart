@@ -220,6 +220,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 bool painel = result.get('painel');
                 String Email = result.get('email');
 
+                bool listaColaborador = result.get('listaColaborador');
+                bool relatorioColaborador = result.get('relatorioColaborador');
+
                 if(naoachado == true){
                   FirebaseFirestore.instance.collection('Motoristas').doc().set({
                     'nomeMotorista': nomeMotorista,
@@ -239,7 +242,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 Navigator.pop(context);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context){
-                      return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath, Email, liberacao);
+                      return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath, Email, liberacao, listaColaborador, relatorioColaborador);
                     }));
               }
             });
@@ -332,6 +335,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 bool painel = result.get('painel');
                 String Email = result.get('email');
 
+                bool listaColaborador = result.get('listaColaborador');
+                bool relatorioColaborador = result.get('relatorioColaborador');
+
                 if(naoachado == true){
                   FirebaseFirestore.instance.collection('Motoristas').doc().set({
                     'nomeMotorista': nomeMotorista,
@@ -351,7 +357,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 Navigator.pop(context);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context){
-                      return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath, Email, liberacao);
+                      return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath, Email, liberacao, listaColaborador, relatorioColaborador);
                     }));
               }
             });
@@ -1171,6 +1177,9 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     bool relatorio = result.get('relatorio');
                     bool painel = result.get('painel');
                     String Email = result.get('email');
+                    bool listaColaborador = result.get('listaColaborador');
+                    bool relatorioColaborador = result.get('relatorioColaborador');
+
                     var resulte = await FirebaseFirestore.instance
                         .collection("Condominio")
                         .doc('condominio')
@@ -1183,7 +1192,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     Navigator.pop(context);
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context){
-                          return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath, Email, liberacao);
+                          return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath, Email, liberacao, listaColaborador, relatorioColaborador);
                         }));
                     // retorna false para impedir que a navegação volte à tela anterior
 

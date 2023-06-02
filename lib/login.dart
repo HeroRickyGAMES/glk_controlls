@@ -221,6 +221,8 @@ class _loginState extends State<login> {
                                               bool painel = result.get('painel');
                                               String Email = result.get('email');
 
+                                              bool listaColaborador = result.get('listaColaborador');
+                                              bool relatorioColaborador = result.get('relatorioColaborador');
 
                                               var resulte = await FirebaseFirestore.instance
                                                   .collection("Condominio")
@@ -234,7 +236,7 @@ class _loginState extends State<login> {
                                               Navigator.pop(context);
                                               Navigator.push(context,
                                                   MaterialPageRoute(builder: (context){
-                                                    return mainPorteiro(PorteiroNome, cadastro, entrada, saida, relatorio, painel, logoPath, Email, liberacao);
+                                                    return mainPorteiro(PorteiroNome, cadastro, entrada, saida, relatorio, painel, logoPath, Email, liberacao, listaColaborador, relatorioColaborador);
                                                   }));
 
                                             }

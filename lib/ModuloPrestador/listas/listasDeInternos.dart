@@ -17,6 +17,9 @@ class listasdeInternos extends StatefulWidget {
 }
 
 class _listasdeInternosState extends State<listasdeInternos> {
+
+  String EmpresaIs = '';
+
   @override
   Widget build(BuildContext context) {
 
@@ -70,6 +73,10 @@ class _listasdeInternosState extends State<listasdeInternos> {
       return file;
     }
 
+    if(widget.EmpresaID != ''){
+      EmpresaIs = 'Empresa';
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Lista de cadastros'),
@@ -83,8 +90,21 @@ class _listasdeInternosState extends State<listasdeInternos> {
           children: [
             Container(
               padding: const EdgeInsets.all(16),
+              width: 500,
+              child: Image.asset(
+                'assets/icon.png',
+                width: 200,
+                height: 200,
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
               child: StreamBuilder(
-                stream: FirebaseFirestore.instance
+                stream: widget.EmpresaID != '' ? FirebaseFirestore.instance
+                    .collection('Prestadores')
+                    .where('EmpresaID', isEqualTo: widget.EmpresaID)
+                    .snapshots() :
+                FirebaseFirestore.instance
                     .collection('Prestadores')
                     .snapshots(),
                 builder: (BuildContext context,
@@ -163,14 +183,26 @@ class _listasdeInternosState extends State<listasdeInternos> {
                                       height: 50,
                                       width: double.infinity,
                                       child: TextButton(onPressed: () async {
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return const AlertDialog(
+                                              title: Text('Aguarde!'),
+                                              actions: [
+                                                Center(
+                                                  child: CircularProgressIndicator(),
+                                                )
+                                              ],
+                                            );
+                                          },
+                                        );
 
                                         final convertedFile = await convertImageUrlToFile(documents['urlImage']);
-
+                                        Navigator.of(context).pop();
                                         Navigator.push(context,
                                             MaterialPageRoute(builder: (context){
                                               return RecuperarInfos(widget.NomeEmpresa, widget.EmpresaID, convertedFile, documents['nome'], documents['RG'], documents['Telefone'], documents['id'], true, true, documents['carro'], documents['moto'], documents['carroEmoto'], documents['vagaComum'], documents['vagaMoto'], documents['VagaDiretoria'], true, documents['Liberado'], false, true, false);
                                             }));
-
                                       },
                                         child: const Icon(Icons.edit),
                                       )

@@ -232,8 +232,6 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                     'VagaDiretoria': VagaDiretoria,
                     'Liberado': Liberado,
                     'urlImage': imageUrl,
-                    'Empresa': widget.EmpresaNome,
-                    'EmpresaID': widget.EmpresaID,
                   }).then((value){
                     Navigator.of(context).pop();
                     Navigator.pop(context);

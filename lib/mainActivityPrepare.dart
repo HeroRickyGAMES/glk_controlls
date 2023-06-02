@@ -176,11 +176,13 @@ checkislog(context) async {
 
                             String logoPath = resulte.get('imageURL');
                             bool liberacao = result.get('liberacao');
+                            bool listaColaborador = result.get('listaColaborador');
+                            bool relatorioColaborador = result.get('relatorioColaborador');
 
                             Navigator.pop(context);
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context){
-                                  return mainPorteiro(PorteiroNome, cadastro, entrada, saida, relatorio, painel, logoPath, Email, liberacao);
+                                  return mainPorteiro(PorteiroNome, cadastro, entrada, saida, relatorio, painel, logoPath, Email, liberacao, listaColaborador, relatorioColaborador);
                                 }));
 
                           }else{
@@ -455,10 +457,13 @@ checkislogOFFLine(context) async {
                 String PorteiroNome = result.get('nome');
                 String Email = result.get('email');
 
+                bool listaColaborador = result.get('listaColaborador');
+                bool relatorioColaborador = result.get('relatorioColaborador');
+
                 Navigator.pop(context);
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context){
-                      return mainPorteiro(PorteiroNome, cadastro, entrada, saida, relatorio, painel, '', Email, liberacao);
+                      return mainPorteiro(PorteiroNome, cadastro, entrada, saida, relatorio, painel, '', Email, liberacao, listaColaborador, relatorioColaborador);
                     }));
 
               });

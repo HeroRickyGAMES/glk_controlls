@@ -29,6 +29,8 @@ class _operadorInternoState extends State<operadorInterno> {
   bool cadastrarbool = false;
   bool saidabool = false;
   bool visivel = true;
+  bool relatorioColaborador = true;
+  bool listaColaborador = true;
 
   @override
   Widget build(BuildContext context) {
@@ -274,6 +276,30 @@ class _operadorInternoState extends State<operadorInterno> {
                     checkColor: Colors.white,
                     controlAffinity: ListTileControlAffinity.leading,
                   ),
+                  CheckboxListTile(
+                    title: const Text('Lista de colaboradores'),
+                    value: listaColaborador,
+                    onChanged: (value) {
+                      setState(() {
+                        listaColaborador = value!;
+                      });
+                    },
+                    activeColor: Colors.blue,
+                    checkColor: Colors.white,
+                    controlAffinity: ListTileControlAffinity.leading,
+                  ),
+                  CheckboxListTile(
+                    title: const Text('Relatorio de colaboradores'),
+                    value: relatorioColaborador,
+                    onChanged: (value) {
+                      setState(() {
+                        relatorioColaborador = value!;
+                      });
+                    },
+                    activeColor: Colors.blue,
+                    checkColor: Colors.white,
+                    controlAffinity: ListTileControlAffinity.leading,
+                  ),
                 ],
               ),
               Container(
@@ -352,6 +378,8 @@ class _operadorInternoState extends State<operadorInterno> {
                                     'tipoConta': 'porteiro',
                                     'estaativo': true,
                                     'liberacao': liberacao,
+                                    'listaColaborador': listaColaborador,
+                                    'relatorioColaborador': relatorioColaborador,
                                     'id': userCredential.user?.uid,
                                   }
                               );
@@ -369,7 +397,9 @@ class _operadorInternoState extends State<operadorInterno> {
                                     'tipoConta': 'porteiro',
                                     'estaativo': true,
                                     'liberacao': liberacao,
-                                    'id': userCredential.user?.uid
+                                    'id': userCredential.user?.uid,
+                                    'listaColaborador': listaColaborador,
+                                    'relatorioColaborador': relatorioColaborador,
                                   }
                               ).then((value) {
                                 Fluttertoast.showToast(

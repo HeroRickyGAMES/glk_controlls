@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:glk_controls/ModuloPrestador/internoPorteiro/mainPorteiroInternoPrestador.dart';
 import 'package:glk_controls/Painel.dart';
 import 'package:glk_controls/btnsVerificarEntrada.dart';
 import 'package:glk_controls/btnsVerificarSaida.dart';
@@ -15,8 +16,6 @@ import 'package:glk_controls/relatorio.dart';
 import 'package:glk_controls/modal/modalVeiculo.dart';
 import 'package:glk_controls/anteLogin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'firebase_options.dart';
 
 //Programado por HeroRickyGames
 
@@ -37,9 +36,11 @@ class mainPorteiro extends StatefulWidget {
   bool painel;
   bool liberacao;
   String Email;
+  bool listaColaborador;
+  bool relatorioColaborador;
 
   final String PorteiroNome;
-  mainPorteiro(this.PorteiroNome, this.cadastro, this.entrada, this.saida, this.relatorio, this.painel, this.LogoPath, this.Email, this.liberacao, {super.key});
+  mainPorteiro(this.PorteiroNome, this.cadastro, this.entrada, this.saida, this.relatorio, this.painel, this.LogoPath, this.Email, this.liberacao, this.listaColaborador, this.relatorioColaborador, {super.key});
 
   @override
   State<mainPorteiro> createState() => _mainPorteiroState();
@@ -182,6 +183,13 @@ class _mainPorteiroState extends State<mainPorteiro> {
       Navigator.push(context,
           MaterialPageRoute(builder: (context){
             return btnsVerificarSaida(widget.PorteiroNome);
+          }));
+    }
+
+    openColaborador(){
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context){
+            return mainPorteiroInternoPrestador(widget.PorteiroNome, widget.LogoPath, widget.listaColaborador, widget.relatorioColaborador);
           }));
     }
 
@@ -795,10 +803,23 @@ class _mainPorteiroState extends State<mainPorteiro> {
                     width: 500,
                     padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                     child: ElevatedButton(
+                      onPressed: openColaborador,
+                      child: Text(
+                        'Acesso interno',
+                        style: TextStyle(
+                            fontSize: tamanhotextobtns
+                        ),
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 500,
+                    padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
+                    child: ElevatedButton(
                       onPressed: widget.entrada? entradaMT : null,
                       style: ElevatedButton.styleFrom(
-                          primary: Colors.green[700]
-                      ),
+                        primary: Colors.green[700]
+                    ),
                       child: Text(
                         'Verificar Entrada',
                         style: TextStyle(
@@ -1077,7 +1098,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                                       primary: Colors.red
                                   ),
                                   child: const Text(
-                                    'Logoff',
+                                    'Sair',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                     ),

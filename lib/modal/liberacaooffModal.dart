@@ -398,6 +398,9 @@ class _liberacaoOffState extends State<liberacaoOff> {
                     bool painel = result.get('painel');
                     String Email = result.get('email');
 
+                    bool listaColaborador = result.get('listaColaborador');
+                    bool relatorioColaborador = result.get('relatorioColaborador');
+
                     var resulte = await FirebaseFirestore.instance
                         .collection("Condominio")
                         .doc('condominio')
@@ -407,10 +410,11 @@ class _liberacaoOffState extends State<liberacaoOff> {
 
                     bool liberacao = result.get('liberacao');
 
+
                     Navigator.pop(context);
                     Navigator.push(context,
                         MaterialPageRoute(builder: (context){
-                          return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath, Email, liberacao);
+                          return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath, Email, liberacao, listaColaborador, relatorioColaborador);
                         }));
                   }
 
@@ -855,6 +859,9 @@ class _liberacaoOffState extends State<liberacaoOff> {
                   bool painel = result.get('painel');
                   String Email = result.get('email');
 
+                  bool listaColaborador = result.get('listaColaborador');
+                  bool relatorioColaborador = result.get('relatorioColaborador');
+
                   var resulte = await FirebaseFirestore.instance
                       .collection("Condominio")
                       .doc('condominio')
@@ -867,7 +874,7 @@ class _liberacaoOffState extends State<liberacaoOff> {
                   Navigator.pop(context);
                   Navigator.push(context,
                       MaterialPageRoute(builder: (context){
-                        return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath, Email, liberacao);
+                        return mainPorteiro(widget.nomeUser, cadastro, entrada, saida, relatorio, painel, logoPath, Email, liberacao, listaColaborador, relatorioColaborador);
                       }));
                   // retorna false para impedir que a navegação volte à tela anterior
                   return false;
