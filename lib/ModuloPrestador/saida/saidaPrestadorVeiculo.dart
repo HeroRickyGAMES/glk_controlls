@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/callToAPI.dart';
 
-class entradaModuloPrestador extends StatefulWidget {
+class SaidaPrestadorSaida extends StatefulWidget {
   String Operador;
   String URLImage;
   String NomeUser;
@@ -24,13 +24,13 @@ class entradaModuloPrestador extends StatefulWidget {
   String ID;
   String IDEmpresa;
   String galpao;
-  entradaModuloPrestador(this.Operador, this.URLImage, this.NomeUser, this.TipoDeVeiculo, this.Empresa, this.Telefone, this.vagaComum, this.vagaMoto, this.VagaDiretoria, this.Marca, this.Modelo, this.Cor, this.placa, this.PermitidosVeiculos, this.ID, this.IDEmpresa, this.galpao, {super.key});
+  SaidaPrestadorSaida(this.Operador, this.URLImage, this.NomeUser, this.TipoDeVeiculo, this.Empresa, this.Telefone, this.vagaComum, this.vagaMoto, this.VagaDiretoria, this.Marca, this.Modelo, this.Cor, this.placa, this.PermitidosVeiculos, this.ID, this.IDEmpresa, this.galpao, {super.key});
 
   @override
-  State<entradaModuloPrestador> createState() => _entradaModuloPrestadorState();
+  State<SaidaPrestadorSaida> createState() => _SaidaPrestadorSaidaState();
 }
 
-class _entradaModuloPrestadorState extends State<entradaModuloPrestador> {
+class _SaidaPrestadorSaidaState extends State<SaidaPrestadorSaida> {
   bool _isChecked = false;
   @override
   Widget build(BuildContext context) {
@@ -93,11 +93,11 @@ class _entradaModuloPrestadorState extends State<entradaModuloPrestador> {
         'vagasMoto': vagasMoto
       }).then((value){
         FirebaseFirestore.instance.collection('VeiculosdePrestadores').doc(widget.ID).update({
-          'status': 'Liberado Entrada',
-          'lastStatus': 'Liberado Entrada'
+          'status': '',
+          'lastStatus': 'Liberado Saida'
         }).then((value) async {
           Fluttertoast.showToast(
-            msg: 'Entrada Realizada com sucesso! Aguarde os reles se acionarem!',
+            msg: 'Saida Realizada com sucesso! Aguarde os reles se acionarem!',
             toastLength: Toast.LENGTH_SHORT,
             timeInSecForIosWeb: 1,
             backgroundColor: Colors.black,
@@ -440,7 +440,7 @@ class _entradaModuloPrestadorState extends State<entradaModuloPrestador> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Entrada - Placa: ${widget.placa}'),
+        title: Text('Saida - Placa: ${widget.placa}'),
         backgroundColor: Colors.blue,
         centerTitle: true,
       ),
@@ -555,7 +555,7 @@ class _entradaModuloPrestadorState extends State<entradaModuloPrestador> {
                         child: Text(
                           'Marca: ${widget.Marca}',
                           style: TextStyle(
-                              fontSize: tamanhotexto,
+                            fontSize: tamanhotexto,
                           ),
                         )
                     ),
@@ -621,10 +621,10 @@ class _entradaModuloPrestadorState extends State<entradaModuloPrestador> {
                       },
                     ),
                     Text(
-                      'Liberar Entrada',
+                      'Saída Entrada',
                       style: TextStyle(
-                        fontSize: tamanhotexto,
-                        fontWeight: FontWeight.bold
+                          fontSize: tamanhotexto,
+                          fontWeight: FontWeight.bold
                       ),
                     ),
                   ],
@@ -646,10 +646,10 @@ class _entradaModuloPrestadorState extends State<entradaModuloPrestador> {
                             Navigator.pop(context);
                           },
                           child: Text(
-                              'Cancelar',
+                            'Cancelar',
                             style: TextStyle(
-                              fontSize: tamanhotexto,
-                              color: Colors.black
+                                fontSize: tamanhotexto,
+                                color: Colors.black
                             ),
                           )
                       ),
@@ -687,12 +687,12 @@ class _entradaModuloPrestadorState extends State<entradaModuloPrestador> {
                                                   setState(() {
                                                     Entrada01 = value ?? false;
                                                     Entrada02 = !value! ?? false;
-                                                    Entrada = 'Rele01';
+                                                    Entrada = 'Rele02';
                                                   });
                                                 },
                                               ),
                                               Text(
-                                                'Cancela 01 Entrada Passeio',
+                                                'Cancela 01 Saida Passeio',
                                                 style: TextStyle(
                                                     fontSize: tamanhotexto,
                                                     fontWeight: FontWeight.bold
@@ -710,12 +710,12 @@ class _entradaModuloPrestadorState extends State<entradaModuloPrestador> {
                                                   setState(() {
                                                     Entrada02 = value ?? false;
                                                     Entrada01 = !value! ?? false;
-                                                    Entrada = 'Rele03';
+                                                    Entrada = 'Rele04';
                                                   });
                                                 },
                                               ),
                                               Text(
-                                                'Cancela 02 Entrada Caminhões',
+                                                'Cancela 02 Saida Caminhões',
                                                 style: TextStyle(
                                                     fontSize: tamanhotexto,
                                                     fontWeight: FontWeight.bold
@@ -733,12 +733,12 @@ class _entradaModuloPrestadorState extends State<entradaModuloPrestador> {
                                                         primary: Colors.red
                                                     ),
                                                     onPressed: (){
-                                                        Navigator.of(context).pop();
+                                                      Navigator.of(context).pop();
                                                     },
                                                     child: Text(
-                                                        'Cancelar',
+                                                      'Cancelar',
                                                       style: TextStyle(
-                                                        fontSize: tamanhotextobtns
+                                                          fontSize: tamanhotextobtns
                                                       ),
                                                     )
                                                 ),
@@ -801,51 +801,23 @@ class _entradaModuloPrestadorState extends State<entradaModuloPrestador> {
                                                           if(widget.vagaComum == true){
 
                                                             if(widget.TipoDeVeiculo == 'Carro'){
-                                                              vagasInterno = vagasInterno - 1.0;
+                                                              vagasInterno = vagasInterno + 1.0;
                                                               print(vagasInterno);
                                                             }else{
                                                               if(widget.TipoDeVeiculo == 'Moto'){
-                                                                vagasInterno = vagasInterno - 0.5;
+                                                                vagasInterno = vagasInterno + 0.5;
                                                               }
                                                             }
 
                                                           }
                                                           if(widget.vagaMoto == true){
-                                                            vagasDeDiretoria = vagasDeDiretoria - 1;
+                                                            vagasDeDiretoria = vagasDeDiretoria + 1;
                                                           }
                                                           if(widget.VagaDiretoria == true){
-                                                            vagasMoto = vagasMoto - 1;
+                                                            vagasMoto = vagasMoto + 1;
                                                           }
 
-                                                          if(widget.TipoDeVeiculo == 'Carro'){
-                                                            if(vagasInterno == 0.0 || vagasInterno == 0.5){
-                                                              Fluttertoast.showToast(
-                                                                msg: 'Não há mais vagas disponiveis! Por favor aguarde a saida de um veiculo!',
-                                                                toastLength: Toast.LENGTH_SHORT,
-                                                                timeInSecForIosWeb: 1,
-                                                                backgroundColor: Colors.black,
-                                                                textColor: Colors.white,
-                                                                fontSize: tamanhotexto,
-                                                              );
-                                                            }else{
-                                                              nextStep();
-                                                            }
-                                                          }else{
-                                                            if(widget.TipoDeVeiculo == 'Moto'){
-                                                              if(vagasInterno == 0.0){
-                                                                Fluttertoast.showToast(
-                                                                  msg: 'Não há mais vagas disponiveis! Por favor aguarde a saida de um veiculo!',
-                                                                  toastLength: Toast.LENGTH_SHORT,
-                                                                  timeInSecForIosWeb: 1,
-                                                                  backgroundColor: Colors.black,
-                                                                  textColor: Colors.white,
-                                                                  fontSize: tamanhotexto,
-                                                                );
-                                                              }else{
-                                                                nextStep();
-                                                              }
-                                                            }
-                                                          }
+                                                          nextStep();
                                                         }
                                                       }
                                                     },
@@ -870,7 +842,7 @@ class _entradaModuloPrestadorState extends State<entradaModuloPrestador> {
                           child: Text(
                             'Prosseguir',
                             style: TextStyle(
-                                fontSize: tamanhotexto,
+                              fontSize: tamanhotexto,
                             ),
                           )
                       ),

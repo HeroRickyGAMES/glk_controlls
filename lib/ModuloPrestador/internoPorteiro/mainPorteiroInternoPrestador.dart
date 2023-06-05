@@ -2,6 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:glk_controls/ModuloPrestador/geral/pesquisa/PesquisaPlacaSaida.dart';
+import 'package:glk_controls/ModuloPrestador/geral/pesquisa/pesquisa.dart';
 import 'package:glk_controls/ModuloPrestador/geral/pesquisa/pesquisaPlaca.dart';
 import 'package:glk_controls/ModuloPrestador/listas/listasDeInternos.dart';
 
@@ -69,6 +71,17 @@ class _mainPorteiroInternoPrestadorState extends State<mainPorteiroInternoPresta
           }));
     }
 
+    saidaColaborador(){
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context){
+            return PesquisaPlacaSaida(widget.Operador);
+          }));
+    }
+
+    listaDeColaboradores(){
+
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Acesso interno'),
@@ -120,7 +133,7 @@ class _mainPorteiroInternoPrestadorState extends State<mainPorteiroInternoPresta
                 width: 500,
                 padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                 child: ElevatedButton(
-                  onPressed: null,
+                  onPressed: saidaColaborador,
                   child: Text(
                     'Saida Colaborador',
                     style: TextStyle(
@@ -133,9 +146,9 @@ class _mainPorteiroInternoPrestadorState extends State<mainPorteiroInternoPresta
                 width: 500,
                 padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                 child: ElevatedButton(
-                  onPressed: null,
+                  onPressed: listaDeColaboradores,
                   child: Text(
-                    'Lista de colaboradores',
+                    'Cadastro de Colaboradores',
                     style: TextStyle(
                         fontSize: tamanhotextobtns
                     ),

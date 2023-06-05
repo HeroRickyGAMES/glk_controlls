@@ -43,6 +43,7 @@ class _CadastrarPrestadorState extends State<CadastrarPrestador> {
 
   @override
   Widget build(BuildContext context) {
+    var dbInstance = FirebaseFirestore.instance;
 
     double tamanhotexto = 20;
     double tamanhotextomin = 16;
@@ -380,6 +381,13 @@ class _CadastrarPrestadorState extends State<CadastrarPrestador> {
                                       );
                                     }else{
 
+                                      var result = await dbInstance
+                                          .collection("empresa")
+                                          .doc(widget.idEmpresa)
+                                          .get();
+
+                                      String galpao = (result.get('galpaoPrimario'));
+
                                       List veiculosPlacas = [];
 
                                       final VeiculosCollections = FirebaseFirestore.instance.collection('VeiculosdePrestadores');
@@ -423,7 +431,8 @@ class _CadastrarPrestadorState extends State<CadastrarPrestador> {
                                           'idEmpresa': widget.idEmpresa,
                                           'Empresa': widget.NomeEmpresa,
                                           'PertenceA': widget.NomePrestador,
-                                          'lastStatus': ''
+                                          'lastStatus': '',
+                                          'galpao': galpao,
                                         }).whenComplete((){
                                           Navigator.pop(context);
                                         });

@@ -142,6 +142,7 @@ class _PesquisaPlacaState extends State<PesquisaPlaca> {
                       String Cor = '';
                       String ID = '';
                       bool liberado = false;
+                      String galpao = '';
 
                       final PlacaCollections = FirebaseFirestore.instance.collection('VeiculosdePrestadores').where('PlacaVeiculo', isEqualTo: Placa);
                       final snapshot6 = await PlacaCollections.get();
@@ -159,6 +160,7 @@ class _PesquisaPlacaState extends State<PesquisaPlaca> {
                         final CorDoc = PLACADOC.get('cor');
                         final idDoc = PLACADOC.get('id');
                         final liberadoDoc = PLACADOC.get('Liberado');
+                        final galpaoDoc = PLACADOC.get('galpao');
                         placaLista = placa;
                         statusList = status;
                         Pertence = pertence;
@@ -171,6 +173,7 @@ class _PesquisaPlacaState extends State<PesquisaPlaca> {
                         Cor = CorDoc;
                         ID = idDoc;
                         liberado = liberadoDoc;
+                        galpao = galpaoDoc;
                       }
 
                       if(liberado == false){
@@ -228,7 +231,7 @@ class _PesquisaPlacaState extends State<PesquisaPlaca> {
 
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context){
-                                return entradaModuloPrestador(widget.Porteiro, imageURL, Pertence, tipoDeVeiculo, Empresa, telefone, vagaComum, vagaMoto, VagaDiretoria, Marca, Modelo, Cor, placaLista, PermitidosVeiculos, ID, IDEmpresa);
+                                return entradaModuloPrestador(widget.Porteiro, imageURL, Pertence, tipoDeVeiculo, Empresa, telefone, vagaComum, vagaMoto, VagaDiretoria, Marca, Modelo, Cor, placaLista, PermitidosVeiculos, ID, IDEmpresa, galpao);
                               }));
 
                         }else{
