@@ -676,12 +676,12 @@ class _mainActivityPrepareState extends State<mainActivityPrepare> {
         title: const Text("Preparando login"),
         centerTitle: true,
       ),
-      body: Column(
-        children: const [
-          Center(
-              child: CircularProgressIndicator()
-          ),
-        ],
+      body: const Center(
+        child: Column(
+          children: [
+            CircularProgressIndicator(),
+          ],
+        ),
       ),
     );
   }

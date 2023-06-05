@@ -14,7 +14,9 @@ class CadastrarPrestador extends StatefulWidget {
   String NomePrestador;
   bool carroEmoto;
   bool carroOuMoto;
-  CadastrarPrestador(this.NomeEmpresa, this.idEmpresa, this.idPrestador, this.NomePrestador, this.carroEmoto, this.carroOuMoto, {Key? key}) : super(key: key);
+  String nomeUser;
+  String OperadorName;
+  CadastrarPrestador(this.NomeEmpresa, this.idEmpresa, this.idPrestador, this.NomePrestador, this.carroEmoto, this.carroOuMoto, this.nomeUser, this.OperadorName, {Key? key}) : super(key: key);
 
   @override
   State<CadastrarPrestador> createState() => _CadastrarPrestadorState();
@@ -417,6 +419,11 @@ class _CadastrarPrestadorState extends State<CadastrarPrestador> {
                                           'DataCriadaCode': dateTime,
                                           'Liberado': liberado,
                                           'id': idd,
+                                          'status': '',
+                                          'idEmpresa': widget.idEmpresa,
+                                          'Empresa': widget.NomeEmpresa,
+                                          'PertenceA': widget.NomePrestador,
+                                          'lastStatus': ''
                                         }).whenComplete((){
                                           Navigator.pop(context);
                                         });
@@ -459,7 +466,7 @@ class _CadastrarPrestadorState extends State<CadastrarPrestador> {
                     Column(
                       children: [
                         Text(
-                          'Operador: ${widget.NomeEmpresa}',
+                          'Operador: ${widget.OperadorName}',
                           style: TextStyle(
                               fontSize: tamanhotexto
                           ),

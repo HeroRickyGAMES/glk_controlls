@@ -23,6 +23,7 @@ class _pesquisaPrestadorState extends State<pesquisaPrestador> {
 
   String RGouNome = '';
   String oqPesquisar = 'RG';
+
   @override
   Widget build(BuildContext context) {
     double tamanhotexto = 20;
@@ -100,8 +101,16 @@ class _pesquisaPrestadorState extends State<pesquisaPrestador> {
                     setState(() async {
                       RGouNome = valor;
 
+                      if(RGouNome == ''){
+                        setState(() {
+                          oqPesquisar = 'RG';
+                        });
+                        RGouNome = '';
+                      }
 
                       List pesquisaRG = [];
+
+
 
                       final RGCollections = FirebaseFirestore.instance.collection('Prestadores');
                       final snapshot5 = await RGCollections.get();
@@ -177,6 +186,10 @@ class _pesquisaPrestadorState extends State<pesquisaPrestador> {
                     padding: const EdgeInsets.all(16),
                     child: ElevatedButton(onPressed: () async {
                       if(RGouNome == ''){
+                        setState(() {
+                          oqPesquisar = 'RG';
+                        });
+                        RGouNome = '';
                         Fluttertoast.showToast(
                           msg: 'O campo de pesquisa está vazio!',
                           toastLength: Toast.LENGTH_SHORT,
@@ -354,7 +367,7 @@ class _pesquisaPrestadorState extends State<pesquisaPrestador> {
 
                                           Navigator.push(context,
                                               MaterialPageRoute(builder: (context){
-                                                return RecuperarInfos(widget.EmpresaNome, widget.EmpresaID, convertedFile, documents['nome'], documents['RG'], documents['Telefone'], documents['id'], true, true, documents['carro'], documents['moto'], documents['carroEmoto'], documents['vagaComum'], documents['vagaMoto'], documents['VagaDiretoria'], true, documents['Liberado'], false, true, false);
+                                                return RecuperarInfos(documents['Empresa'], documents['EmpresaID'], convertedFile, documents['nome'], documents['RG'], documents['Telefone'], documents['id'], true, true, documents['carro'], documents['moto'], documents['carroEmoto'], documents['vagaComum'], documents['vagaMoto'], documents['VagaDiretoria'], true, documents['Liberado'], false, true, false, widget.EmpresaNome);
                                               }));
 
                                         },

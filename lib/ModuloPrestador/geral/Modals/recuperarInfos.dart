@@ -29,8 +29,9 @@ class RecuperarInfos extends StatefulWidget {
   bool bloqueadoBool;
   bool isTired;
   bool poscadastro;
+  String OperadorName = '';
 
-  RecuperarInfos(this.EmpresaNome, this.EmpresaID, this.imageFile,this.Nome, this.RG, this.Telefone, this.idd, this.PreenchidoTipoVeiculo, this.PreenchidoPermissao, this.carroOuMoto, this.moto, this.carroEmoto, this.VagaComum, this.VagaMoto, this.VagaDiretoria, this.PreenchidoBloqueado, this.Liberado, this.bloqueadoBool, this.isTired, this.poscadastro , {Key? key}) : super(key: key);
+  RecuperarInfos(this.EmpresaNome, this.EmpresaID, this.imageFile,this.Nome, this.RG, this.Telefone, this.idd, this.PreenchidoTipoVeiculo, this.PreenchidoPermissao, this.carroOuMoto, this.moto, this.carroEmoto, this.VagaComum, this.VagaMoto, this.VagaDiretoria, this.PreenchidoBloqueado, this.Liberado, this.bloqueadoBool, this.isTired, this.poscadastro, this.OperadorName, {Key? key}) : super(key: key);
 
   @override
   State<RecuperarInfos> createState() => _RecuperarInfosState();
@@ -916,7 +917,7 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                       onPressed: (){
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context){
-                              return CadastrarPrestador(widget.EmpresaNome, widget.EmpresaID, widget.idd, nome, carroEmoto, carroOuMoto);
+                              return CadastrarPrestador(widget.EmpresaNome, widget.EmpresaID, widget.idd, nome, carroEmoto, carroOuMoto, nome, widget.OperadorName);
                             }));
                       },
                       child: Text(
@@ -950,7 +951,7 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                         Column(
                           children: [
                             Text(
-                              'Operador: ${widget.EmpresaNome}',
+                              'Operador: ${widget.OperadorName}',
                               style: TextStyle(
                                   fontSize: tamanhotexto
                               ),

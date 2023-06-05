@@ -201,7 +201,7 @@ class _listasdeInternosState extends State<listasdeInternos> {
                                         Navigator.of(context).pop();
                                         Navigator.push(context,
                                             MaterialPageRoute(builder: (context){
-                                              return RecuperarInfos(widget.NomeEmpresa, widget.EmpresaID, convertedFile, documents['nome'], documents['RG'], documents['Telefone'], documents['id'], true, true, documents['carro'], documents['moto'], documents['carroEmoto'], documents['vagaComum'], documents['vagaMoto'], documents['VagaDiretoria'], true, documents['Liberado'], false, true, false);
+                                              return RecuperarInfos(documents['Empresa'], documents['EmpresaID'], convertedFile, documents['nome'], documents['RG'], documents['Telefone'], documents['id'], true, true, documents['carro'], documents['moto'], documents['carroEmoto'], documents['vagaComum'], documents['vagaMoto'], documents['VagaDiretoria'], true, documents['Liberado'], false, true, false, widget.NomeEmpresa);
                                             }));
                                       },
                                         child: const Icon(Icons.edit),
