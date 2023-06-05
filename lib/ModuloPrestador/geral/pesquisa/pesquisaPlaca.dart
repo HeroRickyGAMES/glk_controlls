@@ -141,6 +141,7 @@ class _PesquisaPlacaState extends State<PesquisaPlaca> {
                       String Modelo = '';
                       String Cor = '';
                       String ID = '';
+                      bool liberado = false;
 
                       final PlacaCollections = FirebaseFirestore.instance.collection('VeiculosdePrestadores').where('PlacaVeiculo', isEqualTo: Placa);
                       final snapshot6 = await PlacaCollections.get();
@@ -157,6 +158,7 @@ class _PesquisaPlacaState extends State<PesquisaPlaca> {
                         final ModeloDoc = PLACADOC.get('Modelo');
                         final CorDoc = PLACADOC.get('cor');
                         final idDoc = PLACADOC.get('id');
+                        final liberadoDoc = PLACADOC.get('Liberado');
                         placaLista = placa;
                         statusList = status;
                         Pertence = pertence;
@@ -168,87 +170,87 @@ class _PesquisaPlacaState extends State<PesquisaPlaca> {
                         Modelo = ModeloDoc;
                         Cor = CorDoc;
                         ID = idDoc;
+                        liberado = liberadoDoc;
                       }
 
-
-                      if(!statusList.contains('Liberado Entrada')){
-                        print(placaLista);
-                        print(Pertence);
-                        print(Empresa);
-                        print(tipoDeVeiculo);
-                        print(IDPrestador);
-
-                        bool vagaComum = false;
-                        bool vagaMoto = false;
-                        bool VagaDiretoria = false;
-                        String telefone = '';
-                        String imageURL = '';
-                        String PermitidosVeiculos = '';
-                        String IDEmpresa = '';
-
-                        final RGCollections = FirebaseFirestore.instance.collection('Prestadores');
-                        final snapshot5 = await RGCollections.get();
-                        final RGDOC = snapshot5.docs;
-                        for (final VEICULODOC in RGDOC) {
-
-                          final vagacomum = VEICULODOC.get('vagaComum');
-                          final vagamoto = VEICULODOC.get('vagaMoto');
-                          final vagadirecao = VEICULODOC.get('VagaDiretoria');
-                          final telefoneDOC = VEICULODOC.get('Telefone');
-                          final imageURI = VEICULODOC.get('urlImage');
-                          final carro = VEICULODOC.get('carro');
-                          final carroEmoto = VEICULODOC.get('carroEmoto');
-                          final moto = VEICULODOC.get('moto');
-                          final idEmpresaDoc = VEICULODOC.get('EmpresaID');
-
-                          if(carro == true){
-                            PermitidosVeiculos = 'Carro';
-                          }
-                          if(carroEmoto == true){
-                            PermitidosVeiculos = 'Carro+Moto';
-                          }
-                          if(moto == true){
-                            PermitidosVeiculos = 'Moto';
-                          }
-
-                          vagaComum = vagacomum;
-                          vagaMoto = vagamoto;
-                          VagaDiretoria = vagadirecao;
-                          telefone = telefoneDOC;
-                          imageURL = imageURI;
-                          IDEmpresa = idEmpresaDoc;
-                        }
-
-                        print(vagaComum);
-                        print(vagaMoto);
-                        print(VagaDiretoria);
-                        print(telefone);
-                        print(imageURL);
-
-                        Navigator.push(context,
-                            MaterialPageRoute(builder: (context){
-                              return entradaModuloPrestador(widget.Porteiro, imageURL, Pertence, tipoDeVeiculo, Empresa, telefone, vagaComum, vagaMoto, VagaDiretoria, Marca, Modelo, Cor, placaLista, PermitidosVeiculos, ID, IDEmpresa);
-                            }));
-
+                      if(liberado == false){
+                        Fluttertoast.showToast(
+                          msg: 'Esse veiculo está bloqueado!',
+                          toastLength: Toast.LENGTH_LONG,
+                          timeInSecForIosWeb: 5,
+                          backgroundColor: Colors.black,
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
                       }else{
-                        Fluttertoast.showToast(
-                          msg: 'Esse veiculo está dentro da empresa!',
-                          toastLength: Toast.LENGTH_LONG,
-                          timeInSecForIosWeb: 5,
-                          backgroundColor: Colors.black,
-                          textColor: Colors.white,
-                          fontSize: 16.0,
-                        );
-                      }
-                      if(placaLista.isEmpty){
-                        Fluttertoast.showToast(
-                          msg: 'Não encontrei nada, por favor tente novamente!',
-                          toastLength: Toast.LENGTH_LONG,
-                          timeInSecForIosWeb: 5,
-                          backgroundColor: Colors.black,
-                          textColor: Colors.white,
-                          fontSize: 16.0,
-                        );
+                        if(!statusList.contains('Liberado Entrada')){
+
+                          bool vagaComum = false;
+                          bool vagaMoto = false;
+                          bool VagaDiretoria = false;
+                          String telefone = '';
+                          String imageURL = '';
+                          String PermitidosVeiculos = '';
+                          String IDEmpresa = '';
+
+                          final RGCollections = FirebaseFirestore.instance.collection('Prestadores');
+                          final snapshot5 = await RGCollections.get();
+                          final RGDOC = snapshot5.docs;
+                          for (final VEICULODOC in RGDOC) {
+
+                            final vagacomum = VEICULODOC.get('vagaComum');
+                            final vagamoto = VEICULODOC.get('vagaMoto');
+                            final vagadirecao = VEICULODOC.get('VagaDiretoria');
+                            final telefoneDOC = VEICULODOC.get('Telefone');
+                            final imageURI = VEICULODOC.get('urlImage');
+                            final carro = VEICULODOC.get('carro');
+                            final carroEmoto = VEICULODOC.get('carroEmoto');
+                            final moto = VEICULODOC.get('moto');
+                            final idEmpresaDoc = VEICULODOC.get('EmpresaID');
+
+                            if(carro == true){
+                              PermitidosVeiculos = 'Carro';
+                            }
+                            if(carroEmoto == true){
+                              PermitidosVeiculos = 'Carro+Moto';
+                            }
+                            if(moto == true){
+                              PermitidosVeiculos = 'Moto';
+                            }
+
+                            vagaComum = vagacomum;
+                            vagaMoto = vagamoto;
+                            VagaDiretoria = vagadirecao;
+                            telefone = telefoneDOC;
+                            imageURL = imageURI;
+                            IDEmpresa = idEmpresaDoc;
+                          }
+
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context){
+                                return entradaModuloPrestador(widget.Porteiro, imageURL, Pertence, tipoDeVeiculo, Empresa, telefone, vagaComum, vagaMoto, VagaDiretoria, Marca, Modelo, Cor, placaLista, PermitidosVeiculos, ID, IDEmpresa);
+                              }));
+
+                        }else{
+                          Fluttertoast.showToast(
+                            msg: 'Esse veiculo está dentro da empresa!',
+                            toastLength: Toast.LENGTH_LONG,
+                            timeInSecForIosWeb: 5,
+                            backgroundColor: Colors.black,
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
+                        }
+                        if(placaLista.isEmpty){
+                          Fluttertoast.showToast(
+                            msg: 'Não encontrei nada, por favor tente novamente!',
+                            toastLength: Toast.LENGTH_LONG,
+                            timeInSecForIosWeb: 5,
+                            backgroundColor: Colors.black,
+                            textColor: Colors.white,
+                            fontSize: 16.0,
+                          );
+                        }
                       }
                     }
                   },

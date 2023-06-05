@@ -364,7 +364,6 @@ class _mainPorteiroState extends State<mainPorteiro> {
                   ),
                   ElevatedButton(
                     onPressed: () async {
-
                       if(Senha == ""){
                         Fluttertoast.showToast(
                           msg: 'Preencha a senha!',

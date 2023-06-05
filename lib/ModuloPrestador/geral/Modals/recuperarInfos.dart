@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/ModuloPrestador/geral/Modals/cadastrarVeiculoPrestador.dart';
+import 'package:glk_controls/ModuloPrestador/geral/Modals/editarVeiculo.dart';
 import 'package:image_picker/image_picker.dart';
 
 class RecuperarInfos extends StatefulWidget {
@@ -825,7 +826,10 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                                       height: 50,
                                       width: double.infinity,
                                       child: TextButton(onPressed: (){
-
+                                        Navigator.push(context,
+                                            MaterialPageRoute(builder: (context){
+                                              return editarVeiculo(widget.EmpresaNome, widget.EmpresaID, widget.idd, nome, carroEmoto, carroOuMoto, nome, widget.OperadorName, documents['Marca'], documents['Modelo'], documents['cor'], documents['PlacaVeiculo'], documents['TipoDeVeiculo'], documents['Liberado'], documents['id']);
+                                            }));
                                       }, child: const Icon(Icons.edit),
                                       )
                                     ),

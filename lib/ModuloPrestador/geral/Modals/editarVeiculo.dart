@@ -7,7 +7,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:uuid/uuid.dart';
 import 'package:intl/intl.dart';
 
-class CadastrarPrestador extends StatefulWidget {
+class editarVeiculo extends StatefulWidget {
   String NomeEmpresa;
   String idEmpresa;
   String idPrestador;
@@ -16,14 +16,22 @@ class CadastrarPrestador extends StatefulWidget {
   bool carroOuMoto;
   String nomeUser;
   String OperadorName;
-  CadastrarPrestador(this.NomeEmpresa, this.idEmpresa, this.idPrestador, this.NomePrestador, this.carroEmoto, this.carroOuMoto, this.nomeUser, this.OperadorName, {Key? key}) : super(key: key);
+  String Marca;
+  String Modelo;
+  String Cor;
+  String Placa;
+  String tipodeVeiculo;
+  bool Liberado;
+  String ID;
+  editarVeiculo(this.NomeEmpresa, this.idEmpresa, this.idPrestador, this.NomePrestador, this.carroEmoto, this.carroOuMoto, this.nomeUser, this.OperadorName, this.Marca, this.Modelo, this.Cor, this.Placa, this.tipodeVeiculo, this.Liberado, this.ID,  {Key? key}) : super(key: key);
 
   @override
-  State<CadastrarPrestador> createState() => _CadastrarPrestadorState();
+  State<editarVeiculo> createState() => _editarVeiculoState();
 }
 
-class _CadastrarPrestadorState extends State<CadastrarPrestador> {
+class _editarVeiculoState extends State<editarVeiculo> {
 
+  bool init = false;
   //Strings
   List Veiculos = [];
   String marca = '';
@@ -37,6 +45,9 @@ class _CadastrarPrestadorState extends State<CadastrarPrestador> {
 
   //Controlador
   TextEditingController placaveiculointerface = TextEditingController();
+  TextEditingController marcainterface = TextEditingController();
+  TextEditingController modelointerface = TextEditingController();
+  TextEditingController corinterface = TextEditingController();
 
   //dropvalues
   final dropValue = ValueNotifier('');
@@ -79,6 +90,21 @@ class _CadastrarPrestadorState extends State<CadastrarPrestador> {
       }
     }
 
+    if(init == false){
+
+      marca = widget.Marca;
+      modelo = widget.Modelo;
+      cor = widget.Cor;
+      VeiculoPlaca = widget.Placa;
+      Veiculo = widget.tipodeVeiculo;
+      liberado = widget.Liberado;
+
+      placaveiculointerface = TextEditingController(text: VeiculoPlaca);
+      marcainterface = TextEditingController(text: marca);
+      modelointerface = TextEditingController(text: modelo);
+      corinterface = TextEditingController(text: cor);
+    }
+
     if(widget.carroEmoto == true){
       Veiculos = [
         'Carro',
@@ -98,6 +124,8 @@ class _CadastrarPrestadorState extends State<CadastrarPrestador> {
       }
     }
 
+    init == true;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue,
@@ -113,16 +141,17 @@ class _CadastrarPrestadorState extends State<CadastrarPrestador> {
               Container(
                   padding: const EdgeInsets.all(16),
                   child: Text(
-                      'Dados do veiculo; ${widget.NomePrestador}',
+                    'Dados do veiculo; ${widget.NomePrestador}',
                     style: TextStyle(
-                      fontSize: tamanhotextobtns,
-                      fontWeight: FontWeight.bold
+                        fontSize: tamanhotextobtns,
+                        fontWeight: FontWeight.bold
                     ),
                   )
               ),
               Container(
                 padding: const EdgeInsets.all(16),
                 child: TextFormField(
+                  controller: marcainterface,
                   onChanged: (valor){
                     marca = valor;
                     //Mudou mandou para a String
@@ -142,6 +171,7 @@ class _CadastrarPrestadorState extends State<CadastrarPrestador> {
               Container(
                 padding: const EdgeInsets.all(16),
                 child: TextFormField(
+                  controller: modelointerface,
                   onChanged: (valor){
                     modelo = valor;
                     //Mudou mandou para a String
@@ -161,6 +191,7 @@ class _CadastrarPrestadorState extends State<CadastrarPrestador> {
               Container(
                 padding: const EdgeInsets.all(16),
                 child: TextFormField(
+                  controller: corinterface,
                   onChanged: (valor){
                     cor = valor;
                     //Mudou mandou para a String
@@ -213,7 +244,7 @@ class _CadastrarPrestadorState extends State<CadastrarPrestador> {
                             fontSize: tamanhotexto
                         ),
                       ),
-                      value: (value.isEmpty)? null : value,
+                      value: (value.isEmpty)? Veiculo : value,
                       onChanged: (escolha) async {
                         dropValue.value = escolha.toString();
 
@@ -379,55 +410,20 @@ class _CadastrarPrestadorState extends State<CadastrarPrestador> {
                                         fontSize: tamanhotexto,
                                       );
                                     }else{
-
-                                      List veiculosPlacas = [];
-
-                                      final VeiculosCollections = FirebaseFirestore.instance.collection('VeiculosdePrestadores');
-                                      final snapshot5 = await VeiculosCollections.get();
-                                      final VEICULOSDOCS = snapshot5.docs;
-                                      for (final VEICULODOC in VEICULOSDOCS) {
-
-                                        final placas = VEICULODOC.get('PlacaVeiculo');
-                                        final idPertence = VEICULODOC.get('idPertence');
-
-                                        veiculosPlacas.add('$placas $idPertence');
-                                      }
-                                      
-                                      if(veiculosPlacas.contains('$VeiculoPlaca ${widget.idPrestador}')){
-                                        Fluttertoast.showToast(
-                                          msg: 'Um Veiculo com a mesma placa já existe no cadastro desse interno!',
-                                          toastLength: Toast.LENGTH_SHORT,
-                                          timeInSecForIosWeb: 1,
-                                          backgroundColor: Colors.black,
-                                          textColor: Colors.white,
-                                          fontSize: tamanhotexto,
-                                        );
-                                      }else{
-
-                                        var dateTime = DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
-                                        var uuid = const Uuid();
-                                        String idd = "${DateTime.now().toString()}${uuid.v4()}";
-                                        String ComumData = "${DateTime.now().toString()}";
-                                        FirebaseFirestore.instance.collection('VeiculosdePrestadores').doc(idd).set({
-                                          'PlacaVeiculo': VeiculoPlaca,
-                                          'idPertence': widget.idPrestador,
-                                          'Modelo': modelo,
-                                          'Marca': marca,
-                                          'cor': cor,
-                                          'TipoDeVeiculo': Veiculo,
-                                          'DataCriada': ComumData,
-                                          'DataCriadaCode': dateTime,
-                                          'Liberado': liberado,
-                                          'id': idd,
-                                          'status': '',
-                                          'idEmpresa': widget.idEmpresa,
-                                          'Empresa': widget.NomeEmpresa,
-                                          'PertenceA': widget.NomePrestador,
-                                          'lastStatus': ''
-                                        }).whenComplete((){
-                                          Navigator.pop(context);
-                                        });
-                                      }
+                                      FirebaseFirestore.instance.collection('VeiculosdePrestadores').doc(widget.ID).update({
+                                        'PlacaVeiculo': VeiculoPlaca,
+                                        'idPertence': widget.idPrestador,
+                                        'Modelo': modelo,
+                                        'Marca': marca,
+                                        'cor': cor,
+                                        'TipoDeVeiculo': Veiculo,
+                                        'Liberado': liberado,
+                                        'idEmpresa': widget.idEmpresa,
+                                        'Empresa': widget.NomeEmpresa,
+                                        'PertenceA': widget.NomePrestador,
+                                      }).whenComplete((){
+                                        Navigator.pop(context);
+                                      });
                                     }
                                   }
                                 }

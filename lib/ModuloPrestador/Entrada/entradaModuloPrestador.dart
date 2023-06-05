@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:glk_controls/callToAPI.dart';
 
 class entradaModuloPrestador extends StatefulWidget {
   String Operador;
@@ -32,6 +33,11 @@ class _entradaModuloPrestadorState extends State<entradaModuloPrestador> {
   bool _isChecked = false;
   @override
   Widget build(BuildContext context) {
+    double vagasInterno = 0.0;
+    int vagasDeDiretoria = 0;
+    int vagasMoto = 0;
+    String Entrada = '';
+
     String vaga = '';
 
     if(widget.vagaComum == true){
@@ -77,6 +83,358 @@ class _entradaModuloPrestadorState extends State<entradaModuloPrestador> {
         aspect = 0.8;
 
       }
+    }
+
+    nextStep(){
+      FirebaseFirestore.instance.collection('empresa').doc(widget.IDEmpresa).update({
+        'vagasInterno': vagasInterno,
+        'vagasDeDiretoria': vagasDeDiretoria,
+        'vagasMoto': vagasMoto
+      }).then((value){
+        FirebaseFirestore.instance.collection('VeiculosdePrestadores').doc(widget.ID).update({
+          'status': 'Liberado Entrada',
+          'lastStatus': 'Liberado Entrada'
+        }).then((value) async {
+          Fluttertoast.showToast(
+            msg: 'Pronto! Ligando Reles!',
+            toastLength: Toast.LENGTH_SHORT,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.black,
+            textColor: Colors.white,
+            fontSize: tamanhotexto,
+          );
+
+          Fluttertoast.showToast(
+            msg: 'Ligando reles!',
+            toastLength: Toast.LENGTH_SHORT,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.black,
+            textColor: Colors.white,
+            fontSize: tamanhotexto,
+          );
+
+          var result = await FirebaseFirestore.instance
+              .collection("Reles")
+              .doc(Entrada)
+              .get();
+
+
+          //rele 1
+          if(result.get('localAplicacao1') == "Cancela"){
+            //Verifica a função dos outros relês
+
+            if(result.get('funcao-rele1').contains('Pulso')){
+
+
+              rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+            }else{
+              releCancelaEntrada();
+            }
+
+            if(result.get('localAplicacao2') == 'Fechamento'){
+
+              if(result.get('funcao-rele2').contains('Pulso')){
+
+                rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+              }else{
+                await Future.delayed(const Duration(seconds: 5));
+                releFechamento02();
+              }
+
+            }
+
+            if(result.get('localAplicacao2') == 'Farol'){
+              if(result.get('funcao-rele2').contains('Pulso')){
+
+                rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+              }else{
+                await Future.delayed(const Duration(seconds: 5));
+                releFechamento02();
+              }
+            }
+
+            //Verifica a função dos outros relês
+
+            if(result.get('localAplicacao3') == 'Fechamento'){
+              if(result.get('funcao-rele3').contains('Pulso')){
+
+                rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+              }else{
+                await Future.delayed(const Duration(seconds: 5));
+                releFarol03();
+              }
+            }
+
+            if(result.get('localAplicacao3') == 'Farol'){
+
+              if(result.get('funcao-rele3').contains('Pulso')){
+
+                rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+              }else{
+                await Future.delayed(const Duration(seconds: 5));
+                releFarol03();
+              }
+            }
+
+            //Verifica a função dos outros relês
+
+
+            if(result.get('localAplicacao4') == 'Fechamento'){
+              if(result.get('funcao-rele4').contains('Pulso')){
+
+                rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+              }else{
+                await Future.delayed(const Duration(seconds: 5));
+                releFarol04();
+              }
+            }
+
+            if(result.get('localAplicacao4') == 'Farol'){
+              if(result.get('funcao-rele4').contains('Pulso')){
+
+                rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+              }else{
+                await Future.delayed(const Duration(seconds: 5));
+                releFarol04();
+              }
+            }
+          }
+
+          //rele 2
+
+          if(result.get('localAplicacao2') == "Cancela"){
+            if(result.get('funcao-rele2').contains('Pulso')){
+
+              rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+            }else{
+              await Future.delayed(const Duration(seconds: 5));
+              releFarol02();
+            }
+
+            if(result.get('localAplicacao1') == 'Fechamento'){
+
+              if(result.get('funcao-rele1').contains('Pulso')){
+
+                rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+              }else{
+                await Future.delayed(const Duration(seconds: 5));
+                releCancelaEntrada();
+              }
+
+            }
+
+            if(result.get('localAplicacao1') == 'Farol'){
+
+              if(result.get('funcao-rele1').contains('Pulso')){
+                rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+              }else{
+                await Future.delayed(const Duration(seconds: 5));
+                releCancelaEntrada();
+              }
+            }
+
+            //Verifica a função dos outros relês
+
+            if(result.get('localAplicacao3') == 'Fechamento'){
+
+              if(result.get('funcao-rele3').contains('Pulso')){
+
+                rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+              }else{
+                await Future.delayed(const Duration(seconds: 5));
+                releFarol03();
+              }
+
+            }
+
+            if(result.get('localAplicacao3') == 'Farol'){
+
+              if(result.get('funcao-rele3').contains('Pulso')){
+
+                rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+
+              }else{
+                await Future.delayed(const Duration(seconds: 5));
+                releFarol03();
+              }
+            }
+
+            //Verifica a função dos outros relês
+
+            if(result.get('localAplicacao4') == 'Fechamento'){
+              if(result.get('funcao-rele4').contains('Pulso')){
+
+                rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+              }else{
+                await Future.delayed(const Duration(seconds: 5));
+                releFarol04();
+              }
+            }
+
+            if(result.get('localAplicacao4') == 'Farol'){
+              if(result.get('funcao-rele4').contains('Pulso')){
+
+                rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+              }else{
+                await Future.delayed(const Duration(seconds: 5));
+                releFarol04();
+              }
+            }
+
+          }
+
+
+          //Rele3
+
+          if(result.get('localAplicacao3') == "Cancela"){
+            if(result.get('localAplicacao1') == 'Fechamento'){
+
+              if(result.get('funcao-rele1').contains('Pulso')){
+
+                rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+              }else{
+                await Future.delayed(const Duration(seconds: 5));
+                releCancelaEntrada();
+              }
+
+            }
+
+            if(result.get('localAplicacao1') == 'Farol'){
+
+              if(result.get('funcao-rele1').contains('Pulso')){
+                rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+              }else{
+                await Future.delayed(const Duration(seconds: 5));
+                releCancelaEntrada();
+              }
+            }
+
+            if(result.get('localAplicacao2') == 'Fechamento'){
+
+              if(result.get('funcao-rele2').contains('Pulso')){
+
+                rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+              }else{
+                await Future.delayed(const Duration(seconds: 5));
+                releFechamento02();
+              }
+
+            }
+
+            if(result.get('localAplicacao2') == 'Farol'){
+              if(result.get('funcao-rele2').contains('Pulso')){
+
+                rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+              }else{
+                await Future.delayed(const Duration(seconds: 5));
+                releFechamento02();
+              }
+            }
+
+            if(result.get('localAplicacao4') == 'Fechamento'){
+              if(result.get('funcao-rele4').contains('Pulso')){
+
+                rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+              }else{
+                await Future.delayed(const Duration(seconds: 5));
+                releFarol04();
+              }
+            }
+
+            if(result.get('localAplicacao4') == 'Farol'){
+              if(result.get('funcao-rele4').contains('Pulso')){
+
+                rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+              }else{
+                await Future.delayed(const Duration(seconds: 5));
+                releFarol04();
+              }
+            }
+          }
+
+          //rele 4
+
+          if(result.get('localAplicacao4') == 'Cancela'){
+            if(result.get('funcao-rele4').contains('Pulso')){
+
+              rele4comDelay(int.parse(result.get('funcao-rele4').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+            }else{
+              await Future.delayed(const Duration(seconds: 5));
+              releFarol04();
+            }
+
+            if(result.get('localAplicacao1') == 'Fechamento'){
+
+              if(result.get('funcao-rele1').contains('Pulso')){
+
+                rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+              }else{
+                await Future.delayed(const Duration(seconds: 5));
+                releCancelaEntrada();
+              }
+
+            }
+
+            if(result.get('localAplicacao1') == 'Farol'){
+
+              if(result.get('funcao-rele1').contains('Pulso')){
+                rele1comDelay(int.parse(result.get('funcao-rele1').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+              }else{
+                await Future.delayed(const Duration(seconds: 5));
+                releCancelaEntrada();
+              }
+            }
+
+            if(result.get('localAplicacao2') == 'Fechamento'){
+
+              if(result.get('funcao-rele2').contains('Pulso')){
+
+                rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+              }else{
+                await Future.delayed(const Duration(seconds: 5));
+                releFechamento02();
+              }
+
+            }
+
+            if(result.get('localAplicacao2') == 'Farol'){
+              if(result.get('funcao-rele2').contains('Pulso')){
+
+                rele2comDelay(int.parse(result.get('funcao-rele2').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+              }else{
+                await Future.delayed(const Duration(seconds: 5));
+                releFechamento02();
+              }
+            }
+
+            if(result.get('localAplicacao3') == 'Fechamento'){
+
+              if(result.get('funcao-rele3').contains('Pulso')){
+
+                rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+              }else{
+                await Future.delayed(const Duration(seconds: 5));
+                releFarol03();
+              }
+
+            }
+
+            if(result.get('localAplicacao3') == 'Farol'){
+
+              if(result.get('funcao-rele3').contains('Pulso')){
+
+                rele3comDelay(int.parse(result.get('funcao-rele3').replaceAll('Pulso', '').replaceAll(' ', '').replaceAll('s', '')));
+              }else{
+                await Future.delayed(const Duration(seconds: 5));
+                releFarol03();
+              }
+            }
+          }
+        });
+      });
+      Navigator.of(context).pop();
+      Navigator.of(context).pop();
+      Navigator.pop(context);
     }
 
     return Scaffold(
@@ -302,89 +660,196 @@ class _entradaModuloPrestadorState extends State<entradaModuloPrestador> {
                               primary: Colors.green
                           ),
                           onPressed: () async {
-                            if(_isChecked == false){
-                              Fluttertoast.showToast(
-                                msg: 'O botão liberar entrada não está checado!',
-                                toastLength: Toast.LENGTH_SHORT,
-                                timeInSecForIosWeb: 1,
-                                backgroundColor: Colors.black,
-                                textColor: Colors.white,
-                                fontSize: tamanhotexto,
-                              );
-                            }else{
-                              showDialog(
-                                context: context,
-                                builder: (BuildContext context) {
-                                  return const AlertDialog(
-                                    title: Text('Aguarde!'),
+                            bool Entrada01 = false;
+                            bool Entrada02 = false;
+
+                            Entrada = '';
+
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return StatefulBuilder(builder: (BuildContext context, StateSetter setState){
+                                  return AlertDialog(
+                                    title: Text('Escolha a Cancela a ser liberada!'),
                                     actions: [
-                                      Center(
-                                        child: CircularProgressIndicator(),
-                                      )
+                                      Column(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        children: [
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Checkbox(
+                                                value: Entrada01,
+                                                onChanged: (bool? value) {
+                                                  setState(() {
+                                                    Entrada01 = value ?? false;
+                                                    Entrada02 = !value! ?? false;
+                                                    Entrada = 'Rele01';
+                                                  });
+                                                },
+                                              ),
+                                              Text(
+                                                'Cancela 01 Entrada Passeio',
+                                                style: TextStyle(
+                                                    fontSize: tamanhotexto,
+                                                    fontWeight: FontWeight.bold
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Checkbox(
+                                                value: Entrada02,
+                                                onChanged: (bool? value) {
+                                                  setState(() {
+                                                    Entrada02 = value ?? false;
+                                                    Entrada01 = !value! ?? false;
+                                                    Entrada = 'Rele03';
+                                                  });
+                                                },
+                                              ),
+                                              Text(
+                                                'Cancela 02 Entrada Caminhões',
+                                                style: TextStyle(
+                                                    fontSize: tamanhotexto,
+                                                    fontWeight: FontWeight.bold
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Container(
+                                                padding: const EdgeInsets.all(16),
+                                                child: ElevatedButton(
+                                                    style: ElevatedButton.styleFrom(
+                                                        primary: Colors.red
+                                                    ),
+                                                    onPressed: (){
+                                                        Navigator.of(context).pop();
+                                                    },
+                                                    child: Text(
+                                                        'Cancelar',
+                                                      style: TextStyle(
+                                                        fontSize: tamanhotextobtns
+                                                      ),
+                                                    )
+                                                ),
+                                              ),
+                                              Container(
+                                                padding: const EdgeInsets.all(16),
+                                                child: ElevatedButton(
+                                                    style: ElevatedButton.styleFrom(
+                                                        primary: Colors.green
+                                                    ),
+                                                    onPressed: () async {
+                                                      if(Entrada == ''){
+                                                        Fluttertoast.showToast(
+                                                          msg: 'Selecione pelo menos uma entrada!',
+                                                          toastLength: Toast.LENGTH_SHORT,
+                                                          timeInSecForIosWeb: 1,
+                                                          backgroundColor: Colors.black,
+                                                          textColor: Colors.white,
+                                                          fontSize: tamanhotexto,
+                                                        );
+                                                      }else{
+                                                        if(_isChecked == false){
+                                                          Fluttertoast.showToast(
+                                                            msg: 'O botão liberar entrada não está checado!',
+                                                            toastLength: Toast.LENGTH_SHORT,
+                                                            timeInSecForIosWeb: 1,
+                                                            backgroundColor: Colors.black,
+                                                            textColor: Colors.white,
+                                                            fontSize: tamanhotexto,
+                                                          );
+                                                        }else{
+                                                          showDialog(
+                                                            context: context,
+                                                            builder: (BuildContext context) {
+                                                              return const AlertDialog(
+                                                                title: Text('Aguarde!'),
+                                                                actions: [
+                                                                  Center(
+                                                                    child: CircularProgressIndicator(),
+                                                                  )
+                                                                ],
+                                                              );
+                                                            },
+                                                          );
+
+                                                          final EmpresaCollection = FirebaseFirestore.instance.collection('empresa');
+                                                          final snapshot6 = await EmpresaCollection.get();
+                                                          final EMPRESADOC = snapshot6.docs;
+                                                          for (final NOMEDOC in EMPRESADOC) {
+
+                                                            final Vagasinternos = NOMEDOC.get('vagasInterno') + 0.0;
+                                                            final VagasDirecao = NOMEDOC.get('vagasDeDiretoria');
+                                                            final VagasMoto = NOMEDOC.get('vagasMoto');
+
+                                                            vagasInterno = Vagasinternos;
+                                                            vagasDeDiretoria = VagasDirecao;
+                                                            vagasMoto = VagasMoto;
+                                                          }
+
+                                                          if(widget.vagaComum == true){
+
+                                                            if(widget.TipoDeVeiculo == 'Carro'){
+                                                              vagasInterno = vagasInterno - 1.0;
+                                                              print(vagasInterno);
+                                                            }else{
+                                                              if(widget.TipoDeVeiculo == 'Moto'){
+                                                                vagasInterno = vagasInterno - 0.5;
+                                                              }
+                                                            }
+
+                                                          }
+                                                          if(widget.vagaMoto == true){
+                                                            vagasDeDiretoria = vagasDeDiretoria - 1;
+                                                          }
+                                                          if(widget.VagaDiretoria == true){
+                                                            vagasMoto = vagasMoto - 1;
+                                                          }
+
+                                                          if(widget.TipoDeVeiculo == 'Carro'){
+                                                            if(vagasInterno == 0){
+                                                              Fluttertoast.showToast(
+                                                                msg: 'Não há mais vagas disponiveis! Por favor aguarde a saida de um veiculo!',
+                                                                toastLength: Toast.LENGTH_SHORT,
+                                                                timeInSecForIosWeb: 1,
+                                                                backgroundColor: Colors.black,
+                                                                textColor: Colors.white,
+                                                                fontSize: tamanhotexto,
+                                                              );
+                                                            }else{
+                                                              nextStep();
+                                                            }
+                                                          }
+                                                        }
+                                                      }
+                                                    },
+                                                    child: Text(
+                                                      'Prosseguir',
+                                                      style: TextStyle(
+                                                          fontSize: tamanhotextobtns
+                                                      ),
+                                                    )
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
                                     ],
                                   );
-                                },
-                              );
-
-                              double vagasInterno = 0.0;
-                              int vagasDeDiretoria = 0;
-                              int vagasMoto = 0;
-
-                              final EmpresaCollection = FirebaseFirestore.instance.collection('empresa');
-                              final snapshot6 = await EmpresaCollection.get();
-                              final EMPRESADOC = snapshot6.docs;
-                              for (final NOMEDOC in EMPRESADOC) {
-
-                                final Vagasinternos = NOMEDOC.get('vagasInterno') + 0.0;
-                                final VagasDirecao = NOMEDOC.get('vagasDeDiretoria');
-                                final VagasMoto = NOMEDOC.get('vagasMoto');
-
-                                vagasInterno = Vagasinternos;
-                                vagasDeDiretoria = VagasDirecao;
-                                vagasMoto = VagasMoto;
-                              }
-
-                              if(widget.vagaComum == true){
-                                if(widget.TipoDeVeiculo == 'Carro'){
-                                  vagasInterno = vagasInterno - 1.0;
-                                  print(vagasInterno);
-                                }else{
-                                  if(widget.TipoDeVeiculo == 'Moto'){
-                                    vagasInterno = vagasInterno - 0.5;
-                                  }
-                                }
-
-                              }
-                              if(widget.vagaMoto == true){
-                                vagasDeDiretoria = vagasDeDiretoria - 1;
-                              }
-                              if(widget.VagaDiretoria == true){
-                                vagasMoto = vagasMoto - 1;
-                              }
-
-                              FirebaseFirestore.instance.collection('empresa').doc(widget.IDEmpresa).update({
-                                'vagasInterno': vagasInterno,
-                                'vagasDeDiretoria': vagasDeDiretoria,
-                                'vagasMoto': vagasMoto
-                              }).then((value){
-                                FirebaseFirestore.instance.collection('VeiculosdePrestadores').doc(widget.ID).update({
-                                  'status': 'Liberado Entrada',
-                                  'lastStatus': 'Liberado Entrada'
-                                }).then((value){
-                                  Fluttertoast.showToast(
-                                    msg: 'Pronto!',
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    timeInSecForIosWeb: 1,
-                                    backgroundColor: Colors.black,
-                                    textColor: Colors.white,
-                                    fontSize: tamanhotexto,
-                                  );
-                                  Navigator.of(context).pop();
-                                  Navigator.pop(context);
                                 });
-                              });
-
-                            }
+                              },
+                            );
                           },
                           child: Text(
                             'Prosseguir',
