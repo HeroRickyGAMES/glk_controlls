@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/ModuloPrestador/geral/CadastroDoColabotador.dart';
 import 'package:glk_controls/ModuloPrestador/geral/pesquisa/pesquisa.dart';
 import 'package:glk_controls/ModuloPrestador/listas/listasDeInternos.dart';
@@ -63,7 +64,14 @@ class _PrestadorEmpresaMainState extends State<PrestadorEmpresaMain> {
     criarCadastro() async {
 
       if(kIsWeb == true){
-
+        Fluttertoast.showToast(
+          msg: 'A função não está disponivel para web!',
+          toastLength: Toast.LENGTH_SHORT,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.black,
+          textColor: Colors.white,
+          fontSize: tamanhotexto,
+        );
       }else{
         final ByteData imageData = await rootBundle.load('assets/error-image.png');
 

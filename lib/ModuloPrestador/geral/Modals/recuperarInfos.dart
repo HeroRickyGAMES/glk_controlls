@@ -8,6 +8,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/ModuloPrestador/geral/Modals/cadastrarVeiculoPrestador.dart';
 import 'package:glk_controls/ModuloPrestador/geral/Modals/editarVeiculo.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 
 class RecuperarInfos extends StatefulWidget {
   String EmpresaNome = '';
@@ -31,15 +32,16 @@ class RecuperarInfos extends StatefulWidget {
   bool isTired;
   bool poscadastro;
   String OperadorName = '';
+  bool Empresa;
 
-  RecuperarInfos(this.EmpresaNome, this.EmpresaID, this.imageFile,this.Nome, this.RG, this.Telefone, this.idd, this.PreenchidoTipoVeiculo, this.PreenchidoPermissao, this.carroOuMoto, this.moto, this.carroEmoto, this.VagaComum, this.VagaMoto, this.VagaDiretoria, this.PreenchidoBloqueado, this.Liberado, this.bloqueadoBool, this.isTired, this.poscadastro, this.OperadorName, {Key? key}) : super(key: key);
+  RecuperarInfos(this.EmpresaNome, this.EmpresaID, this.imageFile,this.Nome, this.RG, this.Telefone, this.idd, this.PreenchidoTipoVeiculo, this.PreenchidoPermissao, this.carroOuMoto, this.moto, this.carroEmoto, this.VagaComum, this.VagaMoto, this.VagaDiretoria, this.PreenchidoBloqueado, this.Liberado, this.bloqueadoBool, this.isTired, this.poscadastro, this.OperadorName, this.Empresa, {Key? key}) : super(key: key);
 
   @override
   State<RecuperarInfos> createState() => _RecuperarInfosState();
 }
 
 class _RecuperarInfosState extends State<RecuperarInfos> {
-
+  File? imageFile;
   bool initialized = false;
   TextEditingController nameAllcaps = TextEditingController();
   TextEditingController RGController = TextEditingController();
@@ -90,13 +92,13 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
       bloqueadoBool = widget.bloqueadoBool;
 
       isTired = widget.isTired;
+      imageFile = widget.imageFile;
     }
 
     double tamanhotexto = 20;
     double tamanhotextomin = 16;
     double tamanhotextobtns = 16;
     double aspect = 1.0;
-    File? imageFile = widget.imageFile;
 
     final mediaQueryData = MediaQuery.of(context);
     final screenWidth = mediaQueryData.size.width;
@@ -410,7 +412,14 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
               ),
               Container(
                 padding: const EdgeInsets.all(16),
-                child: TextFormField(
+                child: widget.Empresa == false ?
+                    Text(
+                      'Nome: $nome',
+                      style: TextStyle(
+                          fontSize: tamanhotexto
+                      ),
+                    )
+                    : TextFormField(
                   controller: nameAllcaps,
                   onChanged: (valor){
                     nome = valor.toUpperCase();
@@ -430,7 +439,14 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
               ),
               Container(
                 padding: const EdgeInsets.all(16),
-                child: TextFormField(
+                child: widget.Empresa == false ?
+                Text(
+                  "RG: $RG",
+                  style: TextStyle(
+                      fontSize: tamanhotexto
+                  ),
+                )
+                    : TextFormField(
                   controller: RGController,
                   onChanged: (valor){
                     RG = valor;
@@ -459,7 +475,15 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
               ),
               Container(
                 padding: const EdgeInsets.all(16),
-                child: TextFormField(
+                child: widget.Empresa == false ?
+                Text(
+                  "Telefone: $telefone",
+                  style: TextStyle(
+                      fontSize: tamanhotexto
+                  ),
+                )
+                    :
+                TextFormField(
                   controller: TelefoneController,
                   onChanged: (valor){
                     telefone = valor;
@@ -500,7 +524,8 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                         ),
                       ),
                       value: carroOuMoto,
-                      onChanged: (value) {
+                      onChanged:
+                      widget.Empresa == true ? (value) {
                         setState(() {
                           if(value == true){
                             PreenchidoTipoVeiculo = true;
@@ -510,7 +535,7 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                           }
 
                         });
-                      },
+                      } :null,
                       activeColor: Colors.blue,
                       checkColor: Colors.white,
                       controlAffinity: ListTileControlAffinity.leading,
@@ -525,7 +550,7 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                         ),
                       ),
                       value: moto,
-                      onChanged: (value) {
+                      onChanged: widget.Empresa == true ? (value) {
                         setState(() {
 
                           if(value == true){
@@ -535,7 +560,7 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                             carroEmoto = false;
                           }
                         });
-                      },
+                      } : null,
                       activeColor: Colors.blue,
                       checkColor: Colors.white,
                       controlAffinity: ListTileControlAffinity.leading,
@@ -550,7 +575,7 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                         ),
                       ),
                       value: carroEmoto,
-                      onChanged: (value) {
+                      onChanged: widget.Empresa == true ? (value) {
                         setState(() {
                           if(value == true){
                             PreenchidoTipoVeiculo = true;
@@ -559,7 +584,7 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                             carroEmoto = true;
                           }
                         });
-                      },
+                      }: null,
                       activeColor: Colors.blue,
                       checkColor: Colors.white,
                       controlAffinity: ListTileControlAffinity.leading,
@@ -592,7 +617,7 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                           ),
                         ),
                         value: VagaComum,
-                        onChanged: (value) {
+                        onChanged: widget.Empresa == true ? (value) {
                           setState(() {
 
                             if(value == true){
@@ -603,7 +628,7 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                             }
 
                           });
-                        },
+                        }: null,
                         activeColor: Colors.blue,
                         checkColor: Colors.white,
                         controlAffinity: ListTileControlAffinity.leading,
@@ -618,7 +643,7 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                           ),
                         ),
                         value: VagaMoto,
-                        onChanged: (value) {
+                        onChanged: widget.Empresa == true ? (value) {
                           setState(() {
                             if(value == true){
                               PreenchidoPermissao = true;
@@ -627,7 +652,7 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                               VagaDiretoria = false;
                             }
                           });
-                        },
+                        } : null,
                         activeColor: Colors.blue,
                         checkColor: Colors.white,
                         controlAffinity: ListTileControlAffinity.leading,
@@ -642,7 +667,7 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                           ),
                         ),
                         value: VagaDiretoria,
-                        onChanged: (value) {
+                        onChanged: widget.Empresa == true ? (value) {
                           setState(() {
                             if(value == true){
                               PreenchidoPermissao = true;
@@ -651,7 +676,7 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                               VagaDiretoria = true;
                             }
                           });
-                        },
+                        }: null,
                         activeColor: Colors.blue,
                         checkColor: Colors.white,
                         controlAffinity: ListTileControlAffinity.leading,
@@ -675,7 +700,7 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                           ),
                         ),
                         value: Liberado,
-                        onChanged: (value) {
+                        onChanged: widget.Empresa == true ? (value) {
                           setState(() {
                             if(value == true){
                               bloqueadoBool = false;
@@ -683,7 +708,7 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                               Liberado = true;
                             }
                           });
-                        },
+                        }: null,
                         activeColor: Colors.blue,
                         checkColor: Colors.white,
                         controlAffinity: ListTileControlAffinity.leading,
@@ -698,7 +723,7 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                           ),
                         ),
                         value: bloqueadoBool,
-                        onChanged: (value) {
+                        onChanged: widget.Empresa == true ? (value) {
                           setState(() {
                             if(value == true){
                               bloqueadoBool = true;
@@ -706,7 +731,7 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                               Liberado = false;
                             }
                           });
-                        },
+                        }: null,
                         activeColor: Colors.blue,
                         checkColor: Colors.white,
                         controlAffinity: ListTileControlAffinity.leading,
@@ -921,7 +946,7 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                       onPressed: (){
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context){
-                              return CadastrarPrestador(widget.EmpresaNome, widget.EmpresaID, widget.idd, nome, carroEmoto, carroOuMoto, nome, widget.OperadorName);
+                              return CadastrarPrestador(widget.EmpresaNome, widget.EmpresaID, widget.idd, nome, carroEmoto, carroOuMoto, nome, widget.OperadorName, RG);
                             }));
                       },
                       child: Text(
@@ -966,6 +991,22 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                     ],
                   ),
                 ],
+              ),
+              WillPopScope(
+                onWillPop: () async {
+                  setState(() async {
+                    final appDirectory = await getApplicationDocumentsDirectory();
+                    final filePath = '${appDirectory.path}/image.jpg';
+                    File imageFilee = File(filePath);
+
+                    await imageFilee.delete();
+
+                    imageFile = null;
+                    Navigator.pop(context);
+
+                  });
+                  return false;
+                }, child: const Text(''),
               ),
             ],
           ),

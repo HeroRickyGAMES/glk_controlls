@@ -268,7 +268,7 @@ class _CadastroDoOperadorState extends State<CadastroDoOperador> {
                         Navigator.pop(context);
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context){
-                              return RecuperarInfos(widget.EmpresaNome, widget.EmpresaID, widget.imageFile, nome, RG, telefone, idd, PreenchidoTipoVeiculo, PreenchidoPermissao, carroOuMoto, moto, carroEmoto, VagaComum, VagaMoto, VagaDiretoria, PreenchidoBloqueado, Liberado, bloqueadoBool, isTired, true, widget.EmpresaNome);
+                              return RecuperarInfos(widget.EmpresaNome, widget.EmpresaID, widget.imageFile, nome, RG, telefone, idd, PreenchidoTipoVeiculo, PreenchidoPermissao, carroOuMoto, moto, carroEmoto, VagaComum, VagaMoto, VagaDiretoria, PreenchidoBloqueado, Liberado, bloqueadoBool, isTired, true, widget.EmpresaNome, true);
                             }));
                       });
                     }

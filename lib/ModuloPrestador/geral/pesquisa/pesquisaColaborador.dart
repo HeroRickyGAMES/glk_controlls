@@ -4,22 +4,23 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:glk_controls/ModuloPrestador/geral/Modals/editarInfosAdM.dart';
 import 'package:glk_controls/ModuloPrestador/geral/Modals/recuperarInfos.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 
-class pesquisaPrestador extends StatefulWidget {
+class pesquisaColaborador extends StatefulWidget {
 
   String EmpresaNome = '';
   String EmpresaID = '';
 
-  pesquisaPrestador(this.EmpresaNome, this.EmpresaID, {Key? key}) : super(key: key);
+  pesquisaColaborador(this.EmpresaNome, this.EmpresaID, {Key? key}) : super(key: key);
 
   @override
-  State<pesquisaPrestador> createState() => _pesquisaPrestadorState();
+  State<pesquisaColaborador> createState() => _pesquisaColaboradorState();
 }
 
-class _pesquisaPrestadorState extends State<pesquisaPrestador> {
+class _pesquisaColaboradorState extends State<pesquisaColaborador> {
 
   String RGouNome = '';
   String oqPesquisar = 'RG';
@@ -66,7 +67,7 @@ class _pesquisaPrestadorState extends State<pesquisaPrestador> {
 
       // Obtenha o diretório de armazenamento local
       final appDirectory = await getApplicationDocumentsDirectory();
-      final filePath = '${appDirectory.path}/$imageUrl.jpg';
+      final filePath = '${appDirectory.path}/image.jpg';
 
       // Crie o arquivo local e escreva os bytes da imagem nele
       final file = File(filePath);
@@ -91,7 +92,7 @@ class _pesquisaPrestadorState extends State<pesquisaPrestador> {
               Text(
                 'Digite RG ou Nome:',
                 style: TextStyle(
-                  fontSize: tamanhotexto
+                    fontSize: tamanhotexto
                 ),
               ),
               Container(
@@ -101,52 +102,66 @@ class _pesquisaPrestadorState extends State<pesquisaPrestador> {
                     setState(() async {
                       RGouNome = valor;
 
-                      if(RGouNome == ''){
+                      if(valor == ''){
                         setState(() {
                           oqPesquisar = 'RG';
                         });
                         RGouNome = '';
-                      }
-
-                      List pesquisaRG = [];
-
-
-
-                      final RGCollections = FirebaseFirestore.instance.collection('Prestadores');
-                      final snapshot5 = await RGCollections.get();
-                      final RGDOC = snapshot5.docs;
-                      for (final VEICULODOC in RGDOC) {
-
-                        final RG = VEICULODOC.get('RG');
-
-                        pesquisaRG.add('$RG');
-                      }
-                      List pesquisaNome = [];
-
-                      final NomeCollections = FirebaseFirestore.instance.collection('Prestadores');
-                      final snapshot6 = await NomeCollections.get();
-                      final NOMEDOC = snapshot6.docs;
-                      for (final NOMEDOC in NOMEDOC) {
-
-                        final nome = NOMEDOC.get('nome');
-
-                        pesquisaNome.add('$nome');
-                      }
-
-                      if(pesquisaRG.contains(RGouNome)){
-                        //TODO PESQUISA RG
-
-                        setState(() {
-                          oqPesquisar = 'RG';
-                        });
                       }else{
-                        if(pesquisaNome.contains(RGouNome)){
-                          //TODO PESQUISA nome
+                        List pesquisaRG = [];
 
+                        final RGCollections = FirebaseFirestore.instance.collection('Prestadores').where('RG', isEqualTo: RGouNome);
+                        final snapshot5 = await RGCollections.get();
+                        final RGDOC = snapshot5.docs;
+                        for (final VEICULODOC in RGDOC) {
+
+                          final RG = VEICULODOC.get('RG');
+
+                          pesquisaRG.add('$RG');
+                        }
+
+                        List NomeRG = [];
+
+                        final NomeCollections = FirebaseFirestore.instance.collection('Prestadores').where('nome', isEqualTo: RGouNome);
+                        final snapshot6 = await NomeCollections.get();
+                        final NOMEDOC = snapshot6.docs;
+                        for (final NOMEDOC in NOMEDOC) {
+
+                          final NOME = NOMEDOC.get('nome');
+
+                          NomeRG.add('$NOME');
+                        }
+
+                        List EmpresaList = [];
+
+                        final EmpresaCollections = FirebaseFirestore.instance.collection('Prestadores').where('Empresa', isEqualTo: RGouNome);
+                        final snapshot8 = await EmpresaCollections.get();
+                        final EMPRESAS = snapshot8.docs;
+                        for (final EMPRESA in EMPRESAS) {
+
+                          final Empresa = EMPRESA.get('Empresa');
+
+                          EmpresaList.add('$Empresa');
+                        }
+
+                        if(pesquisaRG.contains(RGouNome)){
                           setState(() {
-                            oqPesquisar = 'nome';
+                            oqPesquisar = 'RG';
                           });
+                        }else{
+                          if(NomeRG.contains(RGouNome)){
+                            setState(() {
+                              oqPesquisar = 'nome';
+                            });
+                          }else{
+                            if(EmpresaList.contains(RGouNome)){
+                              setState(() {
+                                oqPesquisar = 'Empresa';
+                              });
+                            }else{
 
+                            }
+                          }
                         }
                       }
 
@@ -155,7 +170,7 @@ class _pesquisaPrestadorState extends State<pesquisaPrestador> {
                   },
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
-                    hintText: 'Digite RG ou Nome ',
+                    hintText: 'Digite RG, Nome, Placa, Empresa ou Galpão',
                     hintStyle: TextStyle(
                         fontSize: tamanhotexto
                     ),
@@ -175,11 +190,11 @@ class _pesquisaPrestadorState extends State<pesquisaPrestador> {
                           primary: Colors.white60
                       ), child: Text(
                         'Cancelar',
-                      style: TextStyle(
-                        fontSize: tamanhotextobtns,
-                        color: Colors.black
+                        style: TextStyle(
+                            fontSize: tamanhotextobtns,
+                            color: Colors.black
+                        ),
                       ),
-                     ),
                     ),
                   ),
                   Container(
@@ -201,7 +216,7 @@ class _pesquisaPrestadorState extends State<pesquisaPrestador> {
                       }else{
                         List pesquisaRG = [];
 
-                        final RGCollections = FirebaseFirestore.instance.collection('Prestadores');
+                        final RGCollections = FirebaseFirestore.instance.collection('Prestadores').where('RG', isEqualTo: RGouNome);
                         final snapshot5 = await RGCollections.get();
                         final RGDOC = snapshot5.docs;
                         for (final VEICULODOC in RGDOC) {
@@ -210,61 +225,57 @@ class _pesquisaPrestadorState extends State<pesquisaPrestador> {
 
                           pesquisaRG.add('$RG');
                         }
-                        List pesquisaNome = [];
 
-                        final NomeCollections = FirebaseFirestore.instance.collection('Prestadores');
+                        List NomeRG = [];
+
+                        final NomeCollections = FirebaseFirestore.instance.collection('Prestadores').where('nome', isEqualTo: RGouNome);
                         final snapshot6 = await NomeCollections.get();
                         final NOMEDOC = snapshot6.docs;
                         for (final NOMEDOC in NOMEDOC) {
 
-                          final nome = NOMEDOC.get('nome');
+                          final NOME = NOMEDOC.get('nome');
 
-                          pesquisaNome.add('$nome');
+                          NomeRG.add('$NOME');
+                        }
+
+                        List EmpresaList = [];
+
+                        final EmpresaCollections = FirebaseFirestore.instance.collection('Prestadores').where('Empresa', isEqualTo: RGouNome);
+                        final snapshot8 = await EmpresaCollections.get();
+                        final EMPRESAS = snapshot8.docs;
+                        for (final EMPRESA in EMPRESAS) {
+
+                          final Empresa = EMPRESA.get('Empresa');
+
+                          EmpresaList.add('$Empresa');
                         }
 
                         if(pesquisaRG.contains(RGouNome)){
-                          //TODO PESQUISA RG
-
                           setState(() {
                             oqPesquisar = 'RG';
                           });
-
-                          Fluttertoast.showToast(
-                            msg: 'Os resultados devem aparecer logo a baixo!',
-                            toastLength: Toast.LENGTH_SHORT,
-                            timeInSecForIosWeb: 1,
-                            backgroundColor: Colors.black,
-                            textColor: Colors.white,
-                            fontSize: tamanhotexto,
-                          );
                         }else{
-                          if(pesquisaNome.contains(RGouNome)){
-                            //TODO PESQUISA nome
-
+                          if(NomeRG.contains(RGouNome)){
                             setState(() {
                               oqPesquisar = 'nome';
                             });
-                            Fluttertoast.showToast(
-                              msg: 'Os resultados devem aparecer logo a baixo!',
-                              toastLength: Toast.LENGTH_SHORT,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.black,
-                              textColor: Colors.white,
-                              fontSize: tamanhotexto,
-                            );
-
                           }else{
-                            Fluttertoast.showToast(
-                              msg: 'Nenhum resultado foi encontrado!',
-                              toastLength: Toast.LENGTH_SHORT,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.black,
-                              textColor: Colors.white,
-                              fontSize: tamanhotexto,
-                            );
+                              if(EmpresaList.contains(RGouNome)){
+                                setState(() {
+                                  oqPesquisar = 'Empresa';
+                                });
+                              }else{
+                                Fluttertoast.showToast(
+                                  msg: 'Não encontrei nada!',
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  timeInSecForIosWeb: 1,
+                                  backgroundColor: Colors.black,
+                                  textColor: Colors.white,
+                                  fontSize: tamanhotexto,
+                                );
+                              }
                           }
                         }
-
                       }
                     },
                       style: ElevatedButton.styleFrom(
@@ -272,7 +283,7 @@ class _pesquisaPrestadorState extends State<pesquisaPrestador> {
                       ), child: Text(
                         'Pesquisar',
                         style: TextStyle(
-                            fontSize: tamanhotextobtns,
+                          fontSize: tamanhotextobtns,
                         ),
                       ),
                     ),
@@ -336,7 +347,7 @@ class _pesquisaPrestadorState extends State<pesquisaPrestador> {
                                         child: Text(
                                           '${documents['RG']}-',
                                           style: TextStyle(
-                                              fontSize: tamanhotexto,
+                                            fontSize: tamanhotexto,
                                           ),
                                         ),
                                       ),
@@ -351,7 +362,7 @@ class _pesquisaPrestadorState extends State<pesquisaPrestador> {
                                         child: Text(
                                           '${documents['Empresa']}-',
                                           style: TextStyle(
-                                              fontSize: tamanhotexto,
+                                            fontSize: tamanhotexto,
                                           ),
                                         ),
                                       ),
@@ -363,23 +374,24 @@ class _pesquisaPrestadorState extends State<pesquisaPrestador> {
                                         width: double.infinity,
                                         child: TextButton(onPressed: () async {
 
-                                          final convertedFile = await convertImageUrlToFile(documents['urlImage']);
+                                          Navigator.push(context,
+                                              MaterialPageRoute(builder: (context){
+                                                return editarInfosADM(documents['Empresa'], documents['EmpresaID'], documents['nome'], documents['RG'], documents['Telefone'], documents['id'], true, true, documents['carro'], documents['moto'], documents['carroEmoto'], documents['vagaComum'], documents['vagaMoto'], documents['VagaDiretoria'], true, documents['Liberado'], false, true, false, widget.EmpresaNome, documents['urlImage']);
+                                              }));
 
-                                          if(widget.EmpresaID == ''){
-                                            Navigator.push(context,
-                                                MaterialPageRoute(builder: (context){
-                                                  return RecuperarInfos(documents['Empresa'], documents['EmpresaID'], convertedFile, documents['nome'], documents['RG'], documents['Telefone'], documents['id'], true, true, documents['carro'], documents['moto'], documents['carroEmoto'], documents['vagaComum'], documents['vagaMoto'], documents['VagaDiretoria'], true, documents['Liberado'], false, true, false, widget.EmpresaNome, false);
-                                                }));
-                                          }else{
-                                            Navigator.push(context,
-                                                MaterialPageRoute(builder: (context){
-                                                  return RecuperarInfos(documents['Empresa'], documents['EmpresaID'], convertedFile, documents['nome'], documents['RG'], documents['Telefone'], documents['id'], true, true, documents['carro'], documents['moto'], documents['carroEmoto'], documents['vagaComum'], documents['vagaMoto'], documents['VagaDiretoria'], true, documents['Liberado'], false, true, false, widget.EmpresaNome, true);
-                                                }));
-                                          }
                                         },
                                           child: const Icon(Icons.edit),
                                         )
                                     ),
+                                  ),
+                                  documents['Liberado'] == true ?
+                                      Icon(
+                                      Icons.done,
+                                      color: Colors.green,
+                                      ):
+                                  Icon(
+                                    Icons.block_flipped,
+                                    color: Colors.red,
                                   ),
                                   Expanded(
                                     child: SizedBox(

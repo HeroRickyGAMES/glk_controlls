@@ -16,7 +16,8 @@ class CadastrarPrestador extends StatefulWidget {
   bool carroOuMoto;
   String nomeUser;
   String OperadorName;
-  CadastrarPrestador(this.NomeEmpresa, this.idEmpresa, this.idPrestador, this.NomePrestador, this.carroEmoto, this.carroOuMoto, this.nomeUser, this.OperadorName, {Key? key}) : super(key: key);
+  String RG;
+  CadastrarPrestador(this.NomeEmpresa, this.idEmpresa, this.idPrestador, this.NomePrestador, this.carroEmoto, this.carroOuMoto, this.nomeUser, this.OperadorName, this.RG, {Key? key}) : super(key: key);
 
   @override
   State<CadastrarPrestador> createState() => _CadastrarPrestadorState();
@@ -303,16 +304,16 @@ class _CadastrarPrestadorState extends State<CadastrarPrestador> {
                         padding: const EdgeInsets.all(16),
                         child: ElevatedButton(onPressed: (){
                           Navigator.pop(context);
-                        }, child: Text(
+                        },
+                          style: ElevatedButton.styleFrom(
+                              primary: Colors.grey[300]
+                          ), child: Text(
                           'Cancelar',
                           style: TextStyle(
                               fontSize: tamanhotextobtns,
                               color: Colors.black
                           ),
                         ),
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.grey[300]
-                          ),
                         )
                     ),
                   ),
@@ -433,6 +434,7 @@ class _CadastrarPrestadorState extends State<CadastrarPrestador> {
                                           'PertenceA': widget.NomePrestador,
                                           'lastStatus': '',
                                           'galpao': galpao,
+                                          'RG': widget.RG
                                         }).whenComplete((){
                                           Navigator.pop(context);
                                         });

@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:glk_controls/ModuloPrestador/geral/pesquisa/PesquisaPlacaSaida.dart';
 import 'package:glk_controls/ModuloPrestador/geral/pesquisa/pesquisa.dart';
+import 'package:glk_controls/ModuloPrestador/geral/pesquisa/pesquisaColaborador.dart';
 import 'package:glk_controls/ModuloPrestador/geral/pesquisa/pesquisaPlaca.dart';
 import 'package:glk_controls/ModuloPrestador/listas/listasDeInternos.dart';
 
@@ -79,7 +80,10 @@ class _mainPorteiroInternoPrestadorState extends State<mainPorteiroInternoPresta
     }
 
     listaDeColaboradores(){
-
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context){
+            return pesquisaColaborador(widget.Operador, '');
+          }));
     }
 
     return Scaffold(
