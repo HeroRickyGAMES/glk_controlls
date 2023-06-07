@@ -92,7 +92,7 @@ class _PesquisaPlacaSaidaState extends State<PesquisaPlacaSaida> {
                 child: TextFormField(
                   controller: placaveiculointerface,
                   onChanged: (valor){
-                    setState(() async {
+                    setState(() {
                       String valorpuro = valor.toUpperCase();
                       if(valorpuro.length == 7){
                         Placa = valorpuro.replaceAllMapped(
@@ -196,6 +196,7 @@ class _PesquisaPlacaSaidaState extends State<PesquisaPlacaSaida> {
                             String imageURL = '';
                             String PermitidosVeiculos = '';
                             String IDEmpresa = '';
+                            String RG = '';
 
                             final RGCollections = FirebaseFirestore.instance.collection('Prestadores');
                             final snapshot5 = await RGCollections.get();
@@ -211,6 +212,7 @@ class _PesquisaPlacaSaidaState extends State<PesquisaPlacaSaida> {
                               final carroEmoto = VEICULODOC.get('carroEmoto');
                               final moto = VEICULODOC.get('moto');
                               final idEmpresaDoc = VEICULODOC.get('EmpresaID');
+                              final RGDoc = VEICULODOC.get('RG');
 
                               if(carro == true){
                                 PermitidosVeiculos = 'Carro';
@@ -228,11 +230,12 @@ class _PesquisaPlacaSaidaState extends State<PesquisaPlacaSaida> {
                               telefone = telefoneDOC;
                               imageURL = imageURI;
                               IDEmpresa = idEmpresaDoc;
+                              RG = RGDoc;
                             }
 
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context){
-                                  return SaidaPrestadorSaida(widget.Porteiro, imageURL, Pertence, tipoDeVeiculo, Empresa, telefone, vagaComum, vagaMoto, VagaDiretoria, Marca, Modelo, Cor, placaLista, PermitidosVeiculos, ID, IDEmpresa, galpao);
+                                  return SaidaPrestadorSaida(widget.Porteiro, imageURL, Pertence, tipoDeVeiculo, Empresa, telefone, vagaComum, vagaMoto, VagaDiretoria, Marca, Modelo, Cor, placaLista, PermitidosVeiculos, ID, IDEmpresa, galpao, RG);
                                 }));
 
                           }else{

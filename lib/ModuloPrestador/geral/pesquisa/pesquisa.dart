@@ -60,20 +60,6 @@ class _pesquisaPrestadorState extends State<pesquisaPrestador> {
 
       }
     }
-    Future<File> convertImageUrlToFile(String imageUrl) async {
-      final response = await http.get(Uri.parse(imageUrl));
-      final bytes = response.bodyBytes;
-
-      // Obtenha o diretório de armazenamento local
-      final appDirectory = await getApplicationDocumentsDirectory();
-      final filePath = '${appDirectory.path}/$imageUrl.jpg';
-
-      // Crie o arquivo local e escreva os bytes da imagem nele
-      final file = File(filePath);
-      await file.writeAsBytes(bytes);
-
-      return file;
-    }
 
 
     return Scaffold(
@@ -363,7 +349,13 @@ class _pesquisaPrestadorState extends State<pesquisaPrestador> {
                                         width: double.infinity,
                                         child: TextButton(onPressed: () async {
 
-                                          final convertedFile = await convertImageUrlToFile(documents['urlImage']);
+                                          final http.Response responseData = await http.get(Uri.parse(documents['urlImage']));
+                                          Uint8List uint8list = responseData.bodyBytes;
+                                          var buffer = uint8list.buffer;
+                                          ByteData byteData = ByteData.view(buffer);
+                                          var tempDir = await getTemporaryDirectory();
+                                          File convertedFile = await File('${tempDir.path}/${documents['urlImage'].replaceAll('-', '').replaceAll('%', '').replaceAll('/', '').replaceAll('=', '').replaceAll('https', '').replaceAll(':', '').replaceAll('firebasestorage.googleapis.com', '').replaceAll('bglkcontrols.appspot.comoimages', '')}').writeAsBytes(
+                                              buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
 
                                           if(widget.EmpresaID == ''){
                                             Navigator.push(context,

@@ -24,7 +24,8 @@ class entradaModuloPrestador extends StatefulWidget {
   String ID;
   String IDEmpresa;
   String galpao;
-  entradaModuloPrestador(this.Operador, this.URLImage, this.NomeUser, this.TipoDeVeiculo, this.Empresa, this.Telefone, this.vagaComum, this.vagaMoto, this.VagaDiretoria, this.Marca, this.Modelo, this.Cor, this.placa, this.PermitidosVeiculos, this.ID, this.IDEmpresa, this.galpao, {super.key});
+  String RG;
+  entradaModuloPrestador(this.Operador, this.URLImage, this.NomeUser, this.TipoDeVeiculo, this.Empresa, this.Telefone, this.vagaComum, this.vagaMoto, this.VagaDiretoria, this.Marca, this.Modelo, this.Cor, this.placa, this.PermitidosVeiculos, this.ID, this.IDEmpresa, this.galpao, this.RG,{super.key});
 
   @override
   State<entradaModuloPrestador> createState() => _entradaModuloPrestadorState();
@@ -40,6 +41,7 @@ class _entradaModuloPrestadorState extends State<entradaModuloPrestador> {
     String Entrada = '';
 
     String vaga = '';
+    String EntradaST = '';
 
     if(widget.vagaComum == true){
       vaga = 'Vaga';
@@ -96,6 +98,23 @@ class _entradaModuloPrestadorState extends State<entradaModuloPrestador> {
           'status': 'Liberado Entrada',
           'lastStatus': 'Liberado Entrada'
         }).then((value) async {
+
+          FirebaseFirestore.instance.collection('relatorioModuloPrestador').doc().set({
+            'Nome': widget.NomeUser,
+            'RG': widget.RG,
+            'Empresa': widget.Empresa,
+            'Placa': widget.placa,
+            'Veiculo': widget.TipoDeVeiculo,
+            'Modelo': widget.Modelo,
+            'Cor': widget.Cor,
+            'Data': '${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}',
+            'Horario': '${DateTime.now().hour}:${DateTime.now().minute}',
+            'Status': EntradaST,
+            'DATACODE': '${DateTime.now().day}${DateTime.now().month}${DateTime.now().year}',
+            'HORACODE': '${DateTime.now().hour}${DateTime.now().minute}',
+            'galpao': widget.galpao
+          });
+
           Fluttertoast.showToast(
             msg: 'Entrada Realizada com sucesso! Aguarde os reles se acionarem!',
             toastLength: Toast.LENGTH_SHORT,
@@ -665,6 +684,7 @@ class _entradaModuloPrestadorState extends State<entradaModuloPrestador> {
                             bool Entrada02 = false;
 
                             Entrada = '';
+                            EntradaST = '';
 
                             showDialog(
                               context: context,
@@ -688,6 +708,7 @@ class _entradaModuloPrestadorState extends State<entradaModuloPrestador> {
                                                     Entrada01 = value ?? false;
                                                     Entrada02 = !value! ?? false;
                                                     Entrada = 'Rele01';
+                                                    EntradaST = 'Entrada 01';
                                                   });
                                                 },
                                               ),
@@ -711,6 +732,7 @@ class _entradaModuloPrestadorState extends State<entradaModuloPrestador> {
                                                     Entrada02 = value ?? false;
                                                     Entrada01 = !value! ?? false;
                                                     Entrada = 'Rele03';
+                                                    EntradaST = 'Entrada 02';
                                                   });
                                                 },
                                               ),

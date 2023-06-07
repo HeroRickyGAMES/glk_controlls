@@ -7,6 +7,7 @@ import 'package:glk_controls/ModuloPrestador/geral/pesquisa/pesquisa.dart';
 import 'package:glk_controls/ModuloPrestador/geral/pesquisa/pesquisaColaborador.dart';
 import 'package:glk_controls/ModuloPrestador/geral/pesquisa/pesquisaPlaca.dart';
 import 'package:glk_controls/ModuloPrestador/listas/listasDeInternos.dart';
+import 'package:glk_controls/ModuloPrestador/relatorio/relatorio.dart';
 
 class mainPorteiroInternoPrestador extends StatefulWidget {
   String Operador;
@@ -86,6 +87,13 @@ class _mainPorteiroInternoPrestadorState extends State<mainPorteiroInternoPresta
           }));
     }
 
+    relatorioColaborador(){
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context){
+            return Relatorio(widget.Operador, widget.LogoPath);
+          }));
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Acesso interno'),
@@ -150,9 +158,9 @@ class _mainPorteiroInternoPrestadorState extends State<mainPorteiroInternoPresta
                 width: 500,
                 padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                 child: ElevatedButton(
-                  onPressed: listaDeColaboradores,
+                  onPressed: widget.listaColaborador == true ? listaDeColaboradores : null,
                   child: Text(
-                    'Cadastro de Colaboradores',
+                    'Lista de Colaboradores',
                     style: TextStyle(
                         fontSize: tamanhotextobtns
                     ),
@@ -163,7 +171,7 @@ class _mainPorteiroInternoPrestadorState extends State<mainPorteiroInternoPresta
                 width: 500,
                 padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                 child: ElevatedButton(
-                  onPressed: null,
+                  onPressed: widget.relatorioColaborador == true ? relatorioColaborador :null,
                   child: Text(
                     'Relatorio de colaboradores',
                     style: TextStyle(

@@ -994,17 +994,7 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
               ),
               WillPopScope(
                 onWillPop: () async {
-                  setState(() async {
-                    final appDirectory = await getApplicationDocumentsDirectory();
-                    final filePath = '${appDirectory.path}/image.jpg';
-                    File imageFilee = File(filePath);
-
-                    await imageFilee.delete();
-
-                    imageFile = null;
-                    Navigator.pop(context);
-
-                  });
+                  Navigator.pop(context);
                   return false;
                 }, child: const Text(''),
               ),
