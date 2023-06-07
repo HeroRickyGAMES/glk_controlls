@@ -112,7 +112,8 @@ class _entradaModuloPrestadorState extends State<entradaModuloPrestador> {
             'Status': EntradaST,
             'DATACODE': '${DateTime.now().day}${DateTime.now().month}${DateTime.now().year}',
             'HORACODE': '${DateTime.now().hour}${DateTime.now().minute}',
-            'galpao': widget.galpao
+            'galpao': widget.galpao,
+            'id': ''
           });
 
           Fluttertoast.showToast(

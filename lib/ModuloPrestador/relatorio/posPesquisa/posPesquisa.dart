@@ -19,6 +19,9 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
   bool pesquisaHora = false;
   bool horaEData = false;
 
+  Map<String, dynamic> dataDBPusher = {};
+  List DBPusherIDS = [];
+
   String PesquisaDATA = '';
   String PesquisaHORA = '';
   @override
@@ -58,6 +61,36 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
 
       }
     }
+    dalay() async {
+      var RGCollections;
+      pesquisaData == true ?
+      RGCollections = FirebaseFirestore.instance.collection('relatorioModuloPrestador').where('DATACODE', isEqualTo: PesquisaDATA)
+          : pesquisaHora == true ?
+      RGCollections = FirebaseFirestore.instance.collection('relatorioModuloPrestador')
+          .where('HORACODE', isEqualTo: PesquisaHORA) :
+      horaEData == true ? RGCollections = FirebaseFirestore.instance.collection('relatorioModuloPrestador')
+          .where('DATACODE', isEqualTo: pesquisaData)
+          .where('HORACODE', isEqualTo: PesquisaHORA) :
+      RGCollections = FirebaseFirestore.instance.collection('relatorioModuloPrestador');
+
+      final snapshot7 = await RGCollections.get();
+      final RGDOC = snapshot7.docs;
+
+      for (final RGDOCU in RGDOC) {
+
+        dataDBPusher[RGDOCU.id] = RGDOCU.data();
+
+        DBPusherIDS.add(RGDOCU.id);
+
+        print(dataDBPusher);
+
+      }
+      print(DBPusherIDS);
+      await Future.delayed(const Duration(seconds: 1));
+
+    }
+
+    dalay();
     return Scaffold(
       appBar: AppBar(
         title: Text('Resultado da pesquisa ${widget.Pesquisa}'),
@@ -84,10 +117,36 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
                     ),
                   ),
                   ElevatedButton(
-                    onPressed: (){
+                    onPressed: () async {
+                      DBPusherIDS.clear();
+                      var RGCollections;
+
+                      pesquisaData == true ?
+                      RGCollections = FirebaseFirestore.instance.collection('relatorioModuloPrestador').where('DATACODE', isEqualTo: PesquisaDATA)
+                          : pesquisaHora == true ?
+                      RGCollections = FirebaseFirestore.instance.collection('relatorioModuloPrestador')
+                          .where('HORACODE', isEqualTo: PesquisaHORA) :
+                      horaEData == true ? RGCollections = FirebaseFirestore.instance.collection('relatorioModuloPrestador')
+                          .where('DATACODE', isEqualTo: pesquisaData)
+                          .where('HORACODE', isEqualTo: PesquisaHORA) :
+                      RGCollections = FirebaseFirestore.instance.collection('relatorioModuloPrestador');
+
+                      final snapshot7 = await RGCollections.get();
+                      final RGDOC = snapshot7.docs;
+
+                      for (final RGDOCU in RGDOC) {
+
+                        dataDBPusher[RGDOCU.id] = RGDOCU.data();
+                        DBPusherIDS.add(RGDOCU.id);
+
+                        print(dataDBPusher);
+                      }
+
+                      print(DBPusherIDS);
+
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context){
-                            return generatePDFPrestador();
+                            return generatePDFPrestador(dataDBPusher, DBPusherIDS);
                           }));
                     },
                     child: const Icon(
@@ -105,7 +164,6 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
                   setState(() {
                     PesquisaDATA = valor.replaceAll('/', '');
 
-                    print(PesquisaDATA);
                     pesquisaData = true;
 
                     if(PesquisaDATA == ''){
@@ -196,6 +254,7 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
                     width: double.infinity,
                     child: ListView(
                       children: snapshot.data!.docs.map((documents) {
+
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Container(
