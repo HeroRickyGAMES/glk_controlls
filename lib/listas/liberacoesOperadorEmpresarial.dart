@@ -209,7 +209,8 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                           'Pesquisar',
                           style: TextStyle(
                               fontSize: tamanhotextobtns,
-                              fontWeight: FontWeight.bold
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
                           ),
                         ),
                       ),
@@ -454,7 +455,8 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                                     documents['PlacaVeiculo'],
                                                     style: TextStyle(
                                                         fontSize: tamanhotextobtns,
-                                                        fontWeight: FontWeight.bold
+                                                        fontWeight: FontWeight.bold,
+                                                        color: Colors.white
                                                     ),
                                                   )
                                               ),

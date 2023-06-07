@@ -780,7 +780,8 @@ class _mainPorteiroState extends State<mainPorteiro> {
                       child: Text(
                         'Status de liberação',
                         style: TextStyle(
-                            fontSize: tamanhotextobtns
+                            fontSize: tamanhotextobtns,
+                            color: Colors.white
                         ),
                       ),
                     ),
@@ -793,7 +794,8 @@ class _mainPorteiroState extends State<mainPorteiro> {
                         child: Text(
                             'Novo cadastro',
                           style: TextStyle(
-                              fontSize: tamanhotextobtns
+                              fontSize: tamanhotextobtns,
+                              color: Colors.white
                           ),
                         ),
                     ),
@@ -806,7 +808,8 @@ class _mainPorteiroState extends State<mainPorteiro> {
                       child: Text(
                         'Acesso interno',
                         style: TextStyle(
-                            fontSize: tamanhotextobtns
+                            fontSize: tamanhotextobtns,
+                            color: Colors.white
                         ),
                       ),
                     ),
@@ -822,7 +825,8 @@ class _mainPorteiroState extends State<mainPorteiro> {
                       child: Text(
                         'Verificar Entrada',
                         style: TextStyle(
-                            fontSize: tamanhotextobtns
+                            fontSize: tamanhotextobtns,
+                            color: Colors.white
                         ),
                       ),
                     ),
@@ -838,7 +842,8 @@ class _mainPorteiroState extends State<mainPorteiro> {
                       child: Text(
                         'Verificar Saída',
                         style: TextStyle(
-                            fontSize: tamanhotextobtns
+                            fontSize: tamanhotextobtns,
+                            color: Colors.white
                         ),
                       ),
                     ),
@@ -854,7 +859,8 @@ class _mainPorteiroState extends State<mainPorteiro> {
                       child: Text(
                         'Relatorio',
                         style: TextStyle(
-                            fontSize: tamanhotextobtns
+                            fontSize: tamanhotextobtns,
+                            color: Colors.white
                         ),
                       ),
                     ),
@@ -871,7 +877,8 @@ class _mainPorteiroState extends State<mainPorteiro> {
                       child: Text(
                         'Painel',
                         style: TextStyle(
-                            fontSize: tamanhotextobtns
+                            fontSize: tamanhotextobtns,
+                            color: Colors.white
                         ),
                       ),
                     ),
@@ -940,7 +947,8 @@ class _mainPorteiroState extends State<mainPorteiro> {
                       child: Text(
                         'Ativar/Desativar modo Offline',
                         style: TextStyle(
-                            fontSize: tamanhotextobtns
+                            fontSize: tamanhotextobtns,
+                            color: Colors.white
                         ),
                       ),
                     ),
@@ -956,7 +964,8 @@ class _mainPorteiroState extends State<mainPorteiro> {
                       child: Text(
                         'Liberação de pânico',
                         style: TextStyle(
-                            fontSize: tamanhotextobtns
+                            fontSize: tamanhotextobtns,
+                            color: Colors.white
                         ),
                       ),
                     ),
@@ -1064,6 +1073,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                                     'Trocar Senha',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
+                                        color: Colors.white
                                     ),
                                   ),
                                 ),
@@ -1100,6 +1110,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                                     'Sair',
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
+                                        color: Colors.white
                                     ),
                                   ),
                                 ),

@@ -190,7 +190,12 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                                   });
                                                                 }
                                                               },
-                                                              child: const Text('Selecionar Data e Horario de Entrada'),
+                                                              child: const Text(
+                                                                  'Selecionar Data e Horario de Entrada',
+                                                                style: TextStyle(
+                                                                    color: Colors.white
+                                                                ),
+                                                              ),
                                                             ),
                                                             Text(dataAgendataSTsaida == ''
                                                                 ? 'Nenhum data selecionada para Saída'
@@ -221,7 +226,12 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                                   });
                                                                 }
                                                               },
-                                                              child: const Text('Selecionar Data e Horario de Saída'),
+                                                              child: const Text(
+                                                                  'Selecionar Data e Horario de Saída',
+                                                                style: TextStyle(
+                                                                    color: Colors.white
+                                                                ),
+                                                              ),
                                                             ),
                                                             Container(
                                                                 padding: const EdgeInsets.only(top: 16),
@@ -380,7 +390,12 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                                     style: ElevatedButton.styleFrom(
                                                                         primary: Colors.red
                                                                     ),
-                                                                    child: const Text('Cancelar'),
+                                                                    child: const Text(
+                                                                        'Cancelar',
+                                                                      style: TextStyle(
+                                                                          color: Colors.white
+                                                                      ),
+                                                                    ),
                                                                   ),
                                                                 ),
                                                                 Container(
@@ -458,7 +473,12 @@ class _meusAgendamentosActivityState extends State<meusAgendamentosActivity> {
                                                                     style: ElevatedButton.styleFrom(
                                                                         primary: Colors.green
                                                                     ),
-                                                                    child: const Text('Prosseguir'),
+                                                                    child: const Text(
+                                                                        'Prosseguir',
+                                                                      style: TextStyle(
+                                                                          color: Colors.white
+                                                                      ),
+                                                                    ),
                                                                   ),
                                                                 ),
                                                               ],

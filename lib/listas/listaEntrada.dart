@@ -474,7 +474,8 @@ class _listEntradaState extends State<listEntrada> {
                                                       documents['PlacaVeiculo'],
                                                       style: TextStyle(
                                                           fontSize: tamanhotextobtns,
-                                                          fontWeight: FontWeight.bold
+                                                          fontWeight: FontWeight.bold,
+                                                          color: Colors.white
                                                       ),
                                                     )
                                                 ),
@@ -548,7 +549,9 @@ class _listEntradaState extends State<listEntrada> {
                                             style: ElevatedButton.styleFrom(
                                                 primary: Colors.red[800]
                                             ),
-                                            child: const Text("Cancelar"),
+                                            child: const Text(
+                                                "Cancelar",
+                                            ),
                                           ),
                                           ElevatedButton(
                                             onPressed: () async {
@@ -908,7 +911,12 @@ class _listEntradaState extends State<listEntrada> {
                                             style: ElevatedButton.styleFrom(
                                                 primary: Colors.green[800]
                                             ),
-                                            child: const Text("Prosseguir"),
+                                            child: const Text(
+                                                "Prosseguir",
+                                              style: TextStyle(
+                                                  color: Colors.white
+                                              ),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -923,7 +931,8 @@ class _listEntradaState extends State<listEntrada> {
                             child: const Text(
                               'Liberação Manual',
                               style: TextStyle(
-                                  fontSize: 16
+                                  fontSize: 16,
+                                  color: Colors.white
                               ),
                             ),
                           ),

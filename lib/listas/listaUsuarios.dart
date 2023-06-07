@@ -193,7 +193,8 @@ class _listaUsuariosState extends State<listaUsuarios> {
                       }, child: Text(
                           'Selecionar esse motorista',
                         style: TextStyle(
-                            fontSize: tamanhotextobtns
+                            fontSize: tamanhotextobtns,
+                            color: Colors.white
                         ),
                       )
                       )
@@ -317,7 +318,8 @@ class _listaUsuariosState extends State<listaUsuarios> {
                       }, child: Text(
                         'Selecionar esse motorista',
                         style: TextStyle(
-                            fontSize: tamanhotextobtns
+                            fontSize: tamanhotextobtns,
+                            color: Colors.white
                         ),
                       )
                       )

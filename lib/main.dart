@@ -21,8 +21,19 @@ void main() {
         Locale('pt', 'BR'),
       ],
       theme: ThemeData(
-        //brightness: Brightness.dark,
-        //useMaterial3: true,
+        useMaterial3: true,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.blue,
+              onPrimary: Colors.white
+          ),
+        ),
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.blue,
+          titleTextStyle: TextStyle(
+            color: Colors.white
+          )
+        )
       ),
       home: const loginScreen(),
     ),

@@ -207,7 +207,8 @@ class _listaSaidaState extends State<listaSaida> {
                           'Pesquisar',
                           style: TextStyle(
                               fontSize: tamanhotexto,
-                              fontWeight: FontWeight.bold
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white
                           ),
                         ),
                       ),
@@ -398,7 +399,8 @@ class _listaSaidaState extends State<listaSaida> {
                                                   documents['PlacaVeiculo'],
                                                   style: TextStyle(
                                                       fontSize: tamanhotextobtns,
-                                                      fontWeight: FontWeight.bold
+                                                      fontWeight: FontWeight.bold,
+                                                      color: Colors.white
                                                   ),
                                                 )
                                             ),
@@ -833,7 +835,12 @@ class _listaSaidaState extends State<listaSaida> {
                                           style: ElevatedButton.styleFrom(
                                               primary: Colors.green[800]
                                           ),
-                                          child: const Text("Prosseguir"),
+                                          child: const Text(
+                                              "Prosseguir",
+                                            style: TextStyle(
+                                                color: Colors.white
+                                            ),
+                                          ),
                                         ),
                                       ],
                                     ),
