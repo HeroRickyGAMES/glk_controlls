@@ -82,10 +82,8 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
 
         DBPusherIDS.add(RGDOCU.id);
 
-        print(dataDBPusher);
 
       }
-      print(DBPusherIDS);
       await Future.delayed(const Duration(seconds: 1));
 
     }
@@ -139,10 +137,8 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
                         dataDBPusher[RGDOCU.id] = RGDOCU.data();
                         DBPusherIDS.add(RGDOCU.id);
 
-                        print(dataDBPusher);
                       }
 
-                      print(DBPusherIDS);
 
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context){
@@ -164,13 +160,15 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
                   setState(() {
                     PesquisaDATA = valor.replaceAll('/', '');
 
-                    pesquisaData = true;
 
-                    if(PesquisaDATA == ''){
+                    if(PesquisaHORA != ''){
+                      horaEData = true;
+                      pesquisaHora = false;
                       pesquisaData = false;
                     }else{
-                      if(PesquisaHORA != ''){
-                        horaEData = true;
+                      if(PesquisaDATA == ''){
+                        pesquisaData = false;
+                        horaEData = false;
                       }
                     }
 
@@ -192,14 +190,21 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
                 onChanged: (valor){
                   setState((){
                     PesquisaHORA = valor.replaceAll(':', '');
-                    pesquisaHora = true;
 
-                    if(PesquisaHORA == ''){
+                    print(PesquisaDATA != '');
+                    if(PesquisaDATA != ''){
+                      horaEData = true;
                       pesquisaHora = false;
+                      pesquisaData = false;
+                    }
+
+                    if(valor == ''){
+                      pesquisaHora = false;
+                      horaEData = false;
                     }else{
-                      if(PesquisaDATA != ''){
-                        horaEData = true;
-                      }
+                      horaEData = false;
+                      pesquisaHora = true;
+                      pesquisaData = false;
                     }
 
                   });

@@ -7,6 +7,8 @@ import 'package:flutter/material.dart' as Material;
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
 
+List<pw.Widget> listaItens = [];
+
 class generatePDFPrestador extends StatelessWidget {
   Map<String, dynamic> dataDBPusher;
   List IDS;
@@ -15,24 +17,10 @@ class generatePDFPrestador extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Gerar PDF')),
-        body: PdfPreview(
-          build: (format) => _generatePDFPrestador(format, 'Gerar PDF', dataDBPusher, IDS),
-        ),
-      ),
-    );
-  }
-
-  Future<Uint8List> _generatePDFPrestador(PdfPageFormat format, String title, Map<String, dynamic> dataDBPusherr, List IDS) async {
-    final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
-
-    List<pw.Widget> listaItens = [];
-
+    listaItens.clear();
     for (int i = 0; i <= IDS.length -1; i++) {
 
-      print(dataDBPusherr.length);
+      print(dataDBPusher.length);
 
       listaItens.add(
         pw.Row(
@@ -42,7 +30,7 @@ class generatePDFPrestador extends StatelessWidget {
                   children: [
                     pw.Container(
                       padding: const pw.EdgeInsets.all(5),
-                      child: pw.Text('Nome: ${dataDBPusherr[IDS[i]]['Nome']}'),
+                      child: pw.Text('Nome: ${dataDBPusher[IDS[i]]['Nome']}'),
                     ),
                   ]
               ),
@@ -52,7 +40,7 @@ class generatePDFPrestador extends StatelessWidget {
                   children: [
                     pw.Container(
                       padding: const pw.EdgeInsets.all(5),
-                      child: pw.Text('RG: ${dataDBPusherr[IDS[i]]['RG']},'),
+                      child: pw.Text('RG: ${dataDBPusher[IDS[i]]['RG']},'),
                     ),
                   ]
               ),
@@ -62,27 +50,7 @@ class generatePDFPrestador extends StatelessWidget {
                   children: [
                     pw.Container(
                       padding: const pw.EdgeInsets.all(5),
-                      child: pw.Text('Empresa: ${dataDBPusherr[IDS[i]]['galpao']} ${dataDBPusherr[IDS[i]]['Empresa']},'),
-                    ),
-                  ]
-                ),
-              ),
-              pw.Expanded(child:
-              pw.Column(
-                  children: [
-                    pw.Container(
-                      padding: const pw.EdgeInsets.all(5),
-                      child: pw.Text('Placa: ${dataDBPusherr[IDS[i]]['Placa']},'),
-                    ),
-                  ]
-                ),
-              ),
-              pw.Expanded(child:
-              pw.Column(
-                  children: [
-                    pw.Container(
-                      padding: const pw.EdgeInsets.all(5),
-                      child: pw.Text('Veiculo: ${dataDBPusherr[IDS[i]]['Veiculo']},'),
+                      child: pw.Text('Empresa: ${dataDBPusher[IDS[i]]['galpao']} ${dataDBPusher[IDS[i]]['Empresa']},'),
                     ),
                   ]
               ),
@@ -92,7 +60,7 @@ class generatePDFPrestador extends StatelessWidget {
                   children: [
                     pw.Container(
                       padding: const pw.EdgeInsets.all(5),
-                      child: pw.Text('Modelo: ${dataDBPusherr[IDS[i]]['Modelo']},'),
+                      child: pw.Text('Placa: ${dataDBPusher[IDS[i]]['Placa']},'),
                     ),
                   ]
               ),
@@ -102,7 +70,7 @@ class generatePDFPrestador extends StatelessWidget {
                   children: [
                     pw.Container(
                       padding: const pw.EdgeInsets.all(5),
-                      child: pw.Text('Cor: ${dataDBPusherr[IDS[i]]['Cor']},'),
+                      child: pw.Text('Veiculo: ${dataDBPusher[IDS[i]]['Veiculo']},'),
                     ),
                   ]
               ),
@@ -112,7 +80,7 @@ class generatePDFPrestador extends StatelessWidget {
                   children: [
                     pw.Container(
                       padding: const pw.EdgeInsets.all(5),
-                      child: pw.Text('Data: ${dataDBPusherr[IDS[i]]['Data']},'),
+                      child: pw.Text('Modelo: ${dataDBPusher[IDS[i]]['Modelo']},'),
                     ),
                   ]
               ),
@@ -122,7 +90,7 @@ class generatePDFPrestador extends StatelessWidget {
                   children: [
                     pw.Container(
                       padding: const pw.EdgeInsets.all(5),
-                      child: pw.Text('Hora: ${dataDBPusherr[IDS[i]]['Horario']},'),
+                      child: pw.Text('Cor: ${dataDBPusher[IDS[i]]['Cor']},'),
                     ),
                   ]
               ),
@@ -132,7 +100,27 @@ class generatePDFPrestador extends StatelessWidget {
                   children: [
                     pw.Container(
                       padding: const pw.EdgeInsets.all(5),
-                      child: pw.Text('Status: ${dataDBPusherr[IDS[i]]['Status']},'),
+                      child: pw.Text('Data: ${dataDBPusher[IDS[i]]['Data']},'),
+                    ),
+                  ]
+              ),
+              ),
+              pw.Expanded(child:
+              pw.Column(
+                  children: [
+                    pw.Container(
+                      padding: const pw.EdgeInsets.all(5),
+                      child: pw.Text('Hora: ${dataDBPusher[IDS[i]]['Horario']},'),
+                    ),
+                  ]
+              ),
+              ),
+              pw.Expanded(child:
+              pw.Column(
+                  children: [
+                    pw.Container(
+                      padding: const pw.EdgeInsets.all(5),
+                      child: pw.Text('Status: ${dataDBPusher[IDS[i]]['Status']},'),
                     ),
                   ]
               ),
@@ -141,6 +129,21 @@ class generatePDFPrestador extends StatelessWidget {
         ),
       );
     }
+    
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+            title: const Text('Gerar PDF')
+        ),
+        body: PdfPreview(
+          build: (format) => _generatePDFPrestador(format, 'Gerar PDF', dataDBPusher, IDS),
+        ),
+      ),
+    );
+  }
+
+  Future<Uint8List> _generatePDFPrestador(PdfPageFormat format, String title, Map<String, dynamic> dataDBPusherr, List IDS) async {
+    final pdf = pw.Document(version: PdfVersion.pdf_1_5, compress: true);
 
 
     pdf.addPage(
