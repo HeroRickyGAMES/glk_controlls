@@ -117,52 +117,25 @@ class _mainPorteiroState extends State<mainPorteiro> {
           );
         },
       );
+      final dropValue = ValueNotifier('');
+      final dropValue2 = ValueNotifier('');
 
-      var result = await FirebaseFirestore.instance
-          .collection("empresa")
-          .get();
-      for (var res in result.docs) {
+      final EmpresaCollections = FirebaseFirestore.instance.collection('empresa');
+      final snapshot3 = await EmpresaCollections.get();
+      final Empresa = snapshot3.docs;
+      for (final docEmpresa in Empresa) {
 
-        setState(() {
-          listaNome.add(res.data()['nome']);
+        final name = docEmpresa.get('nome');
 
-          final dropValue = ValueNotifier('');
-          final dropValue2 = ValueNotifier('');
-
-          var db = FirebaseFirestore.instance;
-          var UID = FirebaseAuth.instance.currentUser?.uid;
-          db.collection('Users').doc(UID).get().then((event){
-
-            event.data()?.forEach((key, value) {
-
-
-              if(key == 'nome'){
-                String PorteiroNomee = value;
-
-                var db = FirebaseFirestore.instance;
-                var UID = FirebaseAuth.instance.currentUser?.uid;
-                db.collection('Users').doc(UID).get().then((event){
-
-                  event.data()?.forEach((key, value) {
-
-
-                    if(key == 'nome'){
-
-                      Navigator.pop(context);
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context){
-                            return modalPorteiro(listaNome, dropValue, PorteiroNomee, '',dropValue2);
-                          }));
-                    }
-                  });
-                }
-                );
-              }
-            });
-          }
-          );
-        });
+        listaNome.add(name);
       }
+
+      Navigator.pop(context);
+      Navigator.push(context,
+          MaterialPageRoute(builder: (context){
+            return modalPorteiro(listaNome, dropValue, widget.PorteiroNome, '',dropValue2);
+          }));
+
     }
 
     openModalOffline() async {
