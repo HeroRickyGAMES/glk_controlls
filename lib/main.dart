@@ -28,7 +28,7 @@ void main() {
               onPrimary: Colors.white
           ),
         ),
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           backgroundColor: Colors.blue,
           titleTextStyle: TextStyle(
             color: Colors.white

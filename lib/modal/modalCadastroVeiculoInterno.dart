@@ -22,6 +22,7 @@ class _cadastroVeiculoInternoState extends State<cadastroVeiculoInterno> {
     'Carro de passeio',
     'Moto',
   ];
+
   TextEditingController placaveiculointerface = TextEditingController();
   final dropValue = ValueNotifier('');
 
@@ -78,10 +79,13 @@ class _cadastroVeiculoInternoState extends State<cadastroVeiculoInterno> {
               onChanged: (valor){
 
                 String valorpuro = valor.toUpperCase();
-                placaVeiculo = valorpuro.replaceAllMapped(
-                  RegExp(r'^([a-zA-Z]{3})([0-9a-zA-Z]{4})$'),
-                      (Match m) => '${m[1]} ${m[2]}',
-                );
+                if(valorpuro.length == 7){
+                  placaVeiculo = valorpuro.replaceAllMapped(
+                    RegExp(r'^([a-zA-Z]{3})([0-9a-zA-Z]{4})$'),
+                        (Match m) => '${m[1]} ${m[2]}',
+                  );
+                  placaveiculointerface.text = placaVeiculo;
+                }
                 //Mudou mandou para a String
               },
               controller: placaveiculointerface,

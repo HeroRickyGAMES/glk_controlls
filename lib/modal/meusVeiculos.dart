@@ -129,7 +129,17 @@ class _meusVeiculosActivityState extends State<meusVeiculosActivity> {
                                     padding: const EdgeInsets.only(left: 16),
                                     child: ElevatedButton(
                                         onPressed: (){
-                                          FirebaseFirestore.instance.collection('veiculosDeEmpresa').doc(documents['id']).delete().then((value){
+                                          FirebaseFirestore.instance.collection('veiculosDeEmpresa').doc(documents['id']).delete().onError((error, stackTrace){
+                                            Fluttertoast.showToast(
+                                                msg: 'Um erro aconteceu $error, $stackTrace, contate o suporte!',
+                                                toastLength: Toast.LENGTH_SHORT,
+                                                gravity: ToastGravity.CENTER,
+                                                timeInSecForIosWeb: 1,
+                                                backgroundColor: Colors.grey[600],
+                                                textColor: Colors.white,
+                                                fontSize: tamanhotexto
+                                            );
+                                          }).whenComplete((){
                                             Fluttertoast.showToast(
                                                 msg: 'Deletado!',
                                                 toastLength: Toast.LENGTH_SHORT,
