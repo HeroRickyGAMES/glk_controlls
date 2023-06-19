@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,12 +8,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/ModuloPrestador/geral/Modals/recuperarInfos.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
-import 'package:intl/intl.dart';
 
 class CadastroDoOperador extends StatefulWidget {
   String EmpresaNome = '';
   String EmpresaID = '';
-  File? imageFile;
+  var imageFile;
   CadastroDoOperador(this.EmpresaNome, this.EmpresaID, this.imageFile,{Key? key}) : super(key: key);
 
   @override
@@ -20,6 +20,8 @@ class CadastroDoOperador extends StatefulWidget {
 }
 
 class _CadastroDoOperadorState extends State<CadastroDoOperador> {
+  //web
+  PlatformFile? file;
 
   TextEditingController nameAllcaps = TextEditingController();
   String nome = '';
@@ -45,12 +47,11 @@ class _CadastroDoOperadorState extends State<CadastroDoOperador> {
 
   @override
   Widget build(BuildContext context) {
-
     double tamanhotexto = 20;
     double tamanhotextomin = 16;
     double tamanhotextobtns = 16;
     double aspect = 1.0;
-    File? imageFile = widget.imageFile;
+    var imageFile = widget.imageFile;
     final mediaQueryData = MediaQuery.of(context);
     final screenWidth = mediaQueryData.size.width;
     final screenHeight = mediaQueryData.size.height;
@@ -222,13 +223,29 @@ class _CadastroDoOperadorState extends State<CadastroDoOperador> {
                         },
                       );
 
-                      var dateTime= DateFormat('MM-dd-yyyy HH:mm:ss').format(DateTime.now()).replaceAll('-', '/');
-
                       var uuid = const Uuid();
 
                       String idd = "${DateTime.now().toString()}${uuid.v4()}";
+                      var imageUrl;
 
-                      final imageUrl = await _uploadImageToFirebase(imageFile!, idd);
+                      if(kIsWeb == true){
+                        print(file!.bytes);
+                        print(file!.name);
+                        Uint8List? fileBytes = file!.bytes;
+                        String fileName = file!.name;
+
+                        // Upload file
+                        final reference = storage.ref().child('uploads/colaboradores/$idd/$fileName');
+                        // Faça upload da imagem para o Cloud Storage
+                        await reference.putData(fileBytes!);
+                        imageUrl = await reference.getDownloadURL();
+                        print(imageUrl);
+
+                      }else{
+                        setState(() async {
+                          imageUrl = await _uploadImageToFirebase(imageFile!, idd);
+                        });
+                      }
 
                       FirebaseFirestore.instance.collection('Prestadores').doc(idd).set({
                         'nome': nome,
@@ -268,7 +285,7 @@ class _CadastroDoOperadorState extends State<CadastroDoOperador> {
                         Navigator.pop(context);
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context){
-                              return RecuperarInfos(widget.EmpresaNome, widget.EmpresaID, widget.imageFile, nome, RG, telefone, idd, PreenchidoTipoVeiculo, PreenchidoPermissao, carroOuMoto, moto, carroEmoto, VagaComum, VagaMoto, VagaDiretoria, PreenchidoBloqueado, Liberado, bloqueadoBool, isTired, true, widget.EmpresaNome, true);
+                              return RecuperarInfos(widget.EmpresaNome, widget.EmpresaID, widget.imageFile, nome, RG, telefone, idd, PreenchidoTipoVeiculo, PreenchidoPermissao, carroOuMoto, moto, carroEmoto, VagaComum, VagaMoto, VagaDiretoria, PreenchidoBloqueado, Liberado, bloqueadoBool, isTired, true, widget.EmpresaNome, true, file, imageUrl);
                             }));
                       });
                     }
@@ -342,39 +359,77 @@ class _CadastroDoOperadorState extends State<CadastroDoOperador> {
                   ),
                 ],
               ),
-              SizedBox(
+             kIsWeb?
+                 Column(
+                   children: [
+                     ElevatedButton(
+                       onPressed: () async {
+                         FilePickerResult? result = await FilePicker.platform.pickFiles();
+                         setState(() {
+                           imageFile = '';
+                           if (result != null) {
+                             file = result.files.first;
+                             Fluttertoast.showToast(
+                               msg: 'O arquivo foi selecionado com sucesso!',
+                               toastLength: Toast.LENGTH_SHORT,
+                               timeInSecForIosWeb: 1,
+                               backgroundColor: Colors.black,
+                               textColor: Colors.white,
+                               fontSize: tamanhotexto,
+                             );
+                           } else {
+                             Fluttertoast.showToast(
+                               msg: 'A operação foi cancelada!',
+                               toastLength: Toast.LENGTH_SHORT,
+                               timeInSecForIosWeb: 1,
+                               backgroundColor: Colors.black,
+                               textColor: Colors.white,
+                               fontSize: tamanhotexto,
+                             );
+                           }
+                         });
+                       },
+                       child: Text(''
+                           'Imagem *',
+                         style: TextStyle(
+                             fontSize: textSize,
+                             color: Colors.black
+                         ),
+                       ),
+                     ),
+                   ],
+                 )
+             :SizedBox(
                 height: 300,
                 width: 700,
-                child: Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    alignment: Alignment.center,
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  alignment: Alignment.center,
+                  child:
+                  ElevatedButton(
+                    onPressed: _uploadImage,
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent
+                    ),
                     child:
-                    ElevatedButton(
-                      onPressed: _uploadImage,
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent
-                      ),
-                      child:
-                      Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(4),
-                            child: Text(
-                              'Foto *',
-                              style: TextStyle(
-                                  fontSize: textSize,
-                                  color: Colors.black
-                              ),
+                    Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(4),
+                          child: Text(
+                            'Foto *',
+                            style: TextStyle(
+                                fontSize: textSize,
+                                color: Colors.black
                             ),
                           ),
-                          Image.file(
-                            imageFile!,
-                            height: 265,
-                            width: 200,
-                          ),
-                        ],
-                      ),
+                        ),
+                        Image.file(
+                          imageFile!,
+                          height: 265,
+                          width: 200,
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -456,86 +511,89 @@ class _CadastroDoOperadorState extends State<CadastroDoOperador> {
                   ),
                 )
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: CheckboxListTile(
-                      title: Text(
-                        'Carro',
-                        style: TextStyle(
-                          fontSize: tamanhotexto,
+              Container(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: CheckboxListTile(
+                        title: Text(
+                          'Carro',
+                          style: TextStyle(
+                            fontSize: tamanhotexto,
+                          ),
                         ),
+                        value: carroOuMoto,
+                        onChanged: (value) {
+                          setState(() {
+
+                            if(value == true){
+                              PreenchidoTipoVeiculo = true;
+                              moto = false;
+                              carroOuMoto = true;
+                              carroEmoto = false;
+                            }
+
+                          });
+                        },
+                        activeColor: Colors.blue,
+                        checkColor: Colors.white,
+                        controlAffinity: ListTileControlAffinity.leading,
                       ),
-                      value: carroOuMoto,
-                      onChanged: (value) {
-                        setState(() {
-
-                          if(value == true){
-                            PreenchidoTipoVeiculo = true;
-                            moto = false;
-                            carroOuMoto = true;
-                            carroEmoto = false;
-                          }
-
-                        });
-                      },
-                      activeColor: Colors.blue,
-                      checkColor: Colors.white,
-                      controlAffinity: ListTileControlAffinity.leading,
                     ),
-                  ),
-                  Expanded(
-                    child: CheckboxListTile(
-                      title: Text(
-                        'Moto',
-                        style: TextStyle(
-                          fontSize: tamanhotexto,
+                    Expanded(
+                      child: CheckboxListTile(
+                        title: Text(
+                          'Moto',
+                          style: TextStyle(
+                            fontSize: tamanhotexto,
+                          ),
                         ),
-                      ),
-                      value: moto,
-                      onChanged: (value) {
-                        setState(() {
+                        value: moto,
+                        onChanged: (value) {
+                          setState(() {
 
-                          if(value == true){
-                            PreenchidoTipoVeiculo = true;
-                            moto = true;
-                            carroOuMoto = false;
-                            carroEmoto = false;
-                          }
-                        });
-                      },
-                      activeColor: Colors.blue,
-                      checkColor: Colors.white,
-                      controlAffinity: ListTileControlAffinity.leading,
-                    ),
-                  ),
-                  Expanded(
-                    child: CheckboxListTile(
-                      title: Text(
-                        'Carro + Moto',
-                        style: TextStyle(
-                          fontSize: tamanhotexto,
-                        ),
+                            if(value == true){
+                              PreenchidoTipoVeiculo = true;
+                              moto = true;
+                              carroOuMoto = false;
+                              carroEmoto = false;
+                            }
+                          });
+                        },
+                        activeColor: Colors.blue,
+                        checkColor: Colors.white,
+                        controlAffinity: ListTileControlAffinity.leading,
                       ),
-                      value: carroEmoto,
-                      onChanged: (value) {
-                        setState(() {
-                          if(value == true){
-                            PreenchidoTipoVeiculo = true;
-                            moto = false;
-                            carroOuMoto = false;
-                            carroEmoto = true;
-                          }
-                        });
-                      },
-                      activeColor: Colors.blue,
-                      checkColor: Colors.white,
-                      controlAffinity: ListTileControlAffinity.leading,
                     ),
-                  ),
-                ],
+                    Expanded(
+                      child: CheckboxListTile(
+                        title: Text(
+                          'Carro + Moto',
+                          style: TextStyle(
+                            fontSize: tamanhotexto,
+                          ),
+                        ),
+                        value: carroEmoto,
+                        onChanged: (value) {
+                          setState(() {
+                            if(value == true){
+                              PreenchidoTipoVeiculo = true;
+                              moto = false;
+                              carroOuMoto = false;
+                              carroEmoto = true;
+                            }
+                          });
+                        },
+                        activeColor: Colors.blue,
+                        checkColor: Colors.white,
+                        controlAffinity: ListTileControlAffinity.leading,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Container(
                   padding: const EdgeInsets.all(16),

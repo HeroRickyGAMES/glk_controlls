@@ -64,6 +64,20 @@ class _PrestadorEmpresaMainState extends State<PrestadorEmpresaMain> {
     criarCadastro() async {
 
       if(kIsWeb == true){
+
+
+        final ByteData imageData = await rootBundle.load('assets/error-image.png');
+
+        final Uint8List uint8List = imageData.buffer.asUint8List();
+
+        final tempDir = '/';
+        var file = '';
+
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context){
+              return CadastroDoOperador(widget.Empresa, widget.IDEmpresa, file);
+            }));
+
         Fluttertoast.showToast(
           msg: 'A função não está disponivel para web!',
           toastLength: Toast.LENGTH_SHORT,

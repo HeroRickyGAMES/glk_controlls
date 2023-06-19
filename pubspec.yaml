@@ -60,6 +60,7 @@ dependencies:
   package_info_plus: ^4.0.0
   enhanced_url_launcher: ^6.1.11
   flutter_screenutil: ^5.8.1
+  file_picker: ^5.3.2
 
 
 dev_dependencies:

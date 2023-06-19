@@ -349,24 +349,38 @@ class _pesquisaPrestadorState extends State<pesquisaPrestador> {
                                         width: double.infinity,
                                         child: TextButton(onPressed: () async {
 
-                                          final http.Response responseData = await http.get(Uri.parse(documents['urlImage']));
-                                          Uint8List uint8list = responseData.bodyBytes;
-                                          var buffer = uint8list.buffer;
-                                          ByteData byteData = ByteData.view(buffer);
-                                          var tempDir = await getTemporaryDirectory();
-                                          File convertedFile = await File('${tempDir.path}/${documents['urlImage'].replaceAll('-', '').replaceAll('%', '').replaceAll('/', '').replaceAll('=', '').replaceAll('https', '').replaceAll(':', '').replaceAll('firebasestorage.googleapis.com', '').replaceAll('bglkcontrols.appspot.comoimages', '')}').writeAsBytes(
-                                              buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-
-                                          if(widget.EmpresaID == ''){
-                                            Navigator.push(context,
-                                                MaterialPageRoute(builder: (context){
-                                                  return RecuperarInfos(documents['Empresa'], documents['EmpresaID'], convertedFile, documents['nome'], documents['RG'], documents['Telefone'], documents['id'], true, true, documents['carro'], documents['moto'], documents['carroEmoto'], documents['vagaComum'], documents['vagaMoto'], documents['VagaDiretoria'], true, documents['Liberado'], false, true, false, widget.EmpresaNome, false);
-                                                }));
+                                          if(kIsWeb){
+                                            if(widget.EmpresaID == ''){
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(builder: (context){
+                                                    return RecuperarInfos(documents['Empresa'], documents['EmpresaID'], '', documents['nome'], documents['RG'], documents['Telefone'], documents['id'], true, true, documents['carro'], documents['moto'], documents['carroEmoto'], documents['vagaComum'], documents['vagaMoto'], documents['VagaDiretoria'], true, documents['Liberado'], false, true, false, widget.EmpresaNome, false, '', documents['urlImage']);
+                                                  }));
+                                            }else{
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(builder: (context){
+                                                    return RecuperarInfos(documents['Empresa'], documents['EmpresaID'], '', documents['nome'], documents['RG'], documents['Telefone'], documents['id'], true, true, documents['carro'], documents['moto'], documents['carroEmoto'], documents['vagaComum'], documents['vagaMoto'], documents['VagaDiretoria'], true, documents['Liberado'], false, true, false, widget.EmpresaNome, true, '', documents['urlImage']);
+                                                  }));
+                                            }
                                           }else{
-                                            Navigator.push(context,
-                                                MaterialPageRoute(builder: (context){
-                                                  return RecuperarInfos(documents['Empresa'], documents['EmpresaID'], convertedFile, documents['nome'], documents['RG'], documents['Telefone'], documents['id'], true, true, documents['carro'], documents['moto'], documents['carroEmoto'], documents['vagaComum'], documents['vagaMoto'], documents['VagaDiretoria'], true, documents['Liberado'], false, true, false, widget.EmpresaNome, true);
-                                                }));
+                                            final http.Response responseData = await http.get(Uri.parse(documents['urlImage']));
+                                            Uint8List uint8list = responseData.bodyBytes;
+                                            var buffer = uint8list.buffer;
+                                            ByteData byteData = ByteData.view(buffer);
+                                            var tempDir = await getTemporaryDirectory();
+                                            File convertedFile = await File('${tempDir.path}/${documents['urlImage'].replaceAll('-', '').replaceAll('%', '').replaceAll('/', '').replaceAll('=', '').replaceAll('https', '').replaceAll(':', '').replaceAll('firebasestorage.googleapis.com', '').replaceAll('bglkcontrols.appspot.comoimages', '')}').writeAsBytes(
+                                                buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+
+                                            if(widget.EmpresaID == ''){
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(builder: (context){
+                                                    return RecuperarInfos(documents['Empresa'], documents['EmpresaID'], convertedFile, documents['nome'], documents['RG'], documents['Telefone'], documents['id'], true, true, documents['carro'], documents['moto'], documents['carroEmoto'], documents['vagaComum'], documents['vagaMoto'], documents['VagaDiretoria'], true, documents['Liberado'], false, true, false, widget.EmpresaNome, false, '', documents['urlImage']);
+                                                  }));
+                                            }else{
+                                              Navigator.push(context,
+                                                  MaterialPageRoute(builder: (context){
+                                                    return RecuperarInfos(documents['Empresa'], documents['EmpresaID'], convertedFile, documents['nome'], documents['RG'], documents['Telefone'], documents['id'], true, true, documents['carro'], documents['moto'], documents['carroEmoto'], documents['vagaComum'], documents['vagaMoto'], documents['VagaDiretoria'], true, documents['Liberado'], false, true, false, widget.EmpresaNome, true, '', documents['urlImage']);
+                                                  }));
+                                            }
                                           }
                                         },
                                           child: const Icon(Icons.edit),

@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ import 'package:path_provider/path_provider.dart';
 class RecuperarInfos extends StatefulWidget {
   String EmpresaNome = '';
   String EmpresaID = '';
-  File? imageFile;
+  var imageFile;
   String Nome = '';
   String RG = '';
   String Telefone = '';
@@ -33,15 +34,17 @@ class RecuperarInfos extends StatefulWidget {
   bool poscadastro;
   String OperadorName = '';
   bool Empresa;
+  var fileweb;
+  String urlImage;
 
-  RecuperarInfos(this.EmpresaNome, this.EmpresaID, this.imageFile,this.Nome, this.RG, this.Telefone, this.idd, this.PreenchidoTipoVeiculo, this.PreenchidoPermissao, this.carroOuMoto, this.moto, this.carroEmoto, this.VagaComum, this.VagaMoto, this.VagaDiretoria, this.PreenchidoBloqueado, this.Liberado, this.bloqueadoBool, this.isTired, this.poscadastro, this.OperadorName, this.Empresa, {Key? key}) : super(key: key);
+  RecuperarInfos(this.EmpresaNome, this.EmpresaID, this.imageFile,this.Nome, this.RG, this.Telefone, this.idd, this.PreenchidoTipoVeiculo, this.PreenchidoPermissao, this.carroOuMoto, this.moto, this.carroEmoto, this.VagaComum, this.VagaMoto, this.VagaDiretoria, this.PreenchidoBloqueado, this.Liberado, this.bloqueadoBool, this.isTired, this.poscadastro, this.OperadorName, this.Empresa, this.fileweb, this.urlImage, {Key? key}) : super(key: key);
 
   @override
   State<RecuperarInfos> createState() => _RecuperarInfosState();
 }
 
 class _RecuperarInfosState extends State<RecuperarInfos> {
-  File? imageFile;
+  var imageFile;
   bool initialized = false;
   TextEditingController nameAllcaps = TextEditingController();
   TextEditingController RGController = TextEditingController();
@@ -222,24 +225,42 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                       );
                     },
                   );
-                  final imageUrl = await _uploadImageToFirebase(imageFile!, widget.idd);
+                  if(kIsWeb){
+                    FirebaseFirestore.instance.collection('Prestadores').doc(widget.idd).update({
+                      'nome': nome,
+                      'RG': RG,
+                      'Telefone': telefone,
+                      'carro': carroOuMoto,
+                      'moto': moto,
+                      'carroEmoto': carroEmoto,
+                      'vagaComum': VagaComum,
+                      'vagaMoto': VagaMoto,
+                      'VagaDiretoria': VagaDiretoria,
+                      'Liberado': Liberado,
+                    }).then((value){
+                      Navigator.of(context).pop();
+                      Navigator.pop(context);
+                    });
+                  }else{
+                    final imageUrl = await _uploadImageToFirebase(imageFile!, widget.idd);
 
-                  FirebaseFirestore.instance.collection('Prestadores').doc(widget.idd).update({
-                    'nome': nome,
-                    'RG': RG,
-                    'Telefone': telefone,
-                    'carro': carroOuMoto,
-                    'moto': moto,
-                    'carroEmoto': carroEmoto,
-                    'vagaComum': VagaComum,
-                    'vagaMoto': VagaMoto,
-                    'VagaDiretoria': VagaDiretoria,
-                    'Liberado': Liberado,
-                    'urlImage': imageUrl,
-                  }).then((value){
-                    Navigator.of(context).pop();
-                    Navigator.pop(context);
-                  });
+                    FirebaseFirestore.instance.collection('Prestadores').doc(widget.idd).update({
+                      'nome': nome,
+                      'RG': RG,
+                      'Telefone': telefone,
+                      'carro': carroOuMoto,
+                      'moto': moto,
+                      'carroEmoto': carroEmoto,
+                      'vagaComum': VagaComum,
+                      'vagaMoto': VagaMoto,
+                      'VagaDiretoria': VagaDiretoria,
+                      'Liberado': Liberado,
+                      'urlImage': imageUrl,
+                    }).then((value){
+                      Navigator.of(context).pop();
+                      Navigator.pop(context);
+                    });
+                  }
                 }
               }
             }
@@ -373,39 +394,46 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                   ),
                 ],
               ),
-              SizedBox(
+              kIsWeb?
+              Container(
+                padding: const EdgeInsets.all(4),
+                child: Image.network(
+                  widget.urlImage,
+                  height: 265,
+                  width: 200,
+                ),
+              )
+                  : SizedBox(
                 height: 300,
                 width: 700,
-                child: Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.all(4),
-                    alignment: Alignment.center,
+                child: Container(
+                  padding: const EdgeInsets.all(4),
+                  alignment: Alignment.center,
+                  child:
+                  ElevatedButton(
+                    onPressed: _uploadImage,
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.transparent
+                    ),
                     child:
-                    ElevatedButton(
-                      onPressed: _uploadImage,
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.transparent
-                      ),
-                      child:
-                      Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(4),
-                            child: Text(
-                              'Foto *',
-                              style: TextStyle(
-                                  fontSize: textSize,
-                                  color: Colors.black
-                              ),
+                    Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(4),
+                          child: Text(
+                            'Foto *',
+                            style: TextStyle(
+                                fontSize: textSize,
+                                color: Colors.black
                             ),
                           ),
-                          Image.file(
-                            imageFile!,
-                            height: 265,
-                            width: 200,
-                          ),
-                        ],
-                      ),
+                        ),
+                        Image.file(
+                          imageFile!,
+                          height: 265,
+                          width: 200,
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -511,86 +539,89 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
                     ),
                   )
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: CheckboxListTile(
-                      title: Text(
-                        'Carro',
-                        style: TextStyle(
-                          fontSize: tamanhotexto,
+              Container(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: CheckboxListTile(
+                        title: Text(
+                          'Carro',
+                          style: TextStyle(
+                            fontSize: tamanhotexto,
+                          ),
                         ),
-                      ),
-                      value: carroOuMoto,
-                      onChanged:
-                      widget.Empresa == true ? (value) {
-                        setState(() {
-                          if(value == true){
-                            PreenchidoTipoVeiculo = true;
-                            moto = false;
-                            carroOuMoto = true;
-                            carroEmoto = false;
-                          }
+                        value: carroOuMoto,
+                        onChanged:
+                        widget.Empresa == true ? (value) {
+                          setState(() {
+                            if(value == true){
+                              PreenchidoTipoVeiculo = true;
+                              moto = false;
+                              carroOuMoto = true;
+                              carroEmoto = false;
+                            }
 
-                        });
-                      } :null,
-                      activeColor: Colors.blue,
-                      checkColor: Colors.white,
-                      controlAffinity: ListTileControlAffinity.leading,
-                    ),
-                  ),
-                  Expanded(
-                    child: CheckboxListTile(
-                      title: Text(
-                        'Moto',
-                        style: TextStyle(
-                          fontSize: tamanhotexto,
-                        ),
+                          });
+                        } :null,
+                        activeColor: Colors.blue,
+                        checkColor: Colors.white,
+                        controlAffinity: ListTileControlAffinity.leading,
                       ),
-                      value: moto,
-                      onChanged: widget.Empresa == true ? (value) {
-                        setState(() {
+                    ),
+                    Expanded(
+                      child: CheckboxListTile(
+                        title: Text(
+                          'Moto',
+                          style: TextStyle(
+                            fontSize: tamanhotexto,
+                          ),
+                        ),
+                        value: moto,
+                        onChanged: widget.Empresa == true ? (value) {
+                          setState(() {
 
-                          if(value == true){
-                            PreenchidoTipoVeiculo = true;
-                            moto = true;
-                            carroOuMoto = false;
-                            carroEmoto = false;
-                          }
-                        });
-                      } : null,
-                      activeColor: Colors.blue,
-                      checkColor: Colors.white,
-                      controlAffinity: ListTileControlAffinity.leading,
-                    ),
-                  ),
-                  Expanded(
-                    child: CheckboxListTile(
-                      title: Text(
-                        'Carro + Moto',
-                        style: TextStyle(
-                          fontSize: tamanhotexto,
-                        ),
+                            if(value == true){
+                              PreenchidoTipoVeiculo = true;
+                              moto = true;
+                              carroOuMoto = false;
+                              carroEmoto = false;
+                            }
+                          });
+                        } : null,
+                        activeColor: Colors.blue,
+                        checkColor: Colors.white,
+                        controlAffinity: ListTileControlAffinity.leading,
                       ),
-                      value: carroEmoto,
-                      onChanged: widget.Empresa == true ? (value) {
-                        setState(() {
-                          if(value == true){
-                            PreenchidoTipoVeiculo = true;
-                            moto = false;
-                            carroOuMoto = false;
-                            carroEmoto = true;
-                          }
-                        });
-                      }: null,
-                      activeColor: Colors.blue,
-                      checkColor: Colors.white,
-                      controlAffinity: ListTileControlAffinity.leading,
                     ),
-                  ),
-                ],
+                    Expanded(
+                      child: CheckboxListTile(
+                        title: Text(
+                          'Carro + Moto',
+                          style: TextStyle(
+                            fontSize: tamanhotexto,
+                          ),
+                        ),
+                        value: carroEmoto,
+                        onChanged: widget.Empresa == true ? (value) {
+                          setState(() {
+                            if(value == true){
+                              PreenchidoTipoVeiculo = true;
+                              moto = false;
+                              carroOuMoto = false;
+                              carroEmoto = true;
+                            }
+                          });
+                        }: null,
+                        activeColor: Colors.blue,
+                        checkColor: Colors.white,
+                        controlAffinity: ListTileControlAffinity.leading,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Container(
                   padding: const EdgeInsets.all(16),
