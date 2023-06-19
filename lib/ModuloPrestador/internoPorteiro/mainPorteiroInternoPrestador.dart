@@ -154,11 +154,11 @@ class _mainPorteiroInternoPrestadorState extends State<mainPorteiroInternoPresta
                   ),
                 ),
               ),
-              Container(
+              widget.listaColaborador == true? Container(
                 width: 500,
                 padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                 child: ElevatedButton(
-                  onPressed: widget.listaColaborador == true ? listaDeColaboradores : null,
+                  onPressed: listaDeColaboradores,
                   child: Text(
                     'Lista de Colaboradores',
                     style: TextStyle(
@@ -166,12 +166,12 @@ class _mainPorteiroInternoPrestadorState extends State<mainPorteiroInternoPresta
                     ),
                   ),
                 ),
-              ),
-              Container(
+              ):Container(),
+              widget.relatorioColaborador == true? Container(
                 width: 500,
                 padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                 child: ElevatedButton(
-                  onPressed: widget.relatorioColaborador == true ? relatorioColaborador :null,
+                  onPressed: relatorioColaborador,
                   child: Text(
                     'Relatorio de colaboradores',
                     style: TextStyle(
@@ -179,7 +179,7 @@ class _mainPorteiroInternoPrestadorState extends State<mainPorteiroInternoPresta
                     ),
                   ),
                 ),
-              ),
+              ): Container(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [

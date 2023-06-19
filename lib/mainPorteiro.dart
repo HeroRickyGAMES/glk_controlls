@@ -11,7 +11,6 @@ import 'package:glk_controls/Painel.dart';
 import 'package:glk_controls/btnsVerificarEntrada.dart';
 import 'package:glk_controls/btnsVerificarSaida.dart';
 import 'package:glk_controls/callToAPI.dart';
-import 'package:glk_controls/offlineService/mainPorteiroOffline.dart';
 import 'package:glk_controls/relatorio.dart';
 import 'package:glk_controls/modal/modalVeiculo.dart';
 import 'package:glk_controls/anteLogin.dart';
@@ -136,13 +135,6 @@ class _mainPorteiroState extends State<mainPorteiro> {
             return modalPorteiro(listaNome, dropValue, widget.PorteiroNome, '',dropValue2);
           }));
 
-    }
-
-    openModalOffline() async {
-      Navigator.push(context,
-          MaterialPageRoute(builder: (context){
-            return const mainPorteiroOff();
-          }));
     }
 
     entradaMT(){
@@ -270,7 +262,6 @@ class _mainPorteiroState extends State<mainPorteiro> {
                   decoration: InputDecoration(
                     border: const OutlineInputBorder(),
                     hintText: 'Senha',
-
                     hintStyle: TextStyle(
                         fontSize: tamanhotexto
                     ),
@@ -759,11 +750,11 @@ class _mainPorteiroState extends State<mainPorteiro> {
                       ),
                     ),
                   ),
-                  Container(
+                  widget.cadastro ? Container(
                     width: 500,
                     padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                     child: ElevatedButton(
-                      onPressed: widget.cadastro? openModal: null,
+                      onPressed: openModal,
                         child: Text(
                             'Novo cadastro',
                           style: TextStyle(
@@ -772,7 +763,8 @@ class _mainPorteiroState extends State<mainPorteiro> {
                           ),
                         ),
                     ),
-                  ),
+                  ):
+                  Container(),
                   Container(
                     width: 500,
                     padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
@@ -787,11 +779,11 @@ class _mainPorteiroState extends State<mainPorteiro> {
                       ),
                     ),
                   ),
-                  Container(
+                  widget.entrada? Container(
                     width: 500,
                     padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                     child: ElevatedButton(
-                      onPressed: widget.entrada? entradaMT : null,
+                      onPressed: entradaMT,
                       style: ElevatedButton.styleFrom(
                         primary: Colors.green[700]
                     ),
@@ -803,12 +795,13 @@ class _mainPorteiroState extends State<mainPorteiro> {
                         ),
                       ),
                     ),
-                  ),
-                  Container(
+                  ):
+                  Container(),
+                  widget.saida? Container(
                     width: 500,
                     padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                     child: ElevatedButton(
-                      onPressed: widget.saida ? saidaMT : null,
+                      onPressed: saidaMT,
                       style: ElevatedButton.styleFrom(
                           primary: Colors.yellow[800]
                       ),
@@ -820,12 +813,12 @@ class _mainPorteiroState extends State<mainPorteiro> {
                         ),
                       ),
                     ),
-                  ),
-                  Container(
+                  ): Container(),
+                  widget.relatorio? Container(
                     width: 500,
                     padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                     child: ElevatedButton(
-                      onPressed: widget.relatorio ? relatorioMT : null,
+                      onPressed: relatorioMT,
                       style: ElevatedButton.styleFrom(
                         //primary: Colors.yellow[800]
                       ),
@@ -837,7 +830,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                         ),
                       ),
                     ),
-                  ),
+                  ): Container(),
                   widget.painel ?
                   Container(
                     width: 500,
@@ -855,7 +848,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                         ),
                       ),
                     ),
-                  ) : const Text(''),
+                  ) : Container(),
                   Container(
                     width: 500,
                     padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
@@ -926,11 +919,11 @@ class _mainPorteiroState extends State<mainPorteiro> {
                       ),
                     ),
                   ),
-                  Container(
+                  widget.liberacao? Container(
                     width: 500,
                     padding: const EdgeInsets.only(left: 25, right: 25, top: 16, bottom: 16),
                     child: ElevatedButton(
-                      onPressed: widget.liberacao ?abrirPainelDePanico: null,
+                      onPressed: abrirPainelDePanico,
                       style: ElevatedButton.styleFrom(
                           primary: Colors.red[800]
                       ),
@@ -942,7 +935,7 @@ class _mainPorteiroState extends State<mainPorteiro> {
                         ),
                       ),
                     ),
-                  )
+                  ):Container(),
                 ],
               ),
               Column(
