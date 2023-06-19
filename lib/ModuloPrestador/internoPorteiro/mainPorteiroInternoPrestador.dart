@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:glk_controls/ModuloPrestador/geral/pesquisa/PesquisaPlacaSaida.dart';
 import 'package:glk_controls/ModuloPrestador/geral/pesquisa/pesquisa.dart';
 import 'package:glk_controls/ModuloPrestador/geral/pesquisa/pesquisaColaborador.dart';
+import 'package:glk_controls/ModuloPrestador/geral/pesquisa/pesquisaCriarVeiculo.dart';
 import 'package:glk_controls/ModuloPrestador/geral/pesquisa/pesquisaPlaca.dart';
 import 'package:glk_controls/ModuloPrestador/listas/listasDeInternos.dart';
 import 'package:glk_controls/ModuloPrestador/relatorio/relatorio.dart';
@@ -62,7 +63,7 @@ class _mainPorteiroInternoPrestadorState extends State<mainPorteiroInternoPresta
     cadastrodoVeiculo(){
       Navigator.push(context,
           MaterialPageRoute(builder: (context){
-            return listasdeInternos(widget.Operador, '');
+            return pesquisaCriarVeiculo(widget.Operador, '');
           }));
     }
 

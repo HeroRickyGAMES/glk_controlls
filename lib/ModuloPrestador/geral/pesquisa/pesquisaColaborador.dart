@@ -100,7 +100,7 @@ class _pesquisaColaboradorState extends State<pesquisaColaborador> {
                 child: TextFormField(
                   onChanged: (valor){
                     setState(() async {
-                      RGouNome = valor;
+                      RGouNome = valor.toUpperCase();
 
                       if(valor == ''){
                         setState(() {

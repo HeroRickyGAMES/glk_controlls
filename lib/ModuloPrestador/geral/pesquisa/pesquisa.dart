@@ -85,7 +85,7 @@ class _pesquisaPrestadorState extends State<pesquisaPrestador> {
                 child: TextFormField(
                   onChanged: (valor){
                     setState(() async {
-                      RGouNome = valor;
+                      RGouNome = valor.toUpperCase();
 
                       if(RGouNome == ''){
                         setState(() {
