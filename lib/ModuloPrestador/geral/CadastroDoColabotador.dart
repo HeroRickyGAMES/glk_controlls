@@ -242,9 +242,7 @@ class _CadastroDoOperadorState extends State<CadastroDoOperador> {
                         print(imageUrl);
 
                       }else{
-                        setState(() async {
-                          imageUrl = await _uploadImageToFirebase(imageFile!, idd);
-                        });
+                        imageUrl = await _uploadImageToFirebase(imageFile!, idd);
                       }
 
                       FirebaseFirestore.instance.collection('Prestadores').doc(idd).set({

@@ -35,7 +35,6 @@ class _UsuariosCadastradosState extends State<UsuariosCadastrados> {
         OperadorTipe = 'Operador de Empresa';
       });
     }
-
   }
 
   @override

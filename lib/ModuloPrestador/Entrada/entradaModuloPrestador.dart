@@ -98,7 +98,6 @@ class _entradaModuloPrestadorState extends State<entradaModuloPrestador> {
           'status': 'Liberado Entrada',
           'lastStatus': 'Liberado Entrada'
         }).then((value) async {
-
           FirebaseFirestore.instance.collection('relatorioModuloPrestador').doc().set({
             'Nome': widget.NomeUser,
             'RG': widget.RG,
