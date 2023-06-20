@@ -268,7 +268,13 @@ class _pesquisaPrestadorState extends State<pesquisaPrestador> {
               Container(
                 padding: const EdgeInsets.all(16),
                 child: StreamBuilder(
-                  stream: FirebaseFirestore.instance
+                  stream:
+                  widget.EmpresaID != '' ? FirebaseFirestore.instance
+                      .collection('Prestadores')
+                      .where(oqPesquisar, isEqualTo: RGouNome)
+                      .where('EmpresaID', isEqualTo: widget.EmpresaID)
+                      .snapshots() :
+                  FirebaseFirestore.instance
                       .collection('Prestadores')
                       .where(oqPesquisar, isEqualTo: RGouNome)
                       .snapshots(),
