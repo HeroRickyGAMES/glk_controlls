@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/ModuloPrestador/relatorio/posPesquisa/posPesquisa.dart';
 
+//Programado por HeroRickyGames
+
 class Relatorio extends StatefulWidget {
   String Porteiro;
   String LogoPath;

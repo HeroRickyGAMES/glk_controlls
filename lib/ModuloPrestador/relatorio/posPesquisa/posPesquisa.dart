@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:glk_controls/ModuloPrestador/relatorio/posPesquisa/pdf/CriarPDFPrestador.dart';
 
+//Programado por HeroRickyGames
+
 class PosPesquisaRelatorio extends StatefulWidget {
   String Pesquisa;
   String OquePesquisar;

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 
-import 'callToAPItoOFF.dart';
+//Programado por HeroRickyGames
 
 Future<void> getReleAPI1adm() async {
   await Future.delayed(Duration(seconds: 1));

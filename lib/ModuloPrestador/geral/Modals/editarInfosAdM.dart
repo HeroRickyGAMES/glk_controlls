@@ -5,9 +5,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:glk_controls/ModuloPrestador/geral/Modals/cadastrarVeiculoPrestador.dart';
 import 'package:glk_controls/ModuloPrestador/geral/Modals/editarVeiculo.dart';
-import 'package:image_picker/image_picker.dart';
+
+//Programado por HeroRickyGames
 
 class editarInfosADM extends StatefulWidget {
   String EmpresaNome = '';

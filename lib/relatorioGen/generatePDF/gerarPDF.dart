@@ -7,6 +7,8 @@ import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
+//Programado por HeroRickyGames
+
 class generatePDF extends StatelessWidget {
   String entradapor = '';
   String dataEntrada = '';

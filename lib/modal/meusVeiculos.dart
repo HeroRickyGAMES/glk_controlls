@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/modal/modalCadastroVeiculoInterno.dart';
 
+//Programado por HeroRickyGames
+
 class meusVeiculosActivity extends StatefulWidget {
   String Empresa;
   String idEmpresa;

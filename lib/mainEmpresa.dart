@@ -9,7 +9,6 @@ import 'package:glk_controls/pesquisaDir/pesquisa.dart';
 import 'package:glk_controls/relatorio.dart';
 import 'package:intl/intl.dart';
 
-
 //Programado por HeroRickyGames
 
 Map map = Map();

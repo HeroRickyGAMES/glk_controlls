@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:http/http.dart' as http;
 
+//Programado por HeroRickyGames
+
 Future<void> releCancelaEntrada() async {
 
   //Contasta para o Relê 1

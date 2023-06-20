@@ -1,7 +1,5 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -9,8 +7,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/ModuloPrestador/geral/Modals/cadastrarVeiculoPrestador.dart';
 import 'package:glk_controls/ModuloPrestador/geral/Modals/editarVeiculo.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:path_provider/path_provider.dart';
 
+//Programado por HeroRickyGames
 class RecuperarInfos extends StatefulWidget {
   String EmpresaNome = '';
   String EmpresaID = '';

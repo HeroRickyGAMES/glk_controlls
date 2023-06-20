@@ -1,6 +1,5 @@
 import 'package:enhanced_url_launcher/enhanced_url_launcher.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
@@ -12,6 +11,8 @@ import 'package:glk_controls/setorADM.dart';
 import 'package:glk_controls/firebase_options.dart';
 import 'package:glk_controls/anteLogin.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+
+//Programado por HeroRickyGames
 
 class mainActivityPrepare extends StatefulWidget {
   String calloff;
@@ -320,22 +321,15 @@ checkislog(context) async {
               );
             }
             if(value == 'operadorEmpresarial'){
-
               db.collection('Users').doc(UID).get().then((event){
-
                 event.data()?.forEach((key, value) {
-
-
                   if(key == 'nome'){
                     String nome = value;
                     //Passar o codigo para mandar a tela
                     var db = dbInstance;
                     var UID = FirebaseAuth.instance.currentUser?.uid;
                     db.collection('Users').doc(UID).get().then((event){
-
                       event.data()?.forEach((key, value) async {
-
-
                         if(key == 'estaativo'){
                           if(value == true){
 

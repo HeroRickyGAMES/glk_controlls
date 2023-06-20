@@ -1,12 +1,12 @@
 import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-
 import 'package:glk_controls/login.dart';
 import 'package:glk_controls/PainelAdministrativo/painelAdmin.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+//Programado por HeroRickyGames
 
 class anteLogin extends StatefulWidget {
   String logoCondominio;

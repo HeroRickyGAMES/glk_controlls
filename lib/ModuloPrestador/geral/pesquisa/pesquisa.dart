@@ -8,6 +8,8 @@ import 'package:glk_controls/ModuloPrestador/geral/Modals/recuperarInfos.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 
+//Programado por HeroRickyGames
+
 class pesquisaPrestador extends StatefulWidget {
 
   String EmpresaNome = '';

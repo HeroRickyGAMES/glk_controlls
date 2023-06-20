@@ -6,6 +6,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+//Programado por HeroRickyGames
+
 class UsuariosCadastrados extends StatefulWidget {
   String ADMName;
   String LogoPath;

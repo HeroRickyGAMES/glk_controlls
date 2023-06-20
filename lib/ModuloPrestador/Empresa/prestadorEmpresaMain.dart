@@ -13,6 +13,8 @@ import 'package:glk_controls/ModuloPrestador/listas/listasDeInternos.dart';
 import 'package:glk_controls/anteLogin.dart';
 import 'package:path_provider/path_provider.dart';
 
+//Programado por HeroRickyGames
+
 class PrestadorEmpresaMain extends StatefulWidget {
   String Empresa = '';
   String IDEmpresa = '';

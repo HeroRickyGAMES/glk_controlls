@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 
+//Programado por HeroRickyGames
+
 class CadastroCondominio extends StatefulWidget {
 
   var dropValue;

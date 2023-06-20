@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/ModuloPrestador/Entrada/entradaModuloPrestador.dart';
 
+//Programado por HeroRickyGames
+
 class PesquisaPlaca extends StatefulWidget {
   String Porteiro;
   PesquisaPlaca(this.Porteiro, {Key? key}) : super(key: key);

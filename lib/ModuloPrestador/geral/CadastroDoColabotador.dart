@@ -9,6 +9,8 @@ import 'package:glk_controls/ModuloPrestador/geral/Modals/recuperarInfos.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';
 
+//Programado por HeroRickyGames
+
 class CadastroDoOperador extends StatefulWidget {
   String EmpresaNome = '';
   String EmpresaID = '';

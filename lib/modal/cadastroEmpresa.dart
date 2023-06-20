@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:uuid/uuid.dart';
 
+//Programado por HeroRickyGames
+
 List<String> tags = [];
 List<String> gpLs = [];
 class cadastroEmpresa extends StatefulWidget {

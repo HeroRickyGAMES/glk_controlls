@@ -3,6 +3,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:glk_controls/listas/listaEntrada.dart';
 
+//Programado por HeroRickyGames
+
 class btnsVerificarEntrada extends StatefulWidget {
   String PorteiroName;
   btnsVerificarEntrada(

@@ -5,6 +5,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:glk_controls/subModais/ReleConfigOnly.dart';
 
+//Programado por HeroRickyGames
+
 class releModalConfig extends StatefulWidget {
   String urlPadrao;
   String urlPadrao2;

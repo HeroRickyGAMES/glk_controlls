@@ -1,8 +1,9 @@
 import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:glk_controls/listas/listaSaida.dart';
+
+//Programado por HeroRickyGames
 
 class btnsVerificarSaida extends StatefulWidget {
   String PorteiroName;

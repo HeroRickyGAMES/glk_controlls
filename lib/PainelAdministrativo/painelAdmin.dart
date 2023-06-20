@@ -11,6 +11,7 @@ import 'package:glk_controls/CadastrarCondominio.dart';
 import 'package:glk_controls/Painel.dart';
 import 'package:glk_controls/anteLogin.dart';
 
+//Programado por HeroRickyGames
 
 class painelAdmin extends StatefulWidget {
   const painelAdmin({Key? key}) : super(key: key);

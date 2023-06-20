@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/callToAPI.dart';
 
+//Programado por HeroRickyGames
+
 class entradaModuloPrestador extends StatefulWidget {
   String Operador;
   String URLImage;

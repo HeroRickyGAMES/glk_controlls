@@ -5,9 +5,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/ModuloPrestador/geral/Modals/editarInfosAdM.dart';
-import 'package:glk_controls/ModuloPrestador/geral/Modals/recuperarInfos.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
+
+//Programado por HeroRickyGames
 
 class pesquisaColaborador extends StatefulWidget {
 

@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/pesquisaDir/pesquisaRelatorio.dart';
 
+//Programado por HeroRickyGames
+
 class relatorio extends StatefulWidget {
 
   String operadorName;
