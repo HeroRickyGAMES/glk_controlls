@@ -16,7 +16,8 @@ import 'package:path_provider/path_provider.dart';
 class PrestadorEmpresaMain extends StatefulWidget {
   String Empresa = '';
   String IDEmpresa = '';
-  PrestadorEmpresaMain(this.Empresa, this.IDEmpresa,{Key? key}) : super(key: key);
+  String EmpresaVdd = '';
+  PrestadorEmpresaMain(this.Empresa, this.IDEmpresa,this.EmpresaVdd, {Key? key}) : super(key: key);
 
   @override
   State<PrestadorEmpresaMain> createState() => _PrestadorEmpresaMainState();
@@ -75,7 +76,7 @@ class _PrestadorEmpresaMainState extends State<PrestadorEmpresaMain> {
 
         Navigator.push(context,
             MaterialPageRoute(builder: (context){
-              return CadastroDoOperador(widget.Empresa, widget.IDEmpresa, file);
+              return CadastroDoOperador(widget.EmpresaVdd, widget.IDEmpresa, file, widget.Empresa);
             }));
 
         Fluttertoast.showToast(
@@ -102,21 +103,21 @@ class _PrestadorEmpresaMainState extends State<PrestadorEmpresaMain> {
 
         Navigator.push(context,
             MaterialPageRoute(builder: (context){
-              return CadastroDoOperador(widget.Empresa, widget.IDEmpresa, file);
+              return CadastroDoOperador(widget.Empresa, widget.IDEmpresa, file, widget.EmpresaVdd);
             }));
       }
     }
     pesquisa() async {
       Navigator.push(context,
           MaterialPageRoute(builder: (context){
-            return pesquisaPrestador(widget.Empresa, widget.IDEmpresa);
+            return pesquisaPrestador(widget.EmpresaVdd, widget.IDEmpresa);
           }));
     }
 
     listaInternos(){
       Navigator.push(context,
           MaterialPageRoute(builder: (context){
-            return listasdeInternos(widget.Empresa, widget.IDEmpresa);
+            return listasdeInternos(widget.EmpresaVdd, widget.IDEmpresa);
           }));
     }
 
@@ -252,7 +253,7 @@ class _PrestadorEmpresaMainState extends State<PrestadorEmpresaMain> {
                         Column(
                           children: [
                             Text(
-                              'Operador: ${widget.Empresa}',
+                              'Operador: ${widget.EmpresaVdd}',
                               style: TextStyle(
                                   fontSize: tamanhotexto
                               ),

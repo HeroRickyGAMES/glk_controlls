@@ -25,39 +25,6 @@ class mainEmpresa extends StatefulWidget {
   State<mainEmpresa> createState() => _mainEmpresaState();
 }
 
-class _PlateFormatter extends TextInputFormatter {
-  static const int _firstGroupLength = 3;
-  static const int _secondGroupLength = 4;
-  static const String _separator = ' ';
-
-  @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
-    String cleaned = newValue.text.replaceAll(RegExp('[^a-zA-Z0-9]'), '');
-    String plate = '';
-    int i = 0;
-    while (i < cleaned.length) {
-      int remaining = cleaned.length - i;
-      if (remaining > _firstGroupLength) {
-        plate += cleaned.substring(i, i + _firstGroupLength) + _separator;
-        i += _firstGroupLength;
-      } else {
-        plate += cleaned.substring(i, i + remaining);
-        i += remaining;
-      }
-      if (i == _firstGroupLength && remaining > 0) {
-        plate += _separator;
-      }
-    }
-    return TextEditingValue(
-      text: plate,
-      selection: TextSelection.fromPosition(
-        TextPosition(offset: plate.length),
-      ),
-    );
-  }
-}
-
 class _mainEmpresaState extends State<mainEmpresa> {
 
   Widget build(BuildContext context) {

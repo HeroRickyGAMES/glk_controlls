@@ -285,7 +285,7 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
       trocandoparaverdadeiro();
     }
 
-    started() async {
+    started(context) async {
       await Future.delayed(const Duration(seconds: 2));
       if(widget.poscadastro == true){
         showDialog(
@@ -327,7 +327,7 @@ class _RecuperarInfosState extends State<RecuperarInfos> {
       }
     }
     if(initialized == false){
-      started();
+      started(context);
     }
 
 

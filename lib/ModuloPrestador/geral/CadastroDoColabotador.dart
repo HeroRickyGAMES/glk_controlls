@@ -13,7 +13,8 @@ class CadastroDoOperador extends StatefulWidget {
   String EmpresaNome = '';
   String EmpresaID = '';
   var imageFile;
-  CadastroDoOperador(this.EmpresaNome, this.EmpresaID, this.imageFile,{Key? key}) : super(key: key);
+  String OperadorName = '';
+  CadastroDoOperador(this.EmpresaNome, this.EmpresaID, this.imageFile,this.OperadorName, {Key? key}) : super(key: key);
 
   @override
   State<CadastroDoOperador> createState() => _CadastroDoOperadorState();
@@ -116,7 +117,7 @@ class _CadastroDoOperadorState extends State<CadastroDoOperador> {
       trocandoparaverdadeiro();
     }
 
-    salvarmt() async {
+    salvarmt(context) async {
       if(imageFile == null){
         Fluttertoast.showToast(
           msg: 'Ponha uma foto para esse cadastro!',
@@ -341,7 +342,9 @@ class _CadastroDoOperadorState extends State<CadastroDoOperador> {
                         ),
                       ),
                       ElevatedButton(
-                        onPressed: salvarmt,
+                        onPressed: (){
+                          salvarmt(context);
+                        },
                         style: ElevatedButton.styleFrom(
                             primary: Colors.green
                         ),
@@ -770,7 +773,7 @@ class _CadastroDoOperadorState extends State<CadastroDoOperador> {
                         Column(
                           children: [
                             Text(
-                              'Operador: ${widget.EmpresaNome}',
+                              'Operador: ${widget.OperadorName}',
                               style: TextStyle(
                                   fontSize: tamanhotexto
                               ),

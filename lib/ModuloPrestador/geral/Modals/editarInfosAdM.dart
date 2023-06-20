@@ -231,57 +231,63 @@ class _editarInfosADMState extends State<editarInfosADM> {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Image.asset(
-                    'assets/icon.png',
-                    width: 150,
-                    height: 150,
-                  ),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(5),
-                        child: ElevatedButton(
-                          onPressed: (){
-                            Navigator.pop(context);
-                          },
-                          style: ElevatedButton.styleFrom(
-                              primary: Colors.white
-                          ),
-                          child: Text(
-                            'Cancelar',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: tamanhotextobtns,
-                              fontWeight: FontWeight.bold,
+              Container(
+                padding: const EdgeInsets.all(4),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Image.asset(
+                      'assets/icon.png',
+                      width: 150,
+                      height: 150,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.all(4),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.all(5),
+                            child: ElevatedButton(
+                              onPressed: (){
+                                Navigator.pop(context);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                  primary: Colors.white
+                              ),
+                              child: Text(
+                                'Cancelar',
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: tamanhotextobtns,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                      ElevatedButton(
-                        onPressed: salvarmt,
-                        style: ElevatedButton.styleFrom(
-                            primary: Colors.green
-                        ),
-                        child: Text(
-                          'Salvar',
-                          style: TextStyle(
-                            fontSize: tamanhotextobtns,
-                            fontWeight: FontWeight.bold,
+                          ElevatedButton(
+                            onPressed: salvarmt,
+                            style: ElevatedButton.styleFrom(
+                                primary: Colors.green
+                            ),
+                            child: Text(
+                              'Salvar',
+                              style: TextStyle(
+                                fontSize: tamanhotextobtns,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
-                ],
+                    ),
+                  ],
+                ),
               ),
               Container(
-                padding: const EdgeInsets.all(16),
+                padding: const EdgeInsets.all(4),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -407,56 +413,59 @@ class _editarInfosADMState extends State<editarInfosADM> {
                     ),
                   )
               ),
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    child: CheckboxListTile(
-                      title: Text(
-                        'Carro',
-                        style: TextStyle(
-                          fontSize: tamanhotexto,
+              Container(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: CheckboxListTile(
+                        title: Text(
+                          'Carro',
+                          style: TextStyle(
+                            fontSize: tamanhotexto,
+                          ),
                         ),
+                        value: carroOuMoto,
+                        onChanged: null,
+                        activeColor: Colors.blue,
+                        checkColor: Colors.white,
+                        controlAffinity: ListTileControlAffinity.leading,
                       ),
-                      value: carroOuMoto,
-                      onChanged: null,
-                      activeColor: Colors.blue,
-                      checkColor: Colors.white,
-                      controlAffinity: ListTileControlAffinity.leading,
                     ),
-                  ),
-                  Expanded(
-                    child: CheckboxListTile(
-                      title: Text(
-                        'Moto',
-                        style: TextStyle(
-                          fontSize: tamanhotexto,
+                    Expanded(
+                      child: CheckboxListTile(
+                        title: Text(
+                          'Moto',
+                          style: TextStyle(
+                            fontSize: tamanhotexto,
+                          ),
                         ),
+                        value: moto,
+                        onChanged: null,
+                        activeColor: Colors.blue,
+                        checkColor: Colors.white,
+                        controlAffinity: ListTileControlAffinity.leading,
                       ),
-                      value: moto,
-                      onChanged: null,
-                      activeColor: Colors.blue,
-                      checkColor: Colors.white,
-                      controlAffinity: ListTileControlAffinity.leading,
                     ),
-                  ),
-                  Expanded(
-                    child: CheckboxListTile(
-                      title: Text(
-                        'Carro + Moto',
-                        style: TextStyle(
-                          fontSize: tamanhotexto,
+                    Expanded(
+                      child: CheckboxListTile(
+                        title: Text(
+                          'Carro + Moto',
+                          style: TextStyle(
+                            fontSize: tamanhotexto,
+                          ),
                         ),
+                        value: carroEmoto,
+                        onChanged: null,
+                        activeColor: Colors.blue,
+                        checkColor: Colors.white,
+                        controlAffinity: ListTileControlAffinity.leading,
                       ),
-                      value: carroEmoto,
-                      onChanged: null,
-                      activeColor: Colors.blue,
-                      checkColor: Colors.white,
-                      controlAffinity: ListTileControlAffinity.leading,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
               Container(
                   padding: const EdgeInsets.all(16),
@@ -727,48 +736,51 @@ class _editarInfosADMState extends State<editarInfosADM> {
                                                           ),
                                                         ),
                                                       ),
-                                                      Row(
-                                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                        children: [
-                                                          Container(
-                                                            padding: const EdgeInsets.all(16),
-                                                            child: ElevatedButton(
-                                                              style: ElevatedButton.styleFrom(
-                                                                  primary: Colors.red[800]
-                                                              ),
-                                                              onPressed: () {
-                                                                Navigator.of(context).pop();
-                                                              },
-                                                              child: Text(
-                                                                  'Cancelar',
-                                                                style: TextStyle(
-                                                                  fontSize: tamanhotextobtns
-                                                                ),
-                                                              ),
-                                                            )
-                                                          ),
-                                                          Container(
+                                                      Container(
+                                                        padding: const EdgeInsets.all(16),
+                                                        child: Row(
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                          children: [
+                                                            Container(
                                                               padding: const EdgeInsets.all(16),
                                                               child: ElevatedButton(
                                                                 style: ElevatedButton.styleFrom(
-                                                                    primary: Colors.green[800]
+                                                                    primary: Colors.red[800]
                                                                 ),
                                                                 onPressed: () {
-                                                                  FirebaseFirestore.instance.collection('VeiculosdePrestadores').doc(documents['id']).update({
-                                                                    'Liberado' : false
-                                                                  }).then((value){
-                                                                    Navigator.of(context).pop();
-                                                                  });
+                                                                  Navigator.of(context).pop();
                                                                 },
                                                                 child: Text(
-                                                                  'Prosseguir',
+                                                                    'Cancelar',
                                                                   style: TextStyle(
-                                                                      fontSize: tamanhotextobtns
+                                                                    fontSize: tamanhotextobtns
                                                                   ),
                                                                 ),
-                                                              ),
-                                                          ),
-                                                        ],
+                                                              )
+                                                            ),
+                                                            Container(
+                                                                padding: const EdgeInsets.all(16),
+                                                                child: ElevatedButton(
+                                                                  style: ElevatedButton.styleFrom(
+                                                                      primary: Colors.green[800]
+                                                                  ),
+                                                                  onPressed: () {
+                                                                    FirebaseFirestore.instance.collection('VeiculosdePrestadores').doc(documents['id']).update({
+                                                                      'Liberado' : false
+                                                                    }).then((value){
+                                                                      Navigator.of(context).pop();
+                                                                    });
+                                                                  },
+                                                                  child: Text(
+                                                                    'Prosseguir',
+                                                                    style: TextStyle(
+                                                                        fontSize: tamanhotextobtns
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                            ),
+                                                          ],
+                                                        ),
                                                       )
                                                     ],
                                                   )
@@ -816,41 +828,44 @@ class _editarInfosADMState extends State<editarInfosADM> {
                                                             fontSize: tamanhotexto
                                                         ),
                                                       ),
-                                                      Row(
-                                                        children: [
-                                                          Expanded(
-                                                            child: TextButton(onPressed: (){
-                                                              Navigator.of(context).pop();
-                                                            }, child: Text(
-                                                              'Cancelar',
-                                                              style: TextStyle(
-                                                                  fontSize: tamanhotexto
-                                                              ),
-                                                            ),
-                                                            ),
-                                                          ),
-                                                          Expanded(
-                                                            child: TextButton(onPressed: (){
-                                                              FirebaseFirestore.instance.collection('VeiculosdePrestadores').doc(documents['id']).delete().whenComplete((){
-                                                                Fluttertoast.showToast(
-                                                                  msg: 'O veiculo selecionado foi deletado!',
-                                                                  toastLength: Toast.LENGTH_SHORT,
-                                                                  timeInSecForIosWeb: 1,
-                                                                  backgroundColor: Colors.black,
-                                                                  textColor: Colors.white,
-                                                                  fontSize: tamanhotexto,
-                                                                );
+                                                      Container(
+                                                        padding: const EdgeInsets.all(16),
+                                                        child: Row(
+                                                          children: [
+                                                            Expanded(
+                                                              child: TextButton(onPressed: (){
                                                                 Navigator.of(context).pop();
-                                                              });
-                                                            }, child: Text(
-                                                              'Prosseguir',
-                                                              style: TextStyle(
-                                                                  fontSize: tamanhotexto
+                                                              }, child: Text(
+                                                                'Cancelar',
+                                                                style: TextStyle(
+                                                                    fontSize: tamanhotexto
+                                                                ),
+                                                              ),
                                                               ),
                                                             ),
-                                                            ),
-                                                          )
-                                                        ],
+                                                            Expanded(
+                                                              child: TextButton(onPressed: (){
+                                                                FirebaseFirestore.instance.collection('VeiculosdePrestadores').doc(documents['id']).delete().whenComplete((){
+                                                                  Fluttertoast.showToast(
+                                                                    msg: 'O veiculo selecionado foi deletado!',
+                                                                    toastLength: Toast.LENGTH_SHORT,
+                                                                    timeInSecForIosWeb: 1,
+                                                                    backgroundColor: Colors.black,
+                                                                    textColor: Colors.white,
+                                                                    fontSize: tamanhotexto,
+                                                                  );
+                                                                  Navigator.of(context).pop();
+                                                                });
+                                                              }, child: Text(
+                                                                'Prosseguir',
+                                                                style: TextStyle(
+                                                                    fontSize: tamanhotexto
+                                                                ),
+                                                              ),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
@@ -876,34 +891,37 @@ class _editarInfosADMState extends State<editarInfosADM> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                          width: 180,
-                          height: 180,
+                  Container(
+                    padding: const EdgeInsets.all(16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Container(
+                            width: 180,
+                            height: 180,
+                            padding: const EdgeInsets.all(16),
+                            child:
+                            Image.asset(
+                              'assets/sanca.png',
+                              fit: BoxFit.contain,
+                            )
+                        ),
+                        Container(
                           padding: const EdgeInsets.all(16),
                           child:
-                          Image.asset(
-                            'assets/sanca.png',
-                            fit: BoxFit.contain,
-                          )
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        child:
-                        Column(
-                          children: [
-                            Text(
-                              'Operador: ${widget.OperadorName}',
-                              style: TextStyle(
-                                  fontSize: tamanhotexto
+                          Column(
+                            children: [
+                              Text(
+                                'Operador: ${widget.OperadorName}',
+                                style: TextStyle(
+                                    fontSize: tamanhotexto
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),

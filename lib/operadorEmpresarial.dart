@@ -217,7 +217,7 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
     acessoInterno(){
       Navigator.push(context,
           MaterialPageRoute(builder: (context){
-            return PrestadorEmpresaMain(widget.name, widget.idEmpresa);
+            return PrestadorEmpresaMain(widget.empresaName, widget.idEmpresa, widget.name);
           }));
     }
 
