@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -190,8 +189,6 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
                 onChanged: (valor){
                   setState((){
                     PesquisaHORA = valor.replaceAll(':', '');
-
-                    print(PesquisaDATA != '');
                     if(PesquisaDATA != ''){
                       horaEData = true;
                       pesquisaHora = false;
@@ -254,165 +251,168 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
                       child: CircularProgressIndicator(),
                     );
                   }
-                  return SizedBox(
-                    height: 250,
-                    width: double.infinity,
-                    child: ListView(
-                      children: snapshot.data!.docs.map((documents) {
+                  return SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: SizedBox(
+                      height: 250,
+                      width: double.infinity,
+                      child: ListView(
+                        children: snapshot.data!.docs.map((documents) {
 
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 1.0,
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              alignment: Alignment.center,
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 1.0,
+                                ),
+                                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                               ),
-                              borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                            ),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-                                    child: SizedBox(
-                                      height: 50,
-                                      width: double.infinity,
-                                      child: Text(
-                                        '${documents['Nome']}-',
-                                        style: const TextStyle(
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                                      child: SizedBox(
+                                        height: 50,
+                                        width: double.infinity,
+                                        child: Text(
+                                          '${documents['Nome']}-',
+                                          style: const TextStyle(
+                                              fontSize: 10,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                                      child: SizedBox(
+                                        height: 50,
+                                        width: double.infinity,
+                                        child: Text(
+                                          '${documents['RG']}-',
+                                          style: const TextStyle(
                                             fontSize: 10,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-                                    child: SizedBox(
-                                      height: 50,
-                                      width: double.infinity,
-                                      child: Text(
-                                        '${documents['RG']}-',
-                                        style: const TextStyle(
-                                          fontSize: 10,
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                                      child: SizedBox(
+                                        height: 50,
+                                        width: double.infinity,
+                                        child: Text(
+                                          '${documents['galpao']} ${documents['Empresa']}-',
+                                          style: const TextStyle(
+                                            fontSize: 10,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-                                    child: SizedBox(
-                                      height: 50,
-                                      width: double.infinity,
-                                      child: Text(
-                                        '${documents['galpao']} ${documents['Empresa']}-',
-                                        style: const TextStyle(
-                                          fontSize: 10,
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                                      child: SizedBox(
+                                        height: 50,
+                                        width: double.infinity,
+                                        child: Text(
+                                          '${documents['Placa']}-',
+                                          style: const TextStyle(
+                                            fontSize: 10,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-                                    child: SizedBox(
-                                      height: 50,
-                                      width: double.infinity,
-                                      child: Text(
-                                        '${documents['Placa']}-',
-                                        style: const TextStyle(
-                                          fontSize: 10,
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                                      child: SizedBox(
+                                        height: 50,
+                                        width: double.infinity,
+                                        child: Text(
+                                          '${documents['Modelo']}-',
+                                          style: const TextStyle(
+                                            fontSize: 10,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-                                    child: SizedBox(
-                                      height: 50,
-                                      width: double.infinity,
-                                      child: Text(
-                                        '${documents['Modelo']}-',
-                                        style: const TextStyle(
-                                          fontSize: 10,
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                                      child: SizedBox(
+                                        height: 50,
+                                        width: double.infinity,
+                                        child: Text(
+                                          '${documents['Cor']}-',
+                                          style: const TextStyle(
+                                            fontSize: 10,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-                                    child: SizedBox(
-                                      height: 50,
-                                      width: double.infinity,
-                                      child: Text(
-                                        '${documents['Cor']}-',
-                                        style: const TextStyle(
-                                          fontSize: 10,
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                                      child: SizedBox(
+                                        height: 50,
+                                        width: double.infinity,
+                                        child: Text(
+                                          '${documents['Data']}-',
+                                          style: const TextStyle(
+                                            fontSize: 10,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-                                    child: SizedBox(
-                                      height: 50,
-                                      width: double.infinity,
-                                      child: Text(
-                                        '${documents['Data']}-',
-                                        style: const TextStyle(
-                                          fontSize: 10,
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                                      child: SizedBox(
+                                        height: 50,
+                                        width: double.infinity,
+                                        child: Text(
+                                          '${documents['Horario']}-',
+                                          style: const TextStyle(
+                                            fontSize: 10,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-                                    child: SizedBox(
-                                      height: 50,
-                                      width: double.infinity,
-                                      child: Text(
-                                        '${documents['Horario']}-',
-                                        style: const TextStyle(
-                                          fontSize: 10,
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                                      child: SizedBox(
+                                        height: 50,
+                                        width: double.infinity,
+                                        child: Text(
+                                          '${documents['Status']}-',
+                                          style: const TextStyle(
+                                            fontSize: 10,
+                                          ),
                                         ),
                                       ),
                                     ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-                                    child: SizedBox(
-                                      height: 50,
-                                      width: double.infinity,
-                                      child: Text(
-                                        '${documents['Status']}-',
-                                        style: const TextStyle(
-                                          fontSize: 10,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        );
-                      }).toList(),
+                          );
+                        }).toList(),
+                      ),
                     ),
                   );
                 },

@@ -3,7 +3,6 @@
 import 'dart:typed_data';
 import 'package:pdf/widgets.dart' as pw;
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart' as Material;
 import 'package:pdf/pdf.dart';
 import 'package:printing/printing.dart';
 
@@ -20,8 +19,6 @@ class generatePDFPrestador extends StatelessWidget {
     listaItens.clear();
     for (int i = 0; i <= IDS.length -1; i++) {
 
-      print(dataDBPusher.length);
-
       listaItens.add(
         pw.Row(
             children: [
@@ -30,7 +27,12 @@ class generatePDFPrestador extends StatelessWidget {
                   children: [
                     pw.Container(
                       padding: const pw.EdgeInsets.all(5),
-                      child: pw.Text('Nome: ${dataDBPusher[IDS[i]]['Nome']}'),
+                      child: pw.Text(
+                          'Nome:\n${dataDBPusher[IDS[i]]['Nome']}',
+                        style: const pw.TextStyle(
+                          fontSize: 6,
+                        ),
+                      ),
                     ),
                   ]
               ),
@@ -40,7 +42,12 @@ class generatePDFPrestador extends StatelessWidget {
                   children: [
                     pw.Container(
                       padding: const pw.EdgeInsets.all(5),
-                      child: pw.Text('RG: ${dataDBPusher[IDS[i]]['RG']},'),
+                      child: pw.Text(
+                          'RG:\n${dataDBPusher[IDS[i]]['RG']},',
+                        style: const pw.TextStyle(
+                          fontSize: 6,
+                        ),
+                      ),
                     ),
                   ]
               ),
@@ -50,7 +57,12 @@ class generatePDFPrestador extends StatelessWidget {
                   children: [
                     pw.Container(
                       padding: const pw.EdgeInsets.all(5),
-                      child: pw.Text('Empresa: ${dataDBPusher[IDS[i]]['galpao']} ${dataDBPusher[IDS[i]]['Empresa']},'),
+                      child: pw.Text(
+                          'Empresa:\n${dataDBPusher[IDS[i]]['galpao']} ${dataDBPusher[IDS[i]]['Empresa']},',
+                        style: const pw.TextStyle(
+                          fontSize: 6,
+                        ),
+                      ),
                     ),
                   ]
               ),
@@ -60,7 +72,12 @@ class generatePDFPrestador extends StatelessWidget {
                   children: [
                     pw.Container(
                       padding: const pw.EdgeInsets.all(5),
-                      child: pw.Text('Placa: ${dataDBPusher[IDS[i]]['Placa']},'),
+                      child: pw.Text(
+                          'Placa:\n${dataDBPusher[IDS[i]]['Placa']},',
+                        style: const pw.TextStyle(
+                          fontSize: 6,
+                        ),
+                      ),
                     ),
                   ]
               ),
@@ -70,7 +87,12 @@ class generatePDFPrestador extends StatelessWidget {
                   children: [
                     pw.Container(
                       padding: const pw.EdgeInsets.all(5),
-                      child: pw.Text('Veiculo: ${dataDBPusher[IDS[i]]['Veiculo']},'),
+                      child: pw.Text(
+                          'Veiculo:\n${dataDBPusher[IDS[i]]['Veiculo']},',
+                        style: const pw.TextStyle(
+                          fontSize: 6,
+                        ),
+                      ),
                     ),
                   ]
               ),
@@ -80,7 +102,12 @@ class generatePDFPrestador extends StatelessWidget {
                   children: [
                     pw.Container(
                       padding: const pw.EdgeInsets.all(5),
-                      child: pw.Text('Modelo: ${dataDBPusher[IDS[i]]['Modelo']},'),
+                      child: pw.Text(
+                          'Modelo:\n${dataDBPusher[IDS[i]]['Modelo']},',
+                        style: const pw.TextStyle(
+                          fontSize: 6,
+                        ),
+                      ),
                     ),
                   ]
               ),
@@ -90,7 +117,12 @@ class generatePDFPrestador extends StatelessWidget {
                   children: [
                     pw.Container(
                       padding: const pw.EdgeInsets.all(5),
-                      child: pw.Text('Cor: ${dataDBPusher[IDS[i]]['Cor']},'),
+                      child: pw.Text(
+                          'Cor:\n${dataDBPusher[IDS[i]]['Cor']},',
+                        style: const pw.TextStyle(
+                          fontSize: 6,
+                        ),
+                      ),
                     ),
                   ]
               ),
@@ -100,7 +132,12 @@ class generatePDFPrestador extends StatelessWidget {
                   children: [
                     pw.Container(
                       padding: const pw.EdgeInsets.all(5),
-                      child: pw.Text('Data: ${dataDBPusher[IDS[i]]['Data']},'),
+                      child: pw.Text(
+                          'Data:\n${dataDBPusher[IDS[i]]['Data']},',
+                        style: const pw.TextStyle(
+                          fontSize: 6,
+                        ),
+                      ),
                     ),
                   ]
               ),
@@ -110,7 +147,12 @@ class generatePDFPrestador extends StatelessWidget {
                   children: [
                     pw.Container(
                       padding: const pw.EdgeInsets.all(5),
-                      child: pw.Text('Hora: ${dataDBPusher[IDS[i]]['Horario']},'),
+                      child: pw.Text(
+                          'Hora:\n${dataDBPusher[IDS[i]]['Horario']},',
+                        style: const pw.TextStyle(
+                          fontSize: 6,
+                        ),
+                      ),
                     ),
                   ]
               ),
@@ -120,7 +162,12 @@ class generatePDFPrestador extends StatelessWidget {
                   children: [
                     pw.Container(
                       padding: const pw.EdgeInsets.all(5),
-                      child: pw.Text('Status: ${dataDBPusher[IDS[i]]['Status']},'),
+                      child: pw.Text(
+                          'Status:\n${dataDBPusher[IDS[i]]['Status']},',
+                        style: const pw.TextStyle(
+                          fontSize: 6,
+                        ),
+                      ),
                     ),
                   ]
               ),
