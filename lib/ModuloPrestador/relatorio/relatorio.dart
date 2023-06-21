@@ -123,7 +123,6 @@ class _RelatorioState extends State<Relatorio> {
                             primary: Colors.green
                         ),
                         onPressed: () async {
-
                           if(Pesquisa == ''){
                             Fluttertoast.showToast(
                               msg: 'Preencha a pesquisa!',

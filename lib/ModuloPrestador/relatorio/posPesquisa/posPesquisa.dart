@@ -257,10 +257,9 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
                     scrollDirection: Axis.horizontal,
                     child: SizedBox(
                       height: 250,
-                      width: double.infinity,
+                      width: 700,
                       child: ListView(
                         children: snapshot.data!.docs.map((documents) {
-
                           return Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
@@ -279,7 +278,7 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
                                       padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
                                       child: SizedBox(
                                         height: 50,
-                                        width: double.infinity,
+                                        width: 700,
                                         child: Text(
                                           '${documents['Nome']}-',
                                           style: const TextStyle(
