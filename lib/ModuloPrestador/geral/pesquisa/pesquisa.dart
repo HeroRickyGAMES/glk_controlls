@@ -275,10 +275,12 @@ class _pesquisaPrestadorState extends State<pesquisaPrestador> {
                       .collection('Prestadores')
                       .where(oqPesquisar, isEqualTo: RGouNome)
                       .where('EmpresaID', isEqualTo: widget.EmpresaID)
+                      .where('Liberado', isEqualTo: true)
                       .snapshots() :
                   FirebaseFirestore.instance
                       .collection('Prestadores')
                       .where(oqPesquisar, isEqualTo: RGouNome)
+                      .where('Liberado', isEqualTo: true)
                       .snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {

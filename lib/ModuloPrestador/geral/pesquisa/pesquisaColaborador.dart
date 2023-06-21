@@ -50,7 +50,6 @@ class _pesquisaColaboradorState extends State<pesquisaColaborador> {
       tamanhotexto = textSize;
       tamanhotextobtns = textSize;
       tamanhotextomin = 16;
-      //aspect = 1.0;
       aspect = 1.0;
 
     }else{
@@ -297,6 +296,7 @@ class _pesquisaColaboradorState extends State<pesquisaColaborador> {
                   stream: FirebaseFirestore.instance
                       .collection('Prestadores')
                       .where(oqPesquisar, isEqualTo: RGouNome)
+                      .where('Liberado', isEqualTo: true)
                       .snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {

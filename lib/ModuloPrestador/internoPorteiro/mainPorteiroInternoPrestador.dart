@@ -47,7 +47,6 @@ class _mainPorteiroInternoPrestadorState extends State<mainPorteiroInternoPresta
       tamanhotexto = textSize;
       tamanhotextobtns = textSize;
       tamanhotextomin = 16;
-      //aspect = 1.0;
       aspect = 1.0;
 
     }else{
