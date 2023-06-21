@@ -79,7 +79,7 @@ class _pesquisaColaboradorState extends State<pesquisaColaborador> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Pesquisa Cadastro'),
+        title: const Text('Lista de Colaboradores'),
         centerTitle: true,
         backgroundColor: Colors.blue,
       ),
@@ -296,7 +296,6 @@ class _pesquisaColaboradorState extends State<pesquisaColaborador> {
                   stream: FirebaseFirestore.instance
                       .collection('Prestadores')
                       .where(oqPesquisar, isEqualTo: RGouNome)
-                      .where('Liberado', isEqualTo: true)
                       .snapshots(),
                   builder: (BuildContext context,
                       AsyncSnapshot<QuerySnapshot> snapshot) {
