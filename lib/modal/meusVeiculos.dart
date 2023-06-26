@@ -72,7 +72,7 @@ class _meusVeiculosActivityState extends State<meusVeiculosActivity> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Meus Veiculos Internos'),
+        title: const Text('Frota Cadastrada'),
         centerTitle: true,
       ),
       body: SingleChildScrollView(

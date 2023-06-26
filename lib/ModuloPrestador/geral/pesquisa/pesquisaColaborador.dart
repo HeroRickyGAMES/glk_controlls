@@ -266,7 +266,7 @@ class _pesquisaColaboradorState extends State<pesquisaColaborador> {
                                 });
                               }else{
                                 Fluttertoast.showToast(
-                                  msg: 'Não encontrei nada!',
+                                  msg: 'Dados não encontrados!',
                                   toastLength: Toast.LENGTH_SHORT,
                                   timeInSecForIosWeb: 1,
                                   backgroundColor: Colors.black,

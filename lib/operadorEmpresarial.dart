@@ -322,7 +322,7 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                     child: ElevatedButton(
                       onPressed: cadastrarVeiculoInterno,
                       child: Text(
-                        'Cadastrar veiculo interno',
+                        'Cadastrar veiculo de frota',
                         style: TextStyle(
                           fontSize: tamanhotextobtns,
                           fontWeight: FontWeight.bold,
@@ -336,7 +336,7 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                     child: ElevatedButton(
                       onPressed: meusVeiculos,
                       child: Text(
-                        'Meus Veiculos internos',
+                        'Frota Cadastrada',
                         style: TextStyle(
                           fontSize: tamanhotextobtns,
                           fontWeight: FontWeight.bold,

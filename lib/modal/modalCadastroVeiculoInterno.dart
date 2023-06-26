@@ -68,7 +68,7 @@ class _cadastroVeiculoInternoState extends State<cadastroVeiculoInterno> {
     
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Cadastro de Veiculos internos'),
+        title: const Text('Cadastro de Veiculos de frota'),
         centerTitle: true,
       ),
       body: Column(

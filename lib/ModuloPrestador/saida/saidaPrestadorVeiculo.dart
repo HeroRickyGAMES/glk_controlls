@@ -616,15 +616,6 @@ class _SaidaPrestadorSaidaState extends State<SaidaPrestadorSaida> {
                           ),
                         )
                     ),
-                    Container(
-                        padding: const EdgeInsets.all(16),
-                        child: Text(
-                          'Tipo de Veiculo: ${widget.TipoDeVeiculo}',
-                          style: TextStyle(
-                            fontSize: tamanhotexto,
-                          ),
-                        )
-                    ),
                   ],
                 ),
               ),
@@ -642,7 +633,7 @@ class _SaidaPrestadorSaidaState extends State<SaidaPrestadorSaida> {
                       },
                     ),
                     Text(
-                      'Saída Entrada',
+                      'Saída liberada',
                       style: TextStyle(
                           fontSize: tamanhotexto,
                           fontWeight: FontWeight.bold

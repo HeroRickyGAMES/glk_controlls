@@ -81,7 +81,7 @@ class _RelatorioState extends State<Relatorio> {
                 child: TextFormField(
                   onChanged: (valor){
                     setState(() async {
-                      Pesquisa = valor;
+                      Pesquisa = valor.toUpperCase();
                     });
                     //Mudou mandou para a String
                   },
@@ -222,7 +222,7 @@ class _RelatorioState extends State<Relatorio> {
                                         }));
                                   }else{
                                     Fluttertoast.showToast(
-                                      msg: 'Eu não achei nada!',
+                                      msg: 'Dados não encontrados!',
                                       toastLength: Toast.LENGTH_SHORT,
                                       timeInSecForIosWeb: 1,
                                       backgroundColor: Colors.black,

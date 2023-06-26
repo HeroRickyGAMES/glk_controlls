@@ -616,15 +616,6 @@ class _entradaModuloPrestadorState extends State<entradaModuloPrestador> {
                           ),
                         )
                     ),
-                    Container(
-                        padding: const EdgeInsets.all(16),
-                        child: Text(
-                          'Tipo de Veiculo: ${widget.TipoDeVeiculo}',
-                          style: TextStyle(
-                            fontSize: tamanhotexto,
-                          ),
-                        )
-                    ),
                   ],
                 ),
               ),
