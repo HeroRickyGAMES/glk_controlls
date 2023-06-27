@@ -821,7 +821,7 @@ class _SaidaPrestadorSaidaState extends State<SaidaPrestadorSaida> {
 
                                                             if(widget.TipoDeVeiculo == 'Carro'){
                                                               vagasInterno = vagasInterno + 1.0;
-                                                              print(vagasInterno);
+
                                                             }else{
                                                               if(widget.TipoDeVeiculo == 'Moto'){
                                                                 vagasInterno = vagasInterno + 0.5;
