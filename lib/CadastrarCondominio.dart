@@ -810,7 +810,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                                                     'imageURL': imageUrl,
                                                     'maxGalpoes': int.parse(galpaost),
                                                     'VagasPrestadores': double.parse(vagasInternas),
-                                                    'VagasMotos': double.parse(vagasMoto),
+                                                    'VagasMotos': int.parse(vagasMoto),
                                                     'emailADM': emailADM,
                                                   }).then((value){
                                                     Navigator.of(context).pop();
