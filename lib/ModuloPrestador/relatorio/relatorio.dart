@@ -80,7 +80,7 @@ class _RelatorioState extends State<Relatorio> {
                 padding: const EdgeInsets.all(16),
                 child: TextFormField(
                   onChanged: (valor){
-                    setState(() async {
+                    setState(() {
                       Pesquisa = valor.toUpperCase();
                     });
                     //Mudou mandou para a String
@@ -133,6 +133,18 @@ class _RelatorioState extends State<Relatorio> {
                               fontSize: tamanhotexto,
                             );
                           }else{
+                            List PlacaLista = [];
+
+                            final PlacaCollections = FirebaseFirestore.instance.collection('relatorioModuloPrestador').where('Placa', isEqualTo: Pesquisa);
+                            final snapshot5 = await PlacaCollections.get();
+                            final PLACADOC = snapshot5.docs;
+                            for (final PLACADOCS in PLACADOC) {
+
+                              final Placa = PLACADOCS.get('Placa');
+
+                              PlacaLista.add('$Placa');
+                            }
+
                             List pesquisaNome = [];
 
                             final NomeCollections = FirebaseFirestore.instance.collection('relatorioModuloPrestador').where('Nome', isEqualTo: Pesquisa);
@@ -167,6 +179,8 @@ class _RelatorioState extends State<Relatorio> {
                               final Empresa = EmpresaDOCU.get('Empresa');
 
                               pesquisaEmpresa.add('$Empresa');
+
+                              print(Empresa);
                             }
 
                             List galpaoPesquisa = [];
@@ -221,14 +235,24 @@ class _RelatorioState extends State<Relatorio> {
                                           return PosPesquisaRelatorio(Pesquisa, OqPesquisar);
                                         }));
                                   }else{
-                                    Fluttertoast.showToast(
-                                      msg: 'Dados não encontrados!',
-                                      toastLength: Toast.LENGTH_SHORT,
-                                      timeInSecForIosWeb: 1,
-                                      backgroundColor: Colors.black,
-                                      textColor: Colors.white,
-                                      fontSize: tamanhotexto,
-                                    );
+                                    if(PlacaLista.contains(Pesquisa)){
+                                      setState(() {
+                                        OqPesquisar = 'Placa';
+                                      });
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context){
+                                            return PosPesquisaRelatorio(Pesquisa, OqPesquisar);
+                                          }));
+                                    }else{
+                                      Fluttertoast.showToast(
+                                        msg: 'Dados não encontrados!',
+                                        toastLength: Toast.LENGTH_SHORT,
+                                        timeInSecForIosWeb: 1,
+                                        backgroundColor: Colors.black,
+                                        textColor: Colors.white,
+                                        fontSize: tamanhotexto,
+                                      );
+                                    }
                                   }
                                 }
                               }

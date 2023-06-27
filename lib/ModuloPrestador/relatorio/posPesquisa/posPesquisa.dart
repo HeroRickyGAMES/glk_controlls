@@ -257,7 +257,7 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
                     scrollDirection: Axis.horizontal,
                     child: SizedBox(
                       height: 250,
-                      width: 700,
+                      width: 2000,
                       child: ListView(
                         children: snapshot.data!.docs.map((documents) {
                           return Padding(

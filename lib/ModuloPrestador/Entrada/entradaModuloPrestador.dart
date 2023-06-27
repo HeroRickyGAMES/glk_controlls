@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:glk_controls/callToAPI.dart';
+import 'package:uuid/uuid.dart';
 
 //Programado por HeroRickyGames
 
@@ -100,10 +101,12 @@ class _entradaModuloPrestadorState extends State<entradaModuloPrestador> {
           'status': 'Liberado Entrada',
           'lastStatus': 'Liberado Entrada'
         }).then((value) async {
-          FirebaseFirestore.instance.collection('relatorioModuloPrestador').doc().set({
+          var uuid = const Uuid();
+
+          FirebaseFirestore.instance.collection('relatorioModuloPrestador').doc('${DateTime.now().toString()}${uuid.v4()}').set({
             'Nome': widget.NomeUser,
             'RG': widget.RG,
-            'Empresa': widget.Empresa,
+            'Empresa': widget.Empresa.toUpperCase(),
             'Placa': widget.placa,
             'Veiculo': widget.TipoDeVeiculo,
             'Modelo': widget.Modelo,
@@ -113,8 +116,8 @@ class _entradaModuloPrestadorState extends State<entradaModuloPrestador> {
             'Status': EntradaST,
             'DATACODE': '${DateTime.now().day}${DateTime.now().month}${DateTime.now().year}',
             'HORACODE': '${DateTime.now().hour}${DateTime.now().minute}',
-            'galpao': widget.galpao,
-            'id': ''
+            'galpao': widget.galpao.replaceAll('-', ' '),
+            'id': '${DateTime.now().toString()}${uuid.v4()}'
           });
 
           Fluttertoast.showToast(
