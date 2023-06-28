@@ -552,7 +552,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                                     'vagas': vagas,
                                                                     'vagasInterno': double.parse(vagasInterno),
                                                                     'vagasMoto': int.parse(vagasMoto),
-                                                                    'vagasDiretoria': int.parse(vagasDiretoria),
+                                                                    'vagasDeDiretoria': int.parse(vagasDiretoria),
                                                                   }
                                                               ).then((value) {
 
