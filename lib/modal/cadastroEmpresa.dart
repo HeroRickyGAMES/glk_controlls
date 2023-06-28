@@ -555,14 +555,12 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                                                                     'vagasDeDiretoria': int.parse(vagasDiretoria),
                                                                   }
                                                               ).then((value) {
-
                                                                 int galpaoPass = tags.length;
                                                                 int subtracaoGalpao = galpoesDisponiveis - galpaoPass;
                                                                 int vagasSubtracao = vagasDisponiveis - int.parse(vagas);
                                                                 double vagasSubtracaoInterno = vagasInternoDisponiveis - int.parse(vagasInterno);
                                                                 int vagasSubtracaoMoto = vagasMotoDisponiveis - int.parse(vagasMoto);
                                                                 galpoesUsados.addAll(tags);
-
 
                                                                 FirebaseFirestore.instance.collection('Condominio').doc('condominio').update({
                                                                   'galpoes': subtracaoGalpao,

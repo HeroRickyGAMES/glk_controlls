@@ -304,171 +304,174 @@ class _pesquisaColaboradorState extends State<pesquisaColaborador> {
                         child: CircularProgressIndicator(),
                       );
                     }
-                    return SizedBox(
-                      height: 250,
-                      width: double.infinity,
-                      child: ListView(
-                        children: snapshot.data!.docs.map((documents) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black,
-                                  width: 1.0,
+                    return SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: SizedBox(
+                        height: 250,
+                        width: 700,
+                        child: ListView(
+                          children: snapshot.data!.docs.map((documents) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                                 ),
-                                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                              ),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-                                      child: SizedBox(
-                                        height: 50,
-                                        width: double.infinity,
-                                        child: Text(
-                                          '${documents['nome']}-',
-                                          style: TextStyle(
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                                        child: SizedBox(
+                                          height: 50,
+                                          width: 700,
+                                          child: Text(
+                                            '${documents['nome']}-',
+                                            style: TextStyle(
+                                                fontSize: tamanhotexto,
+                                                fontWeight: FontWeight.bold
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Container(
+                                        padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                                        child: SizedBox(
+                                          height: 50,
+                                          width: 700,
+                                          child: Text(
+                                            '${documents['RG']}-',
+                                            style: TextStyle(
                                               fontSize: tamanhotexto,
-                                              fontWeight: FontWeight.bold
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                                    Expanded(
+                                      child: Container(
+                                        padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                                        child: SizedBox(
+                                          height: 50,
+                                          width: 700,
+                                          child: Text(
+                                            '${documents['Empresa']}-',
+                                            style: TextStyle(
+                                              fontSize: tamanhotexto,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Expanded(
                                       child: SizedBox(
-                                        height: 50,
-                                        width: double.infinity,
-                                        child: Text(
-                                          '${documents['RG']}-',
-                                          style: TextStyle(
-                                            fontSize: tamanhotexto,
-                                          ),
-                                        ),
+                                          height: 50,
+                                          width: 700,
+                                          child: TextButton(onPressed: () async {
+
+                                            Navigator.push(context,
+                                                MaterialPageRoute(builder: (context){
+                                                  return editarInfosADM(documents['Empresa'], documents['EmpresaID'], documents['nome'], documents['RG'], documents['Telefone'], documents['id'], true, true, documents['carro'], documents['moto'], documents['carroEmoto'], documents['vagaComum'], documents['vagaMoto'], documents['VagaDiretoria'], true, documents['Liberado'], false, true, false, widget.EmpresaNome, documents['urlImage']);
+                                                }));
+
+                                          },
+                                            child: const Icon(Icons.edit),
+                                          )
                                       ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                                    documents['Liberado'] == true ?
+                                        Icon(
+                                        Icons.done,
+                                        color: Colors.green,
+                                        ):
+                                    Icon(
+                                      Icons.block_flipped,
+                                      color: Colors.red,
+                                    ),
+                                    Expanded(
                                       child: SizedBox(
-                                        height: 50,
-                                        width: double.infinity,
-                                        child: Text(
-                                          '${documents['Empresa']}-',
-                                          style: TextStyle(
-                                            fontSize: tamanhotexto,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: SizedBox(
-                                        height: 50,
-                                        width: double.infinity,
-                                        child: TextButton(onPressed: () async {
-
-                                          Navigator.push(context,
-                                              MaterialPageRoute(builder: (context){
-                                                return editarInfosADM(documents['Empresa'], documents['EmpresaID'], documents['nome'], documents['RG'], documents['Telefone'], documents['id'], true, true, documents['carro'], documents['moto'], documents['carroEmoto'], documents['vagaComum'], documents['vagaMoto'], documents['VagaDiretoria'], true, documents['Liberado'], false, true, false, widget.EmpresaNome, documents['urlImage']);
-                                              }));
-
-                                        },
-                                          child: const Icon(Icons.edit),
-                                        )
-                                    ),
-                                  ),
-                                  documents['Liberado'] == true ?
-                                      Icon(
-                                      Icons.done,
-                                      color: Colors.green,
-                                      ):
-                                  Icon(
-                                    Icons.block_flipped,
-                                    color: Colors.red,
-                                  ),
-                                  Expanded(
-                                    child: SizedBox(
-                                        height: 50,
-                                        width: double.infinity,
-                                        child: TextButton(onPressed: (){
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                title: Text(
-                                                  'Atenção!',
-                                                  style: TextStyle(
-                                                      fontSize: tamanhotextobtns
-                                                  ),
-                                                ),
-                                                actions: [
-                                                  Center(
-                                                    child: Column(
-                                                      children: [
-                                                        Text(
-                                                          'Tem certeza que deseja cancelar esse veiculo?\nOs dados não poderão ser recuperados pós deletação!',
-                                                          style: TextStyle(
-                                                              fontSize: tamanhotexto
-                                                          ),
-                                                        ),
-                                                        Row(
-                                                          children: [
-                                                            Expanded(
-                                                              child: TextButton(onPressed: (){
-                                                                Navigator.of(context).pop();
-                                                              }, child: Text(
-                                                                'Cancelar',
-                                                                style: TextStyle(
-                                                                    fontSize: tamanhotexto
-                                                                ),
-                                                              ),
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              child: TextButton(onPressed: (){
-                                                                FirebaseFirestore.instance.collection('Prestadores').doc(documents['id']).delete().whenComplete((){
-                                                                  Fluttertoast.showToast(
-                                                                    msg: 'O veiculo selecionado foi deletado!',
-                                                                    toastLength: Toast.LENGTH_SHORT,
-                                                                    timeInSecForIosWeb: 1,
-                                                                    backgroundColor: Colors.black,
-                                                                    textColor: Colors.white,
-                                                                    fontSize: tamanhotexto,
-                                                                  );
-                                                                });
-                                                              }, child: Text(
-                                                                'Prosseguir',
-                                                                style: TextStyle(
-                                                                    fontSize: tamanhotexto
-                                                                ),
-                                                              ),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ],
+                                          height: 50,
+                                          width: double.infinity,
+                                          child: TextButton(onPressed: (){
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  title: Text(
+                                                    'Atenção!',
+                                                    style: TextStyle(
+                                                        fontSize: tamanhotextobtns
                                                     ),
-                                                  )
-                                                ],
-                                              );
-                                            },
-                                          );
-                                        }, child: const Icon(Icons.delete),
-                                        )
+                                                  ),
+                                                  actions: [
+                                                    Center(
+                                                      child: Column(
+                                                        children: [
+                                                          Text(
+                                                            'Tem certeza que deseja cancelar esse veiculo?\nOs dados não poderão ser recuperados pós deletação!',
+                                                            style: TextStyle(
+                                                                fontSize: tamanhotexto
+                                                            ),
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              Expanded(
+                                                                child: TextButton(onPressed: (){
+                                                                  Navigator.of(context).pop();
+                                                                }, child: Text(
+                                                                  'Cancelar',
+                                                                  style: TextStyle(
+                                                                      fontSize: tamanhotexto
+                                                                  ),
+                                                                ),
+                                                                ),
+                                                              ),
+                                                              Expanded(
+                                                                child: TextButton(onPressed: (){
+                                                                  FirebaseFirestore.instance.collection('Prestadores').doc(documents['id']).delete().whenComplete((){
+                                                                    Fluttertoast.showToast(
+                                                                      msg: 'O veiculo selecionado foi deletado!',
+                                                                      toastLength: Toast.LENGTH_SHORT,
+                                                                      timeInSecForIosWeb: 1,
+                                                                      backgroundColor: Colors.black,
+                                                                      textColor: Colors.white,
+                                                                      fontSize: tamanhotexto,
+                                                                    );
+                                                                  });
+                                                                }, child: Text(
+                                                                  'Prosseguir',
+                                                                  style: TextStyle(
+                                                                      fontSize: tamanhotexto
+                                                                  ),
+                                                                ),
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    )
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                          }, child: const Icon(Icons.delete),
+                                          )
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        }).toList(),
+                            );
+                          }).toList(),
+                        ),
                       ),
                     );
                   },

@@ -289,190 +289,193 @@ class _pesquisaPrestadorState extends State<pesquisaPrestador> {
                         child: CircularProgressIndicator(),
                       );
                     }
-                    return SizedBox(
-                      height: 250,
-                      width: double.infinity,
-                      child: ListView(
-                        children: snapshot.data!.docs.map((documents) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: Colors.black,
-                                  width: 1.0,
+                    return SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: SizedBox(
+                        height: 250,
+                        width: 700,
+                        child: ListView(
+                          children: snapshot.data!.docs.map((documents) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Container(
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.black,
+                                    width: 1.0,
+                                  ),
+                                  borderRadius: const BorderRadius.all(Radius.circular(5.0)),
                                 ),
-                                borderRadius: const BorderRadius.all(Radius.circular(5.0)),
-                              ),
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                    child: Container(
-                                      padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-                                      child: SizedBox(
-                                        height: 50,
-                                        width: double.infinity,
-                                        child: Text(
-                                          '${documents['nome']}-',
-                                          style: TextStyle(
-                                              fontSize: tamanhotexto,
-                                              fontWeight: FontWeight.bold
+                                child: Row(
+                                  children: [
+                                    Expanded(
+                                      child: Container(
+                                        padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                                        child: SizedBox(
+                                          height: 50,
+                                          width: 700,
+                                          child: Text(
+                                            '${documents['nome']}-',
+                                            style: TextStyle(
+                                                fontSize: tamanhotexto,
+                                                fontWeight: FontWeight.bold
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-                                      child: SizedBox(
-                                        height: 50,
-                                        width: double.infinity,
-                                        child: Text(
-                                          '${documents['RG']}-',
-                                          style: TextStyle(
-                                              fontSize: tamanhotexto,
+                                    Expanded(
+                                      child: Container(
+                                        padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                                        child: SizedBox(
+                                          height: 50,
+                                          width: 700,
+                                          child: Text(
+                                            '${documents['RG']}-',
+                                            style: TextStyle(
+                                                fontSize: tamanhotexto,
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
-                                      child: SizedBox(
-                                        height: 50,
-                                        width: double.infinity,
-                                        child: Text(
-                                          '${documents['Empresa']}-',
-                                          style: TextStyle(
-                                              fontSize: tamanhotexto,
+                                    Expanded(
+                                      child: Container(
+                                        padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
+                                        child: SizedBox(
+                                          height: 50,
+                                          width: 700,
+                                          child: Text(
+                                            '${documents['Empresa']}-',
+                                            style: TextStyle(
+                                                fontSize: tamanhotexto,
+                                            ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: SizedBox(
-                                        height: 50,
-                                        width: double.infinity,
-                                        child: TextButton(onPressed: () async {
+                                    Expanded(
+                                      child: SizedBox(
+                                          height: 50,
+                                          width: 700,
+                                          child: TextButton(onPressed: () async {
 
-                                          if(kIsWeb){
-                                            if(widget.EmpresaID == ''){
-                                              Navigator.push(context,
-                                                  MaterialPageRoute(builder: (context){
-                                                    return RecuperarInfos(documents['Empresa'], documents['EmpresaID'], '', documents['nome'], documents['RG'], documents['Telefone'], documents['id'], true, true, documents['carro'], documents['moto'], documents['carroEmoto'], documents['vagaComum'], documents['vagaMoto'], documents['VagaDiretoria'], true, documents['Liberado'], false, true, false, widget.EmpresaNome, false, '', documents['urlImage']);
-                                                  }));
+                                            if(kIsWeb){
+                                              if(widget.EmpresaID == ''){
+                                                Navigator.push(context,
+                                                    MaterialPageRoute(builder: (context){
+                                                      return RecuperarInfos(documents['Empresa'], documents['EmpresaID'], '', documents['nome'], documents['RG'], documents['Telefone'], documents['id'], true, true, documents['carro'], documents['moto'], documents['carroEmoto'], documents['vagaComum'], documents['vagaMoto'], documents['VagaDiretoria'], true, documents['Liberado'], false, true, false, widget.EmpresaNome, false, '', documents['urlImage']);
+                                                    }));
+                                              }else{
+                                                Navigator.push(context,
+                                                    MaterialPageRoute(builder: (context){
+                                                      return RecuperarInfos(documents['Empresa'], documents['EmpresaID'], '', documents['nome'], documents['RG'], documents['Telefone'], documents['id'], true, true, documents['carro'], documents['moto'], documents['carroEmoto'], documents['vagaComum'], documents['vagaMoto'], documents['VagaDiretoria'], true, documents['Liberado'], false, true, false, widget.EmpresaNome, true, '', documents['urlImage']);
+                                                    }));
+                                              }
                                             }else{
-                                              Navigator.push(context,
-                                                  MaterialPageRoute(builder: (context){
-                                                    return RecuperarInfos(documents['Empresa'], documents['EmpresaID'], '', documents['nome'], documents['RG'], documents['Telefone'], documents['id'], true, true, documents['carro'], documents['moto'], documents['carroEmoto'], documents['vagaComum'], documents['vagaMoto'], documents['VagaDiretoria'], true, documents['Liberado'], false, true, false, widget.EmpresaNome, true, '', documents['urlImage']);
-                                                  }));
-                                            }
-                                          }else{
-                                            final http.Response responseData = await http.get(Uri.parse(documents['urlImage']));
-                                            Uint8List uint8list = responseData.bodyBytes;
-                                            var buffer = uint8list.buffer;
-                                            ByteData byteData = ByteData.view(buffer);
-                                            var tempDir = await getTemporaryDirectory();
-                                            File convertedFile = await File('${tempDir.path}/${documents['urlImage'].replaceAll('-', '').replaceAll('%', '').replaceAll('/', '').replaceAll('=', '').replaceAll('https', '').replaceAll(':', '').replaceAll('firebasestorage.googleapis.com', '').replaceAll('bglkcontrols.appspot.comoimages', '')}').writeAsBytes(
-                                                buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+                                              final http.Response responseData = await http.get(Uri.parse(documents['urlImage']));
+                                              Uint8List uint8list = responseData.bodyBytes;
+                                              var buffer = uint8list.buffer;
+                                              ByteData byteData = ByteData.view(buffer);
+                                              var tempDir = await getTemporaryDirectory();
+                                              File convertedFile = await File('${tempDir.path}/${documents['urlImage'].replaceAll('-', '').replaceAll('%', '').replaceAll('/', '').replaceAll('=', '').replaceAll('https', '').replaceAll(':', '').replaceAll('firebasestorage.googleapis.com', '').replaceAll('bglkcontrols.appspot.comoimages', '')}').writeAsBytes(
+                                                  buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
 
-                                            if(widget.EmpresaID == ''){
-                                              Navigator.push(context,
-                                                  MaterialPageRoute(builder: (context){
-                                                    return RecuperarInfos(documents['Empresa'], documents['EmpresaID'], convertedFile, documents['nome'], documents['RG'], documents['Telefone'], documents['id'], true, true, documents['carro'], documents['moto'], documents['carroEmoto'], documents['vagaComum'], documents['vagaMoto'], documents['VagaDiretoria'], true, documents['Liberado'], false, true, false, widget.EmpresaNome, false, '', documents['urlImage']);
-                                                  }));
-                                            }else{
-                                              Navigator.push(context,
-                                                  MaterialPageRoute(builder: (context){
-                                                    return RecuperarInfos(documents['Empresa'], documents['EmpresaID'], convertedFile, documents['nome'], documents['RG'], documents['Telefone'], documents['id'], true, true, documents['carro'], documents['moto'], documents['carroEmoto'], documents['vagaComum'], documents['vagaMoto'], documents['VagaDiretoria'], true, documents['Liberado'], false, true, false, widget.EmpresaNome, true, '', documents['urlImage']);
-                                                  }));
+                                              if(widget.EmpresaID == ''){
+                                                Navigator.push(context,
+                                                    MaterialPageRoute(builder: (context){
+                                                      return RecuperarInfos(documents['Empresa'], documents['EmpresaID'], convertedFile, documents['nome'], documents['RG'], documents['Telefone'], documents['id'], true, true, documents['carro'], documents['moto'], documents['carroEmoto'], documents['vagaComum'], documents['vagaMoto'], documents['VagaDiretoria'], true, documents['Liberado'], false, true, false, widget.EmpresaNome, false, '', documents['urlImage']);
+                                                    }));
+                                              }else{
+                                                Navigator.push(context,
+                                                    MaterialPageRoute(builder: (context){
+                                                      return RecuperarInfos(documents['Empresa'], documents['EmpresaID'], convertedFile, documents['nome'], documents['RG'], documents['Telefone'], documents['id'], true, true, documents['carro'], documents['moto'], documents['carroEmoto'], documents['vagaComum'], documents['vagaMoto'], documents['VagaDiretoria'], true, documents['Liberado'], false, true, false, widget.EmpresaNome, true, '', documents['urlImage']);
+                                                    }));
+                                              }
                                             }
-                                          }
-                                        },
-                                          child: const Icon(Icons.edit),
-                                        )
+                                          },
+                                            child: const Icon(Icons.edit),
+                                          )
+                                      ),
                                     ),
-                                  ),
-                                  Expanded(
-                                    child: SizedBox(
-                                        height: 50,
-                                        width: double.infinity,
-                                        child: TextButton(onPressed: (){
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                title: Text(
-                                                  'Atenção!',
-                                                  style: TextStyle(
-                                                      fontSize: tamanhotextobtns
-                                                  ),
-                                                ),
-                                                actions: [
-                                                  Center(
-                                                    child: Column(
-                                                      children: [
-                                                        Text(
-                                                          'Tem certeza que deseja cancelar esse veiculo?\nOs dados não poderão ser recuperados pós deletação!',
-                                                          style: TextStyle(
-                                                              fontSize: tamanhotexto
-                                                          ),
-                                                        ),
-                                                        Row(
-                                                          children: [
-                                                            Expanded(
-                                                              child: TextButton(onPressed: (){
-                                                                Navigator.of(context).pop();
-                                                              }, child: Text(
-                                                                'Cancelar',
-                                                                style: TextStyle(
-                                                                    fontSize: tamanhotexto
-                                                                ),
-                                                              ),
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              child: TextButton(onPressed: (){
-                                                                FirebaseFirestore.instance.collection('Prestadores').doc(documents['id']).delete().whenComplete((){
-                                                                  Fluttertoast.showToast(
-                                                                    msg: 'O veiculo selecionado foi deletado!',
-                                                                    toastLength: Toast.LENGTH_SHORT,
-                                                                    timeInSecForIosWeb: 1,
-                                                                    backgroundColor: Colors.black,
-                                                                    textColor: Colors.white,
-                                                                    fontSize: tamanhotexto,
-                                                                  );
-                                                                });
-                                                              }, child: Text(
-                                                                'Prosseguir',
-                                                                style: TextStyle(
-                                                                    fontSize: tamanhotexto
-                                                                ),
-                                                              ),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ],
+                                    Expanded(
+                                      child: SizedBox(
+                                          height: 50,
+                                          width: 700,
+                                          child: TextButton(onPressed: (){
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  title: Text(
+                                                    'Atenção!',
+                                                    style: TextStyle(
+                                                        fontSize: tamanhotextobtns
                                                     ),
-                                                  )
-                                                ],
-                                              );
-                                            },
-                                          );
-                                        }, child: const Icon(Icons.delete),
-                                        )
+                                                  ),
+                                                  actions: [
+                                                    Center(
+                                                      child: Column(
+                                                        children: [
+                                                          Text(
+                                                            'Tem certeza que deseja cancelar esse veiculo?\nOs dados não poderão ser recuperados pós deletação!',
+                                                            style: TextStyle(
+                                                                fontSize: tamanhotexto
+                                                            ),
+                                                          ),
+                                                          Row(
+                                                            children: [
+                                                              Expanded(
+                                                                child: TextButton(onPressed: (){
+                                                                  Navigator.of(context).pop();
+                                                                }, child: Text(
+                                                                  'Cancelar',
+                                                                  style: TextStyle(
+                                                                      fontSize: tamanhotexto
+                                                                  ),
+                                                                ),
+                                                                ),
+                                                              ),
+                                                              Expanded(
+                                                                child: TextButton(onPressed: (){
+                                                                  FirebaseFirestore.instance.collection('Prestadores').doc(documents['id']).delete().whenComplete((){
+                                                                    Fluttertoast.showToast(
+                                                                      msg: 'O veiculo selecionado foi deletado!',
+                                                                      toastLength: Toast.LENGTH_SHORT,
+                                                                      timeInSecForIosWeb: 1,
+                                                                      backgroundColor: Colors.black,
+                                                                      textColor: Colors.white,
+                                                                      fontSize: tamanhotexto,
+                                                                    );
+                                                                  });
+                                                                }, child: Text(
+                                                                  'Prosseguir',
+                                                                  style: TextStyle(
+                                                                      fontSize: tamanhotexto
+                                                                  ),
+                                                                ),
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    )
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                          }, child: const Icon(Icons.delete),
+                                          )
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        }).toList(),
+                            );
+                          }).toList(),
+                        ),
                       ),
                     );
                   },

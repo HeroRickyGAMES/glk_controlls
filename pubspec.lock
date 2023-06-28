@@ -221,58 +221,58 @@ packages:
     dependency: transitive
     description:
       name: enhanced_url_launcher_android
-      sha256: "1007c840d0effc7a8c321912f7bf7722eca756a362d082ff55475f747da4fadf"
+      sha256: "14f7bb2d06e9f7d8ac2e1d4b78afc41deed58a81215b53ad346f6a9db30a2a3a"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.33"
+    version: "6.0.34"
   enhanced_url_launcher_ios:
     dependency: transitive
     description:
       name: enhanced_url_launcher_ios
-      sha256: "2735b7214374122d4bda1dc16397f54f735a5c2a68e4a1bacaae1fd8fce223f5"
+      sha256: "064a5d2fab4267c0064fe8c3d34bc5c56f8bb0c244f833807ac1dc79cd56e0b1"
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.5"
+    version: "6.1.6"
   enhanced_url_launcher_linux:
     dependency: transitive
     description:
       name: enhanced_url_launcher_linux
-      sha256: "43f66d97745807b56ea59ca3c6444580623e2dba3b93025de3a24d64e251ad1f"
+      sha256: "40a51297cb89b4e5f1b46602377cf400d63128e18965d83629e5e232efc17458"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.6"
+    version: "3.0.7"
   enhanced_url_launcher_macos:
     dependency: transitive
     description:
       name: enhanced_url_launcher_macos
-      sha256: adf9141341e897cc65f7458ac3e0d671a61d00521f32fb7a74f962a7dcdeea36
+      sha256: "17c04ca22fe7be517165fb8e3a383e9839e68081b186ac6149901a4dd7d32f32"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.6"
+    version: "3.0.7"
   enhanced_url_launcher_platform_interface:
     dependency: transitive
     description:
       name: enhanced_url_launcher_platform_interface
-      sha256: "12d5d1653252b38eae02fc6a2e88ae41702c2b9657df99f37c20098ea6ab2db9"
+      sha256: dbf7322e0b98bbbfdef61dd874055286deda2366d58e8a9f830b67ab8f67bc9d
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.3"
+    version: "2.1.4"
   enhanced_url_launcher_web:
     dependency: transitive
     description:
       name: enhanced_url_launcher_web
-      sha256: "23d8253850fd92af208dd0be8c9e3e024a1542dfcfc50fb82800676b29c9077b"
+      sha256: "8de93ead2134b6d309d0f49e995f4f3275287a960c04510e98c6ca2ee7d5dcb4"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.17"
+    version: "2.0.18"
   enhanced_url_launcher_windows:
     dependency: transitive
     description:
       name: enhanced_url_launcher_windows
-      sha256: e3a457480849f2877823c58f2cb30ae6d4d2a7af7c740c8d477440f3da982326
+      sha256: a05551ffe6ff5a35b630e620f06d73eef600a1fd43fb446ae41b49af37fd5035
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.7"
+    version: "3.0.8"
   fake_async:
     dependency: transitive
     description:
