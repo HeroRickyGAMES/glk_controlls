@@ -69,7 +69,7 @@ class _painelADMState extends State<painelADM> {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        title: Text('SETOR ADIMISTRATIVO - Painel'),
+        title: const Text('SETOR ADIMISTRATIVO - Painel'),
       ),
       body: Center(
         child: SingleChildScrollView(

@@ -75,11 +75,9 @@ class _CadastrarPrestadorState extends State<CadastrarPrestador> {
 
     }else{
       if(Platform.isAndroid){
-
         tamanhotexto = textSizeandroid;
         tamanhotextobtns = textSizeandroidbtn;
         aspect = 0.8;
-
       }
     }
 
@@ -403,7 +401,7 @@ class _CadastrarPrestadorState extends State<CadastrarPrestador> {
 
                                         veiculosPlacas.add('$placas $idPertence');
                                       }
-                                      
+
                                       if(veiculosPlacas.contains('$VeiculoPlaca ${widget.idPrestador}')){
                                         Fluttertoast.showToast(
                                           msg: 'Um Veiculo com a mesma placa já existe no cadastro desse interno!',
