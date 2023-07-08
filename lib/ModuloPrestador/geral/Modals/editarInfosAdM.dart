@@ -219,546 +219,578 @@ class _editarInfosADMState extends State<editarInfosADM> {
 
     initialized = true;
 
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        title: const Text('Dados de cadastro'),
-        centerTitle: true,
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(4),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Image.asset(
-                      'assets/icon.png',
-                      width: 150,
-                      height: 150,
-                    ),
-                    Container(
-                      padding: const EdgeInsets.all(4),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.all(5),
-                            child: ElevatedButton(
-                              onPressed: (){
-                                Navigator.pop(context);
-                              },
+    return LayoutBuilder(builder: (context, constrains){
+
+      if(constrains.maxWidth < 600){
+        tamanhotexto = textSize;
+        tamanhotextobtns = textSize;
+        tamanhotextomin = 16;
+        //aspect = 1.0;
+        aspect = 1.0;
+      }else {
+        if(constrains.maxWidth > 600){
+          tamanhotexto = textSizeandroid;
+          tamanhotextobtns = textSizeandroidbtn;
+          aspect = 0.8;
+        }
+      }
+
+      return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.blue,
+          title: const Text('Dados de cadastro'),
+          centerTitle: true,
+        ),
+        body: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(4),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Image.asset(
+                        'assets/icon.png',
+                        width: 150,
+                        height: 150,
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(4),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(5),
+                              child: ElevatedButton(
+                                onPressed: (){
+                                  Navigator.pop(context);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    primary: Colors.white
+                                ),
+                                child: Text(
+                                  'Cancelar',
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: tamanhotextobtns,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            ElevatedButton(
+                              onPressed: salvarmt,
                               style: ElevatedButton.styleFrom(
-                                  primary: Colors.white
+                                  primary: Colors.green
                               ),
                               child: Text(
-                                'Cancelar',
+                                'Salvar',
                                 style: TextStyle(
-                                  color: Colors.black,
                                   fontSize: tamanhotextobtns,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ),
-                          ),
-                          ElevatedButton(
-                            onPressed: salvarmt,
-                            style: ElevatedButton.styleFrom(
-                                primary: Colors.green
-                            ),
-                            child: Text(
-                              'Salvar',
-                              style: TextStyle(
-                                fontSize: tamanhotextobtns,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(4),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      height: 300,
-                      child: Container(
-                        padding: const EdgeInsets.all(4),
-                        alignment: Alignment.center,
-                        child:
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ElevatedButton(
-                                onPressed: (){
-                                  setState(() {
-                                    if(Liberado == false){
-                                      bloqueadoBool = false;
-                                      PreenchidoBloqueado = true;
-                                      Liberado = true;
-                                    }else{
-                                      if(Liberado == true){
-                                        bloqueadoBool = true;
+                Container(
+                  padding: const EdgeInsets.all(4),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(
+                        height: 300,
+                        child: Container(
+                            padding: const EdgeInsets.all(4),
+                            alignment: Alignment.center,
+                            child:
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                ElevatedButton(
+                                  onPressed: (){
+                                    setState(() {
+                                      if(Liberado == false){
+                                        bloqueadoBool = false;
                                         PreenchidoBloqueado = true;
-                                        Liberado = false;
+                                        Liberado = true;
+                                      }else{
+                                        if(Liberado == true){
+                                          bloqueadoBool = true;
+                                          PreenchidoBloqueado = true;
+                                          Liberado = false;
+                                        }
                                       }
-                                    }
 
-                                  });
-                                },
-                              style: Liberado == true? ElevatedButton.styleFrom(
-                                  primary: Colors.red[800]
-                              ) :ElevatedButton.styleFrom(
-                                  primary: Colors.green[800]
-                              ),
-                                child: Text(
-                                  LiberarEntrada,
+                                    });
+                                  },
+                                  style: Liberado == true? ElevatedButton.styleFrom(
+                                      primary: Colors.red[800]
+                                  ) :ElevatedButton.styleFrom(
+                                      primary: Colors.green[800]
+                                  ),
+                                  child: Text(
+                                    LiberarEntrada,
+                                    style: TextStyle(
+                                        fontSize: tamanhotexto
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  'Status: $LiberadoCheck',
                                   style: TextStyle(
                                       fontSize: tamanhotexto
                                   ),
                                 ),
-                            ),
-                            Text(
-                                'Status: $LiberadoCheck',
-                              style: TextStyle(
-                                fontSize: tamanhotexto
-                              ),
-                            ),
-                            Liberado == true ?
-                            const Icon(
-                                Icons.done,
-                              color: Colors.green,
-                              size: 50,
-                            ):
-                            const Icon(
-                              Icons.block,
-                              color: Colors.red,
-                              size: 50,
+                                Liberado == true ?
+                                const Icon(
+                                  Icons.done,
+                                  color: Colors.green,
+                                  size: 50,
+                                ):
+                                const Icon(
+                                  Icons.block,
+                                  color: Colors.red,
+                                  size: 50,
+                                )
+                              ],
                             )
-                          ],
+                        ),
+                      ),
+                      SizedBox(
+                        height: 300,
+                        child: Container(
+                          padding: const EdgeInsets.all(4),
+                          alignment: Alignment.center,
+                          child:
+                          Image.network(
+                            widget.URLImage,
+                            height: 200,
+                            width: 200,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(16),
+                        child: Text(
+                          'Nome: $nome',
+                          style: TextStyle(
+                              fontSize: tamanhotexto,
+                              fontWeight: FontWeight.bold
+                          ),
                         )
-                      ),
                     ),
-                    SizedBox(
-                      height: 300,
-                      child: Container(
-                        padding: const EdgeInsets.all(4),
-                        alignment: Alignment.center,
-                        child:
-                        Image.network(
-                          widget.URLImage,
-                          height: 200,
-                          width: 200,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                  padding: const EdgeInsets.all(16),
-                  child: Text(
-                    'Nome: $nome',
-                    style: TextStyle(
-                        fontSize: tamanhotexto
-                    ),
-                  )
-              ),
-              Container(
-                padding: const EdgeInsets.all(16),
-                child: Text(
-                  'RG: $RG',
-                  style: TextStyle(
-                    fontSize: tamanhotexto
-                  ),
-                )
-              ),
-              Container(
-                padding: const EdgeInsets.all(16),
-                child: Text(
-                  'Empresa: ${widget.EmpresaNome}',
-                  style: TextStyle(
-                    fontSize: tamanhotexto,
-                  ),
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(16),
-                child: Text(
-                  'Telefone: $telefone',
-                  style: TextStyle(
-                    fontSize: tamanhotexto,
-                  ),
-                ),
-              ),
-              Container(
-                  padding: const EdgeInsets.all(16),
-                  child: Text(
-                    'Tipo de veiculo:',
-                    style: TextStyle(
-                        fontSize: tamanhotexto,
-                        fontWeight: FontWeight.bold
-                    ),
-                  )
-              ),
-              Container(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: CheckboxListTile(
-                        title: Text(
-                          'Carro',
+                    Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(16),
+                        child: Text(
+                          'RG: $RG',
                           style: TextStyle(
-                            fontSize: tamanhotexto,
+                              fontSize: tamanhotexto,
+                              fontWeight: FontWeight.bold
                           ),
-                        ),
-                        value: carroOuMoto,
-                        onChanged: null,
-                        activeColor: Colors.blue,
-                        checkColor: Colors.white,
-                        controlAffinity: ListTileControlAffinity.leading,
-                      ),
+                        )
                     ),
-                    Expanded(
-                      child: CheckboxListTile(
-                        title: Text(
-                          'Moto',
-                          style: TextStyle(
-                            fontSize: tamanhotexto,
-                          ),
-                        ),
-                        value: moto,
-                        onChanged: null,
-                        activeColor: Colors.blue,
-                        checkColor: Colors.white,
-                        controlAffinity: ListTileControlAffinity.leading,
-                      ),
-                    ),
-                    Expanded(
-                      child: CheckboxListTile(
-                        title: Text(
-                          'Carro + Moto',
-                          style: TextStyle(
-                            fontSize: tamanhotexto,
-                          ),
-                        ),
-                        value: carroEmoto,
-                        onChanged: null,
-                        activeColor: Colors.blue,
-                        checkColor: Colors.white,
-                        controlAffinity: ListTileControlAffinity.leading,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                  padding: const EdgeInsets.all(16),
-                  child: Text(
-                    'Permissão:',
-                    style: TextStyle(
-                        fontSize: tamanhotexto,
-                        fontWeight: FontWeight.bold
-                    ),
-                  )
-              ),
-              Container(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: CheckboxListTile(
-                        title: Text(
-                          'Vaga',
-                          style: TextStyle(
-                            fontSize: tamanhotexto,
-                          ),
-                        ),
-                        value: VagaComum,
-                        onChanged: null,
-                        activeColor: Colors.blue,
-                        checkColor: Colors.white,
-                        controlAffinity: ListTileControlAffinity.leading,
-                      ),
-                    ),
-                    Expanded(
-                      child: CheckboxListTile(
-                        title: Text(
-                          'Vaga Moto',
-                          style: TextStyle(
-                            fontSize: tamanhotexto,
-                          ),
-                        ),
-                        value: VagaMoto,
-                        onChanged: null,
-                        activeColor: Colors.blue,
-                        checkColor: Colors.white,
-                        controlAffinity: ListTileControlAffinity.leading,
-                      ),
-                    ),
-                    Expanded(
-                      child: CheckboxListTile(
-                        title: Text(
-                          'Vaga Diretoria',
-                          style: TextStyle(
-                            fontSize: tamanhotexto,
-                          ),
-                        ),
-                        value: VagaDiretoria,
-                        onChanged: null,
-                        activeColor: Colors.blue,
-                        checkColor: Colors.white,
-                        controlAffinity: ListTileControlAffinity.leading,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: CheckboxListTile(
-                        title: Text(
-                          'Liberado',
-                          style: TextStyle(
-                            fontSize: tamanhotexto,
-                          ),
-                        ),
-                        value: Liberado,
-                        onChanged: (value) {
-                          setState(() {
-                            if(value == true){
-                              bloqueadoBool = false;
-                              PreenchidoBloqueado = true;
-                              Liberado = true;
-                            }
-                          });
-                        },
-                        activeColor: Colors.blue,
-                        checkColor: Colors.white,
-                        controlAffinity: ListTileControlAffinity.leading,
-                      ),
-                    ),
-                    Expanded(
-                      child: CheckboxListTile(
-                        title: Text(
-                          'Bloqueado',
-                          style: TextStyle(
-                            fontSize: tamanhotexto,
-                          ),
-                        ),
-                        value: bloqueadoBool,
-                        onChanged: (value) {
-                          setState(() {
-                            if(value == true){
-                              bloqueadoBool = true;
-                              PreenchidoBloqueado = true;
-                              Liberado = false;
-                            }
-                          });
-                        },
-                        activeColor: Colors.blue,
-                        checkColor: Colors.white,
-                        controlAffinity: ListTileControlAffinity.leading,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Container(
-                  padding: const EdgeInsets.all(16),
-                  child: Text(
-                    'Veiculos Liberado:',
-                    style: TextStyle(
-                        fontSize: tamanhotexto,
-                        fontWeight: FontWeight.bold
-                    ),
-                  )
-              ),
-              Container(
-                padding: const EdgeInsets.all(16),
-                child: StreamBuilder(
-                  stream: FirebaseFirestore.instance
-                      .collection('VeiculosdePrestadores')
-                      .where('idPertence', isEqualTo: widget.idd)
-                  //.where('Liberado', isEqualTo: true)
-                      .snapshots(),
-                  builder: (BuildContext context,
-                      AsyncSnapshot<QuerySnapshot> snapshot) {
-                    if (!snapshot.hasData) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    return SizedBox(
-                      height: 250,
+                    Container(
                       width: double.infinity,
-                      child: ListView(
-                        children: snapshot.data!.docs.map((documents) {
-                          return Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: SizedBox(
-                                    height: 50,
-                                    width: double.infinity,
-                                    child: Text(
-                                      'Veiculo;',
-                                      style: TextStyle(
-                                        fontSize: tamanhotexto,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: SizedBox(
-                                    height: 50,
-                                    width: double.infinity,
-                                    child: Text(
-                                      '${documents['Marca']}-',
-                                      style: TextStyle(
-                                        fontSize: tamanhotexto,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: SizedBox(
-                                    height: 50,
-                                    width: double.infinity,
-                                    child: Text(
-                                      '${documents['Modelo']}-',
-                                      style: TextStyle(
-                                        fontSize: tamanhotexto,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: SizedBox(
-                                    height: 50,
-                                    width: double.infinity,
-                                    child: Text(
-                                      '${documents['cor']}-',
-                                      style: TextStyle(
-                                        fontSize: tamanhotexto,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: SizedBox(
-                                    height: 50,
-                                    width: double.infinity,
-                                    child: Text(
-                                      '${documents['PlacaVeiculo']}-',
-                                      style: TextStyle(
-                                        fontSize: tamanhotexto,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: SizedBox(
-                                    height: 50,
-                                    width: double.infinity,
-                                    child: Text(
-                                      '${documents['TipoDeVeiculo']}-',
-                                      style: TextStyle(
-                                        fontSize: tamanhotexto,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: SizedBox(
+                      padding: const EdgeInsets.all(16),
+                      child: Text(
+                        'Empresa: ${widget.EmpresaNome}',
+                        style: TextStyle(
+                            fontSize: tamanhotexto,
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(16),
+                      child: Text(
+                        'Telefone: $telefone',
+                        style: TextStyle(
+                            fontSize: tamanhotexto,
+                            fontWeight: FontWeight.bold
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Center(
+                  child: Container(
+                      padding: const EdgeInsets.all(16),
+                      child: Text(
+                        'Tipo de veiculo:',
+                        style: TextStyle(
+                            fontSize: tamanhotexto,
+                            fontWeight: FontWeight.bold
+                        ),
+                      )
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: Text(
+                            'Carro',
+                            style: TextStyle(
+                              fontSize: tamanhotexto,
+                            ),
+                          ),
+                          value: carroOuMoto,
+                          onChanged: null,
+                          activeColor: Colors.blue,
+                          checkColor: Colors.white,
+                          controlAffinity: ListTileControlAffinity.leading,
+                        ),
+                      ),
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: Text(
+                            'Moto',
+                            style: TextStyle(
+                              fontSize: tamanhotexto,
+                            ),
+                          ),
+                          value: moto,
+                          onChanged: null,
+                          activeColor: Colors.blue,
+                          checkColor: Colors.white,
+                          controlAffinity: ListTileControlAffinity.leading,
+                        ),
+                      ),
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: Text(
+                            'Carro + Moto',
+                            style: TextStyle(
+                              fontSize: tamanhotexto,
+                            ),
+                          ),
+                          value: carroEmoto,
+                          onChanged: null,
+                          activeColor: Colors.blue,
+                          checkColor: Colors.white,
+                          controlAffinity: ListTileControlAffinity.leading,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                    padding: const EdgeInsets.all(16),
+                    child: Text(
+                      'Permissão:',
+                      style: TextStyle(
+                          fontSize: tamanhotexto,
+                          fontWeight: FontWeight.bold
+                      ),
+                    )
+                ),
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: Text(
+                            'Vaga',
+                            style: TextStyle(
+                              fontSize: tamanhotexto,
+                            ),
+                          ),
+                          value: VagaComum,
+                          onChanged: null,
+                          activeColor: Colors.blue,
+                          checkColor: Colors.white,
+                          controlAffinity: ListTileControlAffinity.leading,
+                        ),
+                      ),
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: Text(
+                            'Vaga Moto',
+                            style: TextStyle(
+                              fontSize: tamanhotexto,
+                            ),
+                          ),
+                          value: VagaMoto,
+                          onChanged: null,
+                          activeColor: Colors.blue,
+                          checkColor: Colors.white,
+                          controlAffinity: ListTileControlAffinity.leading,
+                        ),
+                      ),
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: Text(
+                            'Vaga Diretoria',
+                            style: TextStyle(
+                              fontSize: tamanhotexto,
+                            ),
+                          ),
+                          value: VagaDiretoria,
+                          onChanged: null,
+                          activeColor: Colors.blue,
+                          checkColor: Colors.white,
+                          controlAffinity: ListTileControlAffinity.leading,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: Text(
+                            'Liberado',
+                            style: TextStyle(
+                              fontSize: tamanhotexto,
+                            ),
+                          ),
+                          value: Liberado,
+                          onChanged: (value) {
+                            setState(() {
+                              if(value == true){
+                                bloqueadoBool = false;
+                                PreenchidoBloqueado = true;
+                                Liberado = true;
+                              }
+                            });
+                          },
+                          activeColor: Colors.blue,
+                          checkColor: Colors.white,
+                          controlAffinity: ListTileControlAffinity.leading,
+                        ),
+                      ),
+                      Expanded(
+                        child: CheckboxListTile(
+                          title: Text(
+                            'Bloqueado',
+                            style: TextStyle(
+                              fontSize: tamanhotexto,
+                            ),
+                          ),
+                          value: bloqueadoBool,
+                          onChanged: (value) {
+                            setState(() {
+                              if(value == true){
+                                bloqueadoBool = true;
+                                PreenchidoBloqueado = true;
+                                Liberado = false;
+                              }
+                            });
+                          },
+                          activeColor: Colors.blue,
+                          checkColor: Colors.white,
+                          controlAffinity: ListTileControlAffinity.leading,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                Container(
+                    padding: const EdgeInsets.all(16),
+                    child: Text(
+                      'Veiculos Liberado:',
+                      style: TextStyle(
+                          fontSize: tamanhotexto,
+                          fontWeight: FontWeight.bold
+                      ),
+                    )
+                ),
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  child: StreamBuilder(
+                    stream: FirebaseFirestore.instance
+                        .collection('VeiculosdePrestadores')
+                        .where('idPertence', isEqualTo: widget.idd)
+                    //.where('Liberado', isEqualTo: true)
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (!snapshot.hasData) {
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      }
+                      return SizedBox(
+                        height: 250,
+                        width: double.infinity,
+                        child: ListView(
+                          children: snapshot.data!.docs.map((documents) {
+                            return Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                children: [
+                                  Expanded(
+                                    child: SizedBox(
                                       height: 50,
                                       width: double.infinity,
-                                      child: TextButton(onPressed: (){
-                                        Navigator.push(context,
-                                            MaterialPageRoute(builder: (context){
-                                              return editarVeiculo(widget.EmpresaNome, widget.EmpresaID, widget.idd, nome, carroEmoto, carroOuMoto, nome, widget.OperadorName, documents['Marca'], documents['Modelo'], documents['cor'], documents['PlacaVeiculo'], documents['TipoDeVeiculo'], documents['Liberado'], documents['id']);
-                                            }));
-                                      },
-                                        child: const Icon(Icons.edit),
-                                      )
+                                      child: Text(
+                                        'Veiculo;',
+                                        style: TextStyle(
+                                          fontSize: tamanhotexto,
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                Expanded(
-                                  child: SizedBox(
+                                  Expanded(
+                                    child: SizedBox(
                                       height: 50,
                                       width: double.infinity,
-                                      child: TextButton(onPressed: (){
-                                        if(documents['Liberado'] == true){
-                                          showDialog(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return AlertDialog(
-                                                title: Text(
+                                      child: Text(
+                                        '${documents['Marca']}-',
+                                        style: TextStyle(
+                                          fontSize: tamanhotexto,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(
+                                      height: 50,
+                                      width: double.infinity,
+                                      child: Text(
+                                        '${documents['Modelo']}-',
+                                        style: TextStyle(
+                                          fontSize: tamanhotexto,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(
+                                      height: 50,
+                                      width: double.infinity,
+                                      child: Text(
+                                        '${documents['cor']}-',
+                                        style: TextStyle(
+                                          fontSize: tamanhotexto,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(
+                                      height: 50,
+                                      width: double.infinity,
+                                      child: Text(
+                                        '${documents['PlacaVeiculo']}-',
+                                        style: TextStyle(
+                                          fontSize: tamanhotexto,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(
+                                      height: 50,
+                                      width: double.infinity,
+                                      child: Text(
+                                        '${documents['TipoDeVeiculo']}-',
+                                        style: TextStyle(
+                                          fontSize: tamanhotexto,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(
+                                        height: 50,
+                                        width: double.infinity,
+                                        child: TextButton(onPressed: (){
+                                          Navigator.push(context,
+                                              MaterialPageRoute(builder: (context){
+                                                return editarVeiculo(widget.EmpresaNome, widget.EmpresaID, widget.idd, nome, carroEmoto, carroOuMoto, nome, widget.OperadorName, documents['Marca'], documents['Modelo'], documents['cor'], documents['PlacaVeiculo'], documents['TipoDeVeiculo'], documents['Liberado'], documents['id']);
+                                              }));
+                                        },
+                                          child: const Icon(Icons.edit),
+                                        )
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: SizedBox(
+                                        height: 50,
+                                        width: double.infinity,
+                                        child: TextButton(onPressed: (){
+                                          if(documents['Liberado'] == true){
+                                            showDialog(
+                                              context: context,
+                                              builder: (BuildContext context) {
+                                                return AlertDialog(
+                                                  title: Text(
                                                     'Bloqueio do Administrativo!',
-                                                  style: TextStyle(
-                                                    fontSize: tamanhotexto
+                                                    style: TextStyle(
+                                                        fontSize: tamanhotexto
+                                                    ),
                                                   ),
-                                                ),
-                                                actions: [
-                                                  Column(
-                                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-                                                      Container(
-                                                        padding: const EdgeInsets.all(16),
-                                                        child: Text(
+                                                  actions: [
+                                                    Column(
+                                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                                      mainAxisAlignment: MainAxisAlignment.center,
+                                                      children: [
+                                                        Container(
+                                                          padding: const EdgeInsets.all(16),
+                                                          child: Text(
                                                             'Deseja confirmar o bloqueio desse veiculo?',
-                                                          style: TextStyle(
-                                                              fontSize: tamanhotexto
+                                                            style: TextStyle(
+                                                                fontSize: tamanhotexto
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                      Container(
-                                                        padding: const EdgeInsets.all(16),
-                                                        child: Row(
-                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                          children: [
-                                                            Container(
-                                                              padding: const EdgeInsets.all(16),
-                                                              child: ElevatedButton(
-                                                                style: ElevatedButton.styleFrom(
-                                                                    primary: Colors.red[800]
-                                                                ),
-                                                                onPressed: () {
-                                                                  Navigator.of(context).pop();
-                                                                },
-                                                                child: Text(
-                                                                    'Cancelar',
-                                                                  style: TextStyle(
-                                                                    fontSize: tamanhotextobtns
-                                                                  ),
-                                                                ),
-                                                              )
-                                                            ),
-                                                            Container(
+                                                        Container(
+                                                          padding: const EdgeInsets.all(16),
+                                                          child: Row(
+                                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                              Container(
+                                                                  padding: const EdgeInsets.all(16),
+                                                                  child: ElevatedButton(
+                                                                    style: ElevatedButton.styleFrom(
+                                                                        primary: Colors.red[800]
+                                                                    ),
+                                                                    onPressed: () {
+                                                                      Navigator.of(context).pop();
+                                                                    },
+                                                                    child: Text(
+                                                                      'Cancelar',
+                                                                      style: TextStyle(
+                                                                          fontSize: tamanhotextobtns
+                                                                      ),
+                                                                    ),
+                                                                  )
+                                                              ),
+                                                              Container(
                                                                 padding: const EdgeInsets.all(16),
                                                                 child: ElevatedButton(
                                                                   style: ElevatedButton.styleFrom(
@@ -778,157 +810,159 @@ class _editarInfosADMState extends State<editarInfosADM> {
                                                                     ),
                                                                   ),
                                                                 ),
-                                                            ),
-                                                          ],
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        )
+                                                      ],
+                                                    )
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                          }else{
+
+                                          }
+                                        },
+                                          child: documents['Liberado'] == true ? const Icon(
+                                            Icons.done,
+                                            color: Colors.green,
+                                          ) : const Icon(
+                                            Icons.block,
+                                            color: Colors.red,
+                                          ),
+                                        )
+                                    ),
+                                  ),
+
+                                  Expanded(
+                                    child: SizedBox(
+                                        height: 50,
+                                        width: double.infinity,
+                                        child: TextButton(onPressed: (){
+                                          showDialog(
+                                            context: context,
+                                            builder: (BuildContext context) {
+                                              return AlertDialog(
+                                                title: Text(
+                                                  'Atenção!',
+                                                  style: TextStyle(
+                                                      fontSize: tamanhotextobtns
+                                                  ),
+                                                ),
+                                                actions: [
+                                                  Center(
+                                                    child: Column(
+                                                      children: [
+                                                        Text(
+                                                          'Tem certeza que deseja cancelar esse veiculo?\nOs dados não poderão ser recuperados pós deletação!',
+                                                          style: TextStyle(
+                                                              fontSize: tamanhotexto
+                                                          ),
                                                         ),
-                                                      )
-                                                    ],
+                                                        Container(
+                                                          padding: const EdgeInsets.all(16),
+                                                          child: Row(
+                                                            children: [
+                                                              Expanded(
+                                                                child: TextButton(onPressed: (){
+                                                                  Navigator.of(context).pop();
+                                                                }, child: Text(
+                                                                  'Cancelar',
+                                                                  style: TextStyle(
+                                                                      fontSize: tamanhotexto
+                                                                  ),
+                                                                ),
+                                                                ),
+                                                              ),
+                                                              Expanded(
+                                                                child: TextButton(onPressed: (){
+                                                                  FirebaseFirestore.instance.collection('VeiculosdePrestadores').doc(documents['id']).delete().whenComplete((){
+                                                                    Fluttertoast.showToast(
+                                                                      msg: 'O veiculo selecionado foi deletado!',
+                                                                      toastLength: Toast.LENGTH_SHORT,
+                                                                      timeInSecForIosWeb: 1,
+                                                                      backgroundColor: Colors.black,
+                                                                      textColor: Colors.white,
+                                                                      fontSize: tamanhotexto,
+                                                                    );
+                                                                    Navigator.of(context).pop();
+                                                                  });
+                                                                }, child: Text(
+                                                                  'Prosseguir',
+                                                                  style: TextStyle(
+                                                                      fontSize: tamanhotexto
+                                                                  ),
+                                                                ),
+                                                                ),
+                                                              )
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ],
+                                                    ),
                                                   )
                                                 ],
                                               );
                                             },
                                           );
-                                        }else{
-                                          
-                                        }
-                                      },
-                                        child: documents['Liberado'] == true ? const Icon(
-                                          Icons.done,
-                                          color: Colors.green,
-                                        ) : const Icon(
-                                          Icons.block,
-                                          color: Colors.red,
-                                        ),
-                                      )
+                                        }, child: const Icon(Icons.delete),
+                                        )
+                                    ),
                                   ),
-                                ),
+                                ],
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      );
+                    },
+                  ),
+                ),
 
-                                Expanded(
-                                  child: SizedBox(
-                                      height: 50,
-                                      width: double.infinity,
-                                      child: TextButton(onPressed: (){
-                                        showDialog(
-                                          context: context,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              title: Text(
-                                                'Atenção!',
-                                                style: TextStyle(
-                                                    fontSize: tamanhotextobtns
-                                                ),
-                                              ),
-                                              actions: [
-                                                Center(
-                                                  child: Column(
-                                                    children: [
-                                                      Text(
-                                                        'Tem certeza que deseja cancelar esse veiculo?\nOs dados não poderão ser recuperados pós deletação!',
-                                                        style: TextStyle(
-                                                            fontSize: tamanhotexto
-                                                        ),
-                                                      ),
-                                                      Container(
-                                                        padding: const EdgeInsets.all(16),
-                                                        child: Row(
-                                                          children: [
-                                                            Expanded(
-                                                              child: TextButton(onPressed: (){
-                                                                Navigator.of(context).pop();
-                                                              }, child: Text(
-                                                                'Cancelar',
-                                                                style: TextStyle(
-                                                                    fontSize: tamanhotexto
-                                                                ),
-                                                              ),
-                                                              ),
-                                                            ),
-                                                            Expanded(
-                                                              child: TextButton(onPressed: (){
-                                                                FirebaseFirestore.instance.collection('VeiculosdePrestadores').doc(documents['id']).delete().whenComplete((){
-                                                                  Fluttertoast.showToast(
-                                                                    msg: 'O veiculo selecionado foi deletado!',
-                                                                    toastLength: Toast.LENGTH_SHORT,
-                                                                    timeInSecForIosWeb: 1,
-                                                                    backgroundColor: Colors.black,
-                                                                    textColor: Colors.white,
-                                                                    fontSize: tamanhotexto,
-                                                                  );
-                                                                  Navigator.of(context).pop();
-                                                                });
-                                                              }, child: Text(
-                                                                'Prosseguir',
-                                                                style: TextStyle(
-                                                                    fontSize: tamanhotexto
-                                                                ),
-                                                              ),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                )
-                                              ],
-                                            );
-                                          },
-                                        );
-                                      }, child: const Icon(Icons.delete),
-                                      )
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(16),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Container(
+                              width: 180,
+                              height: 180,
+                              padding: const EdgeInsets.all(16),
+                              child:
+                              Image.asset(
+                                'assets/sanca.png',
+                                fit: BoxFit.contain,
+                              )
+                          ),
+                          Container(
+                            padding: const EdgeInsets.all(16),
+                            child:
+                            Column(
+                              children: [
+                                Text(
+                                  'Operador: ${widget.OperadorName}',
+                                  style: TextStyle(
+                                      fontSize: tamanhotexto
                                   ),
                                 ),
                               ],
                             ),
-                          );
-                        }).toList(),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        Container(
-                            width: 180,
-                            height: 180,
-                            padding: const EdgeInsets.all(16),
-                            child:
-                            Image.asset(
-                              'assets/sanca.png',
-                              fit: BoxFit.contain,
-                            )
-                        ),
-                        Container(
-                          padding: const EdgeInsets.all(16),
-                          child:
-                          Column(
-                            children: [
-                              Text(
-                                'Operador: ${widget.OperadorName}',
-                                style: TextStyle(
-                                    fontSize: tamanhotexto
-                                ),
-                              ),
-                            ],
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }

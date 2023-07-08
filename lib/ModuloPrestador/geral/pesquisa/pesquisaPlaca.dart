@@ -19,13 +19,12 @@ class PesquisaPlaca extends StatefulWidget {
 class _PesquisaPlacaState extends State<PesquisaPlaca> {
   TextEditingController placaveiculointerface = TextEditingController();
   String Placa = '';
+  String Pre = '';
 
   var dbInstance = FirebaseFirestore.instance;
 
   @override
   Widget build(BuildContext context) {
-
-
     double tamanhotexto = 20;
     double tamanhotextomin = 16;
     double tamanhotextobtns = 16;
@@ -61,248 +60,297 @@ class _PesquisaPlacaState extends State<PesquisaPlaca> {
       }
     }
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Liberação: Entrada de veiculo'),
-        centerTitle: true,
-        backgroundColor: Colors.blue,
-      ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(16),
-                width: 500,
-                child: Image.asset(
-                  'assets/icon.png',
-                  width: 200,
-                  height: 200,
+    return LayoutBuilder(builder: (context, constrains){
+      double wid = 700;
+      double widin = 700;
+      double heig = 50;
+      if(constrains.maxWidth < 600){
+        tamanhotexto = textSize;
+        tamanhotextobtns = textSize;
+        tamanhotextomin = 16;
+        //aspect = 1.0;
+        aspect = 1.0;
+        wid = 700;
+        widin = 800;
+        heig = 50;
+      }else {
+        if(constrains.maxWidth > 600){
+          tamanhotexto = textSizeandroid;
+          tamanhotextobtns = textSizeandroidbtn;
+          aspect = 0.8;
+          wid = 1000;
+          widin = 1200;
+          heig = 100;
+        }
+      }
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Liberação: Entrada de veiculo'),
+          centerTitle: true,
+          backgroundColor: Colors.blue,
+        ),
+        body: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  width: 500,
+                  child: Image.asset(
+                    'assets/icon.png',
+                    width: 200,
+                    height: 200,
+                  ),
                 ),
-              ),
-              Text(
-                'Digite a placa:',
-                style: TextStyle(
-                    fontSize: tamanhotexto
+                Text(
+                  'Digite a placa:',
+                  style: TextStyle(
+                      fontSize: tamanhotexto
+                  ),
                 ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(16),
-                child: TextFormField(
-                  controller: placaveiculointerface,
-                  onChanged: (valor){
-                    setState(() {
-                      String valorpuro = valor.toUpperCase();
-                      if(valorpuro.length == 7){
-                        Placa = valorpuro.replaceAllMapped(
-                          RegExp(r'^([a-zA-Z]{3})([0-9a-zA-Z]{4})$'),
-                              (Match m) => '${m[1]} ${m[2]}',
-                        );
-                        placaveiculointerface.text = Placa;
-                      }
-                    });
-                    //Mudou mandou para a String
-                  },
-                  decoration: InputDecoration(
-                    border: const OutlineInputBorder(),
-                    hintText: 'Digite a placa *',
-                    hintStyle: TextStyle(
-                        fontSize: tamanhotexto
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  child: TextFormField(
+                    controller: placaveiculointerface,
+                    onChanged: (valor){
+                      setState(() {
+                        String valorpuro = valor.toUpperCase();
+                        Pre = valorpuro;
+                        if(valorpuro.length == 7){
+                          Placa = valorpuro.replaceAllMapped(
+                            RegExp(r'^([a-zA-Z]{3})([0-9a-zA-Z]{4})$'),
+                                (Match m) => '${m[1]} ${m[2]}',
+                          );
+                          placaveiculointerface.text = Placa;
+                        }
+                      });
+                      //Mudou mandou para a String
+                    },
+                    decoration: InputDecoration(
+                      border: const OutlineInputBorder(),
+                      hintText: 'Digite a placa *',
+                      hintStyle: TextStyle(
+                          fontSize: tamanhotexto
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                padding: const EdgeInsets.all(16),
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      primary: Colors.green[700]
-                  ),
-                  onPressed: () async {
-                    if(Placa == ''){
-                      Fluttertoast.showToast(
-                        msg: 'Preencha a placa!',
-                        toastLength: Toast.LENGTH_LONG,
-                        timeInSecForIosWeb: 5,
-                        backgroundColor: Colors.black,
-                        textColor: Colors.white,
-                        fontSize: 16.0,
-                      );
-                    }else{
-                      //todo pesquisa
+                Container(
+                    padding: const EdgeInsets.all(16),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.green[700]
+                      ),
+                      onPressed: () async {
+                        setState(() {
+                          Placa = Pre;
+                        });
+                      },
+                      child: Text(
+                        'Pesquisar',
+                        style: TextStyle(
+                            fontSize: tamanhotextobtns
+                        ),
+                      ),
+                    )
+                ),
+                Container(
+                  padding: const EdgeInsets.all(16),
+                  child: StreamBuilder(
+                      stream: FirebaseFirestore
+                          .instance
+                          .collection('VeiculosdePrestadores')
+                          .where('PlacaVeiculo', isEqualTo: Placa)
+                          .where('Liberado', isEqualTo: true)
+                          .where('status', isEqualTo: '')
+                      //.orderBy("Status", descending: true)
+                          .snapshots(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (!snapshot.hasData) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                        return Container(
+                          height: 700,
+                          width: double.infinity,
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 1.0,
+                            ),
+                            borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                          ),
+                          child: OrientationBuilder(
+                            builder: (context, orientation) {
+                              return GridView.count(
+                                crossAxisCount: orientation == Orientation.portrait ? 2 : 4,
+                                mainAxisSpacing: 10,
+                                crossAxisSpacing: 10,
+                                childAspectRatio: orientation == Orientation.portrait ? 1.0 : 0.7,
+                                children:
+                                snapshot.data!.docs.map((documents) {
 
-                      String placaLista = '';
-                      String statusList = '';
-                      String Pertence = '';
-                      String Empresa = '';
-                      String tipoDeVeiculo = '';
-                      String IDPrestador = '';
-                      String Marca = '';
-                      String Modelo = '';
-                      String Cor = '';
-                      String ID = '';
-                      bool liberado = false;
-                      String galpao = '';
+                                  return Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      padding: const EdgeInsets.all(16),
+                                      decoration: BoxDecoration(
+                                        color: Colors.grey[300],
+                                        border: Border.all(
+                                          color: Colors.black,
+                                          width: 1.0,
+                                        ),
+                                        borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+                                      ),
+                                      child:
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Center(
+                                            child: Container(
+                                              padding: const EdgeInsets.all(16),
+                                              child: Text(
+                                                  "Placa: ${documents['PlacaVeiculo']}",
+                                                style: TextStyle(
+                                                    fontSize: tamanhotexto,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Center(
+                                            child: Container(
+                                              padding: const EdgeInsets.all(16),
+                                              child: Text(
+                                                "Nome: ${documents['PertenceA']}",
+                                                style: TextStyle(
+                                                    fontSize: tamanhotexto,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Center(
+                                            child: Container(
+                                              padding: const EdgeInsets.all(16),
+                                              child: Text(
+                                                "RG: ${documents['RG']}",
+                                                style: TextStyle(
+                                                    fontSize: tamanhotexto,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.black
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Center(
+                                            child: Container(
+                                              padding: const EdgeInsets.all(16),
+                                              child: ElevatedButton(
+                                                onPressed: () async {
 
-                      final PlacaCollections = FirebaseFirestore.instance.collection('VeiculosdePrestadores').where('PlacaVeiculo', isEqualTo: Placa);
-                      final snapshot6 = await PlacaCollections.get();
-                      final PLACADOC = snapshot6.docs;
-                      for (final PLACADOC in PLACADOC) {
+                                                  String urlImage = '';
+                                                  String Telefone = '';
+                                                  String PermitidosVeiculos = '';
+                                                  bool vagaComum = false;
+                                                  bool vagaMoto = false;
+                                                  bool VagaDiretoria = false;
+                                                  bool carro = false;
+                                                  bool carroEmoto = false;
+                                                  bool moto = false;
 
-                        final placa = PLACADOC.get('PlacaVeiculo');
-                        final status = PLACADOC.get('status');
-                        final pertence = PLACADOC.get('PertenceA');
-                        final empresa = PLACADOC.get('Empresa');
-                        final veiculo = PLACADOC.get('TipoDeVeiculo');
-                        final prestadorID = PLACADOC.get('idPertence');
-                        final marcaDoc = PLACADOC.get('Marca');
-                        final ModeloDoc = PLACADOC.get('Modelo');
-                        final CorDoc = PLACADOC.get('cor');
-                        final idDoc = PLACADOC.get('id');
-                        final liberadoDoc = PLACADOC.get('Liberado');
-                        final galpaoDoc = PLACADOC.get('galpao');
-                        placaLista = placa;
-                        statusList = status;
-                        Pertence = pertence;
-                        Empresa = empresa;
-                        tipoDeVeiculo = veiculo;
-                        IDPrestador = prestadorID;
-                        Marca = marcaDoc;
-                        Marca = marcaDoc;
-                        Modelo = ModeloDoc;
-                        Cor = CorDoc;
-                        ID = idDoc;
-                        liberado = liberadoDoc;
-                        galpao = galpaoDoc;
-                      }
+                                                  final PrestadorDoc = FirebaseFirestore.instance.collection('Prestadores').where('id', isEqualTo: documents['idPertence']);
+                                                  final snapshot6 = await PrestadorDoc.get();
+                                                  final PrestadorDocs = snapshot6.docs;
+                                                  for (final PLACADOC in PrestadorDocs) {
+                                                    setState(() {
+                                                      urlImage = PLACADOC.get('urlImage');
+                                                      Telefone = PLACADOC.get('Telefone');
+                                                      vagaComum = PLACADOC.get('vagaComum');
+                                                      vagaMoto = PLACADOC.get('vagaMoto');
+                                                      VagaDiretoria = PLACADOC.get('VagaDiretoria');
+                                                      carro = PLACADOC.get('carro');
+                                                      carroEmoto = PLACADOC.get('carroEmoto');
+                                                      moto = PLACADOC.get('moto');
+                                                    });
+                                                  }
+                                                  print(urlImage);
 
-                      if(liberado == false){
-                        Fluttertoast.showToast(
-                          msg: 'Esse veiculo está bloqueado!',
-                          toastLength: Toast.LENGTH_LONG,
-                          timeInSecForIosWeb: 5,
-                          backgroundColor: Colors.black,
-                          textColor: Colors.white,
-                          fontSize: 16.0,
+                                                  if(carro == true){
+                                                    PermitidosVeiculos = 'Carro';
+                                                  }
+                                                  if(carroEmoto == true){
+                                                    PermitidosVeiculos = 'Carro+Moto';
+                                                  }
+                                                  if(moto == true){
+                                                    PermitidosVeiculos = 'Moto';
+                                                  }
+
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(builder: (context){
+                                                        return entradaModuloPrestador(widget.Porteiro, urlImage, documents['PertenceA'], documents['TipoDeVeiculo'], documents['Empresa'], Telefone, vagaComum, vagaMoto, VagaDiretoria, documents['Marca'], documents['Modelo'], documents['cor'], documents['PlacaVeiculo'], PermitidosVeiculos, documents['id'], documents['idEmpresa'], documents['galpao'], documents['RG']);
+                                                      }));
+                                                },
+                                                child: const Text('Autorizar entrada'),
+                                              )
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                }
+                                ).toList().reversed.toList(),
+                              );
+                            },
+                          ),
                         );
-                      }else{
-                        if(!statusList.contains('Liberado Entrada')){
-
-                          bool vagaComum = false;
-                          bool vagaMoto = false;
-                          bool VagaDiretoria = false;
-                          String telefone = '';
-                          String imageURL = '';
-                          String PermitidosVeiculos = '';
-                          String IDEmpresa = '';
-                          String RG = '';
-
-                          final RGCollections = FirebaseFirestore.instance.collection('Prestadores');
-                          final snapshot5 = await RGCollections.get();
-                          final RGDOC = snapshot5.docs;
-                          for (final VEICULODOC in RGDOC) {
-
-                            final vagacomum = VEICULODOC.get('vagaComum');
-                            final vagamoto = VEICULODOC.get('vagaMoto');
-                            final vagadirecao = VEICULODOC.get('VagaDiretoria');
-                            final telefoneDOC = VEICULODOC.get('Telefone');
-                            final imageURI = VEICULODOC.get('urlImage');
-                            final carro = VEICULODOC.get('carro');
-                            final carroEmoto = VEICULODOC.get('carroEmoto');
-                            final moto = VEICULODOC.get('moto');
-                            final idEmpresaDoc = VEICULODOC.get('EmpresaID');
-                            final RGDoc = VEICULODOC.get('RG');
-
-                            if(carro == true){
-                              PermitidosVeiculos = 'Carro';
-                            }
-                            if(carroEmoto == true){
-                              PermitidosVeiculos = 'Carro+Moto';
-                            }
-                            if(moto == true){
-                              PermitidosVeiculos = 'Moto';
-                            }
-
-                            vagaComum = vagacomum;
-                            vagaMoto = vagamoto;
-                            VagaDiretoria = vagadirecao;
-                            telefone = telefoneDOC;
-                            imageURL = imageURI;
-                            IDEmpresa = idEmpresaDoc;
-                            RG = RGDoc;
-                          }
-
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context){
-                                return entradaModuloPrestador(widget.Porteiro, imageURL, Pertence, tipoDeVeiculo, Empresa, telefone, vagaComum, vagaMoto, VagaDiretoria, Marca, Modelo, Cor, placaLista, PermitidosVeiculos, ID, IDEmpresa, galpao, RG);
-                              }));
-
-                        }else{
-                          Fluttertoast.showToast(
-                            msg: 'Esse veiculo está dentro da empresa!',
-                            toastLength: Toast.LENGTH_LONG,
-                            timeInSecForIosWeb: 5,
-                            backgroundColor: Colors.black,
-                            textColor: Colors.white,
-                            fontSize: 16.0,
-                          );
-                        }
-                        if(placaLista.isEmpty){
-                          Fluttertoast.showToast(
-                            msg: 'Não encontrei nada, por favor tente novamente!',
-                            toastLength: Toast.LENGTH_LONG,
-                            timeInSecForIosWeb: 5,
-                            backgroundColor: Colors.black,
-                            textColor: Colors.white,
-                            fontSize: 16.0,
-                          );
-                        }
                       }
-                    }
-                  },
-                  child: Text(
-                      'Pesquisar',
-                    style: TextStyle(
-                      fontSize: tamanhotextobtns
-                    ),
                   ),
-                )
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Container(
-                      width: 180,
-                      height: 180,
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                        width: 180,
+                        height: 180,
+                        padding: const EdgeInsets.all(16),
+                        child:
+                        Image.asset(
+                          'assets/sanca.png',
+                          fit: BoxFit.contain,
+                        )
+                    ),
+                    Container(
                       padding: const EdgeInsets.all(16),
                       child:
-                      Image.asset(
-                        'assets/sanca.png',
-                        fit: BoxFit.contain,
-                      )
-                  ),
-                  Container(
-                    padding: const EdgeInsets.all(16),
-                    child:
-                    Column(
-                      children: [
-                        Text(
-                          'Operador: ${widget.Porteiro}',
-                          style: TextStyle(
-                              fontSize: tamanhotexto
+                      Column(
+                        children: [
+                          Text(
+                            'Operador: ${widget.Porteiro}',
+                            style: TextStyle(
+                                fontSize: tamanhotexto
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    });
   }
 }
