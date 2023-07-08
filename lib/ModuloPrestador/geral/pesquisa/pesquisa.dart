@@ -419,7 +419,7 @@ class _pesquisaPrestadorState extends State<pesquisaPrestador> {
                                                       child: Column(
                                                         children: [
                                                           Text(
-                                                            'Tem certeza que deseja cancelar esse veiculo?\nOs dados não poderão ser recuperados pós deletação!',
+                                                            'Tem certeza que deseja deletar esse interno?\nOs dados não poderão ser recuperados pós deletação!',
                                                             style: TextStyle(
                                                                 fontSize: tamanhotexto
                                                             ),
@@ -440,8 +440,9 @@ class _pesquisaPrestadorState extends State<pesquisaPrestador> {
                                                               Expanded(
                                                                 child: TextButton(onPressed: (){
                                                                   FirebaseFirestore.instance.collection('Prestadores').doc(documents['id']).delete().whenComplete((){
+                                                                    Navigator.of(context).pop();
                                                                     Fluttertoast.showToast(
-                                                                      msg: 'O veiculo selecionado foi deletado!',
+                                                                      msg: 'O interno selecionado foi deletado!',
                                                                       toastLength: Toast.LENGTH_SHORT,
                                                                       timeInSecForIosWeb: 1,
                                                                       backgroundColor: Colors.black,
