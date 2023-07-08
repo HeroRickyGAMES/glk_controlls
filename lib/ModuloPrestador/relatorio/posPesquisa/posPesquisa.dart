@@ -100,13 +100,13 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
         tamanhotextomin = 16;
         //aspect = 1.0;
         aspect = 1.0;
-        wid = 3000;
+        wid = 2000;
       }else {
         if(constrains.maxWidth > 600){
           tamanhotexto = textSizeandroid;
           tamanhotextobtns = textSizeandroidbtn;
           aspect = 0.8;
-          wid = 2000;
+          wid = 3000;
         }
       }
 
@@ -277,7 +277,7 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
                       scrollDirection: Axis.horizontal,
                       child: SizedBox(
                         height: 250,
-                        width: 2000,
+                        width: wid,
                         child: ListView(
                           children: snapshot.data!.docs.map((documents) {
                             return Padding(
