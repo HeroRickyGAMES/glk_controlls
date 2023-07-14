@@ -490,7 +490,7 @@ class _modalVeiculoAgendamentoState extends State<modalVeiculoAgendamento> {
                 child: TextFormField(
                   controller: nameMotoristaAllcaps,
                   onChanged: (valor){
-                    nomeMotorista = valor.toUpperCase();
+                    nomeMotorista = valor.trim().toUpperCase();
                     //Mudou mandou para a String
                   },
                   keyboardType: TextInputType.name,

@@ -277,7 +277,7 @@ class _operadorEmpresarialState extends State<operadorEmpresarial> {
                     child: ElevatedButton(
                       onPressed: openModal,
                       style: ElevatedButton.styleFrom(
-                          primary: Colors.white24
+                          primary: Colors.grey
                       ),
                       child: Text(
                         'Agendamento',

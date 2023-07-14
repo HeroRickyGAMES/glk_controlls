@@ -442,7 +442,7 @@ class _CadastroDoOperadorState extends State<CadastroDoOperador> {
                 child: TextFormField(
                   controller: nameAllcaps,
                   onChanged: (valor){
-                    nome = valor.toUpperCase();
+                    nome = valor.trim().toUpperCase();
                     //Mudou mandou para a String
                   },
                   keyboardType: TextInputType.name,

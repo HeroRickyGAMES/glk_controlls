@@ -713,7 +713,7 @@ class _modalPorteiroState extends State<modalPorteiro> {
                 child: TextFormField(
                   controller: nameMotoristaAllcaps,
                   onChanged: (valor){
-                    nomeMotorista = valor.toUpperCase();
+                    nomeMotorista = valor.trim().toUpperCase();
                     //Mudou mandou para a String
                   },
                   keyboardType: TextInputType.name,
@@ -1070,10 +1070,15 @@ class _modalPorteiroState extends State<modalPorteiro> {
                     value: lacrebool,
                     onChanged: (value) {
                       setState(() {
-                        lacreounao = 'lacre';
+
+                        lacrebool = value!;
+
+                        if(value == false){
+                          lacreounao = 'naolacrado';
+                        }
 
                         if(value == true){
-                          lacrebool = true;
+                          lacreounao = 'lacre';
                           lacrebool2 = false;
                           lacreboolLigado = false;
                         }

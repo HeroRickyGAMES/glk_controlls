@@ -179,7 +179,7 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
                 child: TextFormField(
                   onChanged: (valor){
                     setState(() {
-                      PesquisaDATA = valor.replaceAll('/', '');
+                      PesquisaDATA = valor.trim().replaceAll('/', '');
 
 
                       if(PesquisaHORA != ''){

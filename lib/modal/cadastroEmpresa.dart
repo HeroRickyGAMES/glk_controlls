@@ -156,7 +156,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                     padding: const EdgeInsets.all(16),
                     child: TextFormField(
                       onChanged: (valor){
-                        empresaName = valor;
+                        empresaName = valor.trim().toUpperCase();
                         //Mudou mandou para a String
                       },
                       keyboardType: TextInputType.name,
@@ -285,7 +285,7 @@ class _cadastroEmpresaState extends State<cadastroEmpresa> {
                     child: TextFormField(
                       controller: respNameController,
                       onChanged: (valor){
-                        respName = valor.toUpperCase();
+                        respName = valor.trim().toUpperCase();
                         //Mudou mandou para a String
                       },
                       keyboardType: TextInputType.name,

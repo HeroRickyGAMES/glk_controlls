@@ -81,7 +81,7 @@ class _RelatorioState extends State<Relatorio> {
                 child: TextFormField(
                   onChanged: (valor){
                     setState(() {
-                      Pesquisa = valor.toUpperCase();
+                      Pesquisa = valor.trim().toUpperCase();
                     });
                     //Mudou mandou para a String
                   },

@@ -116,7 +116,7 @@ class _PesquisaPlacaState extends State<PesquisaPlaca> {
                     controller: placaveiculointerface,
                     onChanged: (valor){
                       setState(() {
-                        String valorpuro = valor.toUpperCase();
+                        String valorpuro = valor.trim().toUpperCase();
                         Pre = valorpuro;
                         if(valorpuro.length == 7){
                           Placa = valorpuro.replaceAllMapped(

@@ -117,7 +117,7 @@ class _cadastroUsuarioModalState extends State<cadastroUsuarioModal> {
                 padding: const EdgeInsets.all(16),
                 child: TextFormField(
                   onChanged: (valor){
-                    nomeComp = valor;
+                    nomeComp = valor.trim();
                     //Mudou mandou para a String
                   },
                   keyboardType: TextInputType.name,
