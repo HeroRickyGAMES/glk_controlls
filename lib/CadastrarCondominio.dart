@@ -253,7 +253,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                 controller: empresaController,
                 onChanged: (valor){
                   setState(() {
-                    empresa = valor;
+                    empresa = valor.trim();
                   });
                   //Mudou mandou para a String
                 },
@@ -337,7 +337,7 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                 controller: cidadeController,
                 onChanged: (valor){
                   setState(() {
-                    cidade = valor;
+                    cidade = valor.trim();
                   });
                   //Mudou mandou para a String
                 },
