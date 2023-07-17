@@ -531,14 +531,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.8.4"
-  flutter_tesseract_ocr:
-    dependency: "direct main"
-    description:
-      name: flutter_tesseract_ocr
-      sha256: a45b76842f9670a3b69a4d1276367926aa8428d33e439e80541e699b7c5fb96b
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.4.23"
   flutter_test:
     dependency: "direct dev"
     description: flutter
