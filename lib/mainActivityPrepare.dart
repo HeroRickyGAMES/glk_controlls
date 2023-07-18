@@ -681,6 +681,8 @@ class _mainActivityPrepareState extends State<mainActivityPrepare> {
       ),
       body: const Center(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             CircularProgressIndicator(),
           ],

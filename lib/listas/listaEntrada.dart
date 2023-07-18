@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:glk_controls/CameraModulo/camera_comum/Camera.dart';
 import 'package:glk_controls/callToAPI.dart';
 import 'package:glk_controls/modal/veiculoAguardando.dart';
 import 'package:glk_controls/pesquisaDir/pesquisa.dart';
@@ -16,7 +17,8 @@ import 'package:path_provider/path_provider.dart';
 class listEntrada extends StatefulWidget {
   String porteiroName;
   String Entrada;
-  listEntrada(this.porteiroName, this.Entrada, {Key? key}) : super(key: key);
+  String PreFillPesquisa;
+  listEntrada(this.porteiroName, this.Entrada, this.PreFillPesquisa, {Key? key}) : super(key: key);
 
   @override
   State<listEntrada> createState() => _listEntradaState();
@@ -24,10 +26,13 @@ class listEntrada extends StatefulWidget {
 
 class _listEntradaState extends State<listEntrada> {
   String? idDocumento;
-
+  TextEditingController placaveiculointerface = TextEditingController();
+  bool started = false;
+  String holderPlaca = '';
+  String oqPesquisar = '';
   @override
   Widget build(BuildContext context) {
-    String holderPlaca = '';String idDocumento;
+
 
     double tamanhotexto = 20;
     double tamanhotextomin = 16;
@@ -68,6 +73,54 @@ class _listEntradaState extends State<listEntrada> {
       }
     }
 
+    startedapp(context) async {
+      placaveiculointerface.text = widget.PreFillPesquisa;
+      holderPlaca = widget.PreFillPesquisa;
+      await Future.delayed(const Duration(seconds: 4));
+
+      if(widget.PreFillPesquisa != ''){
+        FirebaseFirestore.instance
+            .collection('Autorizacoes')
+            .where('Status', isEqualTo: 'Liberado Entrada')
+            .get()
+            .then((QuerySnapshot querySnapshot) {
+          querySnapshot.docs.forEach((doc) {
+
+            if(doc["nomeMotorista"] == holderPlaca ){
+              setState(() {
+                oqPesquisar = 'nomeMotorista';
+              });
+            }else{
+              if(doc["PlacaVeiculo"] == holderPlaca ){
+                setState(() {
+                  oqPesquisar = 'PlacaVeiculo';
+                });
+              }else{
+                if(doc["Empresa"] == holderPlaca){
+                  setState(() {
+                    oqPesquisar = 'Empresa';
+                  });
+                }else{
+                  if(doc["Galpão"] == holderPlaca){
+                    setState(() {
+                      oqPesquisar = 'Galpão';
+                    });
+                  }else{
+
+                  }
+                }
+              }
+            }
+          });
+        });
+      }
+    }
+
+    if(started == false){
+      startedapp(context);
+    }
+
+    started = true;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -107,29 +160,99 @@ class _listEntradaState extends State<listEntrada> {
                             fontSize: tamanhotexto
                         ),
                       ),
-                      TextFormField(
-                        onChanged: (valor){
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          SizedBox(
+                            width: 300,
+                            height: 60,
+                            child: TextFormField(
+                              controller: placaveiculointerface,
+                              onChanged: (valor){
+                                setState(() {
+                                  String value = valor.toUpperCase();
+                                  if(placaveiculointerface.text == ''){
+                                    holderPlaca = '';
+                                    oqPesquisar = '';
+                                  }
 
-                          String value = valor.replaceAll(' ', '').toUpperCase();
+                                  if(value.length == 7){
+                                    holderPlaca = value.replaceAllMapped(
+                                      RegExp(r'^([a-zA-Z]{3})([0-9a-zA-Z]{4})$'),
+                                          (Match m) => '${m[1]} ${m[2]}',
+                                    );
+                                    placaveiculointerface.text = holderPlaca;
+                                  }
+                                  FirebaseFirestore.instance
+                                      .collection('Autorizacoes')
+                                      .where('Status', isEqualTo: 'Liberado Entrada')
+                                      .get()
+                                      .then((QuerySnapshot querySnapshot) {
+                                    querySnapshot.docs.forEach((doc) {
 
-                          holderPlaca = value.replaceAllMapped(
-                            RegExp(r'^([a-zA-Z]{3})([0-9]{4})$'),
-                                (Match m) => '${m[1]}-${m[2]}',
-                          );
-                        },
-                        enableSuggestions: false,
-                        autocorrect: false,
-                        decoration: InputDecoration(
+                                      if(doc["nomeMotorista"] == holderPlaca ){
 
-                          border: const OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.green
+                                        oqPesquisar = 'nomeMotorista';
+
+
+                                      }else{
+
+                                        if(doc["PlacaVeiculo"] == holderPlaca ){
+                                          oqPesquisar = 'PlacaVeiculo';
+
+                                        }else{
+                                          if(doc["Empresa"] == holderPlaca){
+                                            oqPesquisar = 'Empresa';
+
+                                          }else{
+                                            if(doc["Galpão"] == holderPlaca){
+                                              oqPesquisar = 'Galpão';
+
+                                            }else{
+
+                                            }
+                                          }
+                                        }
+                                      }
+                                    });
+                                  });
+                                });
+                              },
+                              enableSuggestions: false,
+                              autocorrect: false,
+                              decoration: InputDecoration(
+
+                                border: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.green
+                                    )
+                                ),
+                                hintStyle: TextStyle(
+                                    fontSize: tamanhotexto
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            padding: const EdgeInsets.only(left: 16),
+                            child: SizedBox(
+                              width: 70,
+                              height: 60,
+                              child: ElevatedButton(
+                                onPressed: (){
+                                  Navigator.pop(context);
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context){
+                                        return CameraComum(widget.Entrada, widget.porteiroName);
+                                      }));
+
+                                },
+                                child: const Icon(Icons.camera_alt),
                               )
+                            ),
                           ),
-                          hintStyle: TextStyle(
-                              fontSize: tamanhotexto
-                          ),
-                        ),
+                        ],
                       ),
                       Container(
                         padding: const EdgeInsets.all(16),
@@ -149,45 +272,33 @@ class _listEntradaState extends State<listEntrada> {
                             }else{
                               FirebaseFirestore.instance
                                   .collection('Autorizacoes')
+                                  .where('Status', isEqualTo: 'Liberado Entrada')
                                   .get()
                                   .then((QuerySnapshot querySnapshot) {
                                 querySnapshot.docs.forEach((doc) {
 
                                   if(doc["nomeMotorista"] == holderPlaca ){
 
-                                    String oqPesquisar = 'nomeMotorista';
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context){
-                                          return pesquisa(holderPlaca, oqPesquisar);
-                                        }));
+                                    oqPesquisar = 'nomeMotorista';
+
 
                                   }else{
 
                                     if(doc["PlacaVeiculo"] == holderPlaca ){
+                                      oqPesquisar = 'PlacaVeiculo';
 
-                                      String oqPesquisar = 'PlacaVeiculo';
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder: (context){
-                                            return pesquisa(holderPlaca, oqPesquisar);
-                                          }));
                                     }else{
                                       if(doc["Empresa"] == holderPlaca){
-                                        String oqPesquisar = 'Empresa';
-                                        Navigator.push(context,
-                                            MaterialPageRoute(builder: (context){
-                                              return pesquisa(holderPlaca, oqPesquisar);
-                                            }));
+                                        oqPesquisar = 'Empresa';
+
                                       }else{
                                         if(doc["Galpão"] == holderPlaca){
-                                          String oqPesquisar = 'Galpão';
-                                          Navigator.push(context,
-                                              MaterialPageRoute(builder: (context){
-                                                return pesquisa(holderPlaca, oqPesquisar);
-                                              }));
+                                          oqPesquisar = 'Galpão';
+
                                         }else{
 
                                           Fluttertoast.showToast(
-                                            msg: 'Infelizmente não achei nada do que você pesquisou, por favor, tente novamente!',
+                                            msg: 'Dados não encontrados!',
                                             toastLength: Toast.LENGTH_SHORT,
                                             timeInSecForIosWeb: 1,
                                             backgroundColor: Colors.black,
@@ -213,11 +324,17 @@ class _listEntradaState extends State<listEntrada> {
                         ),
                       ),
                       StreamBuilder(
-                          stream: FirebaseFirestore
+                          stream: oqPesquisar != '' ?  FirebaseFirestore
                               .instance
                               .collection('Autorizacoes')
                               .where('Status', isEqualTo: 'Liberado Entrada')
-                              //.orderBy("Status", descending: true)
+                              .where(oqPesquisar, isEqualTo: holderPlaca)
+                              .snapshots():
+                          FirebaseFirestore
+                              .instance
+                              .collection('Autorizacoes')
+                              .where('Status', isEqualTo: 'Liberado Entrada')
+                          //.orderBy("Status", descending: true)
                               .snapshots(),
                           builder: (BuildContext context,
                               AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -962,7 +1079,7 @@ class _listEntradaState extends State<listEntrada> {
                   Column(
                     children: [
                       Text(
-                        'Operador: ' + widget.porteiroName,
+                        'Operador: ${widget.porteiroName}',
                         style: TextStyle(
                             fontSize: tamanhotexto
                         ),

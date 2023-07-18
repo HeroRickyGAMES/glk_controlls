@@ -80,7 +80,7 @@ class _btnsVerificarEntradaState extends State<btnsVerificarEntrada> {
 
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context){
-                                  return listEntrada(widget.PorteiroName, Entrada);
+                                  return listEntrada(widget.PorteiroName, Entrada, '');
                                 }));
                           },
                           child: Text(
@@ -101,7 +101,7 @@ class _btnsVerificarEntradaState extends State<btnsVerificarEntrada> {
 
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context){
-                                  return listEntrada(widget.PorteiroName, Entrada);
+                                  return listEntrada(widget.PorteiroName, Entrada, '');
                                 }));
                           },
                           child: Text(
