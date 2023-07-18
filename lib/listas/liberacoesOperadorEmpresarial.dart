@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:glk_controls/CameraModulo/camera_comum/Camera.dart';
 import 'package:glk_controls/modal/veiculoEntrada.dart';
 import 'package:glk_controls/pesquisaDir/pesquisa.dart';
 import 'package:glk_controls/modal/operadorEmpresarialAguardandoModal.dart';
@@ -18,7 +19,8 @@ Map<String, String> mapNome = {};
 class liberacoesOperadorEmpresarial extends StatefulWidget {
   final String name;
   final String empresaName;
-  const liberacoesOperadorEmpresarial(this.name, this.empresaName, {super.key});
+  final String PreFillPesquisa;
+  const liberacoesOperadorEmpresarial(this.name, this.empresaName, this.PreFillPesquisa, {super.key});
 
   @override
   State<liberacoesOperadorEmpresarial> createState() => _liberacoesOperadorEmpresarialState();
@@ -26,12 +28,12 @@ class liberacoesOperadorEmpresarial extends StatefulWidget {
 
 class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpresarial> {
 
+  TextEditingController placaveiculointerface = TextEditingController();
+  bool started = false;
+  String holderPlaca = '';
+  String oqPesquisar = '';
+
   Widget build(BuildContext context) {
-
-    String idDocumento;
-
-    String holderPlaca = '';
-
     double tamanhotexto = 20;
     double tamanhotextomin = 16;
     double tamanhotextobtns = 16;
@@ -70,6 +72,55 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
       }
     }
 
+    startedapp(context) async {
+      placaveiculointerface.text = widget.PreFillPesquisa;
+      holderPlaca = widget.PreFillPesquisa;
+      await Future.delayed(const Duration(seconds: 4));
+
+      if(widget.PreFillPesquisa != ''){
+        FirebaseFirestore.instance
+            .collection('Autorizacoes')
+            .where('Status', isEqualTo: 'Liberado Entrada')
+            .get()
+            .then((QuerySnapshot querySnapshot) {
+          querySnapshot.docs.forEach((doc) {
+
+            if(doc["nomeMotorista"] == holderPlaca ){
+              setState(() {
+                oqPesquisar = 'nomeMotorista';
+              });
+            }else{
+              if(doc["PlacaVeiculo"] == holderPlaca ){
+                setState(() {
+                  oqPesquisar = 'PlacaVeiculo';
+                });
+              }else{
+                if(doc["Empresa"] == holderPlaca){
+                  setState(() {
+                    oqPesquisar = 'Empresa';
+                  });
+                }else{
+                  if(doc["Galpão"] == holderPlaca){
+                    setState(() {
+                      oqPesquisar = 'Galpão';
+                    });
+                  }else{
+                    oqPesquisar = 'PlacaVeiculo';
+                  }
+                }
+              }
+            }
+          });
+        });
+      }
+    }
+
+    if(started == false){
+      startedapp(context);
+    }
+
+    started = true;
+
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -107,29 +158,100 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                           fontSize: tamanhotexto
                       ),
                     ),
-                    TextFormField(
-                      onChanged: (valor){
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 300,
+                          height: 60,
+                          child: TextFormField(
+                            controller: placaveiculointerface,
+                            onChanged: (valor){
+                              setState(() {
+                                String value = valor.toUpperCase();
+                                if(placaveiculointerface.text == ''){
+                                  holderPlaca = '';
+                                  oqPesquisar = '';
+                                }
 
-                        String value = valor.replaceAll(' ', '').toUpperCase();
+                                if(value.length == 7){
+                                  holderPlaca = value.replaceAllMapped(
+                                    RegExp(r'^([a-zA-Z]{3})([0-9a-zA-Z]{4})$'),
+                                        (Match m) => '${m[1]} ${m[2]}',
+                                  );
+                                  placaveiculointerface.text = holderPlaca;
+                                }
+                                FirebaseFirestore.instance
+                                    .collection('Autorizacoes')
+                                    .where('Empresa', isEqualTo: widget.empresaName)
+                                    .where('Status', isNotEqualTo: 'Saida')
+                                    .get()
+                                    .then((QuerySnapshot querySnapshot) {
+                                  querySnapshot.docs.forEach((doc) {
 
-                        holderPlaca = value.replaceAllMapped(
-                          RegExp(r'^([a-zA-Z]{3})([0-9]{4})$'),
-                              (Match m) => '${m[1]}-${m[2]}',
-                        );
-                      },
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      decoration: InputDecoration(
+                                    if(doc["nomeMotorista"] == holderPlaca ){
 
-                        border: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors.green
-                            )
+                                      oqPesquisar = 'nomeMotorista';
+
+
+                                    }else{
+
+                                      if(doc["PlacaVeiculo"] == holderPlaca ){
+                                        oqPesquisar = 'PlacaVeiculo';
+
+                                      }else{
+                                        if(doc["Empresa"] == holderPlaca){
+                                          oqPesquisar = 'Empresa';
+
+                                        }else{
+                                          if(doc["Galpão"] == holderPlaca){
+                                            oqPesquisar = 'Galpão';
+
+                                          }else{
+
+                                          }
+                                        }
+                                      }
+                                    }
+                                  });
+                                });
+                              });
+                            },
+                            enableSuggestions: false,
+                            autocorrect: false,
+                            decoration: InputDecoration(
+
+                              border: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.green
+                                  )
+                              ),
+                              hintStyle: TextStyle(
+                                  fontSize: tamanhotexto
+                              ),
+                            ),
+                          ),
                         ),
-                        hintStyle: TextStyle(
-                            fontSize: tamanhotexto
+                        Container(
+                          padding: const EdgeInsets.only(left: 16),
+                          child: SizedBox(
+                              width: 70,
+                              height: 60,
+                              child: ElevatedButton(
+                                onPressed: (){
+                                  Navigator.pop(context);
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context){
+                                        return CameraComum('LiberaçãoEmpresa', widget.name, widget.empresaName);
+                                      }));
+
+                                },
+                                child: const Icon(Icons.camera_alt),
+                              )
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                     Container(
                       padding: const EdgeInsets.all(16),
@@ -143,59 +265,46 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                               timeInSecForIosWeb: 1,
                               backgroundColor: Colors.black,
                               textColor: Colors.white,
-                              fontSize: tamanhotexto,
+                              fontSize: tamanhotextomin,
                             );
 
                           }else{
-
                             FirebaseFirestore.instance
                                 .collection('Autorizacoes')
+                                .where('Empresa', isEqualTo: widget.empresaName)
+                                .where('Status', isNotEqualTo: 'Saida')
                                 .get()
                                 .then((QuerySnapshot querySnapshot) {
                               querySnapshot.docs.forEach((doc) {
 
                                 if(doc["nomeMotorista"] == holderPlaca ){
 
-                                  String oqPesquisar = 'nomeMotorista';
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context){
-                                        return pesquisa(holderPlaca, oqPesquisar);
-                                      }));
+                                  oqPesquisar = 'nomeMotorista';
+
 
                                 }else{
 
                                   if(doc["PlacaVeiculo"] == holderPlaca ){
+                                    oqPesquisar = 'PlacaVeiculo';
 
-                                    String oqPesquisar = 'PlacaVeiculo';
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context){
-                                          return pesquisa(holderPlaca, oqPesquisar);
-                                        }));
                                   }else{
                                     if(doc["Empresa"] == holderPlaca){
-                                      String oqPesquisar = 'Empresa';
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder: (context){
-                                            return pesquisa(holderPlaca, oqPesquisar);
-                                          }));
+                                      oqPesquisar = 'Empresa';
+
                                     }else{
                                       if(doc["Galpão"] == holderPlaca){
-                                        String oqPesquisar = 'Galpão';
-                                        Navigator.push(context,
-                                            MaterialPageRoute(builder: (context){
-                                              return pesquisa(holderPlaca, oqPesquisar);
-                                            }));
+                                        oqPesquisar = 'Galpão';
+
                                       }else{
 
                                         Fluttertoast.showToast(
-                                          msg: 'Infelizmente não achei nada do que você pesquisou, por favor, tente novamente!',
+                                          msg: 'Dados não encontrados!',
                                           toastLength: Toast.LENGTH_SHORT,
                                           timeInSecForIosWeb: 1,
                                           backgroundColor: Colors.black,
                                           textColor: Colors.white,
                                           fontSize: 16.0,
                                         );
-
                                       }
                                     }
                                   }
@@ -208,19 +317,26 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                         child: Text(
                           'Pesquisar',
                           style: TextStyle(
-                              fontSize: tamanhotextobtns,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white
+                              fontSize: tamanhotexto,
+                              fontWeight: FontWeight.bold
                           ),
                         ),
                       ),
                     ),
                     StreamBuilder(
-                        stream: FirebaseFirestore
+                        stream: oqPesquisar != '' ?  FirebaseFirestore
                             .instance
                             .collection('Autorizacoes')
                             .where('Empresa', isEqualTo: widget.empresaName)
                             .where('Status', isNotEqualTo: 'Saida')
+                            .where('PlacaVeiculo', isEqualTo: holderPlaca)
+                            .snapshots():
+                        FirebaseFirestore
+                            .instance
+                            .collection('Autorizacoes')
+                            .where('Empresa', isEqualTo: widget.empresaName)
+                            .where('Status', isNotEqualTo: 'Saida')
+                        //.orderBy("Status", descending: true)
                             .snapshots(),
                         builder: (BuildContext context,
                             AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -257,7 +373,6 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                                       bool coletaBool = false;
                                       String lacrado = '';
                                       String ColetaOuEntregast = '';
-                                      idDocumento = documents.id;
 
                                       if(lacre == 'lacre'){
                                         lacrebool = true;
@@ -512,7 +627,7 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                   Column(
                     children: [
                       Text(
-                        'Operador: ' + widget.name,
+                        'Operador: ${widget.name}',
                         style: TextStyle(
                             fontSize: tamanhotexto
                         ),

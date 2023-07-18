@@ -4,9 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:glk_controls/CameraModulo/camera_comum/Camera.dart';
 import 'package:glk_controls/callToAPI.dart';
 import 'package:glk_controls/modal/ModalSaida.dart';
-import 'package:glk_controls/pesquisaDir/pesquisa.dart';
 
 import 'package:intl/intl.dart';
 
@@ -15,7 +15,8 @@ import 'package:intl/intl.dart';
 class listaSaida extends StatefulWidget {
   String porteiroName;
   String Saida;
-  listaSaida(this.porteiroName, this.Saida, {Key? key}) : super(key: key);
+  final String PreFillPesquisa;
+  listaSaida(this.porteiroName, this.Saida, this.PreFillPesquisa,  {Key? key}) : super(key: key);
 
   @override
   State<listaSaida> createState() => _listaSaidaState();
@@ -26,7 +27,11 @@ class _listaSaidaState extends State<listaSaida> {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController placaveiculointerface = TextEditingController();
+    bool started = false;
     String holderPlaca = '';
+    String oqPesquisar = '';
+
     String idDocumento;
 
     double tamanhotexto = 20;
@@ -105,29 +110,99 @@ class _listaSaidaState extends State<listaSaida> {
                           fontSize: tamanhotexto
                       ),
                     ),
-                    TextFormField(
-                      onChanged: (valor){
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        SizedBox(
+                          width: 300,
+                          height: 60,
+                          child: TextFormField(
+                            controller: placaveiculointerface,
+                            onChanged: (valor){
+                              setState(() {
+                                String value = valor.toUpperCase();
+                                if(placaveiculointerface.text == ''){
+                                  holderPlaca = '';
+                                  oqPesquisar = '';
+                                }
 
-                        String value = valor.replaceAll(' ', '').toUpperCase();
+                                if(value.length == 7){
+                                  holderPlaca = value.replaceAllMapped(
+                                    RegExp(r'^([a-zA-Z]{3})([0-9a-zA-Z]{4})$'),
+                                        (Match m) => '${m[1]} ${m[2]}',
+                                  );
+                                  placaveiculointerface.text = holderPlaca;
+                                }
+                                FirebaseFirestore.instance
+                                    .collection('Autorizacoes')
+                                    .where('Status', isEqualTo: 'Liberado Saida')
+                                    .get()
+                                    .then((QuerySnapshot querySnapshot) {
+                                  querySnapshot.docs.forEach((doc) {
 
-                        holderPlaca = value.replaceAllMapped(
-                          RegExp(r'^([a-zA-Z]{3})([0-9]{4})$'),
-                              (Match m) => '${m[1]}-${m[2]}',
-                        );
-                      },
-                      enableSuggestions: false,
-                      autocorrect: false,
-                      decoration: InputDecoration(
+                                    if(doc["nomeMotorista"] == holderPlaca ){
 
-                        border: const OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors.green
-                            )
+                                      oqPesquisar = 'nomeMotorista';
+
+
+                                    }else{
+
+                                      if(doc["PlacaVeiculo"] == holderPlaca ){
+                                        oqPesquisar = 'PlacaVeiculo';
+
+                                      }else{
+                                        if(doc["Empresa"] == holderPlaca){
+                                          oqPesquisar = 'Empresa';
+
+                                        }else{
+                                          if(doc["Galpão"] == holderPlaca){
+                                            oqPesquisar = 'Galpão';
+
+                                          }else{
+
+                                          }
+                                        }
+                                      }
+                                    }
+                                  });
+                                });
+                              });
+                            },
+                            enableSuggestions: false,
+                            autocorrect: false,
+                            decoration: InputDecoration(
+
+                              border: const OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.green
+                                  )
+                              ),
+                              hintStyle: TextStyle(
+                                  fontSize: tamanhotexto
+                              ),
+                            ),
+                          ),
                         ),
-                        hintStyle: TextStyle(
-                            fontSize: tamanhotexto
+                        Container(
+                          padding: const EdgeInsets.only(left: 16),
+                          child: SizedBox(
+                              width: 70,
+                              height: 60,
+                              child: ElevatedButton(
+                                onPressed: (){
+                                  Navigator.pop(context);
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (context){
+                                        return CameraComum(widget.Saida, widget.porteiroName, '');
+                                      }));
+
+                                },
+                                child: const Icon(Icons.camera_alt),
+                              )
+                          ),
                         ),
-                      ),
+                      ],
                     ),
                     Container(
                       padding: const EdgeInsets.all(16),
@@ -145,49 +220,35 @@ class _listaSaidaState extends State<listaSaida> {
                             );
 
                           }else{
-
-
                             FirebaseFirestore.instance
                                 .collection('Autorizacoes')
+                                .where('Status', isEqualTo: 'Liberado Saida')
                                 .get()
                                 .then((QuerySnapshot querySnapshot) {
                               querySnapshot.docs.forEach((doc) {
 
                                 if(doc["nomeMotorista"] == holderPlaca ){
 
-                                  String oqPesquisar = 'nomeMotorista';
-                                  Navigator.push(context,
-                                      MaterialPageRoute(builder: (context){
-                                        return pesquisa(holderPlaca, oqPesquisar);
-                                      }));
+                                  oqPesquisar = 'nomeMotorista';
+
 
                                 }else{
 
                                   if(doc["PlacaVeiculo"] == holderPlaca ){
+                                    oqPesquisar = 'PlacaVeiculo';
 
-                                    String oqPesquisar = 'PlacaVeiculo';
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context){
-                                          return pesquisa(holderPlaca, oqPesquisar);
-                                        }));
                                   }else{
                                     if(doc["Empresa"] == holderPlaca){
-                                      String oqPesquisar = 'Empresa';
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder: (context){
-                                            return pesquisa(holderPlaca, oqPesquisar);
-                                          }));
+                                      oqPesquisar = 'Empresa';
+
                                     }else{
                                       if(doc["Galpão"] == holderPlaca){
-                                        String oqPesquisar = 'Galpão';
-                                        Navigator.push(context,
-                                            MaterialPageRoute(builder: (context){
-                                              return pesquisa(holderPlaca, oqPesquisar);
-                                            }));
+                                        oqPesquisar = 'Galpão';
+
                                       }else{
 
                                         Fluttertoast.showToast(
-                                          msg: 'Infelizmente não achei nada do que você pesquisou, por favor, tente novamente!',
+                                          msg: 'Dados não encontrados!',
                                           toastLength: Toast.LENGTH_SHORT,
                                           timeInSecForIosWeb: 1,
                                           backgroundColor: Colors.black,
@@ -207,8 +268,7 @@ class _listaSaidaState extends State<listaSaida> {
                           'Pesquisar',
                           style: TextStyle(
                               fontSize: tamanhotexto,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white
+                              fontWeight: FontWeight.bold
                           ),
                         ),
                       ),

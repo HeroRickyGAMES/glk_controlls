@@ -106,7 +106,7 @@ class _listEntradaState extends State<listEntrada> {
                       oqPesquisar = 'Galpão';
                     });
                   }else{
-
+                    oqPesquisar = 'PlacaVeiculo';
                   }
                 }
               }
@@ -244,7 +244,7 @@ class _listEntradaState extends State<listEntrada> {
                                   Navigator.pop(context);
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (context){
-                                        return CameraComum(widget.Entrada, widget.porteiroName);
+                                        return CameraComum(widget.Entrada, widget.porteiroName, '');
                                       }));
 
                                 },

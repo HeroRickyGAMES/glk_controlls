@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_scalable_ocr/flutter_scalable_ocr.dart';
+import 'package:glk_controls/listas/liberacoesOperadorEmpresarial.dart';
 import 'package:glk_controls/listas/listaEntrada.dart';
 
 
@@ -16,7 +17,8 @@ import 'package:glk_controls/listas/listaEntrada.dart';
 class CameraComum extends StatefulWidget {
   String EntradaouSaida;
   String OperadorName;
-  CameraComum(this.EntradaouSaida, this.OperadorName, {super.key});
+  String empresaName;
+  CameraComum(this.EntradaouSaida, this.OperadorName, this.empresaName, {super.key});
 
   @override
   State<CameraComum> createState() => _CameraComumState();
@@ -90,25 +92,6 @@ class _CameraComumState extends State<CameraComum> {
           tamanhotexto = textSizeandroid;
           tamanhotextobtns = textSizeandroidbtn;
           aspect = 0.8;
-        }
-      }
-
-      tirarfotomt(String x, context) async {
-        controller.close();
-        if(widget.EntradaouSaida == 'Rele01'){
-          Navigator.pop(context);
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context){
-                return listEntrada(widget.OperadorName, widget.EntradaouSaida, x);
-              }));
-        }
-
-        if(widget.EntradaouSaida == 'Rele03'){
-          Navigator.pop(context);
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context){
-                return listEntrada(widget.OperadorName, widget.EntradaouSaida, x);
-              }));
         }
       }
 
@@ -269,8 +252,32 @@ class _CameraComumState extends State<CameraComum> {
                                                   Container(
                                                     padding: const EdgeInsets.all(16),
                                                     child: ElevatedButton(onPressed: () {
+                                                      controller.close();
+                                                      if(widget.EntradaouSaida == 'Rele01'){
+                                                        Navigator.of(context).pop();
+                                                        Navigator.pop(context);
+                                                        Navigator.push(context,
+                                                            MaterialPageRoute(builder: (context){
+                                                              return listEntrada(widget.OperadorName, widget.EntradaouSaida, x);
+                                                            }));
+                                                      }
 
-                                                      tirarfotomt(x, context);
+                                                      if(widget.EntradaouSaida == 'Rele03'){
+                                                        Navigator.of(context).pop();
+                                                        Navigator.pop(context);
+                                                        Navigator.push(context,
+                                                            MaterialPageRoute(builder: (context){
+                                                              return listEntrada(widget.OperadorName, widget.EntradaouSaida, x);
+                                                            }));
+                                                      }
+                                                      if(widget.EntradaouSaida == 'LiberaçãoEmpresa'){
+                                                        Navigator.of(context).pop();
+                                                        Navigator.pop(context);
+                                                        Navigator.push(context,
+                                                            MaterialPageRoute(builder: (context){
+                                                              return liberacoesOperadorEmpresarial(widget.OperadorName, widget.empresaName, x);
+                                                            }));
+                                                      }
 
                                                     }, child: Text(
                                                         'Prosseguir',
@@ -289,8 +296,6 @@ class _CameraComumState extends State<CameraComum> {
                                     );
                                   },
                                 );
-
-                                print("placas da camera $x");  // [XXX7XXX]
                               });
 
                             }, child: Text(

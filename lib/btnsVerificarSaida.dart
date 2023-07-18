@@ -80,7 +80,7 @@ class _btnsVerificarSaidaState extends State<btnsVerificarSaida> {
 
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context){
-                            return listaSaida(widget.PorteiroName, Saida);
+                            return listaSaida(widget.PorteiroName, Saida, '');
                           }));
                     },
                     child: Text(
@@ -101,7 +101,7 @@ class _btnsVerificarSaidaState extends State<btnsVerificarSaida> {
 
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context){
-                            return listaSaida(widget.PorteiroName, Saida);
+                            return listaSaida(widget.PorteiroName, Saida, '');
                           }));
                     },
                     child: Text(
