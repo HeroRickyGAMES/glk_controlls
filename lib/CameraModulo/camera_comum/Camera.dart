@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_scalable_ocr/flutter_scalable_ocr.dart';
 import 'package:glk_controls/listas/liberacoesOperadorEmpresarial.dart';
 import 'package:glk_controls/listas/listaEntrada.dart';
+import 'package:glk_controls/listas/listaSaida.dart';
 
 
 //Programado por HeroRickyGames
@@ -136,8 +137,8 @@ class _CameraComumState extends State<CameraComum> {
                         child: Column(
                           children: [
                             ElevatedButton(onPressed: (){
+                              String x = '';
                               setState(() {
-                                String x = '';
                                 textocomEstado = snapshot.data!;
                                 //print(textocomEstado);
 
@@ -252,7 +253,15 @@ class _CameraComumState extends State<CameraComum> {
                                                   Container(
                                                     padding: const EdgeInsets.all(16),
                                                     child: ElevatedButton(onPressed: () {
+                                                      if(x == ''){
+
+                                                      }else{
+
+                                                      }
+
                                                       controller.close();
+
+                                                      //Portaria
                                                       if(widget.EntradaouSaida == 'Rele01'){
                                                         Navigator.of(context).pop();
                                                         Navigator.pop(context);
@@ -270,6 +279,26 @@ class _CameraComumState extends State<CameraComum> {
                                                               return listEntrada(widget.OperadorName, widget.EntradaouSaida, x);
                                                             }));
                                                       }
+
+                                                      if(widget.EntradaouSaida == 'Rele02'){
+                                                        Navigator.of(context).pop();
+                                                        Navigator.pop(context);
+                                                        Navigator.push(context,
+                                                            MaterialPageRoute(builder: (context){
+                                                              return listaSaida(widget.OperadorName, widget.EntradaouSaida, x);
+                                                            }));
+                                                      }
+
+                                                      if(widget.EntradaouSaida == 'Rele04'){
+                                                        Navigator.of(context).pop();
+                                                        Navigator.pop(context);
+                                                        Navigator.push(context,
+                                                            MaterialPageRoute(builder: (context){
+                                                              return listaSaida(widget.OperadorName, widget.EntradaouSaida, x);
+                                                            }));
+                                                      }
+
+                                                      //Empresa
                                                       if(widget.EntradaouSaida == 'LiberaçãoEmpresa'){
                                                         Navigator.of(context).pop();
                                                         Navigator.pop(context);

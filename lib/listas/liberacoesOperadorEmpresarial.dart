@@ -80,7 +80,8 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
       if(widget.PreFillPesquisa != ''){
         FirebaseFirestore.instance
             .collection('Autorizacoes')
-            .where('Status', isEqualTo: 'Liberado Entrada')
+            .where('Empresa', isEqualTo: widget.empresaName)
+            .where('Status', isNotEqualTo: 'Saida')
             .get()
             .then((QuerySnapshot querySnapshot) {
           querySnapshot.docs.forEach((doc) {

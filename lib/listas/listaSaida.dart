@@ -23,15 +23,15 @@ class listaSaida extends StatefulWidget {
 }
 
 class _listaSaidaState extends State<listaSaida> {
+
+  TextEditingController placaveiculointerface = TextEditingController();
   String? idDocumento;
+  bool started = false;
+  String holderPlaca = '';
+  String oqPesquisar = '';
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController placaveiculointerface = TextEditingController();
-    bool started = false;
-    String holderPlaca = '';
-    String oqPesquisar = '';
-
     String idDocumento;
 
     double tamanhotexto = 20;
@@ -69,6 +69,55 @@ class _listaSaidaState extends State<listaSaida> {
       }
     }
 
+    startedapp(context) async {
+      placaveiculointerface.text = widget.PreFillPesquisa;
+      holderPlaca = widget.PreFillPesquisa;
+      await Future.delayed(const Duration(seconds: 4));
+
+      if(widget.PreFillPesquisa != ''){
+        FirebaseFirestore.instance
+            .collection('Autorizacoes')
+            .where('Status', isEqualTo: 'Liberado Saida')
+            .get()
+            .then((QuerySnapshot querySnapshot) {
+          querySnapshot.docs.forEach((doc) {
+
+            if(doc["nomeMotorista"] == holderPlaca ){
+              setState(() {
+                oqPesquisar = 'nomeMotorista';
+              });
+            }else{
+              if(doc["PlacaVeiculo"] == holderPlaca ){
+                setState(() {
+                  oqPesquisar = 'PlacaVeiculo';
+                });
+              }else{
+                if(doc["Empresa"] == holderPlaca){
+                  setState(() {
+                    oqPesquisar = 'Empresa';
+                  });
+                }else{
+                  if(doc["Galpão"] == holderPlaca){
+                    setState(() {
+                      oqPesquisar = 'Galpão';
+                    });
+                  }else{
+                    oqPesquisar = 'PlacaVeiculo';
+                  }
+                }
+              }
+            }
+          });
+        });
+      }
+    }
+
+    if(started == false){
+      startedapp(context);
+    }
+
+    started = true;
+    
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -144,7 +193,6 @@ class _listaSaidaState extends State<listaSaida> {
                                     if(doc["nomeMotorista"] == holderPlaca ){
 
                                       oqPesquisar = 'nomeMotorista';
-
 
                                     }else{
 
@@ -274,7 +322,13 @@ class _listaSaidaState extends State<listaSaida> {
                       ),
                     ),
                     StreamBuilder(
-                        stream: FirebaseFirestore
+                        stream: oqPesquisar != '' ?  FirebaseFirestore
+                            .instance
+                            .collection('Autorizacoes')
+                            .where('Status', isEqualTo: 'Liberado Saida')
+                            .where('PlacaVeiculo', isEqualTo: holderPlaca)
+                            .snapshots():
+                        FirebaseFirestore
                             .instance
                             .collection('Autorizacoes')
                             .where('Status', isEqualTo: 'Liberado Saida')
