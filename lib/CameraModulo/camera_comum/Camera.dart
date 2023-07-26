@@ -1,8 +1,10 @@
-import 'dart:developer';
 import 'dart:io';
 import 'package:camera/camera.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:glk_controls/ModuloPrestador/geral/pesquisa/PesquisaPlacaSaida.dart';
+import 'package:glk_controls/ModuloPrestador/geral/pesquisa/pesquisaPlaca.dart';
 import 'package:glk_controls/listas/liberacoesOperadorEmpresarial.dart';
 import 'package:glk_controls/listas/listaEntrada.dart';
 import 'package:glk_controls/listas/listaSaida.dart';
@@ -129,9 +131,9 @@ class _CameraComumState extends State<CameraComum> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Container(
-                    padding: const EdgeInsets.only(top: 32),
+                    padding: const EdgeInsets.all(16),
                     child: Text(
-                      'Recomendamos que mantenha centralizado na placa antes de tirar a foto!',
+                      'Recomendamos que mantenha centralizado na placa antes de tirar a foto! Quando processado, aguarde alguns segundos para que o texto seja colocado na pesquisa.',
                       style: TextStyle(
                           fontSize: tamanhotexto,
                           fontWeight: FontWeight.bold
@@ -181,12 +183,7 @@ class _CameraComumState extends State<CameraComum> {
 
                       String x = '';
                       setState(() {
-
-
                         textocomEstado = result.text;
-
-                        print(result.text);
-                        //print(textocomEstado);
 
                         List<String> partes = textocomEstado.split(' ');
 
@@ -302,7 +299,6 @@ class _CameraComumState extends State<CameraComum> {
                                           child: TextFormField(
                                             controller: placaveiculointerface,
                                             onChanged: (valor){
-
                                               x = valor.trim().toUpperCase();
                                               //Mudou mandou para a String
                                             },
@@ -334,6 +330,13 @@ class _CameraComumState extends State<CameraComum> {
                                             Container(
                                               padding: const EdgeInsets.all(16),
                                               child: ElevatedButton(onPressed: () {
+
+                                                if(x != anterior){
+                                                  FirebaseFirestore.instance.collection('LogDaCamera').doc().set({
+                                                  'TextoOriginal': anterior,
+                                                  'TextoModificado': x
+                                                  });
+                                                }
 
                                                 //Portaria
                                                 if(widget.EntradaouSaida == 'Rele01'){
@@ -379,6 +382,24 @@ class _CameraComumState extends State<CameraComum> {
                                                   Navigator.push(context,
                                                       MaterialPageRoute(builder: (context){
                                                         return liberacoesOperadorEmpresarial(widget.OperadorName, widget.empresaName, x);
+                                                      }));
+                                                }
+
+                                                if(widget.EntradaouSaida == 'Entrada Colaborador Porteiros'){
+                                                  Navigator.of(context).pop();
+                                                  Navigator.pop(context);
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(builder: (context){
+                                                        return PesquisaPlaca(widget.OperadorName, x);
+                                                      }));
+                                                }
+
+                                                if(widget.EntradaouSaida == 'Saída Colaborador Porteiros'){
+                                                  Navigator.of(context).pop();
+                                                  Navigator.pop(context);
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(builder: (context){
+                                                        return PesquisaPlacaSaida(widget.OperadorName, x);
                                                       }));
                                                 }
 

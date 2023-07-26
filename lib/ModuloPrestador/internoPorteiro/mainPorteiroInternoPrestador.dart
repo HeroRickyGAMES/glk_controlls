@@ -69,14 +69,14 @@ class _mainPorteiroInternoPrestadorState extends State<mainPorteiroInternoPresta
     EntradaColaborador(){
       Navigator.push(context,
           MaterialPageRoute(builder: (context){
-            return PesquisaPlaca(widget.Operador);
+            return PesquisaPlaca(widget.Operador, '');
           }));
     }
 
     saidaColaborador(){
       Navigator.push(context,
           MaterialPageRoute(builder: (context){
-            return PesquisaPlacaSaida(widget.Operador);
+            return PesquisaPlacaSaida(widget.Operador, '');
           }));
     }
 

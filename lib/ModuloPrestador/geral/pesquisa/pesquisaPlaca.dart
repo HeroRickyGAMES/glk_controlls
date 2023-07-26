@@ -3,14 +3,15 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:glk_controls/CameraModulo/camera_comum/Camera.dart';
 import 'package:glk_controls/ModuloPrestador/Entrada/entradaModuloPrestador.dart';
 
 //Programado por HeroRickyGames
 
 class PesquisaPlaca extends StatefulWidget {
   String Porteiro;
-  PesquisaPlaca(this.Porteiro, {Key? key}) : super(key: key);
+  String PreFillPesquisa;
+  PesquisaPlaca(this.Porteiro, this.PreFillPesquisa, {Key? key}) : super(key: key);
 
   @override
   State<PesquisaPlaca> createState() => _PesquisaPlacaState();
@@ -20,6 +21,7 @@ class _PesquisaPlacaState extends State<PesquisaPlaca> {
   TextEditingController placaveiculointerface = TextEditingController();
   String Placa = '';
   String Pre = '';
+  bool started = false;
 
   var dbInstance = FirebaseFirestore.instance;
 
@@ -59,6 +61,22 @@ class _PesquisaPlacaState extends State<PesquisaPlaca> {
 
       }
     }
+
+    startedapp(context) async {
+      await Future.delayed(const Duration(seconds: 4));
+
+      if(widget.PreFillPesquisa != ''){
+        placaveiculointerface.text = widget.PreFillPesquisa;
+        Placa = widget.PreFillPesquisa;
+        Placa = Pre;
+      }
+    }
+
+    if(started == false){
+      startedapp(context);
+    }
+
+    started = true;
 
     return LayoutBuilder(builder: (context, constrains){
       double wid = 700;
@@ -110,32 +128,61 @@ class _PesquisaPlacaState extends State<PesquisaPlaca> {
                       fontSize: tamanhotexto
                   ),
                 ),
-                Container(
-                  padding: const EdgeInsets.all(16),
-                  child: TextFormField(
-                    controller: placaveiculointerface,
-                    onChanged: (valor){
-                      setState(() {
-                        String valorpuro = valor.trim().toUpperCase();
-                        Pre = valorpuro;
-                        if(valorpuro.length == 7){
-                          Placa = valorpuro.replaceAllMapped(
-                            RegExp(r'^([a-zA-Z]{3})([0-9a-zA-Z]{4})$'),
-                                (Match m) => '${m[1]} ${m[2]}',
-                          );
-                          placaveiculointerface.text = Placa;
-                        }
-                      });
-                      //Mudou mandou para a String
-                    },
-                    decoration: InputDecoration(
-                      border: const OutlineInputBorder(),
-                      hintText: 'Digite a placa *',
-                      hintStyle: TextStyle(
-                          fontSize: tamanhotexto
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      width: 300,
+                      height: 60,
+                      child: TextFormField(
+                        controller: placaveiculointerface,
+                        onChanged: (valor){
+                          setState(() {
+                            String valorpuro = valor.trim().toUpperCase();
+                            Pre = valorpuro;
+                            if(valorpuro.length == 7){
+                              Placa = valorpuro.replaceAllMapped(
+                                RegExp(r'^([a-zA-Z]{3})([0-9a-zA-Z]{4})$'),
+                                    (Match m) => '${m[1]} ${m[2]}',
+                              );
+                              placaveiculointerface.text = Placa;
+                            }
+                          });
+                        },
+                        enableSuggestions: false,
+                        autocorrect: false,
+                        decoration: InputDecoration(
+
+                          border: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.green
+                              )
+                          ),
+                          hintStyle: TextStyle(
+                              fontSize: tamanhotexto
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    Container(
+                      padding: const EdgeInsets.only(left: 16),
+                      child: SizedBox(
+                          width: 70,
+                          height: 60,
+                          child: ElevatedButton(
+                            onPressed: kIsWeb == false ? (){
+                              Navigator.pop(context);
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context){
+                                    return CameraComum('Entrada Colaborador Porteiros', widget.Porteiro, '');
+                                  }));
+                            }: null,
+                            child: const Icon(Icons.camera_alt),
+                          )
+                      ),
+                    ),
+                  ],
                 ),
                 Container(
                     padding: const EdgeInsets.all(16),

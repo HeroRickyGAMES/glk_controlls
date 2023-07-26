@@ -238,14 +238,14 @@ class _listaSaidaState extends State<listaSaida> {
                               width: 70,
                               height: 60,
                               child: ElevatedButton(
-                                onPressed: (){
+                                onPressed: kIsWeb == false ? (){
                                   Navigator.pop(context);
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (context){
                                         return CameraComum(widget.Saida, widget.porteiroName, '');
                                       }));
 
-                                },
+                                } : null,
                                 child: const Icon(Icons.camera_alt),
                               )
                           ),

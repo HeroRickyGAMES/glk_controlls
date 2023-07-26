@@ -240,14 +240,14 @@ class _liberacoesOperadorEmpresarialState extends State<liberacoesOperadorEmpres
                               width: 70,
                               height: 60,
                               child: ElevatedButton(
-                                onPressed: (){
+                                onPressed: kIsWeb == false ? (){
                                   Navigator.pop(context);
                                   Navigator.push(context,
                                       MaterialPageRoute(builder: (context){
                                         return CameraComum('LiberaçãoEmpresa', widget.name, widget.empresaName);
                                       }));
 
-                                },
+                                } : null,
                                 child: const Icon(Icons.camera_alt),
                               )
                           ),
