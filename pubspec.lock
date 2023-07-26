@@ -557,14 +557,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "8.2.2"
-  google_ml_kit:
-    dependency: "direct main"
+  google_mlkit_commons:
+    dependency: transitive
     description:
-      name: google_ml_kit
-      sha256: "196eb476970a183e795acc1b9ffdada3e676339f32e70c51d6aaeea4d268f7e3"
+      name: google_mlkit_commons
+      sha256: "42173a8ba89f386486cc5b8249e84da4a4b861daa70498373627d985eb418689"
       url: "https://pub.dev"
     source: hosted
-    version: "0.6.0"
+    version: "0.5.0"
+  google_mlkit_text_recognition:
+    dependency: "direct main"
+    description:
+      name: google_mlkit_text_recognition
+      sha256: "0f181d8a5aa6fc1b934c3454151eea6465c4e81cab1459e5a4b29aef82184618"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.0"
   html:
     dependency: transitive
     description:

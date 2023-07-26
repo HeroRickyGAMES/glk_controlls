@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:glk_controls/listas/liberacoesOperadorEmpresarial.dart';
 import 'package:glk_controls/listas/listaEntrada.dart';
 import 'package:glk_controls/listas/listaSaida.dart';
-import 'package:google_ml_kit/google_ml_kit.dart';
-import 'package:path_provider/path_provider.dart';
+import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 
 
 //Programado por HeroRickyGames
@@ -30,7 +29,8 @@ class _CameraComumState extends State<CameraComum> {
   String text = "";
   String tratado = '';
 
-  final textRecognizer = GoogleMlKit.vision.textDetector();
+  final textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
+
   CameraController? _cameraController;
   var picture;
 
@@ -159,6 +159,20 @@ class _CameraComumState extends State<CameraComum> {
                     child: ElevatedButton(
                         onPressed: () async {
 
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return const AlertDialog(
+                                title: Text('Aguarde!'),
+                                actions: [
+                                  Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                ],
+                              );
+                            },
+                          );
+
                       picture = await _cameraController!.takePicture();
 
 
@@ -247,109 +261,146 @@ class _CameraComumState extends State<CameraComum> {
 
                         picture = null;
 
+                        Navigator.of(context).pop();
+
+                        String anterior = x;
+
+                        TextEditingController placaveiculointerface = TextEditingController();
+
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: Text(
-                                'A Placa $x foi extraida!',
-                                style: TextStyle(
-                                    fontSize: tamanhotexto
+                            return StatefulBuilder(
+                            builder: (BuildContext context, StateSetter setState) {
+
+                              placaveiculointerface.text = x;
+
+                              return AlertDialog(
+                                title: Center(
+                                  child: Text(
+                                    'Placa Extraida!',
+                                    style: TextStyle(
+                                        fontSize: tamanhotexto
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              actions: [
-                                Center(
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                        padding: const EdgeInsets.all(16),
-                                        child: Text(
-                                          'A placa * $x * foi extraida, a placa extraida condiz com a placa real?',
-                                          style: TextStyle(
-                                              fontSize: tamanhotexto
+                                actions: [
+                                  Center(
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.all(16),
+                                          child: Text(
+                                            'A placa descrita logo a baixo foi extraida! A placa extraida condiz com a placa real? Se não, edite antes de mandar!',
+                                            style: TextStyle(
+                                                fontSize: tamanhotexto
+                                            ),
                                           ),
                                         ),
-                                      ),
+                                        Container(
+                                          padding: const EdgeInsets.all(16),
+                                          child: TextFormField(
+                                            controller: placaveiculointerface,
+                                            onChanged: (valor){
 
-                                      Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          ElevatedButton(onPressed: (){
-                                            Navigator.of(context).pop();
-                                          }, child: Text(
-                                            'Cancelar',
-                                            style: TextStyle(
-                                                fontSize: tamanhotextobtns
+                                              x = valor.trim().toUpperCase();
+                                              //Mudou mandou para a String
+                                            },
+                                            keyboardType: TextInputType.name,
+                                            enableSuggestions: false,
+                                            autocorrect: false,
+                                            decoration: InputDecoration(
+                                              border: const OutlineInputBorder(),
+                                              hintText: 'Placa',
+                                              hintStyle: TextStyle(
+                                                  fontSize: tamanhotexto
+                                              ),
                                             ),
-                                          )
                                           ),
-                                          Container(
-                                            padding: const EdgeInsets.all(16),
-                                            child: ElevatedButton(onPressed: () {
-
-                                              //Portaria
-                                              if(widget.EntradaouSaida == 'Rele01'){
-                                                Navigator.of(context).pop();
-                                                Navigator.pop(context);
-                                                Navigator.push(context,
-                                                    MaterialPageRoute(builder: (context){
-                                                      return listEntrada(widget.OperadorName, widget.EntradaouSaida, x);
-                                                    }));
-                                              }
-
-                                              if(widget.EntradaouSaida == 'Rele03'){
-                                                Navigator.of(context).pop();
-                                                Navigator.pop(context);
-                                                Navigator.push(context,
-                                                    MaterialPageRoute(builder: (context){
-                                                      return listEntrada(widget.OperadorName, widget.EntradaouSaida, x);
-                                                    }));
-                                              }
-
-                                              if(widget.EntradaouSaida == 'Rele02'){
-                                                Navigator.of(context).pop();
-                                                Navigator.pop(context);
-                                                Navigator.push(context,
-                                                    MaterialPageRoute(builder: (context){
-                                                      return listaSaida(widget.OperadorName, widget.EntradaouSaida, x);
-                                                    }));
-                                              }
-
-                                              if(widget.EntradaouSaida == 'Rele04'){
-                                                Navigator.of(context).pop();
-                                                Navigator.pop(context);
-                                                Navigator.push(context,
-                                                    MaterialPageRoute(builder: (context){
-                                                      return listaSaida(widget.OperadorName, widget.EntradaouSaida, x);
-                                                    }));
-                                              }
-
-                                              //Empresa
-                                              if(widget.EntradaouSaida == 'LiberaçãoEmpresa'){
-                                                Navigator.of(context).pop();
-                                                Navigator.pop(context);
-                                                Navigator.push(context,
-                                                    MaterialPageRoute(builder: (context){
-                                                      return liberacoesOperadorEmpresarial(widget.OperadorName, widget.empresaName, x);
-                                                    }));
-                                              }
-
+                                        ),
+                                        Row(
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            ElevatedButton(onPressed: (){
+                                              Navigator.of(context).pop();
                                             }, child: Text(
-                                              'Prosseguir',
+                                              'Cancelar',
                                               style: TextStyle(
                                                   fontSize: tamanhotextobtns
                                               ),
                                             )
                                             ),
-                                          )
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
+                                            Container(
+                                              padding: const EdgeInsets.all(16),
+                                              child: ElevatedButton(onPressed: () {
+
+                                                //Portaria
+                                                if(widget.EntradaouSaida == 'Rele01'){
+                                                  Navigator.of(context).pop();
+                                                  Navigator.pop(context);
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(builder: (context){
+                                                        return listEntrada(widget.OperadorName, widget.EntradaouSaida, x);
+                                                      }));
+                                                }
+
+                                                if(widget.EntradaouSaida == 'Rele03'){
+                                                  Navigator.of(context).pop();
+                                                  Navigator.pop(context);
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(builder: (context){
+                                                        return listEntrada(widget.OperadorName, widget.EntradaouSaida, x);
+                                                      }));
+                                                }
+
+                                                if(widget.EntradaouSaida == 'Rele02'){
+                                                  Navigator.of(context).pop();
+                                                  Navigator.pop(context);
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(builder: (context){
+                                                        return listaSaida(widget.OperadorName, widget.EntradaouSaida, x);
+                                                      }));
+                                                }
+
+                                                if(widget.EntradaouSaida == 'Rele04'){
+                                                  Navigator.of(context).pop();
+                                                  Navigator.pop(context);
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(builder: (context){
+                                                        return listaSaida(widget.OperadorName, widget.EntradaouSaida, x);
+                                                      }));
+                                                }
+
+                                                //Empresa
+                                                if(widget.EntradaouSaida == 'LiberaçãoEmpresa'){
+                                                  Navigator.of(context).pop();
+                                                  Navigator.pop(context);
+                                                  Navigator.push(context,
+                                                      MaterialPageRoute(builder: (context){
+                                                        return liberacoesOperadorEmpresarial(widget.OperadorName, widget.empresaName, x);
+                                                      }));
+                                                }
+
+                                              }, child: Text(
+                                                'Prosseguir',
+                                                style: TextStyle(
+                                                    fontSize: tamanhotextobtns
+                                                ),
+                                              )
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              );
+                              }
                             );
+
+
                           },
                         );
                       });
