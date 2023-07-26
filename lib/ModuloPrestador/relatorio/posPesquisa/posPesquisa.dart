@@ -95,18 +95,18 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
       double wid = 2000;
 
       if(constrains.maxWidth < 600){
-        tamanhotexto = textSize;
-        tamanhotextobtns = textSize;
+        tamanhotexto = textSizeandroid;
+        tamanhotextobtns = textSizeandroidbtn;
         tamanhotextomin = 16;
         //aspect = 1.0;
         aspect = 1.0;
-        wid = 2000;
+        wid = 5000;
       }else {
         if(constrains.maxWidth > 600){
-          tamanhotexto = textSizeandroid;
-          tamanhotextobtns = textSizeandroidbtn;
+          tamanhotexto = textSize;
+          tamanhotextobtns = textSize;
           aspect = 0.8;
-          wid = 3000;
+          wid = 5000;
         }
       }
 
@@ -297,8 +297,8 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
                                       child: Container(
                                         padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
                                         child: SizedBox(
-                                          height: 50,
-                                          width: 700,
+                                          height: 100,
+                                          width: 1000,
                                           child: Text(
                                             '${documents['Nome']}-',
                                             style: TextStyle(
@@ -313,7 +313,7 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
                                         padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
                                         child: SizedBox(
                                           height: 50,
-                                          width: double.infinity,
+                                          width: 1000,
                                           child: Text(
                                             '${documents['RG']}-',
                                             style: TextStyle(
@@ -328,7 +328,7 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
                                         padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
                                         child: SizedBox(
                                           height: 50,
-                                          width: double.infinity,
+                                          width: 1000,
                                           child: Text(
                                             '${documents['galpao']} ${documents['Empresa']}-',
                                             style: TextStyle(
@@ -343,7 +343,7 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
                                         padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
                                         child: SizedBox(
                                           height: 50,
-                                          width: double.infinity,
+                                          width: 1000,
                                           child: Text(
                                             '${documents['Placa']}-',
                                             style: TextStyle(
@@ -358,7 +358,7 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
                                         padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
                                         child: SizedBox(
                                           height: 50,
-                                          width: double.infinity,
+                                          width: 1000,
                                           child: Text(
                                             '${documents['Modelo']}-',
                                             style: TextStyle(
@@ -373,7 +373,7 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
                                         padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
                                         child: SizedBox(
                                           height: 50,
-                                          width: double.infinity,
+                                          width: 1000,
                                           child: Text(
                                             '${documents['Cor']}-',
                                             style: TextStyle(
@@ -388,7 +388,7 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
                                         padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
                                         child: SizedBox(
                                           height: 50,
-                                          width: double.infinity,
+                                          width: 1000,
                                           child: Text(
                                             '${documents['Data']}-',
                                             style: TextStyle(
@@ -403,7 +403,7 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
                                         padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
                                         child: SizedBox(
                                           height: 50,
-                                          width: double.infinity,
+                                          width: 1000,
                                           child: Text(
                                             '${documents['Horario']}-',
                                             style: TextStyle(
@@ -418,7 +418,7 @@ class _PosPesquisaRelatorioState extends State<PosPesquisaRelatorio> {
                                         padding: const EdgeInsets.only(top: 16, left: 16, right: 16),
                                         child: SizedBox(
                                           height: 50,
-                                          width: double.infinity,
+                                          width: 1000,
                                           child: Text(
                                             '${documents['Status']}-',
                                             style: TextStyle(

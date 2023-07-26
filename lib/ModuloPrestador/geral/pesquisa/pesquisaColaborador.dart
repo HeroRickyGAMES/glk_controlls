@@ -82,8 +82,8 @@ class _pesquisaColaboradorState extends State<pesquisaColaborador> {
       double widin = 700;
       double heig = 50;
       if(constrains.maxWidth < 600){
-        tamanhotexto = textSize;
-        tamanhotextobtns = textSize;
+        tamanhotexto = textSizeandroid;
+        tamanhotextobtns = textSizeandroidbtn;
         tamanhotextomin = 16;
         //aspect = 1.0;
         aspect = 1.0;
@@ -92,8 +92,8 @@ class _pesquisaColaboradorState extends State<pesquisaColaborador> {
         heig = 50;
       }else {
         if(constrains.maxWidth > 600){
-          tamanhotexto = textSizeandroid;
-          tamanhotextobtns = textSizeandroidbtn;
+          tamanhotexto = textSize;
+          tamanhotextobtns = textSize;
           aspect = 0.8;
           wid = 1000;
           widin = 1200;
