@@ -144,12 +144,16 @@ class _painelAdminState extends State<painelAdmin> {
                       String vagasMoto = '${result.get('VagasMotos')}';
                       String emailADM = '${result.get('emailADM')}';
                       String EstadoSelecionado = '${result.get('estado')}';
+                      String entrada01CamIP = '${result.get('ip_camera_entrada01')}';
+                      String entrada02CamIP = '${result.get('ip_camera_entrada02')}';
+                      String saida01CamIP = '${result.get('ip_camera_saida01')}';
+                      String saida02CamIP = '${result.get('ip_camera_saida02')}';
 
                       Navigator.of(context).pop();
 
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context){
-                            return CadastroCondominio(dropValue, file, file2, empresaName, endereco, cep, cidade, estado, galpao, vagas, tags, vagasInternas, vagasMoto, emailADM, EstadoSelecionado);
+                            return CadastroCondominio(dropValue, file, file2, empresaName, endereco, cep, cidade, estado, galpao, vagas, tags, vagasInternas, vagasMoto, emailADM, EstadoSelecionado, entrada01CamIP, entrada02CamIP, saida01CamIP, saida02CamIP);
                           }));
 
                     }

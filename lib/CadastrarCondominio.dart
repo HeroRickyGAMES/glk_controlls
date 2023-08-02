@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:enhanced_url_launcher/enhanced_url_launcher.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -25,7 +26,11 @@ class CadastroCondominio extends StatefulWidget {
   String vagasMoto = '';
   String emailADM = '';
   String EstadoSelecionado = '';
-  CadastroCondominio(this.dropValue, this.imageFile, this.imageFile2, this.empresa, this.endereco, this.cep, this.cidade, this.estadoSelecionado, this.galpaost, this.vagas, this.tags, this.vagasInternas, this.vagasMoto, this.emailADM, this.EstadoSelecionado, {super.key});
+  String entrada01CamIP = '';
+  String entrada02CamIP = '';
+  String saida01CamIP = '';
+  String saida02CamIP = '';
+  CadastroCondominio(this.dropValue, this.imageFile, this.imageFile2, this.empresa, this.endereco, this.cep, this.cidade, this.estadoSelecionado, this.galpaost, this.vagas, this.tags, this.vagasInternas, this.vagasMoto, this.emailADM, this.EstadoSelecionado, this.entrada01CamIP, this.entrada02CamIP, this.saida01CamIP, this.saida02CamIP, {super.key});
 
   @override
   State<CadastroCondominio> createState() => _CadastroCondominioState();
@@ -46,6 +51,10 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
   String vagasMoto = '';
   String tagsNum = '';
   String emailADM = '';
+  String entrada01CamIP = '';
+  String entrada02CamIP = '';
+  String saida01CamIP = '';
+  String saida02CamIP = '';
   int tags = 0;
   bool tirado = false;
 
@@ -89,6 +98,10 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
   TextEditingController vagasMotoController = TextEditingController();
   TextEditingController tagsNumbers = TextEditingController();
   TextEditingController emailADMController = TextEditingController();
+  TextEditingController entrada01CamIPController = TextEditingController();
+  TextEditingController entrada02CamIPController = TextEditingController();
+  TextEditingController saida01CamIPController = TextEditingController();
+  TextEditingController saida02CamIPController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +119,10 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
       vagasInternas = widget.vagasInternas;
       emailADM = widget.emailADM;
       tags = int.parse(widget.tags);
+      entrada01CamIP = widget.entrada01CamIP;
+      entrada02CamIP = widget.entrada02CamIP;
+      saida01CamIP = widget.saida01CamIP;
+      saida02CamIP = widget.saida02CamIP;
       estadoSelecionado = widget.EstadoSelecionado;
       empresaController = TextEditingController(text: empresa);
       enderecoController = TextEditingController(text: endereco);
@@ -117,6 +134,10 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
       vagasMotoController = TextEditingController(text: vagasMoto);
       tagsNumbers = TextEditingController(text: '$tags');
       emailADMController = TextEditingController(text: emailADM);
+      entrada01CamIPController = TextEditingController(text: entrada01CamIP);
+      entrada02CamIPController = TextEditingController(text: entrada02CamIP);
+      saida01CamIPController = TextEditingController(text: saida01CamIP);
+      saida02CamIPController = TextEditingController(text: saida02CamIP);
     }
     
     
@@ -560,6 +581,388 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
             ),
             Container(
               padding: const EdgeInsets.all(16),
+              child: Text(
+                'Para verificar o IP de cada camera faça o passo a passo a seguir: ',
+                style: TextStyle(
+                  fontSize: tamanhotexto,
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: TextButton(
+                onPressed: (){
+                  showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return SingleChildScrollView(
+                        child: AlertDialog(
+                          title: Text(
+                              'Como conectar uma Camera IP no GLK Controls?',
+                            style: TextStyle(
+                              fontSize: tamanhotextobtns,
+                              fontWeight: FontWeight.bold
+                            ),
+                          ),
+                          actions: [
+                            Center(
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Text('O primeiro passo para conseguir conectar uma Câmera IP ao app é baixar o aplicativo UniCam na PlayStore',
+                                        style: TextStyle(
+                                            fontSize: tamanhotexto
+                                        ),
+                                      )
+                                  ),
+                                  TextButton(
+                                    onPressed: () async {
+                                      Uri uri = Uri.parse("https://play.google.com/store/apps/details?id=com.nittbit.mvr.android");
+                                      if (!await launchUrl(
+                                      uri,
+                                      mode: LaunchMode.externalApplication,
+                                      )) {
+                                      throw Exception('Could not launch $uri');
+                                      }
+                                    },
+                                    child: Text(
+                                        'Baixe agora!',
+                                      style: TextStyle(
+                                          fontSize: tamanhotexto,
+                                          fontWeight: FontWeight.bold
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Text(
+                                          'Pós baixar o aplicativo, agora é só abrir o APP',
+                                        style: TextStyle(
+                                            fontSize: tamanhotexto
+                                        ),
+                                      )
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Image.asset('assets/tuto/1passo.png')
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Text(
+                                          'Quando aberto, clique em Conectar',
+                                        style: TextStyle(
+                                            fontSize: tamanhotexto
+                                        ),
+                                      )
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Image.asset('assets/tuto/2passo.png')
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Text(
+                                          'Ele irá verificar se existe alguma Camera IP em sua rede local.',
+                                        style: TextStyle(
+                                            fontSize: tamanhotexto
+                                        ),
+                                      )
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Image.asset('assets/tuto/3passo.png')
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Text(
+                                          'Algumas vezes pode ser que não seja exibida a camera, então clique em Add device manually',
+                                        style: TextStyle(
+                                            fontSize: tamanhotexto
+                                        ),
+                                      )
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Image.asset('assets/tuto/4passo.png')
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Text(
+                                          'Preencha todas as informações como nome da camera, endereço IP, porta, e a parte de autenticação',
+                                        style: TextStyle(
+                                          fontSize: tamanhotexto
+                                        ),
+                                      )
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Image.asset('assets/tuto/5passo.png')
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Image.asset('assets/tuto/6passo.png')
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Text(
+                                        'Quando a configuração terminada, clique em Not now',
+                                        style: TextStyle(
+                                            fontSize: tamanhotexto
+                                        ),
+                                      )
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Image.asset('assets/tuto/7passo.png')
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Text(
+                                        'Logo em seguida irá aparecer a Camera configurada na lista, clique nela',
+                                        style: TextStyle(
+                                            fontSize: tamanhotexto
+                                        ),
+                                      )
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Image.asset('assets/tuto/8passo.png')
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Text(
+                                        'Se tudo ocorrer bem, teremos uma visualização da Câmera Ip',
+                                        style: TextStyle(
+                                            fontSize: tamanhotexto
+                                        ),
+                                      )
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Image.asset('assets/tuto/9passo.png')
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Text(
+                                        'Com tudo isso pronto, agora vamos clicar e segurar na Camera',
+                                        style: TextStyle(
+                                            fontSize: tamanhotexto
+                                        ),
+                                      )
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Image.asset('assets/tuto/10passo.png')
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Text(
+                                        'Logo aparecerá algumas coisas diferentes na barra da aplicação, clique no botão do lapis para editar',
+                                        style: TextStyle(
+                                            fontSize: tamanhotexto
+                                        ),
+                                      )
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Image.asset('assets/tuto/11passo.png')
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Text(
+                                        'Vai aparecer todas as configurações da camera no app, clique em CHANNELS e selecione a Camera1 ou qualquer que esteja aparecendo a baixo do CHANNELS',
+                                        style: TextStyle(
+                                            fontSize: tamanhotexto
+                                        ),
+                                      )
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Image.asset('assets/tuto/12passo.png')
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Text(
+                                        'Logo vai aparecer alguns RTSP dessa camera, use a primeira que normalmente tem mais qualidade.',
+                                        style: TextStyle(
+                                            fontSize: tamanhotexto
+                                        ),
+                                      )
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Image.asset('assets/tuto/13passo.png')
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Image.asset('assets/tuto/14passo.png')
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Text(
+                                        'E pronto, você já tem um IP de uma camera, agora verifique de qual setor ele é e configure corretamente no app, copiando e colando aqui no GLK Controls.',
+                                        style: TextStyle(
+                                            fontSize: tamanhotexto
+                                        ),
+                                      )
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: Text(
+                                        'Para continuar consultando o RTSP de outras cameras é só clicar no + e fazer a configuração de outra camera, assim obtendo o RTSP de cada camera para cada setor',
+                                        style: TextStyle(
+                                            fontSize: tamanhotexto
+                                        ),
+                                      )
+                                  ),
+                                  Container(
+                                      padding: EdgeInsets.all(16),
+                                      child: TextButton(
+                                        onPressed: (){
+                                          Navigator.of(context).pop();
+                                        },
+                                        child: Text(
+                                            'Fechar essa janela',
+                                          style: TextStyle(
+                                              fontSize: tamanhotexto
+                                          ),
+                                        ),
+                                      )
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
+                        ),
+                      );
+                    },
+                  );
+
+                },
+                child: const Text('Como conectar uma Câmera IP no GLK CONTROLS?'),
+              )
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                'RTSP da Camera IP Entrada 01: ',
+                style: TextStyle(
+                  fontSize: tamanhotexto,
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: TextFormField(
+                onChanged: (valor){
+                  setState(() {
+                    entrada01CamIP = valor.trim();
+                  });
+                  //Mudou mandou para a String
+                },
+                controller: entrada01CamIPController,
+                keyboardType: TextInputType.text,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'RTSP Camera IP Entrada 01',
+                  hintStyle: TextStyle(
+                      fontSize: 16
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                'RTSP Camera IP Entrada 02: ',
+                style: TextStyle(
+                  fontSize: tamanhotexto,
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: TextFormField(
+                onChanged: (valor){
+                  setState(() {
+                    entrada02CamIP = valor.trim();
+                  });
+                  //Mudou mandou para a String
+                },
+                controller: entrada02CamIPController,
+                keyboardType: TextInputType.text,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'RTSP Camera IP Entrada 02',
+                  hintStyle: TextStyle(
+                      fontSize: 16
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                'RTSP Camera IP Saida 01: ',
+                style: TextStyle(
+                  fontSize: tamanhotexto,
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: TextFormField(
+                onChanged: (valor){
+                  setState(() {
+                    saida01CamIP = valor.trim();
+                  });
+                  //Mudou mandou para a String
+                },
+                controller: saida01CamIPController,
+                keyboardType: TextInputType.text,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'RTSP Camera IP Saida 01',
+                  hintStyle: TextStyle(
+                      fontSize: 16
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: Text(
+                'RTSP Camera IP Saida 02: ',
+                style: TextStyle(
+                  fontSize: tamanhotexto,
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
+              child: TextFormField(
+                onChanged: (valor){
+                  setState(() {
+                    saida02CamIP = valor.trim();
+                  });
+                  //Mudou mandou para a String
+                },
+                controller: saida02CamIPController,
+                keyboardType: TextInputType.text,
+                decoration: const InputDecoration(
+                  border: OutlineInputBorder(),
+                  hintText: 'RTSP Camera IP Saida 02',
+                  hintStyle: TextStyle(
+                      fontSize: 16
+                  ),
+                ),
+              ),
+            ),
+            Container(
+              padding: const EdgeInsets.all(16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -810,8 +1213,12 @@ class _CadastroCondominioState extends State<CadastroCondominio> {
                                                     'imageURL': imageUrl,
                                                     'maxGalpoes': int.parse(galpaost),
                                                     'VagasPrestadores': double.parse(vagasInternas),
-                                                    'VagasMotos': int.parse(vagasMoto),
+                                                    'VagasMotos': double.parse(vagasMoto),
                                                     'emailADM': emailADM,
+                                                    'ip_camera_entrada01': entrada01CamIP,
+                                                    'ip_camera_entrada02': entrada02CamIP,
+                                                    'ip_camera_saida01': saida01CamIP,
+                                                    'ip_camera_saida02': saida02CamIP,
                                                   }).then((value){
                                                     Navigator.of(context).pop();
                                                     Navigator.pop(context);

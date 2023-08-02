@@ -96,6 +96,20 @@ flutter:
     - assets/error-image.png
     - assets/white.png
     - assets/introtelagrande.gif
+    - assets/tuto/1passo.png
+    - assets/tuto/2passo.png
+    - assets/tuto/3passo.png
+    - assets/tuto/4passo.png
+    - assets/tuto/5passo.png
+    - assets/tuto/6passo.png
+    - assets/tuto/7passo.png
+    - assets/tuto/8passo.png
+    - assets/tuto/9passo.png
+    - assets/tuto/10passo.png
+    - assets/tuto/11passo.png
+    - assets/tuto/12passo.png
+    - assets/tuto/13passo.png
+    - assets/tuto/14passo.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see
