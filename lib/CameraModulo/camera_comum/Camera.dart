@@ -3,6 +3,7 @@ import 'package:camera/camera.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:glk_controls/CameraModulo/camera_ip/camera_ip.dart';
 import 'package:glk_controls/ModuloPrestador/geral/pesquisa/PesquisaPlacaSaida.dart';
 import 'package:glk_controls/ModuloPrestador/geral/pesquisa/pesquisaPlaca.dart';
 import 'package:glk_controls/listas/liberacoesOperadorEmpresarial.dart';
@@ -105,7 +106,7 @@ class _CameraComumState extends State<CameraComum> {
       return Container();
     }
 
-    return  LayoutBuilder(builder: (context, constrains){
+    return LayoutBuilder(builder: (context, constrains){
 
       if(constrains.maxWidth < 600){
         tamanhotexto = textSize;
@@ -249,6 +250,7 @@ class _CameraComumState extends State<CameraComum> {
                             .replaceAll("SE", '')
                             .replaceAll("TO", '')
                             .replaceAll("-", ' ')
+                            .replaceAll('\n', '')
                             .replaceAllMapped(
                           RegExp(r'^([a-zA-Z]{3})([0-9a-zA-Z]{4})$'),
                               (Match m) => '${m[1]} ${m[2]}',
@@ -432,6 +434,313 @@ class _CameraComumState extends State<CameraComum> {
                           fontSize: tamanhotextobtns
                       ),
                     )
+                    ),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    child: ElevatedButton(
+                      onPressed: () async {
+                        var dbInstance = FirebaseFirestore.instance;
+
+                        if(widget.EntradaouSaida == 'Rele01'){
+
+                          var result = await dbInstance
+                              .collection("Condominio")
+                              .doc('condominio')
+                              .get();
+
+                          String ip_camera_entrada01 = result.get('ip_camera_entrada01');
+
+                          Navigator.of(context).pop();
+                          Navigator.pop(context);
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context){
+                                return ipCamera(cameraIP: ip_camera_entrada01, entradaouSaida: widget.EntradaouSaida, entradaouSaidaselecionado: '', OperadorName: widget.OperadorName, empresaName: '',);
+                              }));
+                        }
+
+                        if(widget.EntradaouSaida == 'Rele03'){
+                          var result = await dbInstance
+                              .collection("Condominio")
+                              .doc('condominio')
+                              .get();
+
+                          String ip_camera_entrada02 = result.get('ip_camera_entrada02');
+
+                          Navigator.of(context).pop();
+                          Navigator.pop(context);
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context){
+                                return ipCamera(cameraIP: ip_camera_entrada02, entradaouSaida: widget.EntradaouSaida, entradaouSaidaselecionado: '', OperadorName: widget.OperadorName, empresaName: '',);
+                              }));
+                        }
+
+                        if(widget.EntradaouSaida == 'Rele02'){
+                          var result = await dbInstance
+                              .collection("Condominio")
+                              .doc('condominio')
+                              .get();
+
+                          String ip_camera_saida01 = result.get('ip_camera_saida01');
+
+                          Navigator.of(context).pop();
+                          Navigator.pop(context);
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context){
+                                return ipCamera(cameraIP: ip_camera_saida01, entradaouSaida: widget.EntradaouSaida, entradaouSaidaselecionado: '', OperadorName: widget.OperadorName, empresaName: '',);
+                              }));
+                        }
+                        if(widget.EntradaouSaida == 'Rele04'){
+                          var result = await dbInstance
+                              .collection("Condominio")
+                              .doc('condominio')
+                              .get();
+
+                          String ip_camera_saida02 = result.get('ip_camera_saida02');
+
+                          Navigator.of(context).pop();
+                          Navigator.pop(context);
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context){
+                                return ipCamera(cameraIP: ip_camera_saida02, entradaouSaida: widget.EntradaouSaida, entradaouSaidaselecionado: '', OperadorName: widget.OperadorName, empresaName: '',);
+                              }));
+                        }
+
+                        if(widget.EntradaouSaida == 'LiberaçãoEmpresa'){
+                          Navigator.of(context).pop();
+                          Navigator.pop(context);
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context){
+                                return ipCamera(cameraIP: '', entradaouSaida: widget.EntradaouSaida, entradaouSaidaselecionado: '', OperadorName: widget.OperadorName, empresaName: widget.empresaName,);
+                              }));
+                        }
+
+                        if(widget.EntradaouSaida == 'Entrada Colaborador Porteiros'){
+                          bool Entrada01 = false;
+                          bool Entrada02 = false;
+                          String Entrada = '';
+                          String EntradaST = '';
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return StatefulBuilder(builder: (BuildContext context, StateSetter setState){
+                                return AlertDialog(
+                                  title: const Text('Selecione a Câmera'),
+                                  actions: [
+                                    Center(
+                                      child: Column(
+                                        children: [
+                                          const Text('Selecione a Câmera'),
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Checkbox(
+                                                value: Entrada01,
+                                                onChanged: (bool? value) async {
+                                                  setState(() {
+                                                    Entrada01 = value!;
+                                                    Entrada02 = !value;
+                                                    Entrada = 'Rele01';
+                                                  });
+                                                  if(Entrada01 == true){
+                                                    var result = await dbInstance
+                                                        .collection("Condominio")
+                                                        .doc('condominio')
+                                                        .get();
+                                                    EntradaST = result.get('ip_camera_entrada01');
+                                                  }else if(Entrada01 == false){
+                                                    var result = await dbInstance
+                                                        .collection("Condominio")
+                                                        .doc('condominio')
+                                                        .get();
+
+                                                    EntradaST = result.get('ip_camera_entrada02');
+                                                  }
+                                                },
+                                              ),
+                                              Text(
+                                                'Câmera Entrada 01',
+                                                style: TextStyle(
+                                                    fontSize: tamanhotexto,
+                                                    fontWeight: FontWeight.bold
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Checkbox(
+                                                value: Entrada02,
+                                                onChanged: (bool? value) async {
+                                                  setState(() {
+                                                    Entrada01 = !value!;
+                                                    Entrada02 = value;
+                                                    Entrada = 'Rele03';
+                                                  });
+                                                  if(Entrada02 == true){
+                                                    var result = await dbInstance
+                                                        .collection("Condominio")
+                                                        .doc('condominio')
+                                                        .get();
+
+                                                    EntradaST = result.get('ip_camera_entrada02');
+                                                  }else if(Entrada02 == false){
+                                                    var result = await dbInstance
+                                                        .collection("Condominio")
+                                                        .doc('condominio')
+                                                        .get();
+                                                    EntradaST = result.get('ip_camera_entrada01');
+                                                  }
+                                                },
+                                              ),
+                                              Text(
+                                                'Câmera Entrada 02',
+                                                style: TextStyle(
+                                                    fontSize: tamanhotexto,
+                                                    fontWeight: FontWeight.bold
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          TextButton(
+                                              onPressed: (){
+                                                Navigator.of(context).pop();
+                                                Navigator.of(context).pop();
+                                                Navigator.pop(context);
+                                                Navigator.push(context,
+                                                    MaterialPageRoute(builder: (context){
+                                                      return ipCamera(cameraIP: EntradaST, entradaouSaida: widget.EntradaouSaida, entradaouSaidaselecionado: '', OperadorName: widget.OperadorName, empresaName: widget.empresaName,);
+                                                    }));
+                                              }, child: const Text('Prosseguir')
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                );
+                              },);
+                            },
+                          );
+                        }
+
+                        if(widget.EntradaouSaida == 'Saída Colaborador Porteiros'){
+                          bool Entrada01 = false;
+                          bool Entrada02 = false;
+                          String EntradaST = '';
+                          showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return StatefulBuilder(builder: (BuildContext context, StateSetter setState){
+                                return AlertDialog(
+                                  title: const Text('Selecione a Câmera'),
+                                  actions: [
+                                    Center(
+                                      child: Column(
+                                        children: [
+                                          const Text('Selecione a Câmera'),
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Checkbox(
+                                                value: Entrada01,
+                                                onChanged: (bool? value) async {
+                                                  setState(() {
+                                                    Entrada01 = value!;
+                                                    Entrada02 = !value;
+                                                  });
+                                                  if(Entrada01 == true){
+                                                    var result = await dbInstance
+                                                        .collection("Condominio")
+                                                        .doc('condominio')
+                                                        .get();
+                                                    EntradaST = result.get('ip_camera_saida02');
+                                                  }else if(Entrada01 == false){
+                                                    var result = await dbInstance
+                                                        .collection("Condominio")
+                                                        .doc('condominio')
+                                                        .get();
+
+                                                    EntradaST = result.get('ip_camera_saida01');
+                                                  }
+                                                },
+                                              ),
+                                              Text(
+                                                'Câmera Saida 01',
+                                                style: TextStyle(
+                                                    fontSize: tamanhotexto,
+                                                    fontWeight: FontWeight.bold
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            crossAxisAlignment: CrossAxisAlignment.center,
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              Checkbox(
+                                                value: Entrada02,
+                                                onChanged: (bool? value) async {
+                                                  setState(() {
+                                                    Entrada01 = !value!;
+                                                    Entrada02 = value;
+                                                  });
+                                                  if(Entrada02 == true){
+                                                    var result = await dbInstance
+                                                        .collection("Condominio")
+                                                        .doc('condominio')
+                                                        .get();
+                                                    EntradaST = result.get('ip_camera_saida02');
+                                                  }else if(Entrada02 == false){
+                                                    var result = await dbInstance
+                                                        .collection("Condominio")
+                                                        .doc('condominio')
+                                                        .get();
+
+                                                    EntradaST = result.get('ip_camera_saida01');
+                                                  }
+                                                },
+                                              ),
+                                              Text(
+                                                'Câmera Saida 02',
+                                                style: TextStyle(
+                                                    fontSize: tamanhotexto,
+                                                    fontWeight: FontWeight.bold
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          TextButton(
+                                              onPressed: (){
+                                                Navigator.of(context).pop();
+                                                Navigator.of(context).pop();
+                                                Navigator.pop(context);
+                                                Navigator.push(context,
+                                                    MaterialPageRoute(builder: (context){
+                                                      return ipCamera(cameraIP: EntradaST, entradaouSaida: widget.EntradaouSaida, entradaouSaidaselecionado: '', OperadorName: widget.OperadorName, empresaName: widget.empresaName,);
+                                                    }));
+                                              }, child: const Text('Prosseguir')
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                );
+                              },);
+                            },
+                          );
+                        }
+
+                      },
+                      child: Text(
+                          'Ir para Camera IP',
+                        style: TextStyle(
+                          fontSize: tamanhotextobtns
+                        ),
+                      ),
                     ),
                   ),
                   Row(
